@@ -80,7 +80,7 @@ export default function Accounting() {
   };
 
   return (
-    <div>
+    <div className="bg-[#F5F5F5]">
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="candidate">
           {(provided) => (
@@ -101,7 +101,7 @@ export default function Accounting() {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className="rounded-md bg-white p-4 shadow-md"
+                      className="rounded-md p-4"
                     >
                       {renderContent(item.content)}
                     </div>

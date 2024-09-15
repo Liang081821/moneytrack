@@ -1,6 +1,6 @@
 export default function MonthlyRecord() {
   return (
-    <div className="h-[685px] w-[420px] rounded-md border border-gray-200 bg-white p-4 shadow-lg">
+    <div className="h-[685px] w-[420px] rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
       <div>月份收支表</div>
       <div className="flex justify-center gap-10">
         <div className="border border-black">總和</div>
