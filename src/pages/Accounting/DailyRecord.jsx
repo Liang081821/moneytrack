@@ -87,6 +87,7 @@ export default function DailyRecord() {
       setValue("class", "");
     }
   }, [recordType, setValue, editing, currentTransaction?.record_type]);
+
   const handleSaveEdit = async (data) => {
     try {
       const docRef = doc(
@@ -106,6 +107,17 @@ export default function DailyRecord() {
       const isNewIncome = data.record_type === "收入";
       const isNewExpense = data.record_type === "支出";
 
+      // 檢查是否有變更
+      if (
+        originalAccount === newAccount &&
+        originalAmount === newAmount &&
+        currentTransaction.record_type === data.record_type &&
+        currentTransaction.class === data.class
+      ) {
+        alert("沒有變更，不需要保存。");
+        return;
+      }
+
       const qOriginal = query(
         propertyCollectionRef,
         where("account", "==", originalAccount),
@@ -118,34 +130,58 @@ export default function DailyRecord() {
       const querySnapshotOriginal = await getDocs(qOriginal);
       const querySnapshotNew = await getDocs(qNew);
 
+      // 合併處理函數，用於更新帳戶餘額
+      const updateAccountBalance = async (docSnap, amountChange) => {
+        const currentBalance = docSnap.data().balance || 0;
+        const newBalance = currentBalance + amountChange;
+        await updateDoc(docSnap.ref, { balance: newBalance });
+      };
+
+      // 計算餘額變化的邏輯
+      let amountChangeForOriginalAccount = 0;
+      let amountChangeForNewAccount = 0;
+
+      // 如果帳戶未更改，計算差額
+      if (originalAccount === newAccount) {
+        if (isOriginalIncome && isNewIncome) {
+          amountChangeForOriginalAccount = newAmount - originalAmount;
+        } else if (isOriginalExpense && isNewExpense) {
+          amountChangeForOriginalAccount = originalAmount - newAmount;
+        } else if (isOriginalIncome && isNewExpense) {
+          amountChangeForOriginalAccount = -originalAmount - newAmount;
+        } else if (isOriginalExpense && isNewIncome) {
+          amountChangeForOriginalAccount = originalAmount + newAmount;
+        }
+      } else {
+        // 如果帳戶已更改，還原原始帳戶的餘額
+        amountChangeForOriginalAccount = isOriginalIncome
+          ? -originalAmount
+          : isOriginalExpense
+            ? originalAmount
+            : 0;
+
+        // 更新新帳戶的餘額
+        amountChangeForNewAccount = isNewIncome
+          ? newAmount
+          : isNewExpense
+            ? -newAmount
+            : 0;
+      }
+
+      // 更新原始帳戶的餘額
       if (!querySnapshotOriginal.empty) {
         querySnapshotOriginal.forEach(async (docSnap) => {
-          const currentBalance = docSnap.data().balance || 0;
-
-          let adjustedBalance = isOriginalIncome
-            ? currentBalance - originalAmount
-            : isOriginalExpense
-              ? currentBalance + originalAmount
-              : currentBalance;
-
-          await updateDoc(docSnap.ref, { balance: adjustedBalance });
+          await updateAccountBalance(docSnap, amountChangeForOriginalAccount);
         });
       }
 
-      if (!querySnapshotNew.empty) {
+      // 如果帳戶已更改，處理新帳戶的情況
+      if (originalAccount !== newAccount && !querySnapshotNew.empty) {
         querySnapshotNew.forEach(async (docSnap) => {
-          const currentBalance = docSnap.data().balance || 0;
-
-          const finalBalance = isNewIncome
-            ? currentBalance + newAmount
-            : isNewExpense
-              ? currentBalance - newAmount
-              : currentBalance;
-
-          await updateDoc(docSnap.ref, { balance: finalBalance });
+          await updateAccountBalance(docSnap, amountChangeForNewAccount);
         });
       }
-
+      // 更新交易文檔
       await setDoc(docRef, data, { merge: true });
       console.log("Document successfully updated!");
       alert("編輯成功");
@@ -201,7 +237,7 @@ export default function DailyRecord() {
       <div>
         {Object.entries(groupedTransactions).map(([date, items]) => (
           <div key={date}>
-            <div className="flex items-center">
+            <div className="mb-2 mt-6 flex items-center">
               <div>{date}</div>
               <div className="mx-auto w-28 border-[0.5px] border-black"></div>
               <div>
@@ -230,8 +266,8 @@ export default function DailyRecord() {
                     <div
                       className={
                         item.record_type === "支出"
-                          ? "text-red-500"
-                          : "text-blue-500"
+                          ? "text-[#468189]"
+                          : "text-[#9DBEBB]"
                       }
                     >
                       {item.record_type === "支出" ? "-" : ""}
