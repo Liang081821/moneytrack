@@ -56,6 +56,7 @@ export default function DailyRecord() {
       class: "",
       account: "",
       amount: 0,
+      targetaccount: "",
     },
   });
 
@@ -66,6 +67,7 @@ export default function DailyRecord() {
     setValue("class", item.class);
     setValue("account", item.account);
     setValue("amount", item.amount);
+    setValue("targetaccount", item.targetaccount);
   };
 
   const handleCloseEdit = () => {
@@ -75,6 +77,7 @@ export default function DailyRecord() {
   };
 
   const recordType = watch("record_type");
+  const watchAccount = watch("account");
 
   const optionsToRender =
     recordType === "收入"
@@ -82,6 +85,10 @@ export default function DailyRecord() {
       : recordType === "支出"
         ? classData.expense
         : [];
+
+  const accountsToRender = property.filter((item) => {
+    return item.account !== watchAccount;
+  });
   useEffect(() => {
     if (editing && recordType !== currentTransaction?.record_type) {
       setValue("class", "");
@@ -97,20 +104,29 @@ export default function DailyRecord() {
         "accounting",
         currentTransaction.id,
       );
-
+      const cleanData = {
+        ...data,
+        class: data.class || null,
+        targetaccount: data.targetaccount || null,
+      };
       const originalAccount = currentTransaction.account;
       const newAccount = data.account;
       const originalAmount = Number(currentTransaction.amount);
       const newAmount = Number(data.amount);
+      const originalTargetAccount = currentTransaction.targetaccount;
+      const newTargetAccount = data.targetaccount;
       const isOriginalIncome = currentTransaction.record_type === "收入";
       const isOriginalExpense = currentTransaction.record_type === "支出";
+      const isOriginalTransfer = currentTransaction.record_type === "轉帳";
       const isNewIncome = data.record_type === "收入";
       const isNewExpense = data.record_type === "支出";
+      const isNewTransfer = data.record_type === "轉帳";
 
       // 檢查是否有變更
       if (
         originalAccount === newAccount &&
         originalAmount === newAmount &&
+        originalTargetAccount === newTargetAccount &&
         currentTransaction.record_type === data.record_type &&
         currentTransaction.class === data.class
       ) {
@@ -118,6 +134,7 @@ export default function DailyRecord() {
         return;
       }
 
+      // 查詢帳戶
       const qOriginal = query(
         propertyCollectionRef,
         where("account", "==", originalAccount),
@@ -126,63 +143,154 @@ export default function DailyRecord() {
         propertyCollectionRef,
         where("account", "==", newAccount),
       );
+      const qOriginalTarget = originalTargetAccount
+        ? query(
+            propertyCollectionRef,
+            where("account", "==", originalTargetAccount),
+          )
+        : null;
+      const qNewTarget = newTargetAccount
+        ? query(propertyCollectionRef, where("account", "==", newTargetAccount))
+        : null;
 
       const querySnapshotOriginal = await getDocs(qOriginal);
       const querySnapshotNew = await getDocs(qNew);
+      const querySnapshotOriginalTarget = qOriginalTarget
+        ? await getDocs(qOriginalTarget)
+        : null;
+      const querySnapshotNewTarget = qNewTarget
+        ? await getDocs(qNewTarget)
+        : null;
 
-      // 合併處理函數，用於更新帳戶餘額
       const updateAccountBalance = async (docSnap, amountChange) => {
         const currentBalance = docSnap.data().balance || 0;
         const newBalance = currentBalance + amountChange;
         await updateDoc(docSnap.ref, { balance: newBalance });
       };
 
-      // 計算餘額變化的邏輯
       let amountChangeForOriginalAccount = 0;
       let amountChangeForNewAccount = 0;
+      let amountChangeForOriginalTargetAccount = 0;
+      let amountChangeForNewTargetAccount = 0;
 
-      // 如果帳戶未更改，計算差額
-      if (originalAccount === newAccount) {
-        if (isOriginalIncome && isNewIncome) {
-          amountChangeForOriginalAccount = newAmount - originalAmount;
-        } else if (isOriginalExpense && isNewExpense) {
-          amountChangeForOriginalAccount = originalAmount - newAmount;
-        } else if (isOriginalIncome && isNewExpense) {
-          amountChangeForOriginalAccount = -originalAmount - newAmount;
-        } else if (isOriginalExpense && isNewIncome) {
-          amountChangeForOriginalAccount = originalAmount + newAmount;
+      if (isOriginalTransfer) {
+        if (
+          originalAccount === newAccount &&
+          originalTargetAccount === newTargetAccount
+        ) {
+          amountChangeForNewAccount = originalAmount - newAmount;
+          amountChangeForNewTargetAccount = newAmount - originalAmount;
+        } else if (originalAccount !== newAccount) {
+          amountChangeForOriginalAccount = originalAmount;
+          amountChangeForNewAccount = -newAmount;
+        } else if (originalTargetAccount !== newTargetAccount) {
+          amountChangeForOriginalTargetAccount = -originalAmount;
+          amountChangeForNewTargetAccount = newAmount;
+        } else if (
+          originalAccount === newTargetAccount &&
+          originalTargetAccount === newAccount
+        ) {
+          amountChangeForNewAccount = originalAmount + newAmount;
+          amountChangeForNewTargetAccount = -(originalAmount + newAmount);
+
+          console.log("Change");
+        }
+      } else if (isNewTransfer) {
+        if (isOriginalIncome) {
+          if (originalAccount === newAccount) {
+            amountChangeForOriginalAccount = -(originalAmount + newAmount);
+            amountChangeForNewTargetAccount = newAmount;
+          } else {
+            amountChangeForOriginalAccount = -originalAmount;
+            amountChangeForNewAccount = -newAmount;
+            amountChangeForNewTargetAccount = newAmount;
+          }
+        } else {
+          if (originalAccount === newAccount) {
+            amountChangeForOriginalAccount = originalAmount - newAmount;
+            amountChangeForNewTargetAccount = newAmount;
+          } else {
+            if (originalAccount === newTargetAccount) {
+              amountChangeForNewTargetAccount = originalAmount + newAmount;
+            } else {
+              amountChangeForOriginalAccount = originalAmount;
+              amountChangeForNewAccount = -newAmount;
+              amountChangeForOriginalAccount = originalAmount;
+              amountChangeForNewAccount = -newAmount;
+              amountChangeForNewTargetAccount = +newAmount;
+            }
+          }
         }
       } else {
-        // 如果帳戶已更改，還原原始帳戶的餘額
-        amountChangeForOriginalAccount = isOriginalIncome
-          ? -originalAmount
-          : isOriginalExpense
-            ? originalAmount
-            : 0;
+        if (originalAccount === newAccount) {
+          // 如果帳戶未更改，計算差額
+          if (isOriginalIncome && isNewIncome) {
+            amountChangeForOriginalAccount = newAmount - originalAmount;
+          } else if (isOriginalExpense && isNewExpense) {
+            amountChangeForOriginalAccount = originalAmount - newAmount;
+          } else if (isOriginalIncome && isNewExpense) {
+            amountChangeForOriginalAccount = -originalAmount - newAmount;
+          } else if (isOriginalExpense && isNewIncome) {
+            amountChangeForOriginalAccount = originalAmount + newAmount;
+          }
+        } else {
+          // 如果帳戶已更改，還原原始帳戶的餘額
+          amountChangeForOriginalAccount = isOriginalIncome
+            ? -originalAmount
+            : isOriginalExpense
+              ? originalAmount
+              : 0;
 
-        // 更新新帳戶的餘額
-        amountChangeForNewAccount = isNewIncome
-          ? newAmount
-          : isNewExpense
-            ? -newAmount
-            : 0;
+          // 更新新帳戶的餘額
+          amountChangeForNewAccount = isNewIncome
+            ? newAmount
+            : isNewExpense
+              ? -newAmount
+              : 0;
+        }
       }
 
-      // 更新原始帳戶的餘額
+      // 更新帳戶餘額
       if (!querySnapshotOriginal.empty) {
         querySnapshotOriginal.forEach(async (docSnap) => {
-          await updateAccountBalance(docSnap, amountChangeForOriginalAccount);
+          if (amountChangeForOriginalAccount !== 0) {
+            await updateAccountBalance(docSnap, amountChangeForOriginalAccount);
+          }
         });
       }
 
-      // 如果帳戶已更改，處理新帳戶的情況
-      if (originalAccount !== newAccount && !querySnapshotNew.empty) {
+      if (!querySnapshotNew.empty) {
         querySnapshotNew.forEach(async (docSnap) => {
-          await updateAccountBalance(docSnap, amountChangeForNewAccount);
+          if (amountChangeForNewAccount !== 0) {
+            await updateAccountBalance(docSnap, amountChangeForNewAccount);
+          }
         });
       }
+
+      if (!querySnapshotOriginalTarget.empty) {
+        querySnapshotOriginalTarget.forEach(async (docSnap) => {
+          if (amountChangeForOriginalTargetAccount !== 0) {
+            await updateAccountBalance(
+              docSnap,
+              amountChangeForOriginalTargetAccount,
+            );
+          }
+        });
+
+        if (!querySnapshotNewTarget.empty) {
+          querySnapshotNewTarget.forEach(async (docSnap) => {
+            if (amountChangeForNewTargetAccount !== 0) {
+              await updateAccountBalance(
+                docSnap,
+                amountChangeForNewTargetAccount,
+              );
+            }
+          });
+        }
+      }
+
       // 更新交易文檔
-      await setDoc(docRef, data, { merge: true });
+      await setDoc(docRef, cleanData, { merge: true });
       console.log("Document successfully updated!");
       alert("編輯成功");
       handleCloseEdit();
@@ -205,26 +313,52 @@ export default function DailyRecord() {
         propertyCollectionRef,
         where("account", "==", currentTransaction.account),
       );
+
+      if (currentTransaction.targetaccount) {
+        const qTargetAccount = query(
+          propertyCollectionRef,
+          where("account", "==", currentTransaction.targetaccount),
+        );
+
+        const querySnapshotTarget = await getDocs(qTargetAccount);
+        const targetAmount = Number(currentTransaction.amount);
+
+        if (!querySnapshotTarget.empty) {
+          querySnapshotTarget.forEach(async (docSnap) => {
+            const currentBalance = docSnap.data().balance || 0;
+            const adjustedBalance = currentBalance - targetAmount;
+            await updateDoc(docSnap.ref, { balance: adjustedBalance });
+          });
+        }
+      }
+
       const querySnapshotOriginal = await getDocs(qOriginal);
       const originalAmount = Number(currentTransaction.amount);
       const isOriginalIncome = currentTransaction.record_type === "收入";
       const isOriginalExpense = currentTransaction.record_type === "支出";
+      const isTransfer = currentTransaction.record_type === "轉帳";
+
       if (!querySnapshotOriginal.empty) {
         querySnapshotOriginal.forEach(async (docSnap) => {
           const currentBalance = docSnap.data().balance || 0;
 
-          let adjustedBalance = isOriginalIncome
-            ? currentBalance - originalAmount
-            : isOriginalExpense
-              ? currentBalance + originalAmount
-              : currentBalance;
+          let adjustedBalance;
+          if (isTransfer) {
+            adjustedBalance = currentBalance + originalAmount;
+          } else {
+            adjustedBalance = isOriginalIncome
+              ? currentBalance - originalAmount
+              : isOriginalExpense
+                ? currentBalance + originalAmount
+                : currentBalance;
+          }
 
           await updateDoc(docSnap.ref, { balance: adjustedBalance });
         });
       }
+      setEditing(false);
       await deleteDoc(docRef);
 
-      setEditing(false);
       alert("刪除成功");
     } catch (error) {
       console.error("Error updating document:", error);
@@ -275,7 +409,9 @@ export default function DailyRecord() {
                     </div>
                   </div>
                   <div className="flex justify-between">
-                    <div className="text-sm text-gray-500">{item.class}</div>
+                    <div className="text-sm text-gray-500">
+                      {item.class ? item.class : `轉入 ${item.targetaccount}`}
+                    </div>
                     <div className="text-sm text-gray-500">{item.account}</div>
                   </div>
                 </div>
@@ -327,22 +463,45 @@ export default function DailyRecord() {
                     <option value="轉帳">轉帳</option>
                   </select>
                 </div>
-                <div className="mb-4 flex flex-col">
-                  <label className="mb-1">分類</label>
-                  <select
-                    className="rounded-xl border p-2"
-                    {...register("class", {
-                      required: "請選擇子分類",
-                    })}
-                  >
-                    {Array.isArray(optionsToRender) &&
-                      optionsToRender.map((item, index) => (
-                        <option key={index} value={item}>
-                          {item}
-                        </option>
-                      ))}
-                  </select>
-                </div>
+
+                {recordType === "轉帳" ? (
+                  <div className="mb-4 flex flex-col">
+                    <label className="mb-1">轉入</label>
+                    <select
+                      className="rounded-xl border p-2"
+                      {...register("targetaccount", {
+                        required:
+                          recordType === "轉帳" ? "請選擇轉入帳戶" : false,
+                      })}
+                    >
+                      {Array.isArray(accountsToRender) &&
+                        accountsToRender.map((item, index) => (
+                          <option key={index} value={item.account}>
+                            {item.account}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                ) : (
+                  <div className="mb-4 flex flex-col">
+                    <label className="mb-1">分類</label>
+                    <select
+                      className="rounded-xl border p-2"
+                      {...register("class", {
+                        required:
+                          recordType !== "轉帳" ? "請選擇子分類" : false,
+                      })}
+                    >
+                      {Array.isArray(optionsToRender) &&
+                        optionsToRender.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                )}
+
                 <div className="mb-4 flex flex-col">
                   <label className="mb-1">金額</label>
                   <input
