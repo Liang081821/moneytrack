@@ -15,10 +15,13 @@ import {
 import { db } from "../../firebase/firebaseConfig";
 import { useForm } from "react-hook-form";
 import { useGlobalContext } from "@/context/GlobalContext";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function DailyRecord() {
   const [transaction, setTransaction] = useState([]);
   const { property, classData } = useGlobalContext();
+  const [startDate, setStartDate] = useState();
 
   useEffect(() => {
     const unsubscribe = fetchAllTranscationData(setTransaction);
@@ -68,6 +71,8 @@ export default function DailyRecord() {
     setValue("account", item.account);
     setValue("amount", item.amount);
     setValue("targetaccount", item.targetaccount);
+    const transactionDate = item.time.toDate();
+    setStartDate(transactionDate);
   };
 
   const handleCloseEdit = () => {
@@ -78,6 +83,7 @@ export default function DailyRecord() {
 
   const recordType = watch("record_type");
   const watchAccount = watch("account");
+  const watchTargetAccount = watch("targetaccount");
 
   const optionsToRender =
     recordType === "收入"
@@ -95,6 +101,12 @@ export default function DailyRecord() {
     }
   }, [recordType, setValue, editing, currentTransaction?.record_type]);
 
+  useEffect(() => {
+    if (editing && watchAccount !== currentTransaction?.account) {
+      setValue("targetaccount", "");
+    }
+  }, [watchAccount, setValue, editing, currentTransaction?.account]);
+
   const handleSaveEdit = async (data) => {
     try {
       const docRef = doc(
@@ -108,6 +120,7 @@ export default function DailyRecord() {
         ...data,
         class: data.class || null,
         targetaccount: data.targetaccount || null,
+        time: startDate || currentTransaction.time,
       };
       const originalAccount = currentTransaction.account;
       const newAccount = data.account;
@@ -128,7 +141,8 @@ export default function DailyRecord() {
         originalAmount === newAmount &&
         originalTargetAccount === newTargetAccount &&
         currentTransaction.record_type === data.record_type &&
-        currentTransaction.class === data.class
+        currentTransaction.class === data.class &&
+        currentTransaction.time === startDate
       ) {
         alert("沒有變更，不需要保存。");
         return;
@@ -149,18 +163,54 @@ export default function DailyRecord() {
             where("account", "==", originalTargetAccount),
           )
         : null;
+
       const qNewTarget = newTargetAccount
         ? query(propertyCollectionRef, where("account", "==", newTargetAccount))
         : null;
 
       const querySnapshotOriginal = await getDocs(qOriginal);
+      console.log(
+        "Original Account Query Result:",
+        querySnapshotOriginal.empty
+          ? "No documents found"
+          : querySnapshotOriginal.docs.map((doc) => doc.data()),
+      );
+
       const querySnapshotNew = await getDocs(qNew);
+      console.log(
+        "New Account Query Result:",
+        querySnapshotNew.empty
+          ? "No documents found"
+          : querySnapshotNew.docs.map((doc) => doc.data()),
+      );
+
       const querySnapshotOriginalTarget = qOriginalTarget
         ? await getDocs(qOriginalTarget)
         : null;
+      if (querySnapshotOriginalTarget) {
+        console.log(
+          "Original Target Account Query Result:",
+          querySnapshotOriginalTarget.empty
+            ? "No documents found"
+            : querySnapshotOriginalTarget.docs.map((doc) => doc.data()),
+        );
+      } else {
+        console.log("No Original Target Account Query");
+      }
+
       const querySnapshotNewTarget = qNewTarget
         ? await getDocs(qNewTarget)
         : null;
+      if (querySnapshotNewTarget) {
+        console.log(
+          "New Target Account Query Result:",
+          querySnapshotNewTarget.empty
+            ? "No documents found"
+            : querySnapshotNewTarget.docs.map((doc) => doc.data()),
+        );
+      } else {
+        console.log("No New Target Account Query");
+      }
 
       const updateAccountBalance = async (docSnap, amountChange) => {
         const currentBalance = docSnap.data().balance || 0;
@@ -173,75 +223,131 @@ export default function DailyRecord() {
       let amountChangeForOriginalTargetAccount = 0;
       let amountChangeForNewTargetAccount = 0;
 
-      if (isOriginalTransfer) {
+      if (isOriginalTransfer && isNewTransfer) {
         if (
           originalAccount === newAccount &&
           originalTargetAccount === newTargetAccount
         ) {
+          // 1. 轉入和轉出帳戶都未更改
+          console.log("1");
           amountChangeForNewAccount = originalAmount - newAmount;
           amountChangeForNewTargetAccount = newAmount - originalAmount;
-        } else if (originalAccount !== newAccount) {
-          amountChangeForOriginalAccount = originalAmount;
-          amountChangeForNewAccount = -newAmount;
-        } else if (originalTargetAccount !== newTargetAccount) {
-          amountChangeForOriginalTargetAccount = -originalAmount;
-          amountChangeForNewTargetAccount = newAmount;
         } else if (
           originalAccount === newTargetAccount &&
           originalTargetAccount === newAccount
         ) {
-          amountChangeForNewAccount = originalAmount + newAmount;
-          amountChangeForNewTargetAccount = -(originalAmount + newAmount);
-
-          console.log("Change");
+          // 2. 轉入和轉出帳戶互換
+          console.log("2");
+          amountChangeForNewAccount = -(originalAmount + newAmount);
+          amountChangeForNewTargetAccount = originalAmount + newAmount;
+        } else if (
+          originalAccount !== newAccount &&
+          originalTargetAccount === newTargetAccount
+        ) {
+          // 3. 只改變了轉出帳戶
+          console.log("3");
+          amountChangeForOriginalAccount = originalAmount;
+          amountChangeForNewAccount = -newAmount;
+        } else if (
+          originalTargetAccount !== newTargetAccount &&
+          originalAccount === newAccount
+        ) {
+          // 4. 只改變了轉入帳戶
+          console.log("4");
+          amountChangeForOriginalTargetAccount = -originalAmount;
+          amountChangeForNewTargetAccount = newAmount;
+        } else if (
+          originalAccount !== newTargetAccount &&
+          originalTargetAccount !== newAccount
+        ) {
+          // 5. 轉入和轉出帳戶都改變了
+          console.log("5");
+          amountChangeForOriginalAccount = originalAmount;
+          amountChangeForOriginalTargetAccount = -originalAmount;
+          amountChangeForNewAccount = -newAmount;
+          amountChangeForNewTargetAccount = newAmount;
         }
-      } else if (isNewTransfer) {
+      } else if ((isOriginalIncome || isOriginalExpense) && isNewTransfer) {
         if (isOriginalIncome) {
           if (originalAccount === newAccount) {
+            console.log("6");
             amountChangeForOriginalAccount = -(originalAmount + newAmount);
             amountChangeForNewTargetAccount = newAmount;
+          } else if (originalAccount === newTargetAccount) {
+            console.log("7");
+            amountChangeForNewAccount = -newAmount;
+            amountChangeForNewTargetAccount = newAmount - originalAmount;
           } else {
+            console.log("8");
             amountChangeForOriginalAccount = -originalAmount;
             amountChangeForNewAccount = -newAmount;
             amountChangeForNewTargetAccount = newAmount;
           }
-        } else {
+        } else if (isOriginalExpense) {
           if (originalAccount === newAccount) {
+            console.log("9");
             amountChangeForOriginalAccount = originalAmount - newAmount;
             amountChangeForNewTargetAccount = newAmount;
+          } else if (originalAccount === newTargetAccount) {
+            console.log("10");
+            amountChangeForNewAccount = -newAmount;
+            amountChangeForNewTargetAccount = originalAmount + newAmount;
           } else {
-            if (originalAccount === newTargetAccount) {
-              amountChangeForNewTargetAccount = originalAmount + newAmount;
-            } else {
-              amountChangeForOriginalAccount = originalAmount;
-              amountChangeForNewAccount = -newAmount;
-              amountChangeForOriginalAccount = originalAmount;
-              amountChangeForNewAccount = -newAmount;
-              amountChangeForNewTargetAccount = +newAmount;
-            }
+            console.log("11");
+            amountChangeForOriginalAccount = originalAmount;
+            amountChangeForNewAccount = -newAmount;
+            amountChangeForNewTargetAccount = newAmount;
+          }
+        }
+      } else if (isOriginalTransfer && (isNewIncome || isNewExpense)) {
+        if (isNewIncome) {
+          if (originalAccount === newAccount) {
+            console.log("12");
+            amountChangeForOriginalTargetAccount = -originalAmount;
+            amountChangeForNewAccount = newAmount + originalAmount;
+          } else {
+            console.log("13");
+            amountChangeForOriginalTargetAccount = -originalAmount;
+            amountChangeForOriginalAccount = originalAmount;
+            amountChangeForNewAccount = newAmount;
+          }
+        } else if (isNewExpense) {
+          if (originalAccount === newAccount) {
+            console.log("14");
+            amountChangeForOriginalTargetAccount = -originalAmount;
+            amountChangeForNewAccount = originalAmount - newAmount;
+          } else {
+            console.log("15");
+            amountChangeForOriginalTargetAccount = -originalAmount;
+            amountChangeForOriginalAccount = originalAmount;
+            amountChangeForNewAccount = -newAmount;
           }
         }
       } else {
+        //收入支出編輯>帳戶沒有改變
         if (originalAccount === newAccount) {
-          // 如果帳戶未更改，計算差額
           if (isOriginalIncome && isNewIncome) {
+            console.log("16");
             amountChangeForOriginalAccount = newAmount - originalAmount;
           } else if (isOriginalExpense && isNewExpense) {
+            console.log("17");
             amountChangeForOriginalAccount = originalAmount - newAmount;
           } else if (isOriginalIncome && isNewExpense) {
+            console.log("18");
             amountChangeForOriginalAccount = -originalAmount - newAmount;
           } else if (isOriginalExpense && isNewIncome) {
+            console.log("19");
             amountChangeForOriginalAccount = originalAmount + newAmount;
           }
+          //收入支出編輯>帳戶改變
         } else {
-          // 如果帳戶已更改，還原原始帳戶的餘額
+          console.log("20");
           amountChangeForOriginalAccount = isOriginalIncome
             ? -originalAmount
             : isOriginalExpense
               ? originalAmount
               : 0;
 
-          // 更新新帳戶的餘額
           amountChangeForNewAccount = isNewIncome
             ? newAmount
             : isNewExpense
@@ -250,8 +356,24 @@ export default function DailyRecord() {
         }
       }
 
-      // 更新帳戶餘額
-      if (!querySnapshotOriginal.empty) {
+      console.log(amountChangeForOriginalAccount);
+      console.log(amountChangeForNewAccount);
+
+      console.log(amountChangeForOriginalTargetAccount);
+      console.log(amountChangeForNewTargetAccount);
+      console.log(watchTargetAccount);
+
+      if (querySnapshotNewTarget && !querySnapshotNewTarget.empty) {
+        querySnapshotNewTarget.forEach(async (docSnap) => {
+          if (amountChangeForNewTargetAccount !== 0) {
+            await updateAccountBalance(
+              docSnap,
+              amountChangeForNewTargetAccount,
+            );
+          }
+        });
+      }
+      if (querySnapshotOriginal && !querySnapshotOriginal.empty) {
         querySnapshotOriginal.forEach(async (docSnap) => {
           if (amountChangeForOriginalAccount !== 0) {
             await updateAccountBalance(docSnap, amountChangeForOriginalAccount);
@@ -259,7 +381,7 @@ export default function DailyRecord() {
         });
       }
 
-      if (!querySnapshotNew.empty) {
+      if (querySnapshotNew && !querySnapshotNew.empty) {
         querySnapshotNew.forEach(async (docSnap) => {
           if (amountChangeForNewAccount !== 0) {
             await updateAccountBalance(docSnap, amountChangeForNewAccount);
@@ -267,7 +389,7 @@ export default function DailyRecord() {
         });
       }
 
-      if (!querySnapshotOriginalTarget.empty) {
+      if (querySnapshotOriginalTarget && !querySnapshotOriginalTarget.empty) {
         querySnapshotOriginalTarget.forEach(async (docSnap) => {
           if (amountChangeForOriginalTargetAccount !== 0) {
             await updateAccountBalance(
@@ -276,24 +398,12 @@ export default function DailyRecord() {
             );
           }
         });
-
-        if (!querySnapshotNewTarget.empty) {
-          querySnapshotNewTarget.forEach(async (docSnap) => {
-            if (amountChangeForNewTargetAccount !== 0) {
-              await updateAccountBalance(
-                docSnap,
-                amountChangeForNewTargetAccount,
-              );
-            }
-          });
-        }
       }
 
-      // 更新交易文檔
       await setDoc(docRef, cleanData, { merge: true });
-      console.log("Document successfully updated!");
-      alert("編輯成功");
       handleCloseEdit();
+      alert("編輯成功");
+      console.log("Document successfully updated!");
     } catch (error) {
       console.error("Error updating document:", error);
     }
@@ -434,6 +544,22 @@ export default function DailyRecord() {
                 </button>
               </div>
               <form onSubmit={handleSubmit(handleSaveEdit)}>
+                <div className="mb-4 flex flex-col">
+                  <label className="mb-1">日期</label>
+                  <div>
+                    <DatePicker
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
+                      showTimeSelect
+                      timeFormat="HH:mm"
+                      timeIntervals={5}
+                      timeCaption="時間"
+                      dateFormat="yyyy/MM/dd h:mm aa"
+                      className="rounded-xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+
                 <div className="mb-4 flex flex-col">
                   <label className="mb-1">帳戶</label>
                   <select

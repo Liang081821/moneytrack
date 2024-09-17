@@ -2,11 +2,13 @@ import {
   accountingCollectionRef,
   propertyCollectionRef,
 } from "../../firebase/api";
-
+import { useState } from "react";
 import { addDoc, query, getDocs, updateDoc, where } from "firebase/firestore";
 import { useForm } from "react-hook-form";
 import { useGlobalContext } from "@/context/GlobalContext";
 import AddNewClass from "./AddNewClass";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; // 引入樣式
 
 export default function DailyAccounting() {
   const { property, classData } = useGlobalContext();
@@ -29,7 +31,7 @@ export default function DailyAccounting() {
 
   const watchType = watch("type");
   const watchAccount = watch("account");
-  const watchTargetAccount = watch("targetaccount");
+  // const watchTargetAccount = watch("targetaccount");
 
   const optionsToRender =
     classData[
@@ -106,7 +108,7 @@ export default function DailyAccounting() {
           account: data.account,
           account_type: accountType,
           amount: Number(data.amount),
-          time: new Date(),
+          time: startDate,
           class: data.class,
           record_type: data.type,
         });
@@ -120,6 +122,7 @@ export default function DailyAccounting() {
       console.error("Error adding document: ", e);
     }
   };
+  const [startDate, setStartDate] = useState(new Date());
 
   return (
     <div className="relative flex h-[380px] w-[420px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
@@ -127,8 +130,17 @@ export default function DailyAccounting() {
       <AddNewClass />
       <div className="mb-1 flex items-center gap-3">
         <div>日期</div>
-        <div className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center">
-          2024.08.31
+        <div>
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={5}
+            timeCaption="時間"
+            dateFormat="yyyy/MM/dd h:mm aa"
+            className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
       </div>
 

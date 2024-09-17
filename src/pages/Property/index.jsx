@@ -11,7 +11,7 @@ export default function Property() {
         <div className="flex w-full justify-end">
           <AddNewFunction></AddNewFunction>
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex flex-wrap items-center justify-center">
           <Saving />
           <Consume />
           <Invest />

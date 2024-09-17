@@ -63,7 +63,7 @@ export default function AddNewClass() {
       </button>
 
       {newclassEditing && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
           <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
             {!newclass && (
               <div className="flex flex-col items-center gap-3">
