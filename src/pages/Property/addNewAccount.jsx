@@ -15,7 +15,6 @@ export default function AddNewFunction() {
     defaultValues: {
       account: "",
       account_type: "",
-      balance: 0,
     },
   });
 
@@ -46,7 +45,7 @@ export default function AddNewFunction() {
     <>
       <button
         onClick={handleAddProperty}
-        className="mx-3 mb-3 mt-auto flex h-[64px] w-[360px] items-center justify-center rounded-2xl border bg-gradient-to-r from-[#3E79E5] to-[#01B8E3] text-white"
+        className="mx-3 mb-3 mt-auto flex h-[48px] w-[150px] items-center justify-center rounded-2xl border bg-gradient-to-r from-[#3E79E5] to-[#01B8E3] text-white"
       >
         新增帳戶
       </button>
@@ -147,7 +146,6 @@ export default function AddNewFunction() {
                   {...register("balance", {
                     required: "請輸入初始金額",
                     valueAsNumber: true,
-                    validate: (value) => value > 0 || "金額必須大於 0",
                   })}
                 />
                 {errors.balance && (
