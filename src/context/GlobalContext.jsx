@@ -14,6 +14,12 @@ export const GlobalProvider = ({ children }) => {
   const [classData, setClassData] = useState([]);
   const [historyData, setHistoryData] = useState([]);
   const [transactionData, setTransactionData] = useState([]);
+  const [loginState, setLoginState] = useState(() => {
+    return localStorage.getItem("user") || null;
+  });
+  const [loginEmail, setLoginEmail] = useState(() => {
+    return localStorage.getItem("userEmail") || null;
+  });
 
   // 獲取 class 分類及 property 所有帳戶資料
   useEffect(() => {
@@ -47,6 +53,10 @@ export const GlobalProvider = ({ children }) => {
         setHistoryData,
         transactionData,
         setTransactionData,
+        loginState,
+        setLoginState,
+        loginEmail,
+        setLoginEmail,
       }}
     >
       {children}
