@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { propertyCollectionRef } from "../../firebase/api";
+import { getFirestoreRefs } from "../../firebase/api";
 import { addDoc } from "firebase/firestore";
 import { useForm } from "react-hook-form";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 export default function AddNewFunction() {
   const [addProperty, setAddProperty] = useState(false);
+  const { loginEmail } = useGlobalContext();
+  const { propertyCollectionRef } = getFirestoreRefs(loginEmail);
   const {
     register,
     handleSubmit,

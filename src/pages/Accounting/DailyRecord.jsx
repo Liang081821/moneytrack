@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  fetchAllTransactionData,
-  propertyCollectionRef,
-} from "../../firebase/api";
+import { fetchAllTransactionData, getFirestoreRefs } from "../../firebase/api";
 import {
   doc,
   setDoc,
@@ -22,9 +19,12 @@ export default function DailyRecord() {
   const [transaction, setTransaction] = useState([]);
   const { property, classData } = useGlobalContext();
   const [startDate, setStartDate] = useState();
+  const { loginEmail } = useGlobalContext();
+
+  const { propertyCollectionRef } = getFirestoreRefs(loginEmail);
 
   useEffect(() => {
-    const unsubscribe = fetchAllTransactionData(setTransaction);
+    const unsubscribe = fetchAllTransactionData(loginEmail, setTransaction);
     return () => unsubscribe();
   }, []);
 

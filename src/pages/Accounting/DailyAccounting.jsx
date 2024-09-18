@@ -1,7 +1,4 @@
-import {
-  accountingCollectionRef,
-  propertyCollectionRef,
-} from "../../firebase/api";
+import { getFirestoreRefs } from "../../firebase/api";
 import { useState } from "react";
 import { addDoc, query, getDocs, updateDoc, where } from "firebase/firestore";
 import { useForm } from "react-hook-form";
@@ -12,6 +9,9 @@ import "react-datepicker/dist/react-datepicker.css"; // 引入樣式
 
 export default function DailyAccounting() {
   const { property, classData } = useGlobalContext();
+  const { loginEmail } = useGlobalContext();
+  const { accountingCollectionRef, propertyCollectionRef } =
+    getFirestoreRefs(loginEmail);
 
   const {
     register,

@@ -23,22 +23,22 @@ export const GlobalProvider = ({ children }) => {
 
   // 獲取 class 分類及 property 所有帳戶資料
   useEffect(() => {
-    const unsubscribe = fetchAllPropertyData(setProperty);
+    const unsubscribe = fetchAllPropertyData(loginEmail, setProperty);
     return () => unsubscribe();
-  }, []);
+  }, [loginEmail]);
 
   useEffect(() => {
-    const unsubscribe = fetchClassData(setClassData);
+    const unsubscribe = fetchClassData(loginEmail, setClassData);
     return () => unsubscribe();
-  }, []);
+  }, [loginEmail]);
   useEffect(() => {
-    const unsubscribe = fetchAllHistoryRecord(setHistoryData);
+    const unsubscribe = fetchAllHistoryRecord(loginEmail, setHistoryData);
     return () => unsubscribe();
-  }, []);
+  }, [loginEmail]);
   useEffect(() => {
-    const unsubscribe = fetchAllTransactionData(setTransactionData);
+    const unsubscribe = fetchAllTransactionData(loginEmail, setTransactionData);
     return () => unsubscribe();
-  }, []);
+  }, [loginEmail]);
   GlobalProvider.propTypes = {
     children: PropTypes.node.isRequired,
   };

@@ -3,7 +3,7 @@ import Consume from "./Consume";
 import Invest from "./Invest";
 import AddNewFunction from "./addNewAccount";
 import { useGlobalContext } from "@/context/GlobalContext";
-import { historyCollectionRef } from "@/firebase/api";
+import { getFirestoreRefs } from "@/firebase/api";
 import { addDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 export default function HistoryRecord() {
@@ -25,6 +25,8 @@ export default function HistoryRecord() {
   //   setTotal(calculateTotal);
   //   return;
   // };
+  const { loginEmail } = useGlobalContext();
+  const { historyCollectionRef } = getFirestoreRefs(loginEmail);
   const calculateProperty = async () => {
     const types = {
       saving: "儲蓄",

@@ -1,12 +1,13 @@
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useState, useEffect } from "react";
-import { accountingCollectionRef } from "../../firebase/api";
+import { getFirestoreRefs } from "../../firebase/api";
 import { getDocs, query, where } from "firebase/firestore";
 export default function Consume() {
   const { property } = useGlobalContext();
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [accountrecord, setAccountRecord] = useState([]);
-
+  const { loginEmail } = useGlobalContext();
+  const { accountingCollectionRef } = getFirestoreRefs(loginEmail);
   const consumeAccounts = Array.isArray(property)
     ? property.filter((item) => item.account_type === "消費")
     : [];

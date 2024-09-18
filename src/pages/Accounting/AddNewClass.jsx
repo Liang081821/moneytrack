@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { updateDoc, arrayUnion } from "firebase/firestore";
-import { docRef } from "../../firebase/api";
+import { getFirestoreRefs } from "../../firebase/api";
 import { useForm } from "react-hook-form";
 export default function AddNewClass() {
   const [newclassEditing, setNewClassEditing] = useState(false);
   const [newclass, setNewclass] = useState(false);
+  const { loginEmail } = useGlobalContext();
+  const { docRef } = getFirestoreRefs(loginEmail);
 
   const [selectedCategory, setSelectedCategory] = useState("收入");
   const { classData } = useGlobalContext();

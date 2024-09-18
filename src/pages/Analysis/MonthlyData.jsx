@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { accountingCollectionRef } from "../../firebase/api";
+import { getFirestoreRefs } from "../../firebase/api";
 import { getDocs, query, where } from "firebase/firestore";
+import { useGlobalContext } from "@/context/GlobalContext";
+
 import PropTypes from "prop-types";
 
 export default function MonthlyData({
@@ -12,7 +14,8 @@ export default function MonthlyData({
   const [expenseTotals, setExpenseTotals] = useState({});
   const [incomeTotals, setIncomeTotals] = useState({});
   const [netWorth, setNetWorth] = useState(0); // 新增淨值狀態
-
+  const { loginEmail } = useGlobalContext();
+  const { accountingCollectionRef } = getFirestoreRefs(loginEmail);
   useEffect(() => {
     const fetchRecords = async () => {
       try {
