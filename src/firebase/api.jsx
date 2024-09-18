@@ -13,6 +13,12 @@ const propertyCollectionRef = collection(
   "2001henry99@gmail.com",
   "property",
 );
+const historyCollectionRef = collection(
+  db,
+  "record",
+  "2001henry99@gmail.com",
+  "history",
+);
 const docRef = doc(db, "record", "2001henry99@gmail.com");
 
 //所有 class 的資料
@@ -72,11 +78,30 @@ const fetchAllPropertyData = async (setPropertyData) => {
   }
 };
 
+const fetchAllHistoryRecord = async (setHistoryRecord) => {
+  try {
+    const unsubscribe = onSnapshot(historyCollectionRef, (querySnapshot) => {
+      const historyData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      console.log(historyData);
+      setHistoryRecord(historyData);
+    });
+    return unsubscribe;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export {
   fetchAllTranscationData,
   accountingCollectionRef,
   propertyCollectionRef,
+  historyCollectionRef,
   fetchAllPropertyData,
   fetchClassData,
+  fetchAllHistoryRecord,
   docRef,
 };

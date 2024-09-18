@@ -1,3 +1,4 @@
+import Report from "./Report";
 export default function Analysis() {
-  return <div>Analysis</div>;
+  return <Report />;
 }
