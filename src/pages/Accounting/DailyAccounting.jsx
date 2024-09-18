@@ -24,7 +24,6 @@ export default function DailyAccounting() {
       account: "",
       type: "",
       class: "",
-      amount: 0,
       targetaccount: "",
     },
   });
@@ -99,7 +98,7 @@ export default function DailyAccounting() {
           account: data.account,
           account_type: accountType,
           amount: Number(data.amount),
-          time: new Date(),
+          time: startDate,
           targetaccount: data.targetaccount,
           record_type: data.type,
         });
