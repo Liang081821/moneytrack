@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  fetchAllTranscationData,
+  fetchAllTransactionData,
   propertyCollectionRef,
 } from "../../firebase/api";
 import {
@@ -24,7 +24,7 @@ export default function DailyRecord() {
   const [startDate, setStartDate] = useState();
 
   useEffect(() => {
-    const unsubscribe = fetchAllTranscationData(setTransaction);
+    const unsubscribe = fetchAllTransactionData(setTransaction);
     return () => unsubscribe();
   }, []);
 

@@ -3,16 +3,17 @@ import {
   fetchAllPropertyData,
   fetchClassData,
   fetchAllHistoryRecord,
-} from "../firebase/api"; // 假設 API 文件在這個路徑
+  fetchAllTransactionData,
+} from "../firebase/api";
+import PropTypes from "prop-types";
 
-// 創建上下文
 const GlobalContext = createContext();
 
-// 創建提供者組件
 export const GlobalProvider = ({ children }) => {
   const [property, setProperty] = useState([]);
   const [classData, setClassData] = useState([]);
   const [historyData, setHistoryData] = useState([]);
+  const [transactionData, setTransactionData] = useState([]);
 
   // 獲取 class 分類及 property 所有帳戶資料
   useEffect(() => {
@@ -28,7 +29,13 @@ export const GlobalProvider = ({ children }) => {
     const unsubscribe = fetchAllHistoryRecord(setHistoryData);
     return () => unsubscribe();
   }, []);
-
+  useEffect(() => {
+    const unsubscribe = fetchAllTransactionData(setTransactionData);
+    return () => unsubscribe();
+  }, []);
+  GlobalProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
   return (
     <GlobalContext.Provider
       value={{
@@ -38,6 +45,8 @@ export const GlobalProvider = ({ children }) => {
         setClassData,
         historyData,
         setHistoryData,
+        transactionData,
+        setTransactionData,
       }}
     >
       {children}

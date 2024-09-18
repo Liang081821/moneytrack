@@ -7,7 +7,7 @@ export default function BalanceSheet() {
   const groupPropertyLiability = property.filter((item) => item.balance < 0);
 
   return (
-    <div className="flex h-[595px] w-[420px] flex-col items-center rounded-2xl border border-black">
+    <div className="flex h-auto w-[420px] flex-col items-center rounded-2xl border border-black">
       <h2 className="mb-10">資產負債表</h2>
       <div className="flex flex-wrap justify-center">
         <div>

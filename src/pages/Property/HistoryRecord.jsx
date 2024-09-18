@@ -76,7 +76,7 @@ export default function HistoryRecord() {
   };
 
   const getPercentage = (amount, total) =>
-    total ? (Math.abs(amount) / total) * 100 : 0;
+    total ? (Math.abs(amount) / Math.abs(total)) * 100 : 0;
 
   return (
     <div className="mt-4">
@@ -96,64 +96,70 @@ export default function HistoryRecord() {
           <Invest />
         </div>
         <div>
-          {historyData.map((item) => (
-            <div
-              key={item.id}
-              className="m-2 flex h-[100px] items-center gap-4 rounded-xl border border-black p-2"
-            >
-              <div className="w-[110px] rounded-xl border border-gray-400 p-2 text-center">
-                {item.time.toDate().toLocaleDateString()}
-              </div>
-              <div className="flex w-full">
-                <div
-                  className="t flex h-5 w-14 items-center justify-center rounded-xl bg-[#F4E9CD]"
-                  style={{
-                    width: `${getPercentage(item.saving, item.totalAssets)}%`,
-                  }}
-                >
-                  {getPercentage(item.saving, item.totalAssets).toFixed(1)}%
-                </div>
-                <div
-                  className="flex h-5 w-full items-center justify-center rounded-xl bg-[#9DBEBB]"
-                  style={{
-                    width: `${getPercentage(item.expense, item.totalAssets)}%`,
-                  }}
-                >
-                  {getPercentage(item.expense, item.totalAssets).toFixed(1)}%
-                </div>
-                <div
-                  className="flex h-5 w-14 items-center justify-center rounded-xl bg-[#E6A602]"
-                  style={{
-                    width: `${getPercentage(item.investment, item.totalAssets)}%`,
-                  }}
-                >
-                  {getPercentage(item.investment, item.totalAssets).toFixed(1)}%
-                </div>
-              </div>
-              <div className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-2">
-                <div>儲蓄</div>
-                <div>NT${item.saving}</div>
-              </div>
-              <div className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-2">
-                <div>消費</div>
-                <div>NT${item.expense}</div>
-              </div>
-              <div className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border bg-[#E6A602] p-2">
-                <div>投資</div>
-                <div>NT${item.investment}</div>
-              </div>
-              <div className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border border-gray-400 p-2">
-                <div>總資產</div>
-                <div>NT${item.totalAssets}</div>
-              </div>
-              <button
-                onClick={() => deleteRecord(item.id)}
-                className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border border-gray-400 p-2"
+          {historyData
+            .slice() // 創建一個數據的副本，防止直接修改原數組
+            .sort((a, b) => b.time.toDate() - a.time.toDate()) // 按時間倒序排列
+            .map((item) => (
+              <div
+                key={item.id}
+                className="m-2 flex h-[100px] items-center gap-4 rounded-xl border border-black p-2"
               >
-                刪除
-              </button>
-            </div>
-          ))}
+                <div className="w-[110px] rounded-xl border border-gray-400 p-2 text-center">
+                  {item.time.toDate().toLocaleDateString()}
+                </div>
+                <div className="flex w-full">
+                  <div
+                    className="t flex h-5 w-14 items-center justify-center rounded-xl bg-[#F4E9CD]"
+                    style={{
+                      width: `${getPercentage(item.saving, item.totalAssets)}%`,
+                    }}
+                  >
+                    {getPercentage(item.saving, item.totalAssets).toFixed(1)}%
+                  </div>
+                  <div
+                    className="flex h-5 w-full items-center justify-center rounded-xl bg-[#9DBEBB]"
+                    style={{
+                      width: `${getPercentage(item.expense, item.totalAssets)}%`,
+                    }}
+                  >
+                    {getPercentage(item.expense, item.totalAssets).toFixed(1)}%
+                  </div>
+                  <div
+                    className="flex h-5 w-14 items-center justify-center rounded-xl bg-[#E6A602]"
+                    style={{
+                      width: `${getPercentage(item.investment, item.totalAssets)}%`,
+                    }}
+                  >
+                    {getPercentage(item.investment, item.totalAssets).toFixed(
+                      1,
+                    )}
+                    %
+                  </div>
+                </div>
+                <div className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-2">
+                  <div>儲蓄</div>
+                  <div>NT${item.saving}</div>
+                </div>
+                <div className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-2">
+                  <div>消費</div>
+                  <div>NT${item.expense}</div>
+                </div>
+                <div className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border bg-[#E6A602] p-2">
+                  <div>投資</div>
+                  <div>NT${item.investment}</div>
+                </div>
+                <div className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border border-gray-400 p-2">
+                  <div>總資產</div>
+                  <div>NT${item.totalAssets}</div>
+                </div>
+                <button
+                  onClick={() => deleteRecord(item.id)}
+                  className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border border-gray-400 p-2"
+                >
+                  刪除
+                </button>
+              </div>
+            ))}
         </div>
       </div>
     </div>

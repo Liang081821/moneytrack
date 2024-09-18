@@ -40,7 +40,7 @@ const fetchClassData = (setClassData) => {
 };
 
 //即時監聽所有 transaction 資料
-const fetchAllTranscationData = (setTransactionData) => {
+const fetchAllTransactionData = (setTransactionData) => {
   //調用的地方會有 useState
   try {
     // 使用 onSnapshot 監聽資料變化
@@ -96,7 +96,7 @@ const fetchAllHistoryRecord = async (setHistoryRecord) => {
 };
 
 export {
-  fetchAllTranscationData,
+  fetchAllTransactionData,
   accountingCollectionRef,
   propertyCollectionRef,
   historyCollectionRef,

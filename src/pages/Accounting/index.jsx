@@ -3,7 +3,8 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { nanoid } from "nanoid";
 import DailyAccounting from "./DailyAccounting";
 import DailyRecord from "./DailyRecord";
-import PieChart from "./PieChart";
+import ExpensePieChart from "./ExpensePieChart";
+import IncomePieChart from "./IncomePieChart";
 import MonthlyRecord from "./MonthlyRecord";
 import LineChart from "./LineChart";
 import BarChart from "./BarChart";
@@ -14,7 +15,8 @@ export default function Accounting() {
       items: [
         { content: "DailyAccounting", id: nanoid(), priority: "3" },
         { content: "DailyRecord", id: nanoid(), priority: "2" },
-        { content: "PieChart", id: nanoid(), priority: "1" },
+        { content: "ExpensePieChart", id: nanoid(), priority: "1" },
+        { content: "IncomePieChart", id: nanoid(), priority: "1" },
         { content: "BarChart", id: nanoid(), priority: "6" },
         { content: "MonthlyRecord", id: nanoid(), priority: "4" },
         { content: "LineChart", id: nanoid(), priority: "5" },
@@ -59,6 +61,17 @@ export default function Accounting() {
 
     setItemObj(newItemObj);
   };
+  const now = new Date();
+  const firstDayOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const lastDayOfLastMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0,
+    23,
+    59,
+    59,
+  );
+  console.log("查詢日期範圍：", firstDayOfLastMonth, lastDayOfLastMonth);
 
   const renderContent = (content) => {
     switch (content) {
@@ -66,14 +79,31 @@ export default function Accounting() {
         return <DailyAccounting />;
       case "DailyRecord":
         return <DailyRecord />;
-      case "PieChart":
-        return <PieChart />;
+      case "ExpensePieChart":
+        return (
+          <ExpensePieChart
+            firstDayOfLastMonth={firstDayOfLastMonth}
+            lastDayOfLastMonth={lastDayOfLastMonth}
+          />
+        );
+      case "IncomePieChart":
+        return (
+          <IncomePieChart
+            firstDayOfLastMonth={firstDayOfLastMonth}
+            lastDayOfLastMonth={lastDayOfLastMonth}
+          />
+        );
       case "MonthlyRecord":
         return <MonthlyRecord />;
       case "LineChart":
         return <LineChart />;
       case "BarChart":
-        return <BarChart />;
+        return (
+          <BarChart
+            firstDayOfLastMonth={firstDayOfLastMonth}
+            lastDayOfLastMonth={lastDayOfLastMonth}
+          />
+        );
       default:
         return <div>未知內容</div>;
     }

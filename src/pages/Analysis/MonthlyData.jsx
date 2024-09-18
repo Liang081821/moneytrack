@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { accountingCollectionRef } from "../../firebase/api";
 import { getDocs, query, where } from "firebase/firestore";
+import PropTypes from "prop-types";
 
 export default function MonthlyData({
   setmonthExpense,
   setmonthIncome,
   setHouseExpense,
 }) {
-  const [records, setRecords] = useState([]);
+  // const [records, setRecords] = useState([]);
   const [expenseTotals, setExpenseTotals] = useState({});
   const [incomeTotals, setIncomeTotals] = useState({});
   const [netWorth, setNetWorth] = useState(0); // 新增淨值狀態
@@ -15,7 +16,6 @@ export default function MonthlyData({
   useEffect(() => {
     const fetchRecords = async () => {
       try {
-        // 計算上個月的開始和結束時間
         const now = new Date();
         const firstDayOfLastMonth = new Date(
           now.getFullYear(),
@@ -70,7 +70,7 @@ export default function MonthlyData({
           ...doc.data(),
         }));
 
-        setRecords([...expenseRecords, ...incomeRecords]); // 設定合併的紀錄狀態
+        // setRecords([...expenseRecords, ...incomeRecords]); // 設定合併的紀錄狀態
 
         // 分組並計算支出總和
         const expenseGroupedTotals = expenseRecords.reduce((acc, record) => {
@@ -116,8 +116,13 @@ export default function MonthlyData({
     };
 
     fetchRecords();
-  }, []);
+  }, [setHouseExpense, setmonthExpense, setmonthIncome]);
 
+  MonthlyData.propTypes = {
+    setHouseExpense: PropTypes.func.isRequired,
+    setmonthExpense: PropTypes.func.isRequired,
+    setmonthIncome: PropTypes.func.isRequired,
+  };
   return (
     <div className="flex h-[595px] w-[420px] flex-col items-center rounded-2xl border border-black">
       <h2 className="mb-10">上月數據</h2>
