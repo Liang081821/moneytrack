@@ -17,7 +17,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export default function DailyRecord() {
   const [transaction, setTransaction] = useState([]);
-  const { property, classData } = useGlobalContext();
+  const { property, classData, projectData } = useGlobalContext();
   const [startDate, setStartDate] = useState();
   const { loginEmail } = useGlobalContext();
 
@@ -26,7 +26,7 @@ export default function DailyRecord() {
   useEffect(() => {
     const unsubscribe = fetchAllTransactionData(loginEmail, setTransaction);
     return () => unsubscribe();
-  }, []);
+  }, [loginEmail]);
 
   const groupByDate = (transactions) => {
     const sortedTransactions = transactions.sort((a, b) => {
@@ -70,6 +70,7 @@ export default function DailyRecord() {
     setValue("class", item.class);
     setValue("account", item.account);
     setValue("amount", item.amount);
+    setValue("project", item.project || "");
     setValue("targetaccount", item.targetaccount);
     const transactionDate = item.time.toDate();
     setStartDate(transactionDate);
@@ -135,14 +136,17 @@ export default function DailyRecord() {
       const isNewExpense = data.record_type === "支出";
       const isNewTransfer = data.record_type === "轉帳";
 
-      // 檢查是否有變更
+      const areDatesEqual =
+        startDate.getTime() === currentTransaction.time.toDate().getTime();
+
       if (
         originalAccount === newAccount &&
         originalAmount === newAmount &&
         originalTargetAccount === newTargetAccount &&
         currentTransaction.record_type === data.record_type &&
         currentTransaction.class === data.class &&
-        currentTransaction.time === startDate
+        areDatesEqual &&
+        currentTransaction.project === data.project
       ) {
         alert("沒有變更，不需要保存。");
         return;
@@ -476,7 +480,7 @@ export default function DailyRecord() {
   };
 
   return (
-    <div className="h-[380px] w-[420px] overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+    <div className="h-[450px] w-[420px] overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
       <div>每日紀錄</div>
       <div>
         {Object.entries(groupedTransactions).map(([date, items]) => (
@@ -523,6 +527,15 @@ export default function DailyRecord() {
                       {item.class ? item.class : `轉入 ${item.targetaccount}`}
                     </div>
                     <div className="text-sm text-gray-500">{item.account}</div>
+                  </div>
+                  <div>
+                    {item.project ? (
+                      <div>
+                        <p className="text-yellow-800">{item.project}</p>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               ))}
@@ -622,6 +635,23 @@ export default function DailyRecord() {
                         optionsToRender.map((item, index) => (
                           <option key={index} value={item}>
                             {item}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                )}
+                {Array.isArray(projectData) && projectData.length > 0 && (
+                  <div className="mb-4 flex flex-col">
+                    <label className="mb-1">專案</label>
+                    <select
+                      className="rounded-xl border p-2"
+                      {...register("project")}
+                    >
+                      {projectData
+                        .filter((item) => item.isediting == true)
+                        .map((item) => (
+                          <option key={item.id} value={item.name}>
+                            {item.name}
                           </option>
                         ))}
                     </select>

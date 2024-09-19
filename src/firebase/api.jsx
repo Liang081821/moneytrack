@@ -124,6 +124,7 @@ const getFirestoreRefs = (loginEmail) => {
     loginEmail,
     "property",
   );
+  const projectCollectionRef = collection(db, "record", loginEmail, "project");
   const historyCollectionRef = collection(db, "record", loginEmail, "history");
   const docRef = doc(db, "record", loginEmail);
 
@@ -131,13 +132,14 @@ const getFirestoreRefs = (loginEmail) => {
     accountingCollectionRef,
     propertyCollectionRef,
     historyCollectionRef,
+    projectCollectionRef,
     docRef,
   };
 };
 
 //所有 class 的資料
 const fetchClassData = (loginEmail, setClassData) => {
-  const { docRef } = getFirestoreRefs(loginEmail); // 使用動態 email 獲取 docRef
+  const { docRef } = getFirestoreRefs(loginEmail);
 
   try {
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
@@ -152,6 +154,26 @@ const fetchClassData = (loginEmail, setClassData) => {
     return unsubscribe;
   } catch (error) {
     console.error("Error fetching document:", error);
+  }
+};
+
+//所有 project 的資料
+const fetchProjectData = (loginEmail, setProjectData) => {
+  const { projectCollectionRef } = getFirestoreRefs(loginEmail);
+
+  try {
+    const unsubscribe = onSnapshot(projectCollectionRef, (querySnapshot) => {
+      const transactionData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(transactionData);
+      setProjectData(transactionData);
+    });
+
+    return unsubscribe;
+  } catch (error) {
+    console.error("Error fetching documents:", error);
   }
 };
 
@@ -221,4 +243,5 @@ export {
   fetchAllPropertyData,
   fetchClassData,
   fetchAllHistoryRecord,
+  fetchProjectData,
 };

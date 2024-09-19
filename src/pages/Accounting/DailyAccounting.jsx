@@ -8,7 +8,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // 引入樣式
 
 export default function DailyAccounting() {
-  const { property, classData } = useGlobalContext();
+  const { property, classData, projectData } = useGlobalContext();
   const { loginEmail } = useGlobalContext();
   const { accountingCollectionRef, propertyCollectionRef } =
     getFirestoreRefs(loginEmail);
@@ -101,6 +101,7 @@ export default function DailyAccounting() {
           time: startDate,
           targetaccount: data.targetaccount,
           record_type: data.type,
+          project: data.project,
         });
       } else {
         docRef = await addDoc(accountingCollectionRef, {
@@ -110,6 +111,7 @@ export default function DailyAccounting() {
           time: startDate,
           class: data.class,
           record_type: data.type,
+          project: data.project,
         });
       }
 
@@ -124,7 +126,7 @@ export default function DailyAccounting() {
   const [startDate, setStartDate] = useState(new Date());
 
   return (
-    <div className="relative flex h-[380px] w-[420px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+    <div className="relative flex h-[450px] w-[420px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
       <div className="h-[48px] w-[345px] text-center">每日記帳</div>
       <AddNewClass />
       <div className="mb-1 flex items-center gap-3">
@@ -215,6 +217,26 @@ export default function DailyAccounting() {
             </select>
           </div>
         )}
+        {Array.isArray(projectData) && projectData.length > 0 && (
+          <div className="flex items-center gap-3">
+            <div>專案</div>
+
+            <select
+              className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
+              {...register("project")}
+            >
+              <option value="">請選擇</option>
+              {projectData
+                .filter((item) => item.isediting) // 過濾掉非編輯狀態的專案
+                .map((item) => (
+                  <option key={item.id} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+        )}
+
         <div className="flex items-center gap-3">
           <div>金額</div>
           <input

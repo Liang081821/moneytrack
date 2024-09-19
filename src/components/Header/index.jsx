@@ -1,7 +1,7 @@
 import { auth } from "../../firebase/firebaseConfig";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useGlobalContext } from "@/context/GlobalContext";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 
 import Logo from "./Logo.png";
@@ -23,10 +23,24 @@ export default function Header() {
       const email = user.email;
 
       const userDocRef = doc(db, "record", email);
-      await setDoc(userDocRef, {
-        createdAt: new Date(),
-        userEmail: email,
-      });
+
+      try {
+        await updateDoc(userDocRef, {
+          createdAt: new Date(),
+          userEmail: email,
+        });
+        console.log("資料更新成功");
+      } catch (error) {
+        if (error.code === "not-found") {
+          await setDoc(userDocRef, {
+            createdAt: new Date(),
+            userEmail: email,
+          });
+          console.log("文件不存在，已創建新的文件");
+        } else {
+          console.error("更新失敗", error);
+        }
+      }
       localStorage.setItem("userEmail", email);
       localStorage.setItem("user", user.displayName);
 
@@ -56,14 +70,14 @@ export default function Header() {
   };
 
   return (
-    <div className="flex h-[100px] items-center justify-between bg-[#222E50] p-6">
-      <div className="flex items-center gap-2">
-        <img src={Logo} alt="Logo" className="flex h-[47px] w-[42px]" />
-        <div className="text-white">MoneyTrack</div>
-      </div>
-      <div className="flex items-center gap-3">
-        {loginEmail ? (
-          <>
+    <>
+      {loginEmail ? (
+        <div className="flex h-[80px] items-center justify-between bg-[#222E50] p-6">
+          <div className="flex items-center gap-2">
+            <img src={Logo} alt="Logo" className="flex h-[47px] w-[42px]" />
+            <div className="text-white">MoneyTrack</div>
+          </div>
+          <div className="flex items-center gap-3">
             <p className="text-white">歡迎！{loginState}</p>
             <button
               onClick={handleLogout}
@@ -71,19 +85,26 @@ export default function Header() {
             >
               登出
             </button>
-          </>
-        ) : (
-          <button
-            onClick={handleGoogleLogin}
-            className="rounded-xl border border-white p-2 text-white hover:bg-white hover:text-[#222E50]"
-          >
-            註冊/登入
-          </button>
-        )}
-        {/* <img src={Mail} alt="Logo" className="h-6 w-6" />
-        <img src={Bell} alt="Logo" className="h-6 w-6" />
-        <img src={Profile} alt="Logo" className="h-6 w-6" /> */}
-      </div>
-    </div>
+          </div>
+        </div>
+      ) : (
+        <div className="p-2 transition-all duration-300 ease-in-out hover:p-0">
+          <div className="flex h-[80px] items-center justify-between rounded-[50px] bg-[#222E50] p-6 transition-all duration-300 ease-in-out hover:rounded-none">
+            <div className="flex items-center gap-2">
+              <img src={Logo} alt="Logo" className="flex h-[47px] w-[42px]" />
+              <div className="text-white">MoneyTrack</div>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handleGoogleLogin}
+                className="rounded-xl border border-white p-2 text-white hover:bg-white hover:text-[#222E50]"
+              >
+                註冊/登入
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
