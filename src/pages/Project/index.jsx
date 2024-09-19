@@ -1,3 +1,5 @@
+import ProjectLayoutGrid from "./ProjectLayoutGrid";
+
 export default function Project() {
-  return <div>Project</div>;
+  return <ProjectLayoutGrid />;
 }
