@@ -640,23 +640,24 @@ export default function DailyRecord() {
                     </select>
                   </div>
                 )}
-                {Array.isArray(projectData) && projectData.length > 0 && (
-                  <div className="mb-4 flex flex-col">
-                    <label className="mb-1">專案</label>
-                    <select
-                      className="rounded-xl border p-2"
-                      {...register("project")}
-                    >
-                      {projectData
-                        .filter((item) => item.isediting == true)
-                        .map((item) => (
-                          <option key={item.id} value={item.name}>
-                            {item.name}
-                          </option>
-                        ))}
-                    </select>
-                  </div>
-                )}
+                {Array.isArray(projectData) &&
+                  projectData.some((item) => item.isediting) && (
+                    <div className="mb-4 flex flex-col">
+                      <label className="mb-1">專案</label>
+                      <select
+                        className="rounded-xl border p-2"
+                        {...register("project")}
+                      >
+                        {projectData
+                          .filter((item) => item.isediting == true)
+                          .map((item) => (
+                            <option key={item.id} value={item.name}>
+                              {item.name}
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+                  )}
 
                 <div className="mb-4 flex flex-col">
                   <label className="mb-1">金額</label>

@@ -4,7 +4,15 @@ import { storage } from "../../firebase/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getFirestoreRefs } from "../../firebase/api";
 import { useGlobalContext } from "@/context/GlobalContext";
-import { addDoc, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  getDocs,
+  doc,
+  deleteDoc,
+  updateDoc,
+  query,
+  where,
+} from "firebase/firestore";
 
 export default function ProjectLayoutGrid() {
   const [projects, setProjects] = useState([]);
@@ -13,10 +21,12 @@ export default function ProjectLayoutGrid() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedProjectData, setselectedProjectData] = useState(null);
   const [totalamount, setTotalAmount] = useState();
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const { loginEmail } = useGlobalContext();
-  const { transactionData, projectData } = useGlobalContext();
-  const { projectCollectionRef } = getFirestoreRefs(loginEmail);
+  const { transactionData } = useGlobalContext();
+  const { projectCollectionRef, accountingCollectionRef } =
+    getFirestoreRefs(loginEmail);
 
   const {
     register,
@@ -99,10 +109,13 @@ export default function ProjectLayoutGrid() {
     const filteredTransactions = transactionData.filter(
       (item) => item.project === name,
     );
+    const sortfilteredTransactions = filteredTransactions.sort(
+      (a, b) => b.time.toDate() - a.time.toDate(),
+    );
 
     // 設定選中的專案
     setSelectedProject(project);
-    setselectedProjectData(filteredTransactions);
+    setselectedProjectData(sortfilteredTransactions);
 
     const total = filteredTransactions.reduce((accumulate, value) => {
       if (value.record_type === "支出") {
@@ -121,13 +134,26 @@ export default function ProjectLayoutGrid() {
   };
 
   // 刪除專案
-  const deleteProject = async (id) => {
+  const deleteProject = async (deleteOption, id) => {
     try {
-      await deleteDoc(doc(projectCollectionRef, id));
+      if (deleteOption === "保留帳單") {
+        await deleteDoc(doc(projectCollectionRef, id));
+      } else if (deleteOption === "刪除帳單") {
+        await deleteDoc(doc(projectCollectionRef, id));
+        const q = query(
+          accountingCollectionRef,
+          where("project", "==", selectedProject.name),
+        );
+        const qSnapShot = await getDocs(q);
+        qSnapShot.forEach(async (docSnap) => {
+          await deleteDoc(doc(accountingCollectionRef, docSnap.id));
+        });
+      }
       setProjects(projects.filter((project) => project.id !== id));
       setSelectedProject(null);
       setselectedProjectData(null);
       alert("專案已刪除");
+      showDeleteConfirm(false);
     } catch (error) {
       console.error("Error deleting project: ", error);
     }
@@ -304,12 +330,46 @@ export default function ProjectLayoutGrid() {
                   </button>
                 )}
                 <button
-                  onClick={() => deleteProject(selectedProject.id)}
+                  onClick={() => setShowDeleteConfirm(true)}
                   className="mt-4 rounded-xl bg-red-500 px-4 py-2 text-white"
                 >
                   刪除專案
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* 刪除確認彈窗 */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4">
+          <div className="w-full max-w-md rounded-lg bg-white p-4">
+            <h2 className="mb-4 text-xl font-bold">確認刪除所有的資料將移除</h2>
+            <div className="flex justify-around">
+              <button
+                className="rounded-lg bg-green-500 p-2 text-white"
+                onClick={() => {
+                  deleteProject("保留帳單", selectedProject.id);
+                  setShowDeleteConfirm(false);
+                }}
+              >
+                保留所有帳單
+              </button>
+              <button
+                className="rounded-lg bg-red-500 p-2 text-white"
+                onClick={() => {
+                  deleteProject("刪除帳單", selectedProject.id);
+                  setShowDeleteConfirm(false);
+                }}
+              >
+                我要刪除
+              </button>
+              <button
+                className="rounded-lg bg-gray-500 p-2 text-white"
+                onClick={() => setShowDeleteConfirm(false)}
+              >
+                取消
+              </button>
             </div>
           </div>
         </div>
