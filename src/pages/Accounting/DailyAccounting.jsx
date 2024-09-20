@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useGlobalContext } from "@/context/GlobalContext";
 import AddNewClass from "./AddNewClass";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // 引入樣式
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function DailyAccounting() {
   const { property, classData, projectData } = useGlobalContext();
@@ -101,7 +101,7 @@ export default function DailyAccounting() {
           time: startDate,
           targetaccount: data.targetaccount,
           record_type: data.type,
-          project: data.project,
+          project: data.project || null,
         });
       } else {
         docRef = await addDoc(accountingCollectionRef, {
@@ -111,7 +111,7 @@ export default function DailyAccounting() {
           time: startDate,
           class: data.class,
           record_type: data.type,
-          project: data.project,
+          project: data.project || null,
         });
       }
 
@@ -217,25 +217,26 @@ export default function DailyAccounting() {
             </select>
           </div>
         )}
-        {Array.isArray(projectData) && projectData.length > 0 && (
-          <div className="flex items-center gap-3">
-            <div>專案</div>
+        {Array.isArray(projectData) &&
+          projectData.some((item) => item.isediting) && (
+            <div className="flex items-center gap-3">
+              <div>專案</div>
 
-            <select
-              className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
-              {...register("project")}
-            >
-              <option value="">請選擇</option>
-              {projectData
-                .filter((item) => item.isediting) // 過濾掉非編輯狀態的專案
-                .map((item) => (
-                  <option key={item.id} value={item.name}>
-                    {item.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-        )}
+              <select
+                className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
+                {...register("project")}
+              >
+                <option value="">請選擇</option>
+                {projectData
+                  .filter((item) => item.isediting)
+                  .map((item) => (
+                    <option key={item.id} value={item.name}>
+                      {item.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+          )}
 
         <div className="flex items-center gap-3">
           <div>金額</div>

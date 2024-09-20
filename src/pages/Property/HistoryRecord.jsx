@@ -81,26 +81,26 @@ export default function HistoryRecord() {
     total ? (Math.abs(amount) / Math.abs(total)) * 100 : 0;
 
   return (
-    <div className="mt-4">
-      <div className="flex w-full flex-col">
-        <div className="flex w-full justify-end">
+    <div className="mt-10 w-full">
+      <div className="flex flex-col px-20">
+        <div className="mb-5 flex w-full justify-end">
           <button
             onClick={calculateProperty}
-            className="mx-3 mb-3 mt-auto flex h-[48px] w-[150px] items-center justify-center rounded-2xl border bg-gradient-to-r from-[#3E79E5] to-[#01B8E3] text-white"
+            className="mb-3 mt-auto flex h-[48px] w-[150px] items-center justify-center rounded-2xl border bg-gradient-to-r from-[#3E79E5] to-[#01B8E3] text-white"
           >
             統計最新資產
           </button>
           <AddNewFunction></AddNewFunction>
         </div>
-        <div className="flex flex-wrap items-center justify-center">
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <Saving />
           <Consume />
           <Invest />
         </div>
-        <div>
+        <div className="mt-5">
           {historyData
-            .slice() // 創建一個數據的副本，防止直接修改原數組
-            .sort((a, b) => b.time.toDate() - a.time.toDate()) // 按時間倒序排列
+            .slice()
+            .sort((a, b) => b.time.toDate() - a.time.toDate())
             .map((item) => (
               <div
                 key={item.id}

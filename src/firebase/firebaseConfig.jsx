@@ -11,12 +11,12 @@ import { getAuth } from "firebase/auth";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: "moneytrack-4c04d.firebaseapp.com",
-  projectId: "moneytrack-4c04d",
-  storageBucket: "moneytrack-4c04d.appspot.com",
-  messagingSenderId: "749760221507",
-  appId: "1:749760221507:web:1647083a1392791d26dff6",
-  measurementId: "G-TJVVE6SQ08",
+  authDomain: "moneytrack2-1778a.firebaseapp.com",
+  projectId: "moneytrack2-1778a",
+  storageBucket: "moneytrack2-1778a.appspot.com",
+  messagingSenderId: "500588622625",
+  appId: "1:500588622625:web:b58580e5d545f034d74460",
+  measurementId: "G-0E9Z00BDF4",
 };
 // Initialize Firebase Authentication and get a reference to the service
 
