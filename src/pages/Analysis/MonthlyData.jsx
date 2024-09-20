@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { getFirestoreRefs } from "../../firebase/api";
 import { getDocs, query, where } from "firebase/firestore";
 import { useGlobalContext } from "@/context/GlobalContext";
@@ -8,12 +8,14 @@ import PropTypes from "prop-types";
 export default function MonthlyData({
   setmonthExpense,
   setmonthIncome,
-  setHouseExpense,
+  expenseTotals,
+  setExpenseTotals,
+  incomeTotals,
+  setIncomeTotals,
+  netWorth,
+  setNetWorth,
+  setExpenseRecords,
 }) {
-  // const [records, setRecords] = useState([]);
-  const [expenseTotals, setExpenseTotals] = useState({});
-  const [incomeTotals, setIncomeTotals] = useState({});
-  const [netWorth, setNetWorth] = useState(0); // 新增淨值狀態
   const { loginEmail } = useGlobalContext();
   const { accountingCollectionRef } = getFirestoreRefs(loginEmail);
   useEffect(() => {
@@ -58,22 +60,14 @@ export default function MonthlyData({
           id: doc.id,
           ...doc.data(),
         }));
+        setExpenseRecords(expenseRecords);
 
-        const houseExpense = expenseRecords
-          .filter((item) => item.class === "房租")
-          .reduce((accumulate, value) => {
-            return accumulate + value.amount;
-          }, 0);
-
-        setHouseExpense(houseExpense);
         // 獲取收入數據
         const incomeSnapShot = await getDocs(incomeQuery);
         const incomeRecords = incomeSnapShot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-
-        // setRecords([...expenseRecords, ...incomeRecords]); // 設定合併的紀錄狀態
 
         // 分組並計算支出總和
         const expenseGroupedTotals = expenseRecords.reduce((acc, record) => {
@@ -112,19 +106,25 @@ export default function MonthlyData({
         );
         setmonthIncome(totalIncome);
         const calculatedNetWorth = totalIncome - totalExpenses;
-        setNetWorth(calculatedNetWorth); // 設置淨值狀態
+        setNetWorth(calculatedNetWorth);
       } catch (e) {
         console.error("查詢錯誤：", e);
       }
     };
 
     fetchRecords();
-  }, [setHouseExpense, setmonthExpense, setmonthIncome]);
+  }, []);
 
   MonthlyData.propTypes = {
-    setHouseExpense: PropTypes.func.isRequired,
     setmonthExpense: PropTypes.func.isRequired,
     setmonthIncome: PropTypes.func.isRequired,
+    expenseTotals: PropTypes.func.isRequired,
+    setExpenseTotals: PropTypes.func.isRequired,
+    incomeTotals: PropTypes.func.isRequired,
+    setIncomeTotals: PropTypes.func.isRequired,
+    netWorth: PropTypes.func.isRequired,
+    setNetWorth: PropTypes.func.isRequired,
+    setExpenseRecords: PropTypes.func.isRequired,
   };
   return (
     <div className="flex h-[595px] w-[420px] flex-col items-center rounded-2xl border border-black">

@@ -8,7 +8,7 @@ import PersonalInformation from "./pages/PersonalInformation";
 import Project from "./pages/Project";
 import Login from "./pages/Login";
 import "./index.css";
-import { GlobalProvider } from "./context/GlobalContext"; // 正確導入 GlobalProvider
+import { GlobalProvider } from "./context/GlobalContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

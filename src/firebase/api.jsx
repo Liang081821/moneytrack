@@ -125,6 +125,8 @@ const getFirestoreRefs = (loginEmail) => {
     "property",
   );
   const projectCollectionRef = collection(db, "record", loginEmail, "project");
+  const reportCollectionRef = collection(db, "record", loginEmail, "report");
+
   const historyCollectionRef = collection(db, "record", loginEmail, "history");
   const docRef = doc(db, "record", loginEmail);
 
@@ -133,6 +135,7 @@ const getFirestoreRefs = (loginEmail) => {
     propertyCollectionRef,
     historyCollectionRef,
     projectCollectionRef,
+    reportCollectionRef,
     docRef,
   };
 };
@@ -179,7 +182,7 @@ const fetchProjectData = (loginEmail, setProjectData) => {
 
 //即時監聽所有 transaction 資料
 const fetchAllTransactionData = (loginEmail, setTransactionData) => {
-  const { accountingCollectionRef } = getFirestoreRefs(loginEmail); // 使用動態 email 獲取 collectionRef
+  const { accountingCollectionRef } = getFirestoreRefs(loginEmail);
 
   try {
     const unsubscribe = onSnapshot(accountingCollectionRef, (querySnapshot) => {
@@ -237,6 +240,26 @@ const fetchAllHistoryRecord = (loginEmail, setHistoryRecord) => {
   }
 };
 
+//所有歷史紀錄
+const fetchAllReportRecord = (loginEmail, setReportRecord) => {
+  const { reportCollectionRef } = getFirestoreRefs(loginEmail);
+
+  try {
+    const unsubscribe = onSnapshot(reportCollectionRef, (querySnapshot) => {
+      const reportData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      console.log(reportData);
+      setReportRecord(reportData);
+    });
+    return unsubscribe;
+  } catch (error) {
+    console.error("Error fetching history records:", error);
+  }
+};
+
 export {
   fetchAllTransactionData,
   getFirestoreRefs,
@@ -244,4 +267,5 @@ export {
   fetchClassData,
   fetchAllHistoryRecord,
   fetchProjectData,
+  fetchAllReportRecord,
 };

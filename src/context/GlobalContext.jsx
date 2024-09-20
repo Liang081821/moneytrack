@@ -5,6 +5,7 @@ import {
   fetchAllHistoryRecord,
   fetchAllTransactionData,
   fetchProjectData,
+  fetchAllReportRecord,
 } from "../firebase/api";
 import PropTypes from "prop-types";
 
@@ -14,6 +15,7 @@ export const GlobalProvider = ({ children }) => {
   const [property, setProperty] = useState([]);
   const [classData, setClassData] = useState([]);
   const [projectData, setProjectData] = useState([]);
+  const [reportData, setReportData] = useState([]);
 
   const [historyData, setHistoryData] = useState([]);
   const [transactionData, setTransactionData] = useState([]);
@@ -29,7 +31,10 @@ export const GlobalProvider = ({ children }) => {
     const unsubscribe = fetchAllPropertyData(loginEmail, setProperty);
     return () => unsubscribe();
   }, [loginEmail]);
-
+  useEffect(() => {
+    const unsubscribe = fetchAllReportRecord(loginEmail, setReportData);
+    return () => unsubscribe();
+  }, [loginEmail]);
   useEffect(() => {
     const unsubscribe = fetchClassData(loginEmail, setClassData);
     return () => unsubscribe();
@@ -68,6 +73,7 @@ export const GlobalProvider = ({ children }) => {
         setLoginEmail,
         projectData,
         setProjectData,
+        reportData,
       }}
     >
       {children}
