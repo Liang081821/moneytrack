@@ -478,7 +478,27 @@ export default function DailyRecord() {
       console.error("Error updating document:", error);
     }
   };
-
+  if (transaction.length === 0) {
+    return (
+      <div className="flex h-[450px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="mb-2 h-12 w-12"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
+          />
+        </svg>
+        <p>開始記帳，解鎖每日紀錄</p>
+      </div>
+    );
+  }
   return (
     <div className="h-[450px] w-[420px] overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
       <div>每日紀錄</div>

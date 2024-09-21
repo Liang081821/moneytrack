@@ -109,7 +109,7 @@ export default function Report() {
       >
         生成上月報表
       </button>
-      <div className="mt-14 flex w-full justify-center">
+      <div className="mt-14 flex w-full justify-center gap-4">
         <MonthlyData
           setmonthExpense={setmonthExpense}
           setmonthIncome={setmonthIncome}
@@ -120,6 +120,7 @@ export default function Report() {
           netWorth={netWorth}
           setNetWorth={setNetWorth}
           setExpenseRecords={setExpenseRecords}
+          expenseRecords={expenseRecords}
         />
         <BalanceSheet />
       </div>

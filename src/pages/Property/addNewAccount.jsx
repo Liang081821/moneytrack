@@ -55,7 +55,7 @@ export default function AddNewFunction() {
 
       {addProperty && (
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
             <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
               <button
                 className="absolute right-3 top-3 rounded-xl bg-red-300 p-2"

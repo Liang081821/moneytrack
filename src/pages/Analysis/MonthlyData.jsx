@@ -14,6 +14,7 @@ export default function MonthlyData({
   setIncomeTotals,
   netWorth,
   setNetWorth,
+  expenseRecords,
   setExpenseRecords,
 }) {
   const { loginEmail } = useGlobalContext();
@@ -126,6 +127,30 @@ export default function MonthlyData({
     setNetWorth: PropTypes.func.isRequired,
     setExpenseRecords: PropTypes.func.isRequired,
   };
+  if (
+    Object.keys(expenseTotals).length === 0 &&
+    Object.keys(incomeTotals).length === 0
+  ) {
+    return (
+      <div className="flex h-[595px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="mb-2 h-12 w-12"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
+          />
+        </svg>
+        <p>前月份沒有記帳資料，無法帶入..</p>
+      </div>
+    );
+  }
   return (
     <div className="flex h-[595px] w-[420px] flex-col items-center rounded-2xl border border-black">
       <h2 className="mb-10">上月數據</h2>
