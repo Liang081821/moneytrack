@@ -42,72 +42,72 @@ export default function HistoryReport() {
   const currentReport = reportData[currentIndex] || {};
 
   return (
-    <div className="mx-auto max-w-7xl p-4">
-      <div className="mb-4 w-[840px] rounded-lg border border-black p-6">
-        <h3 className="mb-4 text-center text-3xl font-bold text-[#468189]">
-          {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}
+    <div className="mx-auto max-w-5xl p-4">
+      <div className="mb-4 w-[760px] rounded-xl bg-white p-6 shadow-md">
+        <h3 className="mb-6 text-center font-semibold">
+          {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}{" "}
           月 報告
         </h3>
 
         {/* 卡片風格報表 */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="rounded-lg bg-blue-100 p-4 shadow">
-            <h4 className="text-lg font-semibold">建議緊急備用金</h4>
-            <p className="text-2xl font-bold">
+        <div className="grid grid-cols-2 gap-3">
+          <div className="rounded-lg bg-[#F4E9CD] p-4 shadow-sm">
+            <h4 className="text-base font-semibold">建議緊急備用金</h4>
+            <p className="text-xl font-bold">
               {currentReport.emergynumberrecommend || "N/A"}
             </p>
           </div>
 
-          <div className="rounded-lg bg-red-100 p-4 shadow">
-            <h4 className="text-lg font-semibold">房租率</h4>
-            <p className="text-2xl font-bold">
+          <div className="rounded-lg bg-[#F4E9CD] p-4 shadow-sm">
+            <h4 className="text-base font-semibold">房租率</h4>
+            <p className="text-xl font-bold">
               {currentReport.houseingRate || "N/A"}%
             </p>
           </div>
 
-          <div className="rounded-lg bg-green-100 p-4 shadow">
-            <h4 className="text-lg font-semibold">保險率</h4>
-            <p className="text-2xl font-bold">
+          <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
+            <h4 className="text-base font-semibold">保險率</h4>
+            <p className="text-xl font-bold">
               {currentReport.insureRate || "N/A"}%
             </p>
           </div>
 
-          <div className="rounded-lg bg-yellow-100 p-4 shadow">
-            <h4 className="text-lg font-semibold">每月支出</h4>
-            <p className="text-2xl font-bold">
+          <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
+            <h4 className="text-base font-semibold">每月支出</h4>
+            <p className="text-xl font-bold">
               {currentReport.monthexpense || "N/A"}
             </p>
           </div>
 
-          <div className="rounded-lg bg-purple-100 p-4 shadow">
-            <h4 className="text-lg font-semibold">每月收入</h4>
-            <p className="text-2xl font-bold">
+          <div className="rounded-lg bg-[#F4E9CD] p-4 shadow-sm">
+            <h4 className="text-base font-semibold">每月收入</h4>
+            <p className="text-xl font-bold">
               {currentReport.monthincome || "N/A"}
             </p>
           </div>
 
-          <div className="rounded-lg bg-indigo-100 p-4 shadow">
-            <h4 className="text-lg font-semibold">淨收入</h4>
-            <p className="text-2xl font-bold">{currentReport.net || "N/A"}</p>
+          <div className="rounded-lg bg-[#F4E9CD] p-4 shadow-sm">
+            <h4 className="text-base font-semibold">淨收入</h4>
+            <p className="text-xl font-bold">{currentReport.net || "N/A"}</p>
           </div>
 
-          <div className="rounded-lg bg-pink-100 p-4 shadow">
-            <h4 className="text-lg font-semibold">儲蓄率</h4>
-            <p className="text-2xl font-bold">
+          <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
+            <h4 className="text-base font-semibold">儲蓄率</h4>
+            <p className="text-xl font-bold">
               {currentReport.savingRate || "N/A"}%
             </p>
           </div>
 
-          <div className="rounded-lg bg-teal-100 p-4 shadow">
-            <h4 className="text-lg font-semibold">總資產</h4>
-            <p className="text-2xl font-bold">
+          <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
+            <h4 className="text-base font-semibold">總資產</h4>
+            <p className="text-xl font-bold">
               {currentReport.totalProperty || "N/A"}
             </p>
           </div>
         </div>
       </div>
 
-      {/* 修正的翻頁按鈕區域，頁碼從 1 開始 */}
+      {/* 翻頁按鈕區域 */}
       <div className="mt-4 flex items-center justify-between">
         <button
           onClick={handlePrev}

@@ -88,8 +88,8 @@ export default function BarChart({ firstDayOfLastMonth, lastDayOfLastMonth }) {
     );
   }
   return (
-    <div className="h-[380px] w-[650px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
-      <div className="text-base font-medium">本月支出變化表</div>
+    <div className="h-[380px] w-[650px] flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+      <div className="text-center text-base font-medium">本月支出變化表</div>
       <VictoryChart
         theme={VictoryTheme.material}
         containerComponent={

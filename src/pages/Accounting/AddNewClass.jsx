@@ -76,13 +76,14 @@ export default function AddNewClass() {
     selectedCategory === "收入" ? classData.income : classData.expense;
 
   return (
-    <>
-      <button
-        onClick={handleEditing}
-        className="absolute right-3 mx-3 mb-3 mt-auto flex items-center justify-center rounded-2xl border bg-gradient-to-r from-[#3E79E5] to-[#01B8E3] p-2 text-white"
-      >
-        編輯分類
-      </button>
+    <div
+      className={`fixed right-0 top-56 p-2 transition-all ${
+        newclassEditing
+          ? ""
+          : "w-25 overflow-hidden rounded-xl bg-[#BABFD1] text-white"
+      }`}
+    >
+      <button onClick={handleEditing}>新增分類</button>
 
       {newclassEditing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
@@ -90,7 +91,6 @@ export default function AddNewClass() {
             {!newclass && (
               <div className="flex flex-col items-center gap-3">
                 <div className="flex w-full justify-evenly">
-                  {/* 類別切換 */}
                   <div
                     className={`grow cursor-pointer rounded-xl p-1 text-center transition-all duration-300 ease-in-out ${
                       selectedCategory === "收入"
@@ -129,9 +129,8 @@ export default function AddNewClass() {
                           viewBox="0 0 24 24"
                           strokeWidth="1.5"
                           stroke="currentColor"
-                          className="ml-1 size-5"
+                          className="ml-1 size-5 cursor-pointer"
                           onClick={() => {
-                            // 彈出確認框，確認後執行刪除
                             const isConfirmed = window.confirm(
                               `確定要刪除 "${item}" 嗎？ 刪除後該紀錄仍會保留`,
                             );
@@ -149,7 +148,7 @@ export default function AddNewClass() {
                       </div>
                     ))}
                   <div
-                    className="flex items-center justify-center rounded-xl border border-gray-300 p-2 hover:bg-gray-100"
+                    className="flex cursor-pointer items-center justify-center rounded-xl border border-gray-300 p-2 hover:bg-gray-100"
                     onClick={handleAddNewClass}
                   >
                     新增
@@ -157,7 +156,7 @@ export default function AddNewClass() {
                 </div>
                 <button
                   onClick={completeEdit}
-                  className="mt-10 rounded-xl bg-[#9dbebb] p-1"
+                  className="mt-10 rounded-xl bg-[#9DBEBB] p-2 text-white"
                 >
                   編輯完成
                 </button>
@@ -171,7 +170,7 @@ export default function AddNewClass() {
                   onSubmit={handleSubmit(onSubmit)}
                   className="flex justify-between"
                 >
-                  <div className="ml-2 rounded-xl bg-[#9DBEBB] p-1">
+                  <div className="ml-2 rounded-xl bg-[#9DBEBB] p-2 text-white">
                     {selectedCategory}
                   </div>
                   <input
@@ -188,13 +187,13 @@ export default function AddNewClass() {
                   <div>
                     <button
                       type="submit"
-                      className="ml-2 rounded-xl bg-[#9DBEBB] p-1"
+                      className="ml-2 rounded-xl bg-[#607196] p-2 text-white"
                     >
                       新增
                     </button>
                     <button
                       onClick={closeAddNewClass}
-                      className="ml-2 rounded-xl bg-[#77ACA2] p-1 text-white"
+                      className="ml-2 rounded-xl bg-[#F4E9CD] p-2 text-[#607196]"
                     >
                       返回
                     </button>
@@ -205,6 +204,6 @@ export default function AddNewClass() {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 }

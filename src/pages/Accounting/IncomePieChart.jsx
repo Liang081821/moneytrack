@@ -82,7 +82,7 @@ export default function IncomePieChart({
     <div className="flex h-[380px] w-[650px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
       <div className="text-base font-medium">本月收入分佈</div>
       <VictoryPie
-        colorScale={["navy", "lightgrey", "gold", "cyan", "tomato"]}
+        colorScale={["#4F5D75", "#BFC0C0", "#2D3142", "#FFFFFF", "#258EA6"]}
         labels={({ datum }) =>
           `${datum.x}: $${datum.y} (${((datum.y / incomeRecord.reduce((acc, cur) => acc + cur.y, 0)) * 100).toFixed(1)}%)`
         }

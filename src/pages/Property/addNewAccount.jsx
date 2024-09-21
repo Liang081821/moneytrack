@@ -45,10 +45,16 @@ export default function AddNewFunction() {
     }
   };
   return (
-    <>
+    <div
+      className={`fixed right-0 top-40 p-2 transition-all ${
+        addProperty
+          ? "z-50"
+          : "w-25 overflow-hidden rounded-xl bg-[#BABFD1] text-white"
+      }`}
+    >
       <button
         onClick={handleAddProperty}
-        className="mx-3 mb-3 mt-auto flex h-[48px] w-[150px] items-center justify-center rounded-2xl border bg-gradient-to-r from-[#3E79E5] to-[#01B8E3] text-white"
+        className="] flex items-center justify-center rounded-2xl"
       >
         新增帳戶
       </button>
@@ -58,10 +64,10 @@ export default function AddNewFunction() {
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
             <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
               <button
-                className="absolute right-3 top-3 rounded-xl bg-red-300 p-2"
+                className="absolute right-3 top-3 mr-2 rounded-xl bg-[#F4E9CD] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
                 onClick={handleCloseButton}
               >
-                關閉
+                取消
               </button>
               <div className="flex items-center gap-3">
                 <div>帳戶名稱</div>
@@ -82,7 +88,7 @@ export default function AddNewFunction() {
                   <label
                     className={`flex cursor-pointer items-center justify-center rounded-xl border px-4 py-2 ${
                       watch("account_type") === "儲蓄"
-                        ? "border-blue-500 bg-blue-500 text-white"
+                        ? "border-[#77ACA2] bg-[#77ACA2] text-white"
                         : "border-gray-300 bg-white text-gray-700"
                     }`}
                   >
@@ -92,7 +98,7 @@ export default function AddNewFunction() {
                       {...register("account_type", {
                         required: "請選擇帳戶類型",
                       })}
-                      className="hidden" // 隱藏原生單選按鈕
+                      className="hidden"
                     />
                     儲蓄
                   </label>
@@ -101,7 +107,7 @@ export default function AddNewFunction() {
                   <label
                     className={`flex cursor-pointer items-center justify-center rounded-xl border px-4 py-2 ${
                       watch("account_type") === "消費"
-                        ? "border-blue-500 bg-blue-500 text-white"
+                        ? "border-[#77ACA2] bg-[#77ACA2] text-white"
                         : "border-gray-300 bg-white text-gray-700"
                     }`}
                   >
@@ -111,7 +117,7 @@ export default function AddNewFunction() {
                       {...register("account_type", {
                         required: "請選擇帳戶類型",
                       })}
-                      className="hidden" // 隱藏原生單選按鈕
+                      className="hidden"
                     />
                     消費
                   </label>
@@ -120,7 +126,7 @@ export default function AddNewFunction() {
                   <label
                     className={`flex cursor-pointer items-center justify-center rounded-xl border px-4 py-2 ${
                       watch("account_type") === "投資"
-                        ? "border-blue-500 bg-blue-500 text-white"
+                        ? "border-[#77ACA2] bg-[#77ACA2] text-white"
                         : "border-gray-300 bg-white text-gray-700"
                     }`}
                   >
@@ -130,7 +136,7 @@ export default function AddNewFunction() {
                       {...register("account_type", {
                         required: "請選擇帳戶類型",
                       })}
-                      className="hidden" // 隱藏原生單選按鈕
+                      className="hidden"
                     />
                     投資
                   </label>
@@ -155,13 +161,16 @@ export default function AddNewFunction() {
                   <p className="text-red-500">{errors.balance.message}</p>
                 )}
               </div>
-              <button type="submit" className="rounded-xl bg-[#9DBEBB] p-2">
+              <button
+                type="submit"
+                className="rounded-xl bg-[#9DBEBB] p-2 text-white"
+              >
                 新增
               </button>
             </div>
           </div>
         </form>
       )}
-    </>
+    </div>
   );
 }

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { addDoc, query, getDocs, updateDoc, where } from "firebase/firestore";
 import { useForm } from "react-hook-form";
 import { useGlobalContext } from "@/context/GlobalContext";
-import AddNewClass from "./AddNewClass";
+// import AddNewClass from "./AddNewClass";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -127,10 +127,12 @@ export default function DailyAccounting() {
 
   return (
     <div className="relative flex h-[450px] w-[420px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
-      <div className="h-[48px] w-[345px] text-center">每日記帳</div>
-      <AddNewClass />
-      <div className="mb-1 flex items-center gap-3">
-        <div>日期</div>
+      <div className="h-[48px] w-[345px] text-center font-semibold">
+        每日記帳
+      </div>
+      {/* <AddNewClass /> */}
+      <div className="mb-2 flex items-center gap-3">
+        <div className="font-semibold text-[##BABFD1]">日期</div>
         <div>
           <DatePicker
             selected={startDate}
@@ -147,10 +149,10 @@ export default function DailyAccounting() {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center gap-1"
+        className="flex flex-col items-center gap-2"
       >
         <div className="flex items-center gap-3">
-          <div>帳戶</div>
+          <div className="font-semibold text-[##BABFD1]">帳戶</div>
           <select
             className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
             {...register("account", {
@@ -167,7 +169,7 @@ export default function DailyAccounting() {
           </select>
         </div>
         <div className="flex items-center gap-3">
-          <div>類型</div>
+          <div className="font-semibold text-[##BABFD1]">類型</div>
           <select
             className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
             {...register("type", {
@@ -182,7 +184,7 @@ export default function DailyAccounting() {
         </div>
         {watchType === "轉帳" ? (
           <div className="flex items-center gap-3">
-            <div>轉入</div>
+            <div className="font-semibold text-[##BABFD1]">轉入</div>
             <select
               className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
               {...register("targetaccount", {
@@ -200,7 +202,7 @@ export default function DailyAccounting() {
           </div>
         ) : (
           <div className="flex items-center gap-3">
-            <div>分類</div>
+            <div className="font-semibold text-[##BABFD1]">分類</div>
             <select
               className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
               {...register("class", {
@@ -220,7 +222,7 @@ export default function DailyAccounting() {
         {Array.isArray(projectData) &&
           projectData.some((item) => item.isediting) && (
             <div className="flex items-center gap-3">
-              <div>專案</div>
+              <div className="font-semibold text-[##BABFD1]">專案</div>
 
               <select
                 className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
@@ -239,7 +241,7 @@ export default function DailyAccounting() {
           )}
 
         <div className="flex items-center gap-3">
-          <div>金額</div>
+          <div className="font-semibold text-[##BABFD1]">金額</div>
           <input
             className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
             type="number"
@@ -252,7 +254,10 @@ export default function DailyAccounting() {
           />
         </div>
 
-        <button type="submit" className="rounded-xl border border-black p-1">
+        <button
+          type="submit"
+          className="w-full rounded-xl bg-[#607196] p-2 text-white"
+        >
           {watchType === "轉帳" ? "我要轉帳" : "我要記一筆"}
         </button>
       </form>

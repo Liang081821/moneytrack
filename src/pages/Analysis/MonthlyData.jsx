@@ -152,34 +152,35 @@ export default function MonthlyData({
     );
   }
   return (
-    <div className="flex h-[595px] w-[420px] flex-col items-center rounded-2xl border border-black">
-      <h2 className="mb-10">上月數據</h2>
-      <div className="flex flex-wrap justify-center">
+    <div className="flex h-[595px] w-[600px] flex-col items-center rounded-xl bg-white">
+      <h2 className="mb-4 mt-3 font-semibold">上月數據</h2>
+      <div className="grid grid-cols-3 gap-2">
         {Object.entries(expenseTotals).map(([recordClass, totalAmount]) => (
           <div
             key={recordClass}
-            className="m-2 w-28 rounded-xl border bg-[#F4E9CD] p-2"
+            className="m-1 flex h-32 w-32 flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-4"
           >
-            <div>{recordClass}</div>
-            <div>NT${totalAmount.toFixed(0)}</div>
-            <div className="text-xl">支出</div>
+            <div className="text-sm font-semibold">{recordClass}</div>
+            <div className="text-lg">NT${totalAmount.toFixed(0)}</div>
+            <div className="text-base text-gray-600">支出</div>
           </div>
         ))}
 
         {Object.entries(incomeTotals).map(([recordClass, totalAmount]) => (
           <div
             key={recordClass}
-            className="m-2 w-28 rounded-xl border bg-[#468189] p-2 text-white"
+            className="m-1 flex h-32 w-32 flex-col items-center justify-center rounded-xl border bg-[#E8E9ED] p-4"
           >
-            <div>{recordClass}</div>
-            <div>NT${totalAmount.toFixed(0)}</div>
-            <div className="text-xl">收入</div>
+            <div className="text-sm font-semibold">{recordClass}</div>
+            <div className="text-lg">NT${totalAmount.toFixed(0)}</div>
+            <div className="text-base text-gray-600">收入</div>
           </div>
         ))}
-        <div className="m-2 w-28 rounded-xl border bg-[#031926] p-2 text-white">
-          <div className="h-6"></div>
-          <div>NT${netWorth}</div>
-          <div className="text-xl">投資&儲蓄</div>
+
+        <div className="m-1 flex h-32 w-32 flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-4">
+          <div className="h-6 text-sm font-semibold">投資&儲蓄</div>
+          <div className="text-lg">NT${netWorth}</div>
+          <div className="text-base text-gray-600">淨現金流</div>
         </div>
       </div>
     </div>

@@ -82,7 +82,7 @@ export default function ExpensePieChart({
     <div className="flex h-[380px] w-[650px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
       <div className="text-base font-medium">本月支出分佈</div>
       <VictoryPie
-        colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
+        colorScale={["#89023E", "#FFD9DA", "#CC7178", "#F3E1DD", "#D4BEBE"]}
         labels={({ datum }) =>
           `${datum.x}: $${datum.y} (${((datum.y / expenseRecord.reduce((acc, cur) => acc + cur.y, 0)) * 100).toFixed(1)}%)`
         }

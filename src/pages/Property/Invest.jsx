@@ -4,7 +4,7 @@ import { getFirestoreRefs } from "../../firebase/api";
 import { getDocs, query, where, deleteDoc, doc } from "firebase/firestore";
 
 export default function Consume() {
-  const { property } = useGlobalContext();
+  const { property, transactionData } = useGlobalContext();
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [accountrecord, setAccountRecord] = useState([]);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -49,29 +49,15 @@ export default function Consume() {
       console.error(e);
     }
   };
-
   useEffect(() => {
     if (selectedAccount) {
-      const getAccountData = async () => {
-        try {
-          const q = query(
-            accountingCollectionRef,
-            where("account", "==", selectedAccount.account),
-          );
-          const qSnapShot = await getDocs(q);
-          const records = qSnapShot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          records.sort((a, b) => b.time.toDate() - a.time.toDate());
-          setAccountRecord(records);
-        } catch (e) {
-          console.error(e);
-        }
-      };
-      getAccountData();
+      const records = transactionData.filter(
+        (account) => account.account === selectedAccount.account,
+      );
+      records.sort((a, b) => b.time.toDate() - a.time.toDate());
+      setAccountRecord(records);
     }
-  }, [selectedAccount, accountingCollectionRef]);
+  }, [selectedAccount, transactionData]);
 
   if (!consumeAccounts || consumeAccounts.length === 0) {
     return (
@@ -94,19 +80,19 @@ export default function Consume() {
       </div>
     );
   }
-
   return (
-    <div className="flex h-[595px] w-[420px] flex-col items-center rounded-2xl border border-black">
-      <div className="mt-3">投資</div>
+    <div className="flex h-[595px] w-[420px] flex-col items-center rounded-2xl bg-white shadow-md">
+      <div className="mt-3 font-semibold">投資</div>
 
       {/* 動態渲染篩選後的帳戶 */}
       {consumeAccounts.map((account) => (
         <div
           key={account.id}
-          className="m-3 flex h-[88px] w-[360px] items-center justify-between rounded-2xl border border-[#01B8E3] p-3"
+          className="m-2 flex h-[88px] w-[380px] items-center justify-between rounded-xl bg-[#D4BEBE] p-3"
         >
           <div>
-            <div className="text-xs">{account.account}</div>
+            <div className="text-md text-black">{account.account}</div>
+            <div className="h-1 w-6 rounded-xl bg-[#031926]"></div>
             <div className="text-2xl">${account.balance}</div>
           </div>
           <svg
@@ -135,7 +121,7 @@ export default function Consume() {
       {/* 帳戶詳細紀錄顯示 */}
       {selectedAccount && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4">
-          <div className="w-full max-w-lg rounded-lg bg-white p-4 shadow-lg">
+          <div className="h-[80vh] w-full max-w-lg overflow-scroll rounded-lg bg-white p-4 shadow-lg">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-xl font-bold">
                 {selectedAccount.account} 歷史紀錄
@@ -143,48 +129,58 @@ export default function Consume() {
               <div>
                 <button
                   onClick={() => setShowDeleteConfirm(true)}
-                  className="mr-2 rounded-xl bg-red-500 p-2 text-white"
+                  className="rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"
                 >
                   刪除帳戶
                 </button>
                 <button
                   onClick={handleCloseDetail}
-                  className="rounded-full p-2"
+                  className="mr-2 rounded-xl bg-[#F4E9CD] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
                 >
-                  關閉
+                  取消
                 </button>
               </div>
             </div>
             {/* 渲染帳戶的所有紀錄 */}
-            {accountrecord?.map((record) => (
-              <div
-                key={record.id}
-                className="rounded-xl border border-black bg-gray-100 p-2"
-              >
-                <div>{record.time.toDate().toLocaleDateString()}</div>
-                <div className="flex justify-between">
-                  <div>{record.record_type}</div>
-                  <div
-                    className={
-                      record.record_type === "支出"
-                        ? "text-[#468189]"
-                        : "text-[#9DBEBB]"
-                    }
-                  >
-                    {record.record_type === "支出" ? "-" : ""}
-                    NT${record.amount}
+            <div className="flex flex-col gap-3">
+              {accountrecord?.map((record) => (
+                <div
+                  key={record.id}
+                  className={`rounded-xl border p-3 transition-all duration-200 ${
+                    record.record_type === "支出"
+                      ? "bg-[#9DBEBB] text-gray-800"
+                      : record.record_type === "轉帳"
+                        ? "bg-[#F4E9CD] text-gray-800"
+                        : "bg-[#E8E9ED] text-gray-800"
+                  }`}
+                >
+                  <div>{record.time.toDate().toLocaleDateString()}</div>
+                  <div className="flex justify-between">
+                    <div>{record.record_type}</div>
+                    <div
+                      className={
+                        record.record_type === "支出"
+                          ? "text-[#468189]"
+                          : "text-[#9DBEBB]"
+                      }
+                    >
+                      {record.record_type === "支出" ? "-" : ""}
+                      NT${record.amount}
+                    </div>
+                  </div>
+                  <div className="flex justify-between">
+                    <div className="text-sm text-gray-500">
+                      {record.class
+                        ? record.class
+                        : `轉入 ${record.targetaccount}`}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {record.account}
+                    </div>
                   </div>
                 </div>
-                <div className="flex justify-between">
-                  <div className="text-sm text-gray-500">
-                    {record.class
-                      ? record.class
-                      : `轉入 ${record.targetaccount}`}
-                  </div>
-                  <div className="text-sm text-gray-500">{record.account}</div>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       )}

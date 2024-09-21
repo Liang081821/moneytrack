@@ -105,10 +105,11 @@ export default function Report() {
     <div className="mt-7 flex w-full flex-col items-center">
       <button
         onClick={() => handleAddReport()}
-        className="mx-3 mb-3 flex h-[48px] w-[150px] items-center justify-center self-end rounded-2xl border bg-gradient-to-r from-[#3E79E5] to-[#01B8E3] text-white"
+        className="transition-allw-25 fixed right-0 top-40 overflow-hidden rounded-xl bg-[#607196] p-2 text-white"
       >
         生成上月報表
       </button>
+
       <div className="mt-14 flex w-full justify-center gap-4">
         <MonthlyData
           setmonthExpense={setmonthExpense}

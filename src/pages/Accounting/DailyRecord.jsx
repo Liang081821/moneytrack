@@ -500,15 +500,15 @@ export default function DailyRecord() {
     );
   }
   return (
-    <div className="h-[450px] w-[420px] overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
-      <div>每日紀錄</div>
+    <div className="flex h-[450px] w-[420px] flex-col overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+      <div className="self-center font-semibold">交易紀錄</div>
       <div>
         {Object.entries(groupedTransactions).map(([date, items]) => (
-          <div key={date}>
-            <div className="mb-2 mt-6 flex items-center">
-              <div>{date}</div>
-              <div className="mx-auto w-28 border-[0.5px] border-black"></div>
-              <div>
+          <div key={date} className="mb-6">
+            <div className="mb-2 flex items-center">
+              <div className="font-semibold text-gray-800">{date}</div>
+              <div className="mx-auto w-28 border-[0.5px] border-gray-400"></div>
+              <div className="font-bold text-gray-800">
                 NT$
                 {items.reduce((total, item) => {
                   if (item.record_type === "轉帳") return total;
@@ -526,37 +526,33 @@ export default function DailyRecord() {
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-xl border border-black bg-gray-100 p-2"
+                  className={`rounded-xl border p-3 transition-all duration-200 ${
+                    item.record_type === "支出"
+                      ? "bg-[#9DBEBB] text-gray-800"
+                      : item.record_type === "轉帳"
+                        ? "bg-[#F4E9CD] text-gray-800"
+                        : "bg-[#E8E9ED] text-gray-800"
+                  }`}
                   onClick={() => handleEditClick(item)}
                 >
                   <div className="flex justify-between">
                     <div>{item.record_type}</div>
-                    <div
-                      className={
-                        item.record_type === "支出"
-                          ? "text-[#468189]"
-                          : "text-[#9DBEBB]"
-                      }
-                    >
+                    <div>
                       {item.record_type === "支出" ? "-" : ""}
                       NT${item.amount}
                     </div>
                   </div>
                   <div className="flex justify-between">
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-gray-600">
                       {item.class ? item.class : `轉入 ${item.targetaccount}`}
                     </div>
-                    <div className="text-sm text-gray-500">{item.account}</div>
+                    <div className="text-sm text-gray-600">{item.account}</div>
                   </div>
-                  <div>
-                    {item.project ? (
-                      <div>
-                        <p className="text-yellow-800">{item.project}</p>
-                      </div>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
+                  {item.project && (
+                    <div>
+                      <p className="text-[#468189]">{item.project}</p>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -565,12 +561,14 @@ export default function DailyRecord() {
 
         {editing && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-            <div className="w-[90%] max-w-lg rounded-lg bg-white p-8">
-              <div className="flex items-center justify-between">
-                <h2 className="mb-4 text-xl">編輯帳單</h2>
+            <div className="w-[90%] max-w-lg rounded-lg bg-white p-8 shadow-lg">
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-xl font-semibold text-gray-800">
+                  編輯帳單
+                </h2>
                 <button
                   type="button"
-                  className="mr-2 rounded-xl bg-red-400 px-4 py-2 text-white"
+                  className="rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"
                   onClick={handleDelete}
                 >
                   刪除此筆
@@ -578,7 +576,7 @@ export default function DailyRecord() {
               </div>
               <form onSubmit={handleSubmit(handleSaveEdit)}>
                 <div className="mb-4 flex flex-col">
-                  <label className="mb-1">日期</label>
+                  <label className="mb-1 text-gray-700">日期</label>
                   <div>
                     <DatePicker
                       selected={startDate}
@@ -594,12 +592,10 @@ export default function DailyRecord() {
                 </div>
 
                 <div className="mb-4 flex flex-col">
-                  <label className="mb-1">帳戶</label>
+                  <label className="mb-1 text-gray-700">帳戶</label>
                   <select
                     className="rounded-xl border p-2"
-                    {...register("account", {
-                      required: "請選擇帳戶",
-                    })}
+                    {...register("account", { required: "請選擇帳戶" })}
                   >
                     {Array.isArray(property) &&
                       property.map((item) => (
@@ -609,13 +605,12 @@ export default function DailyRecord() {
                       ))}
                   </select>
                 </div>
+
                 <div className="mb-4 flex flex-col">
-                  <label className="mb-1">類別</label>
+                  <label className="mb-1 text-gray-700">類別</label>
                   <select
                     className="rounded-xl border p-2"
-                    {...register("record_type", {
-                      required: "請選擇類別",
-                    })}
+                    {...register("record_type", { required: "請選擇類別" })}
                   >
                     <option value="收入">收入</option>
                     <option value="支出">支出</option>
@@ -625,7 +620,7 @@ export default function DailyRecord() {
 
                 {recordType === "轉帳" ? (
                   <div className="mb-4 flex flex-col">
-                    <label className="mb-1">轉入</label>
+                    <label className="mb-1 text-gray-700">轉入</label>
                     <select
                       className="rounded-xl border p-2"
                       {...register("targetaccount", {
@@ -643,7 +638,7 @@ export default function DailyRecord() {
                   </div>
                 ) : (
                   <div className="mb-4 flex flex-col">
-                    <label className="mb-1">分類</label>
+                    <label className="mb-1 text-gray-700">分類</label>
                     <select
                       className="rounded-xl border p-2"
                       {...register("class", {
@@ -660,16 +655,17 @@ export default function DailyRecord() {
                     </select>
                   </div>
                 )}
+
                 {Array.isArray(projectData) &&
                   projectData.some((item) => item.isediting) && (
                     <div className="mb-4 flex flex-col">
-                      <label className="mb-1">專案</label>
+                      <label className="mb-1 text-gray-700">專案</label>
                       <select
                         className="rounded-xl border p-2"
                         {...register("project")}
                       >
                         {projectData
-                          .filter((item) => item.isediting == true)
+                          .filter((item) => item.isediting === true)
                           .map((item) => (
                             <option key={item.id} value={item.name}>
                               {item.name}
@@ -680,7 +676,7 @@ export default function DailyRecord() {
                   )}
 
                 <div className="mb-4 flex flex-col">
-                  <label className="mb-1">金額</label>
+                  <label className="mb-1 text-gray-700">金額</label>
                   <input
                     className="rounded-xl border p-2"
                     type="number"
@@ -691,17 +687,18 @@ export default function DailyRecord() {
                     })}
                   />
                 </div>
+
                 <div className="flex justify-end">
                   <button
                     type="button"
-                    className="mr-2 rounded-xl bg-red-400 px-4 py-2 text-white"
+                    className="mr-2 rounded-xl bg-[#F4E9CD] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
                     onClick={handleCloseEdit}
                   >
                     取消
                   </button>
                   <button
                     type="submit"
-                    className="rounded-xl bg-[#9DBEBB] px-4 py-2 text-white"
+                    className="rounded-xl bg-[#607196] px-4 py-2 text-white transition duration-200 hover:bg-[#4C5966]"
                   >
                     保存
                   </button>
