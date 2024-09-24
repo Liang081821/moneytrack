@@ -1,17 +1,14 @@
+import cors from "cors";
+import express from "express";
 import OpenAI from "openai";
 const app = express();
-import express from "express";
-import cors from "cors";
-import functions from "firebase-functions";
 
 app.use(cors());
 // 中介軟件：解析 JSON 請求主體
 app.use(express.json());
 
 // 初始化 OpenAI API
-const openai = new OpenAI({
-  apiKey: functions.config().openai.apikey,
-});
+const openai = new OpenAI({});
 
 // 聊天接口
 app.post("/api/chat", async (req, res) => {
