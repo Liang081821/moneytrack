@@ -480,7 +480,7 @@ export default function DailyRecord() {
   };
   if (transaction.length === 0) {
     return (
-      <div className="flex h-[450px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="flex h-[450px] w-[500px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -500,14 +500,14 @@ export default function DailyRecord() {
     );
   }
   return (
-    <div className="flex h-[450px] w-[420px] flex-col overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
-      <div className="self-center font-semibold">交易紀錄</div>
+    <div className="flex h-[450px] w-[500px] flex-col overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+      <div className="mb-3 self-center font-semibold">交易紀錄</div>
       <div>
         {Object.entries(groupedTransactions).map(([date, items]) => (
           <div key={date} className="mb-6">
             <div className="mb-2 flex items-center">
               <div className="font-semibold text-gray-800">{date}</div>
-              <div className="mx-auto w-28 border-[0.5px] border-gray-400"></div>
+              <div className="mx-auto w-48 border-[0.5px] border-gray-400"></div>
               <div className="font-bold text-gray-800">
                 NT$
                 {items.reduce((total, item) => {

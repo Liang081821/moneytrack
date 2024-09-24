@@ -1,9 +1,12 @@
-import { VictoryPie } from "victory";
-import PropTypes from "prop-types";
+import { Doughnut } from "react-chartjs-2";
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useGlobalContext } from "@/context/GlobalContext";
+import { Chart, registerables } from "chart.js";
 
-export default function BalancePieChart({
+Chart.register(...registerables);
+
+export default function BalanceDoughnutChart({
   firstDayOfLastMonth,
   lastDayOfLastMonth,
 }) {
@@ -28,16 +31,18 @@ export default function BalancePieChart({
           .filter((transaction) => transaction.record_type === "收入")
           .reduce((acc, record) => acc + record.amount, 0);
         setIncomeRecord(totalIncome);
+
         const totalExpense = filteredTransactions
           .filter((transaction) => transaction.record_type === "支出")
           .reduce((acc, record) => acc + record.amount, 0);
         setExpenseRecord(totalExpense);
+
         const surplusValue = totalIncome - totalExpense;
         setSurplus(surplusValue);
 
         const chartData = [
-          { x: "收入", y: totalIncome },
-          { x: "支出", y: totalExpense },
+          { label: "收入", value: totalIncome },
+          { label: "支出", value: totalExpense },
         ];
 
         setBalanceData(chartData);
@@ -49,7 +54,7 @@ export default function BalancePieChart({
     fetchBalanceData();
   }, [transactionData, firstDayOfLastMonth, lastDayOfLastMonth]);
 
-  BalancePieChart.propTypes = {
+  BalanceDoughnutChart.propTypes = {
     firstDayOfLastMonth: PropTypes.instanceOf(Date).isRequired,
     lastDayOfLastMonth: PropTypes.instanceOf(Date).isRequired,
   };
@@ -59,7 +64,7 @@ export default function BalancePieChart({
     (expenseRecord === 0 || expenseRecord === undefined)
   ) {
     return (
-      <div className="flex h-[380px] w-[500px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="flex h-[450px] w-[500px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -79,24 +84,67 @@ export default function BalancePieChart({
     );
   }
 
+  const data = {
+    labels: balanceData.map((record) => record.label),
+    datasets: [
+      {
+        data: balanceData.map((record) => record.value),
+        backgroundColor: ["#77ACA2", "#E8E9ED"],
+        borderWidth: 0,
+      },
+    ],
+  };
+
+  const options = {
+    maintainAspectRatio: true,
+    responsive: true,
+    devicePixelRatio: window.devicePixelRatio,
+
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (tooltipItem) => {
+            const total = tooltipItem.chart.data.datasets[0].data.reduce(
+              (a, b) => a + b,
+              0,
+            );
+            const percentage = ((tooltipItem.raw / total) * 100).toFixed(1);
+            return `${tooltipItem.label}: ${percentage}%`;
+          },
+        },
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        titleColor: "#fff",
+        bodyColor: "#fff",
+      },
+      legend: {
+        display: false,
+      },
+      datalabels: {
+        anchor: "center",
+        align: "center",
+        color: "black",
+        font: {
+          size: 14,
+          weight: "bold",
+        },
+        formatter: (value, context) => {
+          const label = context.chart.data.labels[context.dataIndex];
+          return `${label}: $${value}`;
+        },
+      },
+    },
+  };
+
   return (
-    <div className="relative flex h-[380px] w-[500px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+    <div className="relative flex h-[450px] w-[500px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
       <div className="text-base font-medium">本月盈餘</div>
-      <VictoryPie
-        colorScale={["#77ACA2", "#9DBEBB"]}
-        labels={({ datum }) => `${datum.x}: $${datum.y} `}
-        style={{
-          labels: { fontSize: 14, fontWeight: "bold" },
-        }}
-        data={balanceData.length > 0 ? balanceData : [{ x: "無資料", y: 1 }]}
-        width={320}
-        height={320}
-        innerRadius={80}
-      />
-      {/* 在中間顯示盈餘 */}
-      <div className="right-1/2flex absolute top-1/2 h-[300px] w-[300px] items-center justify-center text-center">
-        <div className="text-xl font-semibold">
-          月結餘 <br />${surplus}
+      <div className="flex h-full w-full justify-center p-10">
+        <Doughnut data={data} options={options} />
+        {/* 在中間顯示盈餘 */}
+        <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center pt-10 text-center">
+          <div className="text-xl font-semibold">
+            月結餘 <br />${surplus}
+          </div>
         </div>
       </div>
     </div>

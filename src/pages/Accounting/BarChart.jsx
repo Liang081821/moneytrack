@@ -68,7 +68,7 @@ export default function BarChart({ firstDayOfLastMonth, lastDayOfLastMonth }) {
   };
   if (dailyExpenses.length === 0) {
     return (
-      <div className="flex h-[380px] w-[650px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="flex h-[450px] w-[500px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -88,7 +88,7 @@ export default function BarChart({ firstDayOfLastMonth, lastDayOfLastMonth }) {
     );
   }
   return (
-    <div className="h-[380px] w-[650px] flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+    <div className="h-[450px] w-[500px] flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
       <div className="text-center text-base font-medium">本月支出變化表</div>
       <VictoryChart
         theme={VictoryTheme.material}

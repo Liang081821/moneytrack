@@ -16,6 +16,10 @@ export default function Report() {
   const [monthincome, setmonthIncome] = useState(0);
   const [expenseRecords, setExpenseRecords] = useState({});
 
+  //step4 回傳
+  const [totalProperty, setTotalProperty] = useState(0);
+  const [savingRate, setSavingRate] = useState(0);
+
   //MothlyData
   const [expenseTotals, setExpenseTotals] = useState({});
   const [incomeTotals, setIncomeTotals] = useState({});
@@ -24,6 +28,8 @@ export default function Report() {
   const [selectedHouseCategory, setSelectedHouseCategory] = useState("");
   const [selectedInsureCategory, setSelectedInsureCategory] = useState("");
 
+  //chatGpt
+  const [preText, setPreText] = useState("");
   const handleAddReport = () => {
     setReportVisible(true);
   };
@@ -41,6 +47,18 @@ export default function Report() {
         return;
       }
     }
+    if (step === 4) {
+      const confirmed = window.confirm(
+        "理財貓規劃師即將替您分析，進入後不可返回",
+      );
+      setPreText(
+        `我的淨資產有 NT$${totalProperty}，上月總支出 NT$${monthexpense}、總收入 NT$${monthincome}，儲蓄率是 ${savingRate}%，大家都說緊急備用金要是生活費的 6 個月，我目前的狀況是這樣，請給我一些理財建議！`,
+      );
+      if (!confirmed) {
+        return;
+      }
+    }
+
     setStep((prevStep) => prevStep + 1);
   };
 
@@ -49,6 +67,11 @@ export default function Report() {
   };
 
   const handleCloseReport = () => {
+    const confirmed = window.confirm("離開後需重新進入，確定離開嗎");
+
+    if (!confirmed) {
+      return;
+    }
     setReportVisible(false);
     setStep(1);
     setSelectedHouseCategory("");
@@ -56,11 +79,16 @@ export default function Report() {
   };
 
   const handleComplete = () => {
+    const confirmed = window.confirm("離開視窗後將關閉諮詢室，確定離開嗎");
+
+    if (!confirmed) {
+      return;
+    }
+
     setReportVisible(false);
     setStep(1);
     setSelectedHouseCategory("");
     setSelectedInsureCategory("");
-    alert("完成本月分析");
   };
 
   const renderStepContent = () => {
@@ -92,10 +120,14 @@ export default function Report() {
             selectedHouseCategory={selectedHouseCategory}
             expenseRecords={expenseRecords}
             selectedInsureCategory={selectedInsureCategory}
+            setTotalProperty={setTotalProperty}
+            setSavingRate={setSavingRate}
+            savingRate={savingRate}
+            totalProperty={totalProperty}
           />
         );
       case 5:
-        return <Step5 />;
+        return <Step5 preText={preText} setPreText={setPreText} />;
       default:
         return null;
     }
@@ -107,7 +139,7 @@ export default function Report() {
         onClick={() => handleAddReport()}
         className="transition-allw-25 fixed right-0 top-40 overflow-hidden rounded-xl bg-[#607196] p-2 text-white"
       >
-        生成上月報表
+        我要進行分析
       </button>
 
       <div className="mt-14 flex w-full justify-center gap-4">
@@ -134,7 +166,7 @@ export default function Report() {
                 <h2 className="text-2xl font-bold">生成報表 - 步驟 {step}/5</h2>
                 <button
                   onClick={handleCloseReport}
-                  className="rounded-full bg-red-500 p-2 text-white"
+                  className="rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"
                 >
                   關閉
                 </button>
@@ -146,7 +178,7 @@ export default function Report() {
                   <div
                     key={index}
                     className={`mx-1 h-2 flex-1 rounded-full ${
-                      index + 1 <= step ? "bg-blue-500" : "bg-gray-300"
+                      index + 1 <= step ? "bg-[#77ACA2]" : "bg-gray-300"
                     }`}
                   ></div>
                 ))}
@@ -162,22 +194,22 @@ export default function Report() {
             <div className="mt-6 flex justify-between">
               <button
                 onClick={handlePreviousStep}
-                className="rounded-md bg-gray-200 p-2"
-                disabled={step === 1 || step === 4}
+                className="rounded-xl bg-gray-200 p-2"
+                disabled={step === 1 || step === 4 || step === 5}
               >
                 上一步
               </button>
               {step === 5 ? (
                 <button
                   onClick={handleComplete}
-                  className="rounded-md bg-green-500 p-2 text-white"
+                  className="rounded-xl bg-[#607196] p-2 text-white"
                 >
-                  完成
+                  結束健檢分析
                 </button>
               ) : (
                 <button
                   onClick={handleNextStep}
-                  className="rounded-md bg-blue-500 p-2 text-white"
+                  className="rounded-xl bg-[#607196] p-2 text-white"
                   disabled={step === 5}
                 >
                   下一步

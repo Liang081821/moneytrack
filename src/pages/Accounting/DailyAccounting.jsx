@@ -93,31 +93,36 @@ export default function DailyAccounting() {
         ? querySnapshot.docs[0].data().account_type
         : "";
 
-      if (watchType === "轉帳") {
-        docRef = await addDoc(accountingCollectionRef, {
-          account: data.account,
-          account_type: accountType,
-          amount: Number(data.amount),
-          time: startDate,
-          targetaccount: data.targetaccount,
-          record_type: data.type,
-          project: data.project || null,
-        });
-      } else {
-        docRef = await addDoc(accountingCollectionRef, {
-          account: data.account,
-          account_type: accountType,
-          amount: Number(data.amount),
-          time: startDate,
-          class: data.class,
-          record_type: data.type,
-          project: data.project || null,
-        });
+      try {
+        if (watchType === "轉帳") {
+          docRef = await addDoc(accountingCollectionRef, {
+            account: data.account,
+            account_type: accountType,
+            amount: Number(data.amount),
+            time: startDate,
+            targetaccount: data.targetaccount,
+            record_type: data.type,
+            project: data.project || null,
+          });
+          alert("新增成功");
+          reset();
+        } else {
+          docRef = await addDoc(accountingCollectionRef, {
+            account: data.account,
+            account_type: accountType,
+            amount: Number(data.amount),
+            time: startDate,
+            class: data.class,
+            record_type: data.type,
+            project: data.project || null,
+          });
+          alert("新增成功");
+          reset();
+        }
+      } catch (error) {
+        console.error("寫入資料時出錯：", error);
+        alert("新增失敗：" + error.message);
       }
-
-      reset();
-      alert("新增成功");
-
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -126,7 +131,7 @@ export default function DailyAccounting() {
   const [startDate, setStartDate] = useState(new Date());
 
   return (
-    <div className="relative flex h-[450px] w-[420px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+    <div className="relative flex h-[450px] w-[500px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
       <div className="h-[48px] w-[345px] text-center font-semibold">
         每日記帳
       </div>

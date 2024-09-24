@@ -22,6 +22,7 @@ export default function ProjectLayoutGrid() {
   const [selectedProjectData, setselectedProjectData] = useState(null);
   const [totalamount, setTotalAmount] = useState();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { loginEmail } = useGlobalContext();
   const { transactionData } = useGlobalContext();
@@ -63,6 +64,8 @@ export default function ProjectLayoutGrid() {
 
   // 新增專案
   const addNewBox = async (data) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     try {
       let imageUrl = null;
       if (data.projectimage && data.projectimage[0]) {
@@ -87,6 +90,8 @@ export default function ProjectLayoutGrid() {
       setImagePreview(null);
     } catch (error) {
       console.error("Error adding project: ", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -183,36 +188,58 @@ export default function ProjectLayoutGrid() {
 
   return (
     <>
-      <div>
-        <div className="flex h-auto flex-wrap items-start justify-start gap-4 border border-black p-4">
+      <div className="w-full bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1]">
+        <div className="flex h-auto w-full flex-wrap items-start justify-start gap-4 p-4">
           {/* 新增專案按鈕 */}
-          <div className="relative h-[300px] w-[450px]">
-            <div className="h-[300px] w-[450px] rounded-xl border border-[#8b91a1] bg-[#8b91a1] p-4 opacity-20"></div>
+          <div className="relative h-[300px] w-[420px]">
+            <div className="h-[300px] w-[420px] rounded-xl border border-[#8b91a1] bg-[#8b91a1] p-4 opacity-20"></div>
             <button
               onClick={startEditing}
-              className="absolute left-1/2 top-1/2 flex h-[100px] w-[100px] -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-gray-400 pb-4 text-9xl opacity-100"
+              className="absolute left-1/2 top-1/2 flex h-[100px] w-[100px] -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-gray-400 pb-4 text-7xl font-semibold opacity-100"
             >
               +
             </button>
           </div>
 
           {/* 動態生成的專案 */}
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="relative h-[300px] w-[450px] rounded-xl border border-[#8b91a1] p-4"
-              onClick={() => showProjectDetails(project, project.name)}
-            >
-              {project.imageUrl && (
-                <img
-                  src={project.imageUrl}
-                  alt="Project"
-                  className="h-full w-full rounded-xl object-cover"
+          {projects.length === 0 ? (
+            <div className="flex h-[300px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="mb-2 h-12 w-12"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
                 />
-              )}
-              <p>{project.name}</p>
+              </svg>
+              <p>新增第一個專案</p>
             </div>
-          ))}
+          ) : (
+            <>
+              {projects.map((project) => (
+                <div
+                  key={project.id}
+                  className={`relative flex h-[300px] w-[420px] flex-col items-center justify-center gap-4 rounded-xl ${project.isediting ? "bg-[#9DBEBB]" : "bg-[#E8E9ED]"} p-3 shadow-md`}
+                  onClick={() => showProjectDetails(project, project.name)}
+                >
+                  {project.imageUrl && (
+                    <img
+                      src={project.imageUrl}
+                      alt="Project"
+                      className="h-[70%] w-full overflow-hidden rounded-xl object-cover"
+                    />
+                  )}
+                  <p className="text-xl font-semibold">{project.name}</p>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       </div>
 
@@ -220,13 +247,16 @@ export default function ProjectLayoutGrid() {
       {isEditing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
           <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
-            <button onClick={closeEditing} className="self-end">
-              關閉
+            <button
+              onClick={closeEditing}
+              className="self-end rounded-xl bg-[#F4E9CD] px-4 py-2 hover:bg-[#E8E9ED]"
+            >
+              取消
             </button>
 
-            <form onSubmit={handleSubmit(addNewBox)}>
+            <form onSubmit={handleSubmit(addNewBox)} className="flex flex-col">
               <div className="flex items-center gap-3">
-                <div>專案名稱</div>
+                <div className="font-semibold">專案名稱</div>
                 <input
                   className="rounded-xl border border-gray-300 px-4 py-2"
                   type="text"
@@ -239,7 +269,7 @@ export default function ProjectLayoutGrid() {
               </div>
 
               <div className="flex items-center gap-3">
-                <div>專案圖片</div>
+                <div className="font-semibold">專案圖片</div>
                 <input
                   className="rounded-xl border border-gray-300 px-4 py-2"
                   type="file"
@@ -258,8 +288,9 @@ export default function ProjectLayoutGrid() {
               )}
 
               <button
+                disabled={isSubmitting}
                 type="submit"
-                className="mt-4 rounded-xl bg-blue-500 px-4 py-2 text-white"
+                className="mt-4 self-center rounded-xl bg-[#607196] px-4 py-2 text-white"
               >
                 新增專案
               </button>
@@ -271,30 +302,32 @@ export default function ProjectLayoutGrid() {
       {/* 顯示專案詳情的彈出窗 */}
       {selectedProject && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="relative flex w-[2000px] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
-            <button onClick={closeProjectDetails} className="self-end">
-              關閉
+          <div className="relative flex w-[2000px] max-w-lg flex-col gap-3 rounded-xl bg-white p-6">
+            <button
+              onClick={closeProjectDetails}
+              className="self-end rounded-xl bg-[#F4E9CD] px-4 py-2 hover:bg-[#E8E9ED]"
+            >
+              取消
             </button>
 
-            <div className="flex flex-col items-center">
-              {selectedProject.imageUrl && (
-                <img
-                  src={selectedProject.imageUrl}
-                  alt="Project"
-                  className="h-64 w-64 rounded-xl object-cover"
-                />
-              )}
+            <div className="flex flex-col items-center gap-2 overflow-scroll">
               <p className="mt-4 text-xl font-semibold">
                 {selectedProject.name}
               </p>
-              <p className="mt-4 text-xl font-semibold">
+              <p className="font-base mb-4 mt-4 text-xl">
                 總計 NT${totalamount}
               </p>
               {Array.isArray(selectedProjectData) &&
                 selectedProjectData.map((item) => (
                   <div
                     key={item.id}
-                    className="w-full rounded-xl border border-black bg-gray-100 p-2"
+                    className={`w-full rounded-xl border p-3 transition-all duration-200 ${
+                      item.record_type === "支出"
+                        ? "bg-[#9DBEBB] text-gray-800"
+                        : item.record_type === "轉帳"
+                          ? "bg-[#F4E9CD] text-gray-800"
+                          : "bg-[#E8E9ED] text-gray-800"
+                    }`}
                   >
                     <div>{item.time.toDate().toLocaleDateString()}</div>
                     <div className="flex justify-between">
@@ -324,14 +357,14 @@ export default function ProjectLayoutGrid() {
                 {selectedProject.isediting && (
                   <button
                     onClick={() => closeProject(selectedProject.id)}
-                    className="mt-4 rounded-xl bg-green-500 px-4 py-2 text-white"
+                    className="mt-4 rounded-xl bg-[#9DBEBB] px-4 py-2 text-white"
                   >
                     結束專案
                   </button>
                 )}
                 <button
                   onClick={() => setShowDeleteConfirm(true)}
-                  className="mt-4 rounded-xl bg-red-500 px-4 py-2 text-white"
+                  className="mt-4 rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"
                 >
                   刪除專案
                 </button>
@@ -347,7 +380,7 @@ export default function ProjectLayoutGrid() {
             <h2 className="mb-4 text-xl font-bold">確認刪除所有的資料將移除</h2>
             <div className="flex justify-around">
               <button
-                className="rounded-lg bg-green-500 p-2 text-white"
+                className="rounded-xl bg-[#9DBEBB] px-4 py-2 text-white"
                 onClick={() => {
                   deleteProject("保留帳單", selectedProject.id);
                   setShowDeleteConfirm(false);
@@ -356,7 +389,7 @@ export default function ProjectLayoutGrid() {
                 保留所有帳單
               </button>
               <button
-                className="rounded-lg bg-red-500 p-2 text-white"
+                className="rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"
                 onClick={() => {
                   deleteProject("刪除帳單", selectedProject.id);
                   setShowDeleteConfirm(false);
@@ -365,7 +398,7 @@ export default function ProjectLayoutGrid() {
                 我要刪除
               </button>
               <button
-                className="rounded-lg bg-gray-500 p-2 text-white"
+                className="rounded-xl bg-[#F4E9CD] px-4 py-2 hover:bg-[#E8E9ED]"
                 onClick={() => setShowDeleteConfirm(false)}
               >
                 取消

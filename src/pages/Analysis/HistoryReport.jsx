@@ -19,7 +19,7 @@ export default function HistoryReport() {
 
   if (!reportData || reportData.length === 0) {
     return (
-      <div className="mb-4 mt-4 flex w-[840px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="mb-4 mt-4 flex w-[1040px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -42,8 +42,8 @@ export default function HistoryReport() {
   const currentReport = reportData[currentIndex] || {};
 
   return (
-    <div className="mx-auto max-w-5xl p-4">
-      <div className="mb-4 w-[760px] rounded-xl bg-white p-6 shadow-md">
+    <div className="p-4">
+      <div className="mx-auto mb-4 w-[1040px] rounded-xl bg-white p-6 shadow-md">
         <h3 className="mb-6 text-center font-semibold">
           {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}{" "}
           月 報告

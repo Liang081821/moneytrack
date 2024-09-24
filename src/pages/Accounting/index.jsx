@@ -7,7 +7,7 @@ import ExpensePieChart from "./ExpensePieChart";
 import IncomePieChart from "./IncomePieChart";
 import BalanceChart from "./BalanceChart";
 import BarChart from "./BarChart";
-import CustomBudget from "./CustomBudget";
+// import CustomBudget from "./CustomBudget";
 import AddNewClass from "./AddNewClass";
 
 export default function Accounting() {
@@ -206,7 +206,7 @@ export default function Accounting() {
           )}
         </Droppable>
       </DragDropContext>
-      <CustomBudget />
+      {/* <CustomBudget /> */}
       <AddNewClass />
     </div>
   );

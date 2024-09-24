@@ -1,7 +1,11 @@
-import { VictoryPie } from "victory";
-import PropTypes from "prop-types";
+import { Pie } from "react-chartjs-2";
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useGlobalContext } from "@/context/GlobalContext";
+import { Chart, registerables } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels"; // 引入插件
+
+Chart.register(...registerables, ChartDataLabels); // 注册插件
 
 export default function IncomePieChart({
   firstDayOfLastMonth,
@@ -14,19 +18,17 @@ export default function IncomePieChart({
     const fetchRecords = () => {
       try {
         const filteredTransactions = transactionData.filter((transaction) => {
-          const isExpense = transaction.record_type === "收入";
+          const isIncome = transaction.record_type === "收入";
 
           const transactionTime = transaction.time.toDate();
           const isInDateRange =
             transactionTime >= firstDayOfLastMonth &&
             transactionTime <= lastDayOfLastMonth;
 
-          return isExpense && isInDateRange;
+          return isIncome && isInDateRange;
         });
 
-        console.log(filteredTransactions);
-
-        const expenseGroupedTotals = filteredTransactions.reduce(
+        const incomeGroupedTotals = filteredTransactions.reduce(
           (acc, record) => {
             const { class: recordClass, amount } = record;
             if (!acc[recordClass]) {
@@ -38,12 +40,13 @@ export default function IncomePieChart({
           {},
         );
 
-        const pieChartData = Object.entries(expenseGroupedTotals).map(
+        const pieChartData = Object.entries(incomeGroupedTotals).map(
           ([key, value]) => ({
-            x: key,
-            y: value,
+            label: key,
+            value: value,
           }),
         );
+
         setIncomeRecord(pieChartData);
       } catch (e) {
         console.error("查詢錯誤：", e);
@@ -57,9 +60,10 @@ export default function IncomePieChart({
     firstDayOfLastMonth: PropTypes.instanceOf(Date).isRequired,
     lastDayOfLastMonth: PropTypes.instanceOf(Date).isRequired,
   };
+
   if (incomeRecord.length === 0) {
     return (
-      <div className="flex h-[380px] w-[650px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="flex h-[450px] w-[500px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -78,21 +82,84 @@ export default function IncomePieChart({
       </div>
     );
   }
+
+  const data = {
+    labels: incomeRecord.map((record) => record.label),
+    datasets: [
+      {
+        data: incomeRecord.map((record) => record.value),
+        backgroundColor: [
+          "#E8E9ED",
+          "#9DBEBB",
+          "#F4E9CD",
+          "#8BB174",
+          "#468189",
+        ],
+        borderWidth: 0,
+      },
+    ],
+  };
+
+  const options = {
+    maintainAspectRatio: true,
+    responsive: true,
+    devicePixelRatio: window.devicePixelRatio,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          title: (tooltipItems) => tooltipItems[0].label,
+          label: (tooltipItem) => {
+            const value = tooltipItem.raw;
+            const total = tooltipItem.chart.data.datasets[0].data.reduce(
+              (a, b) => a + b,
+              0,
+            );
+            const percentage = ((value / total) * 100).toFixed(1);
+            return `金額: $${value} (${percentage}%)`;
+          },
+        },
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        titleFont: {
+          size: 16,
+        },
+        bodyFont: {
+          size: 14,
+        },
+        titleColor: "#fff",
+        bodyColor: "#fff",
+      },
+      datalabels: {
+        anchor: "center",
+        align: "center",
+        color: "black",
+        font: {
+          size: 14,
+          weight: "bold",
+        },
+        formatter: (value, context) => {
+          const total = context.chart.data.datasets[0].data.reduce(
+            (a, b) => a + b,
+            0,
+          );
+          const percentage = (value / total) * 100;
+
+          return percentage < 5
+            ? ""
+            : `${context.chart.data.labels[context.dataIndex]}: $${value}`;
+        },
+      },
+      legend: {
+        display: false,
+      },
+    },
+  };
+
   return (
-    <div className="flex h-[380px] w-[650px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+    <div className="flex h-[450px] w-[500px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
       <div className="text-base font-medium">本月收入分佈</div>
-      <VictoryPie
-        colorScale={["#4F5D75", "#BFC0C0", "#2D3142", "#FFFFFF", "#258EA6"]}
-        labels={({ datum }) =>
-          `${datum.x}: $${datum.y} (${((datum.y / incomeRecord.reduce((acc, cur) => acc + cur.y, 0)) * 100).toFixed(1)}%)`
-        }
-        style={{
-          labels: { fontSize: 14, fontWeight: "bold" },
-        }}
-        data={incomeRecord.length > 0 ? incomeRecord : [{ x: "無資料", y: 1 }]}
-        width={320}
-        height={320}
-      />
+      <div className="flex h-full w-full justify-center p-10">
+        <Pie data={data} options={options} />
+      </div>
     </div>
   );
 }

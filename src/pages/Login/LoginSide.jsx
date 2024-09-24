@@ -30,18 +30,13 @@ export default function LoginSide() {
   return (
     <div className="landing-page">
       {/* 第一個區塊 */}
-      <motion.section
-        className="relative flex h-screen w-full items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${bannerImage})` }}
-      >
-        <div className="absolute top-0 flex h-[150px] w-full items-center justify-center bg-gray-200 text-4xl font-bold">
-          MoneyTrack 新世代的理財選擇
-        </div>
+      <motion.section className="relative flex h-screen w-full items-center justify-center bg-cover bg-center">
+        <div className="absolute top-0 flex h-[150px] w-full items-center justify-center bg-gray-200 text-4xl font-bold"></div>
         <motion.div className="absolute inset-0 mt-[150px]" style={{ scale }}>
           <div className="flex h-full w-full items-center justify-center">
             <div className="h-full w-full overflow-hidden rounded-xl bg-gray-400 text-center">
               <img
-                src={bannerImage}
+                // src={bannerImage}
                 alt="Banner"
                 className="h-full w-full object-cover"
               />

@@ -192,7 +192,7 @@ export default function Consume() {
             <h2 className="mb-4 text-xl font-bold">確定要刪除帳戶嗎？</h2>
             <div className="flex justify-around">
               <button
-                className="rounded-lg bg-green-500 p-2 text-white"
+                className="rounded-xl bg-[#9DBEBB] px-4 py-2 text-white"
                 onClick={() => {
                   handleDeleteAccount("保留帳單");
                   setShowDeleteConfirm(false);
@@ -201,7 +201,7 @@ export default function Consume() {
                 保留所有帳單
               </button>
               <button
-                className="rounded-lg bg-red-500 p-2 text-white"
+                className="rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"
                 onClick={() => {
                   handleDeleteAccount("刪除帳單");
                   setShowDeleteConfirm(false);
@@ -210,7 +210,7 @@ export default function Consume() {
                 刪除所有帳單
               </button>
               <button
-                className="rounded-lg bg-gray-500 p-2 text-white"
+                className="rounded-xl bg-[#F4E9CD] px-4 py-2 hover:bg-[#E8E9ED]"
                 onClick={() => setShowDeleteConfirm(false)}
               >
                 取消

@@ -14,7 +14,6 @@ export default function MonthlyData({
   setIncomeTotals,
   netWorth,
   setNetWorth,
-  expenseRecords,
   setExpenseRecords,
 }) {
   const { loginEmail } = useGlobalContext();

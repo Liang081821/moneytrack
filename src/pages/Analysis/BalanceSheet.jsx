@@ -36,7 +36,7 @@ export default function BalanceSheet() {
               key={item.account}
               className="m-1 flex h-32 w-32 flex-col items-center justify-center rounded-xl border bg-[#C4CAD0] p-2"
             >
-              <div className="text-sm">{item.account}</div>
+              <div className="text-sm font-semibold">{item.account}</div>
               <div className="text-lg">NT${item.balance}</div>
               <div className="text-base">{item.account_type}帳</div>
             </div>
@@ -48,7 +48,7 @@ export default function BalanceSheet() {
               key={item.account}
               className="m-1 flex h-32 w-32 flex-col items-center justify-center rounded-xl border bg-[#D4BEBE] p-2"
             >
-              <div className="text-sm">{item.account}</div>
+              <div className="text-sm font-semibold">{item.account}</div>
               <div className="text-lg">NT${item.balance}</div>
               <div className="text-base">{item.account_type}帳</div>
             </div>

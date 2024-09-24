@@ -97,7 +97,7 @@ export default function HistoryRecord() {
           <Consume />
           <Invest />
         </div>
-        <div className="mt-5">
+        <div className="mx-auto w-[1280px]">
           {historyData.length !== 0 ? (
             <div className="mb-9 mt-5 flex w-full flex-col items-center justify-center rounded-xl bg-white p-2">
               <div className="font-semibold">資產紀錄</div>

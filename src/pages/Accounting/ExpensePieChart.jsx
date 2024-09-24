@@ -1,7 +1,11 @@
-import { VictoryPie } from "victory";
-import PropTypes from "prop-types";
+import { Pie } from "react-chartjs-2";
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useGlobalContext } from "@/context/GlobalContext";
+import { Chart, registerables } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+
+Chart.register(...registerables, ChartDataLabels);
 
 export default function ExpensePieChart({
   firstDayOfLastMonth,
@@ -24,8 +28,6 @@ export default function ExpensePieChart({
           return isExpense && isInDateRange;
         });
 
-        console.log(filteredTransactions);
-
         const expenseGroupedTotals = filteredTransactions.reduce(
           (acc, record) => {
             const { class: recordClass, amount } = record;
@@ -40,10 +42,11 @@ export default function ExpensePieChart({
 
         const pieChartData = Object.entries(expenseGroupedTotals).map(
           ([key, value]) => ({
-            x: key,
-            y: value,
+            label: key,
+            value: value,
           }),
         );
+
         setExpenseRecord(pieChartData);
       } catch (e) {
         console.error("查詢錯誤：", e);
@@ -57,9 +60,10 @@ export default function ExpensePieChart({
     firstDayOfLastMonth: PropTypes.instanceOf(Date).isRequired,
     lastDayOfLastMonth: PropTypes.instanceOf(Date).isRequired,
   };
+
   if (expenseRecord.length === 0) {
     return (
-      <div className="flex h-[380px] w-[650px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="flex h-[450px] w-[500px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -78,23 +82,85 @@ export default function ExpensePieChart({
       </div>
     );
   }
+
+  const data = {
+    labels: expenseRecord.map((record) => record.label),
+    datasets: [
+      {
+        data: expenseRecord.map((record) => record.value),
+        backgroundColor: [
+          "#9DBEBB",
+          "#F4E9CD",
+          "#8BB174",
+          "#468189",
+          "#E8E9ED",
+        ],
+        borderWidth: 0,
+      },
+    ],
+  };
+
+  const options = {
+    maintainAspectRatio: true,
+    responsive: true,
+    devicePixelRatio: window.devicePixelRatio,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          title: (tooltipItems) => tooltipItems[0].label,
+          label: (tooltipItem) => {
+            const value = tooltipItem.raw;
+            const total = tooltipItem.chart.data.datasets[0].data.reduce(
+              (a, b) => a + b,
+              0,
+            );
+            const percentage = ((value / total) * 100).toFixed(1);
+            return `金額: $${value} (${percentage}%)`;
+          },
+        },
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        titleFont: {
+          size: 16,
+        },
+        bodyFont: {
+          size: 14,
+        },
+        titleColor: "#fff",
+        bodyColor: "#fff",
+      },
+      datalabels: {
+        anchor: "center", // 修改为 "center"
+        align: "center", // 修改为 "center"
+        color: "black",
+        font: {
+          size: 14,
+          weight: "bold",
+        },
+        formatter: (value, context) => {
+          const total = context.chart.data.datasets[0].data.reduce(
+            (a, b) => a + b,
+            0,
+          );
+          const percentage = (value / total) * 100;
+
+          // 如果百分比小于 5，则返回空字符串，仍然占据位置
+          return percentage < 5
+            ? ""
+            : `${context.chart.data.labels[context.dataIndex]}: $${value}`;
+        },
+      },
+      legend: {
+        display: false,
+      },
+    },
+  };
+
   return (
-    <div className="flex h-[380px] w-[650px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+    <div className="flex h-[450px] w-[500px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
       <div className="text-base font-medium">本月支出分佈</div>
-      <VictoryPie
-        colorScale={["#89023E", "#FFD9DA", "#CC7178", "#F3E1DD", "#D4BEBE"]}
-        labels={({ datum }) =>
-          `${datum.x}: $${datum.y} (${((datum.y / expenseRecord.reduce((acc, cur) => acc + cur.y, 0)) * 100).toFixed(1)}%)`
-        }
-        style={{
-          labels: { fontSize: 14, fontWeight: "bold" },
-        }}
-        data={
-          expenseRecord.length > 0 ? expenseRecord : [{ x: "無資料", y: 1 }]
-        }
-        width={320}
-        height={320}
-      />
+      <div className="flex h-full w-full justify-center p-10">
+        <Pie data={data} options={options} />
+      </div>
     </div>
   );
 }

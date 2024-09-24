@@ -10,32 +10,39 @@ export default function Step4({
   expenseRecords,
   selectedHouseCategory,
   selectedInsureCategory,
+  totalProperty,
+  setTotalProperty,
+  setSavingRate,
+  savingRate,
 }) {
   const { property, loginEmail } = useGlobalContext();
   const { reportCollectionRef } = getFirestoreRefs(loginEmail);
-  const [loading, setLoading] = useState(true); // 初始設置為 true
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading(false); // 三秒後設置為 false
+      setLoading(false);
     }, 2000);
 
-    return () => clearTimeout(timer); // 清除定時器
+    return () => clearTimeout(timer);
   }, []);
 
   const emergyAccounts = property
     .filter((item) => item.account_type === "儲蓄")
     .reduce((accumulate, value) => accumulate + value.balance, 0);
 
-  const totalProperty = property.reduce(
-    (accumulate, value) => accumulate + value.balance,
-    0,
-  );
-
-  const savingRate = (
-    ((monthincome - monthexpense) / monthincome) *
-    100
-  ).toFixed(0);
+  useEffect(() => {
+    const totalProperty = property.reduce(
+      (accumulate, value) => accumulate + value.balance,
+      0,
+    );
+    setTotalProperty(totalProperty);
+    const savingRate = (
+      ((monthincome - monthexpense) / monthincome) *
+      100
+    ).toFixed(0);
+    setSavingRate(savingRate);
+  }, [monthexpense, monthincome, setSavingRate, setTotalProperty, property]);
 
   const expensetype = expenseRecords
     .filter((item) => item.class === selectedHouseCategory)
@@ -126,13 +133,21 @@ export default function Step4({
       console.error("儲存到 Firebase 時發生錯誤：", error);
       alert("儲存時發生錯誤");
     } finally {
-      setLoading(false); // 停止加載
+      setLoading(false);
     }
+  };
+  Step4.propTypes = {
+    preText: PropTypes.func.isRequired,
+    setPreText: PropTypes.func.isRequired,
+    totalProperty: PropTypes.func.isRequired,
+    setTotalProperty: PropTypes.func.isRequired,
+    setSavingRate: PropTypes.func.isRequired,
+    savingRate: PropTypes.func.isRequired,
   };
 
   return (
-    <div className="flex h-full flex-col items-center justify-center fade-in">
-      <h2 className="text-2xl font-bold">報表</h2>
+    <div className="flex h-full flex-col items-center justify-center pt-10 fade-in">
+      <h2 className="pb-2 text-2xl font-bold">報表</h2>
 
       {loading && (
         <div className="flex items-center justify-center">載入中 ...</div>
@@ -141,7 +156,7 @@ export default function Step4({
       {!loading && (
         <div className="w-full fade-in">
           {/* 報表內容 */}
-          <div className="mb-4">
+          <div className="mb-1">
             <table className="min-w-full border-collapse border border-gray-200">
               <thead>
                 <tr>
@@ -262,13 +277,13 @@ export default function Step4({
           <div className="flex justify-center">
             <button
               onClick={handleSaveReport}
-              className="mt-4 rounded-md bg-green-500 p-2 text-white"
+              className="mt-1 rounded-md bg-[#9DBEBB] p-2 text-white"
             >
               下載 CSV
             </button>
             <button
               onClick={handleSaveToFirebase}
-              className="ml-4 mt-4 rounded-md bg-blue-500 p-2 text-white"
+              className="ml-4 mt-1 rounded-md bg-[#607196] p-2 text-white"
             >
               儲存報表
             </button>
