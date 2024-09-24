@@ -16,7 +16,7 @@ export default function Step5({ preText, setPreText }) {
   const sendPreText = async (input) => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/api/chat", {
+      const response = await fetch("https://chat-ufdrsceebq-uc.a.run.app", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export default function Step5({ preText, setPreText }) {
     setUserInput("");
 
     try {
-      const response = await fetch("http://localhost:3000/api/chat", {
+      const response = await fetch("https://chat-ufdrsceebq-uc.a.run.app", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
