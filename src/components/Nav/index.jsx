@@ -105,7 +105,7 @@ export default function Nav() {
             <h1>理財專案</h1>
           </div>
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/personalinformation"
           className={({ isActive, isPending, isTransitioning }) =>
             ` ${isActive ? "font-base rounded-xl bg-[#9DBEBB]" : "bg-transparent font-normal"} ${isPending ? "text-red-500" : "text-black"} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
@@ -128,7 +128,7 @@ export default function Nav() {
             </svg>
             <h1>帳號管理</h1>
           </div>
-        </NavLink>
+        </NavLink> */}
       </div>
     </div>
   );

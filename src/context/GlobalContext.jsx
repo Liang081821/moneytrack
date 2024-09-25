@@ -26,7 +26,6 @@ export const GlobalProvider = ({ children }) => {
     return localStorage.getItem("userEmail") || null;
   });
 
-  // 獲取 class 分類及 property 所有帳戶資料
   useEffect(() => {
     const unsubscribe = fetchAllPropertyData(loginEmail, setProperty);
     return () => unsubscribe();
