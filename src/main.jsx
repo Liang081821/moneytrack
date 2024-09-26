@@ -63,7 +63,7 @@ root.render(
             }
           />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/accounting" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>

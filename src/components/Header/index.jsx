@@ -3,12 +3,30 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
+import { useState, useEffect } from "react";
 
 import Logo from "./Logo.png";
 
 export default function Header() {
   const { loginState } = useGlobalContext();
   const { loginEmail } = useGlobalContext();
+
+  const [isSticky, setIsSticky] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      setIsSticky(true);
+    } else {
+      setIsSticky(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // Google 登入處理程序
   const handleGoogleLogin = async () => {
@@ -88,8 +106,12 @@ export default function Header() {
           </div>
         </div>
       ) : (
-        <div className="p-2 transition-all duration-300 ease-in-out hover:p-0">
-          <div className="flex h-[80px] items-center justify-between rounded-[50px] bg-[#222E50] p-6 transition-all duration-300 ease-in-out hover:rounded-none">
+        <div
+          className={`fixed z-10 w-full ${isSticky ? "px-4 pt-4" : ""} transition-all duration-300`}
+        >
+          <div
+            className={`flex h-[80px] items-center justify-between p-6 ${isSticky ? "rounded-2xl bg-[#222E50]" : ""} transition-all duration-300`}
+          >
             <div className="flex items-center gap-2">
               <img src={Logo} alt="Logo" className="flex h-[47px] w-[42px]" />
               <div className="text-white">MoneyTrack</div>
@@ -104,6 +126,22 @@ export default function Header() {
             </div>
           </div>
         </div>
+        // <div className="fixed w-full p-5">
+        //   <div className="flex h-[80px] items-center justify-between rounded-xl bg-[#222E50] p-6">
+        //     <div className="flex items-center gap-2">
+        //       <img src={Logo} alt="Logo" className="flex h-[47px] w-[42px]" />
+        //       <div className="text-white">MoneyTrack</div>
+        //     </div>
+        //     <div className="flex items-center gap-3">
+        //       <button
+        //         onClick={handleGoogleLogin}
+        //         className="rounded-xl border border-white p-2 text-white hover:bg-white hover:text-[#222E50]"
+        //       >
+        //         註冊/登入
+        //       </button>
+        //     </div>
+        //   </div>
+        // </div>
       )}
     </>
   );

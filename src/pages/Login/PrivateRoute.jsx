@@ -1,12 +1,17 @@
 import { Navigate } from "react-router-dom";
+import PropTypes from "prop-types";
+
 import { useGlobalContext } from "@/context/GlobalContext";
 
 const PrivateRoute = ({ children }) => {
-  const { loginEmail } = useGlobalContext(); // 获取 loginEmail
-  const isAuthenticated = Boolean(loginEmail); // 判断用户是否认证
+  const { loginEmail } = useGlobalContext();
+  const isAuthenticated = Boolean(loginEmail);
 
   console.log("Is authenticated:", isAuthenticated);
   return isAuthenticated ? children : <Navigate to="/login" replace />;
+};
+PrivateRoute.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default PrivateRoute;
