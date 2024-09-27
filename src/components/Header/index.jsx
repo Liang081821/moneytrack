@@ -90,16 +90,20 @@ export default function Header() {
   return (
     <>
       {loginEmail ? (
-        <div className="flex h-[80px] items-center justify-between bg-[#222E50] p-6">
+        <div className="fixed top-0 z-10 flex h-[80px] w-full items-center justify-between bg-[#222E50] p-6">
           <div className="flex items-center gap-2">
             <img src={Logo} alt="Logo" className="flex h-[47px] w-[42px]" />
-            <div className="text-white">MoneyTrack</div>
+            <div className="xs:text-sm text-xs text-white sm:text-base">
+              MoneyTrack
+            </div>
           </div>
           <div className="flex items-center gap-3">
-            <p className="text-white">歡迎！{loginState}</p>
+            <p className="xs:text-sm text-xs text-white sm:text-base">
+              歡迎！{loginState}
+            </p>
             <button
               onClick={handleLogout}
-              className="rounded-xl border border-white p-2 text-white hover:bg-white hover:text-[#222E50]"
+              className="xs:text-sm rounded-xl border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] sm:text-base"
             >
               登出
             </button>
@@ -107,19 +111,21 @@ export default function Header() {
         </div>
       ) : (
         <div
-          className={`fixed z-10 w-full ${isSticky ? "px-4 pt-4" : ""} transition-all duration-300`}
+          className={`fixed z-10 w-[100vw] ${isSticky ? "px-4 pt-4" : ""} transition-all duration-300`}
         >
           <div
             className={`flex h-[80px] items-center justify-between p-6 ${isSticky ? "rounded-2xl bg-[#222E50]" : ""} transition-all duration-300`}
           >
             <div className="flex items-center gap-2">
               <img src={Logo} alt="Logo" className="flex h-[47px] w-[42px]" />
-              <div className="text-white">MoneyTrack</div>
+              <div className="xs:text-sm text-xs text-white sm:text-base">
+                MoneyTrack
+              </div>
             </div>
             <div className="flex items-center gap-3">
               <button
                 onClick={handleGoogleLogin}
-                className="rounded-xl border border-white p-2 text-white hover:bg-white hover:text-[#222E50]"
+                className="xs:text-sm rounded-xl border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] sm:text-base"
               >
                 註冊/登入
               </button>

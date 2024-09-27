@@ -14,11 +14,11 @@ import {
 export default function LoginSide() {
   const { ref: firstRef, inView: firstInView } = useInView({
     triggerOnce: true,
-    threshold: 0.4,
+    threshold: 0.3,
   });
   const { ref: secondRef, inView: secondInView } = useInView({
     triggerOnce: true,
-    threshold: 0.4,
+    threshold: 0.3,
   });
   const horizonRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -54,25 +54,25 @@ export default function LoginSide() {
       img: "../../../public/chart.gif",
       text: "我的支出都花在哪？",
       content: "多圖表分析",
-      contenttwo: "支出收入比例一目瞭然",
+      contenttwo: "支出收入一目瞭然",
       smalltext: "各式數據圖表，讓您快速掌握每月的消費習慣！",
-      smalltexttwo: "最客製化的分析建議，讓您不再對理財毫無頭緒。",
+      smalltexttwo: "此外，切換月份檢視各項交易紀錄，轉帳編輯樣樣來！",
     },
     {
       img: "../../../public/analysis.gif",
       text: "我想要客製化的理財方向",
       content: "專屬理財規劃師",
       contenttwo: "提供最專業的諮詢",
-      smalltext: "透過數據報表，分析您每月的支出收入比率、淨資產分佈",
+      smalltext: "透過數據報表，分析您每月的支出收入比率、淨資產分佈。",
       smalltexttwo: "最客製化的分析建議，讓您不再對理財毫無頭緒。",
     },
     {
       img: "../../../public/project.gif",
-      text: "我每次出去玩都不知道自己花了多少錢",
+      text: "我出去玩不知道花了多少錢",
       content: "開啟記帳專案",
       contenttwo: "掌握您金錢的流向",
-      smalltext: "擁有理財專案的功能，不管是出遊、結婚、個人儲蓄計畫",
-      smalltexttwo: "通通可以交給 MoneyTrack。",
+      smalltext: "擁有理財專案功能，不管是出遊、結婚、個人儲蓄計畫，",
+      smalltexttwo: "通通交給我們，讓您人生的路上，你不孤單。",
     },
   ];
   const testimonials = [
@@ -111,6 +111,20 @@ export default function LoginSide() {
       avatar:
         "https://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/9597532/0/638500929989470000?v=1",
     },
+    {
+      name: "扇貝",
+      review:
+        "真的太方便了！離線功能非常實用，我常常去到網路很差的咖啡館，每次都會忘記記帳，後面就越來越懶，現在不管是上山下海，我都會使用 MoneyTrack。",
+      avatar:
+        "https://assets.breezeonline.com/online/production/product/bbda77f3-2434-4969-99d4-dd4788e5b0ba.jpg",
+    },
+    {
+      name: "抹茶山",
+      review:
+        "MoneyTrack 真的很好用！它幫助我檢視我每天的支出，現在爸爸問我錢花到哪去的時候，我不會在支吾其詞了。謝謝 MoneyTrack 改變我的習慣！",
+      avatar:
+        "https://s2.eslite.com/unsafe/fit-in/x900/s.eslite.com/b2b/newItem/2024/08/01/988_153457412_595_mainCoverImage1.jpg",
+    },
   ];
 
   return (
@@ -118,17 +132,28 @@ export default function LoginSide() {
       {/* 第一個區塊 */}
 
       <div className="flex h-full w-full items-center justify-center">
-        <div className="h-full w-full overflow-hidden rounded-xl bg-gray-400 text-center">
-          <img
+        <div
+          className="h-[80vh] w-full overflow-hidden object-cover text-center"
+          style={{
+            backgroundImage: `url(${bannerImage})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
+          {/* <img
             src={bannerImage}
             alt="Banner"
-            className="absolute inset-0 h-[80vh] w-full object-cover"
-          />
-          <div className="absolute left-[200px] top-[200px] flex flex-col items-start gap-4">
+            className="inset-0 h-[80vh] w-full object-cover"
+          /> */}
+          <div className="3xl:mt-[20vh] ml-[5vw] mt-[10vh] flex flex-col items-start gap-4 pr-6 sm:p-0 xl:mt-[17vh]">
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
-                <h1 className="text-4xl text-[#9DBEBB]">4.8 </h1>
-                <h1 className="text-4xl text-white"> 顆星好評推薦</h1>
+                <h1 className="xs:text-3xl text-2xl text-[#9DBEBB] xl:text-4xl">
+                  4.8
+                </h1>
+                <h1 className="xs:text-3xl text-2xl text-white xl:text-4xl">
+                  顆星好評推薦
+                </h1>
               </div>
               <div className="flex gap-3">
                 <svg
@@ -184,10 +209,10 @@ export default function LoginSide() {
               </div>
             </div>
 
-            <h1 className="mt-4 text-5xl font-semibold text-[#bbe0e1]">
+            <h1 className="xs:text-4xl mt-4 text-3xl font-semibold text-[#bbe0e1] xl:text-5xl">
               最創新的理財記帳網頁
             </h1>
-            <h1 className="mt-2 text-xl text-white">
+            <h1 className="mt-2 text-white xl:text-xl">
               最多元的資產管理平台，最方便的記帳工具， 最完整的智慧分析。
             </h1>
           </div>
@@ -195,29 +220,29 @@ export default function LoginSide() {
       </div>
 
       <div>
-        <section className="mt-[80vh] h-[350vh]">
+        <section className="h-[350vh]">
           <div
             ref={horizonRef}
-            className="sticky top-0 flex max-h-screen flex-col items-center justify-center overflow-hidden bg-[#fafafa]"
+            className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden bg-[#fafafa] pt-[20vh] lg:pt-0"
           >
-            <div className="flex h-screen w-screen items-center justify-center gap-40">
+            <div className="mb-44 flex h-screen w-screen flex-col items-center justify-center gap-20 lg:mb-0 lg:flex-row lg:pr-28 xl:gap-28">
               <img
                 src={content[currentPage].img}
                 alt=""
-                className="h-[60vh] w-auto"
+                className="3xl:h-[630px] xs:h-[350px] h-[250px] w-auto sm:h-[400px] lg:h-[300px] xl:h-[500px] 2xl:h-[550px]"
               />
-              <div>
-                <p className="mb-4 text-3xl font-semibold text-[#bbe0e1]">
+              <div className="xs:w-[400px] flex w-[340px] flex-col flex-nowrap">
+                <p className="mb-4 text-xl font-semibold text-[#bbe0e1] sm:text-2xl xl:text-3xl">
                   {content[currentPage].text}
                 </p>
-                <p className="text-6xl font-semibold leading-snug">
+                <p className="3xl:text-6xl 3xl:leading-snug xs:text-5xl xs:leading-tight text-nowrap text-4xl font-semibold">
                   {content[currentPage].content}
                   <br />
                   {content[currentPage].contenttwo}
                 </p>
-                <p className="mt-4 text-2xl leading-snug text-[#374151]">
+                <p className="xs:text-lg mt-4 text-sm leading-snug text-[#374151] xl:text-2xl">
                   {content[currentPage].smalltext}
-                  <br />
+
                   {content[currentPage].smalltexttwo}
                 </p>
               </div>
@@ -225,7 +250,7 @@ export default function LoginSide() {
                 {content.map((_, index) => (
                   <div
                     key={index}
-                    className={`mx-2 h-3 w-3 rounded-full transition duration-300 ${currentPage === index ? "bg-gray-600" : "bg-gray-400"}`}
+                    className={`mx-2 h-2 w-2 rounded-full transition duration-300 xl:h-3 xl:w-3 ${currentPage === index ? "bg-gray-600" : "bg-gray-400"}`}
                   />
                 ))}
               </div>
@@ -235,15 +260,15 @@ export default function LoginSide() {
         </section>
         {/* 最后一部分 */}
         {/* 第一部分 */}
-        <section className="h-[60vh] bg-[#fafafa]">
+        <section className="h-auto bg-[#fafafa] pt-[10vh] lg:pt-0">
           <div className="flex h-full flex-col items-center gap-7">
-            <h1 className="text-6xl font-semibold">更多特色</h1>
-            <div className="flex h-[50%] items-center gap-3 rounded-xl">
+            <h1 className="text-4xl font-semibold lg:text-6xl">更多特色</h1>
+            <div className="flex h-[50%] flex-col items-center gap-3 rounded-xl lg:flex-row">
               {[
                 {
                   title: "自定義佈局",
                   description:
-                    "財務儀表板擺脫傳統固定式排版，您可以根據自己習慣、喜歡的使用方式去拖拉介面，讓記帳更輕鬆！",
+                    "財務儀表板擺脫傳統排版，您可以根據自己習慣、喜歡的使用方式去拖拉介面，讓記帳更輕鬆！",
                   svg: (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -251,7 +276,7 @@ export default function LoginSide() {
                       viewBox="0 0 24 24"
                       strokeWidth="1"
                       stroke="currentColor"
-                      className="size-11"
+                      className="size-8 lg:size-11"
                     >
                       <path
                         strokeLinecap="round"
@@ -272,7 +297,7 @@ export default function LoginSide() {
                       viewBox="0 0 24 24"
                       strokeWidth="1"
                       stroke="currentColor"
-                      className="size-11"
+                      className="size-8 lg:size-11"
                     >
                       <path
                         strokeLinecap="round"
@@ -285,7 +310,7 @@ export default function LoginSide() {
                 {
                   title: "離線使用",
                   description:
-                    "經常在餐廳連不到網路嗎? 沒事，MoneyTrack 在離線時也可以使用，您再也找不到不記帳的藉口！",
+                    "經常在餐廳連不到網路嗎? MoneyTrack 離線時也能繼續使用，您再也找不到不記帳的藉口！",
                   svg: (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -293,7 +318,7 @@ export default function LoginSide() {
                       viewBox="0 0 24 24"
                       strokeWidth="1"
                       stroke="currentColor"
-                      className="size-11"
+                      className="size-8 lg:size-11"
                     >
                       <path
                         strokeLinecap="round"
@@ -311,7 +336,7 @@ export default function LoginSide() {
                 {
                   title: "轉帳交易",
                   description:
-                    "在 MoneyTrack 中您不需要擔心轉帳如何記帳，因為我們提供全新「轉帳」功能，讓你資產轉移不再煩惱！",
+                    "在 MoneyTrack 中您可以輕鬆紀錄轉帳，因為我們提供「轉帳」功能，讓你資產轉移不再煩惱！",
                   svg: (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -319,7 +344,7 @@ export default function LoginSide() {
                       viewBox="0 0 24 24"
                       strokeWidth="1"
                       stroke="currentColor"
-                      className="size-11"
+                      className="size-8 lg:size-11"
                     >
                       <path
                         strokeLinecap="round"
@@ -333,55 +358,61 @@ export default function LoginSide() {
                 <div
                   ref={firstRef}
                   key={index}
-                  className={`flex h-full w-[20vw] transform flex-col items-center justify-center gap-5 rounded-3xl border bg-white p-9 text-3xl shadow-md transition duration-700 hover:bg-gray-100 ${
+                  className={`flex h-full w-[80vw] transform flex-col items-center justify-center gap-3 rounded-3xl border bg-white px-7 py-3 text-3xl shadow-md transition duration-700 hover:bg-gray-100 lg:w-[20vw] lg:gap-5 ${
                     firstInView
                       ? "translate-y-0 opacity-100"
                       : "translate-y-10 opacity-0"
                   }`}
                 >
                   {svg}
-                  <p className="flex items-center text-2xl font-semibold">
+                  <p className="flex items-center text-xl font-semibold lg:text-2xl">
                     {title}
                   </p>
-                  <p className="text-lg text-[#374151]">{description}</p>
+                  <p className="text-base text-[#374151] xl:text-lg">
+                    {description}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         </section>
-        <section className="h-[50vh] bg-[#fafafa]">
-          <div className="flex h-full flex-col items-center gap-7">
-            <h1 className="text-6xl font-semibold">好評推薦</h1>
-            <Carousel className="w-full max-w-7xl">
-              <CarouselContent className="-ml-1">
+        <section className="h-auto bg-[#fafafa] py-[10vh]">
+          <div className="flex h-full flex-col items-center gap-5">
+            <h1 className="text-4xl font-semibold lg:text-6xl">好評推薦</h1>
+            <h2 className="ml-[5vh] self-start rounded-xl bg-[#bbe0e1] p-2 font-semibold text-white sm:ml-[10vh] lg:ml-[20vh]">
+              MoneyTrack 用戶這麽說
+            </h2>
+            <h2 className="mb-2 ml-[5vh] self-start rounded-xl px-2 font-semibold sm:ml-[10vh] lg:ml-[20vh] lg:text-xl">
+              500+ 則真實評價
+            </h2>
+            <Carousel className="max-w-7xl lg:w-[80vw]">
+              <CarouselContent className="mx-auto w-[60vw] sm:w-[80vw] lg:w-[50vw]">
                 {testimonials.map((testimonial, index) => (
                   <CarouselItem
                     key={index}
-                    className="pl-1 md:basis-1/2 lg:basis-1/3"
+                    // className="pl-1 md:basis-1/2 lg:basis-1/3"
                   >
-                    <div className="p-1">
-                      <Card
-                        className={`h-96 w-auto rounded-3xl border bg-white shadow-md transition duration-700 ${
-                          secondInView
-                            ? "translate-y-0 opacity-100"
-                            : "translate-y-10 opacity-0"
-                        }`}
-                      >
-                        <CardContent className="flex h-full flex-col items-center justify-center gap-3 p-9">
-                          <img
-                            src={testimonial.avatar}
-                            alt={`${testimonial.name} avatar`}
-                            className="mb-4 h-24 w-24 rounded-full"
-                          />
-                          <p className="t text-2xl font-semibold">
-                            {testimonial.name}
-                          </p>
-                          <p className="justify-self-start text-lg text-gray-700">
-                            {testimonial.review}
-                          </p>
-                        </CardContent>
-                      </Card>
-                    </div>
+                    <Card
+                      className={`m-2 h-96 w-48 rounded-3xl border bg-white shadow-md transition duration-700 sm:h-80 sm:w-72 lg:h-96 lg:w-72 ${
+                        secondInView
+                          ? "translate-y-0 opacity-100"
+                          : "translate-y-10 opacity-0"
+                      }`}
+                    >
+                      <CardContent className="flex h-full flex-col items-center justify-center gap-3 p-7">
+                        <img
+                          src={testimonial.avatar}
+                          alt={`${testimonial.name} avatar`}
+                          className="mb-4 h-16 w-16 rounded-full md:h-24 md:w-24"
+                        />
+                        <p className="text-lg font-semibold md:text-2xl">
+                          {testimonial.name}
+                        </p>
+                        <p className="justify-self-start text-base text-gray-700 lg:text-lg">
+                          {testimonial.review}
+                        </p>
+                      </CardContent>
+                    </Card>
                   </CarouselItem>
                 ))}
               </CarouselContent>
@@ -391,7 +422,7 @@ export default function LoginSide() {
             <div ref={secondRef} />
           </div>
         </section>
-        <section className="flex h-auto flex-col items-center justify-center gap-10 bg-[#222E50] p-7 text-lg text-white">
+        <section className="flex h-auto flex-col items-center justify-center gap-10 bg-[#222E50] p-7 text-sm text-white lg:text-lg">
           <div className="it flex justify-center gap-10">
             <div className="flex flex-col gap-2">
               <p className="font-semibold text-[#bbe0e1]">麻布追蹤</p>
