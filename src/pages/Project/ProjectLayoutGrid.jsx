@@ -188,14 +188,14 @@ export default function ProjectLayoutGrid() {
 
   return (
     <>
-      <div className="w-full bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1]">
-        <div className="flex h-auto w-full flex-wrap items-start justify-start gap-4 p-4">
+      <div className="w-full bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1] py-10 pl-24 pr-8 md:pl-12">
+        <div className="flex h-auto w-full flex-wrap items-start justify-start gap-3">
           {/* 新增專案按鈕 */}
-          <div className="relative h-[300px] w-[420px]">
-            <div className="h-[300px] w-[420px] rounded-xl border border-[#8b91a1] bg-[#8b91a1] p-4 opacity-20"></div>
+          <div className="relative h-[200px] w-full md:h-[300px] md:w-[32%]">
+            <div className="h-[200px] w-full rounded-xl border border-[#8b91a1] bg-[#8b91a1] p-4 opacity-20 md:h-[300px]"></div>
             <button
               onClick={startEditing}
-              className="absolute left-1/2 top-1/2 flex h-[100px] w-[100px] -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-gray-400 pb-4 text-7xl font-semibold opacity-100"
+              className="absolute left-1/2 top-1/2 flex h-[70px] w-[70px] -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-gray-400 pb-4 text-5xl font-semibold opacity-100 md:h-[100px] md:w-[100px] md:text-7xl"
             >
               +
             </button>
@@ -203,7 +203,7 @@ export default function ProjectLayoutGrid() {
 
           {/* 動態生成的專案 */}
           {projects.length === 0 ? (
-            <div className="flex h-[300px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+            <div className="flex h-[200px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[300px]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -225,7 +225,7 @@ export default function ProjectLayoutGrid() {
               {projects.map((project) => (
                 <div
                   key={project.id}
-                  className={`relative flex h-[300px] w-[420px] flex-col items-center justify-center gap-4 rounded-xl ${project.isediting ? "bg-[#9DBEBB]" : "bg-[#E8E9ED]"} p-3 shadow-md`}
+                  className={`relative flex h-[200px] w-full flex-col items-center justify-center gap-4 rounded-xl md:h-[300px] md:w-[32%] ${project.isediting ? "bg-[#9DBEBB]" : "bg-[#E8E9ED]"} p-3 shadow-md`}
                   onClick={() => showProjectDetails(project, project.name)}
                 >
                   {project.imageUrl && (

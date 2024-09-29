@@ -126,11 +126,11 @@ export default function Accounting() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1]">
+    <div className="bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1] pl-11 md:pl-0">
       <div>
         <div className="flex items-center justify-between p-3">
           <div
-            className="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#607196] p-2 text-white"
+            className="flex cursor-pointer items-center justify-center gap-1 rounded-xl bg-[#607196] p-1 text-sm text-white md:gap-2 md:p-2 md:text-base"
             onClick={() => handleMonthChange("prev")}
           >
             <button>上個月</button>
@@ -153,7 +153,7 @@ export default function Accounting() {
             {`${selectedMonth.getFullYear()}年 ${selectedMonth.getMonth() + 1}月`}
           </span>
           <div
-            className="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#607196] p-2 text-white"
+            className="flex cursor-pointer items-center justify-center gap-1 rounded-xl bg-[#607196] p-1 text-sm text-white md:gap-2 md:p-2 md:text-base"
             onClick={() => handleMonthChange("next")}
           >
             <button>下個月</button>
@@ -178,7 +178,7 @@ export default function Accounting() {
         <Droppable droppableId="candidate">
           {(provided) => (
             <div
-              className="flex flex-wrap items-start justify-center gap-4 p-4"
+              className="flex flex-wrap items-start justify-center gap-4 md:p-4"
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
@@ -194,7 +194,7 @@ export default function Accounting() {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className="rounded-md p-4"
+                      className="rounded-md py-3 pr-3 md:p-4"
                     >
                       {renderContent(item.content)}
                     </div>

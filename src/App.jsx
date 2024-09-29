@@ -8,8 +8,8 @@ function App() {
   return (
     <>
       <Header />
-      <div className="mt-[80px] flex min-h-[90vh] justify-start">
-        <Nav />
+      <div className="mt-[80px] flex min-h-[90vh] items-stretch justify-start">
+        <Nav className="h-auto" />
         <Outlet />
         {/* <RightNav /> */}
       </div>

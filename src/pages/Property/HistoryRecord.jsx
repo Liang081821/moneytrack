@@ -81,7 +81,7 @@ export default function HistoryRecord() {
     total ? (Math.abs(amount) / Math.abs(total)) * 100 : 0;
 
   return (
-    <div className="w-full bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1] pt-10">
+    <div className="w-full bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1] pl-11 pt-10 md:pl-0">
       <div className="flex flex-col px-10">
         <div className="mb-5 flex w-full justify-end">
           <button
@@ -92,12 +92,12 @@ export default function HistoryRecord() {
           </button>
           <AddNewFunction></AddNewFunction>
         </div>
-        <div className="flex flex-wrap items-center justify-center gap-2">
+        <div className="flex flex-col items-center justify-center gap-2 md:flex-row md:flex-nowrap">
           <Saving />
           <Consume />
           <Invest />
         </div>
-        <div className="mx-auto w-[1280px]">
+        <div className="mx-auto w-full">
           {historyData.length !== 0 ? (
             <div className="mb-9 mt-5 flex w-full flex-col items-center justify-center rounded-xl bg-white p-2">
               <div className="font-semibold">資產紀錄</div>
@@ -107,7 +107,7 @@ export default function HistoryRecord() {
                 .map((item) => (
                   <div
                     key={item.id}
-                    className="m-1 flex h-[100px] w-full items-center gap-3 rounded-xl bg-[#E8E9ED] p-2"
+                    className="m-1 flex min-h-[100px] w-full flex-col items-center gap-3 rounded-xl bg-[#E8E9ED] p-2 md:flex-row"
                   >
                     <div className="w-[110px] rounded-xl p-2 text-center">
                       {item.time.toDate().toLocaleDateString()}
@@ -148,28 +148,31 @@ export default function HistoryRecord() {
                         %
                       </div>
                     </div>
-                    <div className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-3">
-                      <div>儲蓄</div>
-                      <div>NT${item.saving}</div>
+                    <div className="flex w-full flex-col items-center justify-center md:flex-row">
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-3">
+                        <div>儲蓄</div>
+                        <div>NT${item.saving}</div>
+                      </div>
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-3">
+                        <div>消費</div>
+                        <div>NT${item.expense}</div>
+                      </div>
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border bg-[#D4BEBE] p-3">
+                        <div>投資</div>
+                        <div>NT${item.investment}</div>
+                      </div>
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl p-3">
+                        <div>總資產</div>
+                        <div>NT${item.totalAssets}</div>
+                      </div>
+
+                      <button
+                        onClick={() => deleteRecord(item.id)}
+                        className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border bg-[#89023E] p-2 text-white transition duration-200 hover:bg-[#CC7178]"
+                      >
+                        刪除
+                      </button>
                     </div>
-                    <div className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-3">
-                      <div>消費</div>
-                      <div>NT${item.expense}</div>
-                    </div>
-                    <div className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border bg-[#D4BEBE] p-3">
-                      <div>投資</div>
-                      <div>NT${item.investment}</div>
-                    </div>
-                    <div className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl p-3">
-                      <div>總資產</div>
-                      <div>NT${item.totalAssets}</div>
-                    </div>
-                    <button
-                      onClick={() => deleteRecord(item.id)}
-                      className="flex h-[60px] w-[110px] flex-col items-center justify-center rounded-xl border bg-[#89023E] p-2 text-white transition duration-200 hover:bg-[#CC7178]"
-                    >
-                      刪除
-                    </button>
                   </div>
                 ))}
             </div>

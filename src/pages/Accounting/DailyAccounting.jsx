@@ -131,13 +131,15 @@ export default function DailyAccounting() {
   const [startDate, setStartDate] = useState(new Date());
 
   return (
-    <div className="relative flex h-[450px] w-[500px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
-      <div className="h-[48px] w-[345px] text-center font-semibold">
+    <div className="relative flex h-[300px] w-[280px] flex-col items-center rounded-xl border border-gray-200 bg-white p-2 shadow-lg md:h-[450px] md:w-[500px] md:p-4">
+      <div className="h-[48px] text-center font-semibold md:w-[345px]">
         每日記帳
       </div>
       {/* <AddNewClass /> */}
       <div className="mb-2 flex items-center gap-3">
-        <div className="font-semibold text-[##BABFD1]">日期</div>
+        <div className="text-sm font-semibold text-[##BABFD1] md:text-base">
+          日期
+        </div>
         <div>
           <DatePicker
             selected={startDate}
@@ -147,7 +149,7 @@ export default function DailyAccounting() {
             timeIntervals={5}
             timeCaption="時間"
             dateFormat="yyyy/MM/dd h:mm aa"
-            className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center focus:outline-none focus:ring-2 focus:ring-blue-500 md:h-[48px] md:w-[250px]"
           />
         </div>
       </div>
@@ -157,9 +159,11 @@ export default function DailyAccounting() {
         className="flex flex-col items-center gap-2"
       >
         <div className="flex items-center gap-3">
-          <div className="font-semibold text-[##BABFD1]">帳戶</div>
+          <div className="text-sm font-semibold text-[##BABFD1] md:text-base">
+            帳戶
+          </div>
           <select
-            className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
+            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[48px] md:w-[250px]"
             {...register("account", {
               required: "請選擇帳戶",
             })}
@@ -174,9 +178,11 @@ export default function DailyAccounting() {
           </select>
         </div>
         <div className="flex items-center gap-3">
-          <div className="font-semibold text-[##BABFD1]">類型</div>
+          <div className="text-sm font-semibold text-[##BABFD1] md:text-base">
+            類型
+          </div>
           <select
-            className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
+            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[48px] md:w-[250px]"
             {...register("type", {
               required: "請選擇類型",
             })}
@@ -189,9 +195,11 @@ export default function DailyAccounting() {
         </div>
         {watchType === "轉帳" ? (
           <div className="flex items-center gap-3">
-            <div className="font-semibold text-[##BABFD1]">轉入</div>
+            <div className="text-sm font-semibold text-[##BABFD1] md:text-base">
+              轉入
+            </div>
             <select
-              className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
+              className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[48px] md:w-[250px]"
               {...register("targetaccount", {
                 required: watchType === "轉帳" ? "請選擇目標轉入帳戶" : false,
               })}
@@ -207,9 +215,11 @@ export default function DailyAccounting() {
           </div>
         ) : (
           <div className="flex items-center gap-3">
-            <div className="font-semibold text-[##BABFD1]">分類</div>
+            <div className="text-sm font-semibold text-[##BABFD1] md:text-base">
+              分類
+            </div>
             <select
-              className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
+              className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[48px] md:w-[250px]"
               {...register("class", {
                 required: watchType !== "轉帳" ? "請選擇目標轉入帳戶" : false,
               })}
@@ -227,10 +237,12 @@ export default function DailyAccounting() {
         {Array.isArray(projectData) &&
           projectData.some((item) => item.isediting) && (
             <div className="flex items-center gap-3">
-              <div className="font-semibold text-[##BABFD1]">專案</div>
+              <div className="text-sm font-semibold text-[##BABFD1] md:text-base">
+                專案
+              </div>
 
               <select
-                className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
+                className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[48px] md:w-[250px]"
                 {...register("project")}
               >
                 <option value="">請選擇</option>
@@ -246,9 +258,11 @@ export default function DailyAccounting() {
           )}
 
         <div className="flex items-center gap-3">
-          <div className="font-semibold text-[##BABFD1]">金額</div>
+          <div className="text-[##BABFD1 text-sm font-semibold md:text-base">
+            金額
+          </div>
           <input
-            className="flex h-[48px] w-[250px] items-center justify-center rounded-xl border border-black text-center"
+            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[48px] md:w-[250px]"
             type="number"
             placeholder={errors.amount ? errors.amount.message : "金額不為 0"}
             {...register("amount", {
@@ -261,7 +275,7 @@ export default function DailyAccounting() {
 
         <button
           type="submit"
-          className="w-full rounded-xl bg-[#607196] p-2 text-white"
+          className="w-full rounded-xl bg-[#607196] p-1 text-sm text-white md:p-2 md:text-base"
         >
           {watchType === "轉帳" ? "我要轉帳" : "我要記一筆"}
         </button>

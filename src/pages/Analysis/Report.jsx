@@ -134,7 +134,7 @@ export default function Report() {
   };
 
   return (
-    <div className="mt-7 flex w-full flex-col items-center">
+    <div className="flex w-full flex-col items-center">
       <button
         onClick={() => handleAddReport()}
         className="transition-allw-25 fixed right-0 top-40 overflow-hidden rounded-xl bg-[#607196] p-2 text-white"
@@ -142,7 +142,7 @@ export default function Report() {
         我要進行分析
       </button>
 
-      <div className="mt-14 flex w-full justify-center gap-4">
+      <div className="flex w-full flex-col justify-center gap-3 md:flex-row">
         <MonthlyData
           setmonthExpense={setmonthExpense}
           setmonthIncome={setmonthIncome}

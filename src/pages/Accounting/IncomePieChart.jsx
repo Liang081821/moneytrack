@@ -63,7 +63,7 @@ export default function IncomePieChart({
 
   if (incomeRecord.length === 0) {
     return (
-      <div className="flex h-[450px] w-[500px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="flex h-[300px] w-[280px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[450px] md:w-[500px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -155,7 +155,7 @@ export default function IncomePieChart({
   };
 
   return (
-    <div className="flex h-[450px] w-[500px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+    <div className="flex h-[300px] w-[280px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg md:h-[450px] md:w-[500px]">
       <div className="text-base font-medium">本月收入分佈</div>
       <div className="flex h-full w-full justify-center p-10">
         <Pie data={data} options={options} />

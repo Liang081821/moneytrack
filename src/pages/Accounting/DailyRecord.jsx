@@ -500,7 +500,7 @@ export default function DailyRecord() {
     );
   }
   return (
-    <div className="flex h-[450px] w-[500px] flex-col overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-lg">
+    <div className="flex h-[300px] w-[280px] flex-col overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-lg md:h-[450px] md:w-[500px]">
       <div className="mb-3 self-center font-semibold">交易紀錄</div>
       <div>
         {Object.entries(groupedTransactions).map(([date, items]) => (

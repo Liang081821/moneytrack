@@ -90,7 +90,7 @@ export default function Header() {
   return (
     <>
       {loginEmail ? (
-        <div className="fixed top-0 z-10 flex h-[80px] w-full items-center justify-between bg-[#222E50] p-6">
+        <div className="fixed top-0 z-20 flex h-[80px] w-full items-center justify-between bg-[#222E50] p-6">
           <div className="flex items-center gap-2">
             <img src={Logo} alt="Logo" className="flex h-[47px] w-[42px]" />
             <div className="xs:text-sm text-xs text-white sm:text-base">

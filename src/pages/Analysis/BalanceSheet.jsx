@@ -27,33 +27,42 @@ export default function BalanceSheet() {
     );
   }
   return (
-    <div className="flex h-auto w-[420px] flex-col items-center rounded-xl bg-white p-3">
+    <div className="flex h-auto w-full flex-col items-center rounded-xl bg-white p-3">
       <h2 className="mb-4 font-semibold">資產負債表</h2>
-      <div className="grid grid-cols-2 gap-2">
-        <div>
-          {groupProperty.map((item) => (
-            <div
-              key={item.account}
-              className="m-1 flex h-32 w-32 flex-col items-center justify-center rounded-xl border bg-[#C4CAD0] p-2"
-            >
-              <div className="text-sm font-semibold">{item.account}</div>
-              <div className="text-lg">NT${item.balance}</div>
-              <div className="text-base">{item.account_type}帳</div>
+      <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
+        {groupProperty.map((item) => (
+          <div
+            key={item.account}
+            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
+          >
+            <div className="text-xs font-semibold sm:text-sm">
+              {item.account}
             </div>
-          ))}
-        </div>
-        <div>
-          {groupPropertyLiability.map((item) => (
-            <div
-              key={item.account}
-              className="m-1 flex h-32 w-32 flex-col items-center justify-center rounded-xl border bg-[#D4BEBE] p-2"
-            >
-              <div className="text-sm font-semibold">{item.account}</div>
-              <div className="text-lg">NT${item.balance}</div>
-              <div className="text-base">{item.account_type}帳</div>
+            <div className="text-xs font-semibold sm:text-sm">
+              NT${item.balance}
             </div>
-          ))}
-        </div>
+            <div className="text-sm text-gray-600 sm:text-base">
+              {item.account_type}帳
+            </div>
+          </div>
+        ))}
+
+        {groupPropertyLiability.map((item) => (
+          <div
+            key={item.account}
+            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#E8E9ED] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
+          >
+            <div className="text-xs font-semibold sm:text-sm">
+              {item.account}
+            </div>
+            <div className="text-xs font-semibold sm:text-sm">
+              NT${item.balance}
+            </div>
+            <div className="text-sm text-gray-600 sm:text-base">
+              {item.account_type}帳
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

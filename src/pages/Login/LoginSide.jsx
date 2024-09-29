@@ -2,6 +2,9 @@ import bannerImage from "../../../public/banner.jpg";
 import { useRef, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { Card, CardContent } from "@/components/ui/card";
+import Chart from "../../../public/chart.gif";
+import Analysis from "../../../public/analysis.gif";
+import Project from "../../../public/project.gif";
 
 import {
   Carousel,
@@ -51,7 +54,7 @@ export default function LoginSide() {
   }, [currentPage, windowHeight]);
   const content = [
     {
-      img: "../../../public/chart.gif",
+      img: Chart,
       text: "我的支出都花在哪？",
       content: "多圖表分析",
       contenttwo: "支出收入一目瞭然",
@@ -59,7 +62,7 @@ export default function LoginSide() {
       smalltexttwo: "此外，切換月份檢視各項交易紀錄，轉帳編輯樣樣來！",
     },
     {
-      img: "../../../public/analysis.gif",
+      img: Analysis,
       text: "我想要客製化的理財方向",
       content: "專屬理財規劃師",
       contenttwo: "提供最專業的諮詢",
@@ -67,7 +70,7 @@ export default function LoginSide() {
       smalltexttwo: "最客製化的分析建議，讓您不再對理財毫無頭緒。",
     },
     {
-      img: "../../../public/project.gif",
+      img: Project,
       text: "我出去玩不知道花了多少錢",
       content: "開啟記帳專案",
       contenttwo: "掌握您金錢的流向",

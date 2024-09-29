@@ -19,7 +19,7 @@ export default function HistoryReport() {
 
   if (!reportData || reportData.length === 0) {
     return (
-      <div className="mb-4 mt-4 flex w-[1040px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="mb-4 mt-4 flex w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -42,8 +42,8 @@ export default function HistoryReport() {
   const currentReport = reportData[currentIndex] || {};
 
   return (
-    <div className="p-4">
-      <div className="mx-auto mb-4 w-[1040px] rounded-xl bg-white p-6 shadow-md">
+    <div className="mt-3 w-full">
+      <div className="mx-auto mb-4 w-full rounded-xl bg-white p-6 shadow-md">
         <h3 className="mb-6 text-center font-semibold">
           {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}{" "}
           月 報告
@@ -112,19 +112,19 @@ export default function HistoryReport() {
         <button
           onClick={handlePrev}
           disabled={currentIndex === 0}
-          className="rounded bg-blue-500 px-4 py-2 text-white disabled:bg-gray-300"
+          className="rounded bg-blue-500 px-2 py-2 text-sm text-white disabled:bg-gray-300 md:px-4 md:text-base"
         >
           上一頁
         </button>
 
-        <span>
-          第 {currentIndex + 1} 頁 / 共 {reportData.length} 頁
+        <span className="text-sm md:text-base">
+          第{currentIndex + 1}頁 / 共{reportData.length}頁
         </span>
 
         <button
           onClick={handleNext}
           disabled={currentIndex === reportData.length - 1}
-          className="rounded bg-blue-500 px-4 py-2 text-white disabled:bg-gray-300"
+          className="rounded bg-blue-500 px-2 py-2 text-sm text-white disabled:bg-gray-300 md:px-4 md:text-base"
         >
           下一頁
         </button>

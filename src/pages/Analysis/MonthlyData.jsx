@@ -151,35 +151,43 @@ export default function MonthlyData({
     );
   }
   return (
-    <div className="flex h-[595px] w-[600px] flex-col items-center rounded-xl bg-white">
-      <h2 className="mb-4 mt-3 font-semibold">上月數據</h2>
-      <div className="grid grid-cols-3 gap-2">
+    <div className="flex w-full flex-col items-center rounded-xl bg-white p-3 sm:min-h-[595px]">
+      <h2 className="mb-4 font-semibold">上月數據</h2>
+      <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
         {Object.entries(expenseTotals).map(([recordClass, totalAmount]) => (
           <div
             key={recordClass}
-            className="m-1 flex h-32 w-32 flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-4"
+            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
           >
-            <div className="text-sm font-semibold">{recordClass}</div>
-            <div className="text-lg">NT${totalAmount.toFixed(0)}</div>
-            <div className="text-base text-gray-600">支出</div>
+            <div className="text-xs font-semibold sm:text-sm">
+              {recordClass}
+            </div>
+            <div className="text-sm sm:text-lg">
+              NT${totalAmount.toFixed(0)}
+            </div>
+            <div className="text-sm text-gray-600 sm:text-base">支出</div>
           </div>
         ))}
 
         {Object.entries(incomeTotals).map(([recordClass, totalAmount]) => (
           <div
             key={recordClass}
-            className="m-1 flex h-32 w-32 flex-col items-center justify-center rounded-xl border bg-[#E8E9ED] p-4"
+            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#E8E9ED] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
           >
-            <div className="text-sm font-semibold">{recordClass}</div>
-            <div className="text-lg">NT${totalAmount.toFixed(0)}</div>
-            <div className="text-base text-gray-600">收入</div>
+            <div className="text-xs font-semibold sm:text-sm">
+              {recordClass}
+            </div>
+            <div className="text-sm sm:text-lg">
+              NT${totalAmount.toFixed(0)}
+            </div>
+            <div className="text-sm text-gray-600 sm:text-base">收入</div>
           </div>
         ))}
 
-        <div className="m-1 flex h-32 w-32 flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-4">
-          <div className="h-6 text-sm font-semibold">投資&儲蓄</div>
-          <div className="text-lg">NT${netWorth}</div>
-          <div className="text-base text-gray-600">淨現金流</div>
+        <div className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48">
+          <div className="text-xs font-semibold sm:text-sm">投資&儲蓄</div>
+          <div className="text-xs font-semibold sm:text-sm">NT${netWorth}</div>
+          <div className="text-sm text-gray-600 sm:text-base">淨現金流</div>
         </div>
       </div>
     </div>

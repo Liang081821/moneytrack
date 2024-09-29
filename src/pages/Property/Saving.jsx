@@ -2,6 +2,7 @@ import { useGlobalContext } from "../../context/GlobalContext";
 import { useState, useEffect } from "react";
 import { getFirestoreRefs } from "../../firebase/api";
 import { getDocs, query, where, deleteDoc, doc } from "firebase/firestore";
+import SavingPic from "../../../public/saving.png";
 
 export default function Consume() {
   const { property, transactionData } = useGlobalContext();
@@ -61,7 +62,7 @@ export default function Consume() {
 
   if (!consumeAccounts || consumeAccounts.length === 0) {
     return (
-      <div className="mb-4 mt-4 flex h-[595px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="mb-4 mt-4 flex h-[300px] w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[595px] md:w-[420px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -81,14 +82,16 @@ export default function Consume() {
     );
   }
   return (
-    <div className="flex h-[595px] w-[420px] flex-col items-center rounded-2xl bg-white shadow-md">
-      <div className="mt-3 font-semibold">儲蓄</div>
-
+    <div className="flex h-auto w-full flex-col items-center rounded-2xl bg-white p-3 shadow-md md:min-h-[595px]">
+      <div className="flex items-center gap-3">
+        <img src={SavingPic} alt="" className="h-8 w-8" />
+        <div className="font-semibold">儲蓄</div>
+      </div>
       {/* 動態渲染篩選後的帳戶 */}
       {consumeAccounts.map((account) => (
         <div
           key={account.id}
-          className="m-2 flex h-[88px] w-[380px] items-center justify-between rounded-xl bg-[#9DBEBB] p-3"
+          className="m-2 flex h-[88px] w-full items-center justify-between rounded-xl bg-[#9DBEBB] p-3"
         >
           <div>
             <div className="text-md text-[#E8E9ED]">{account.account}</div>

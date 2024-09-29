@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 export default function Nav() {
-  const [hidden, setHidden] = useState(false);
+  const [hidden, setHidden] = useState(true);
   const handleClickMenu = () => {
     setHidden(true);
   };
@@ -12,7 +12,7 @@ export default function Nav() {
   return (
     <>
       <div
-        className={`min-h-screen px-3 pt-3 transition-all duration-300 ease-in-out ${hidden ? "bg-[#bbe0e1]" : "flex min-w-48 flex-col gap-8"} shadow-lg shadow-slate-100`}
+        className={`absolute rounded-r-xl p-1 py-3 transition-all duration-300 ease-in md:relative md:h-auto md:rounded-r-none md:px-3 ${hidden ? "md:bg-[#bbe0e1]" : "z-10 flex min-w-48 flex-col gap-8 bg-white px-3"} `}
       >
         {hidden ? (
           <>
