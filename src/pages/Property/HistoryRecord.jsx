@@ -10,21 +10,6 @@ export default function HistoryRecord() {
   const { property } = useGlobalContext();
   const { historyData } = useGlobalContext();
 
-  // const [total, setTotal] = useState();
-  // let calculateTotal;
-  // const calculateProperty = () => {
-  //   const savingaccounts = property.filter(
-  //     (item) => item.account_type === "儲蓄",
-  //   );
-  //   const calculateTotal = savingaccounts.reduce(
-  //     (accumulator, currentValue) => {
-  //       return accumulator + (currentValue.balance || 0);
-  //     },
-  //     0,
-  //   );
-  //   setTotal(calculateTotal);
-  //   return;
-  // };
   const { loginEmail } = useGlobalContext();
   const { historyCollectionRef } = getFirestoreRefs(loginEmail);
   const calculateProperty = async () => {
@@ -53,6 +38,7 @@ export default function HistoryRecord() {
     );
 
     try {
+      alert("添加成功");
       const docRef = await addDoc(historyCollectionRef, {
         saving: newTotals.saving,
         expense: newTotals.expense,
@@ -60,7 +46,7 @@ export default function HistoryRecord() {
         totalAssets: totalAssets,
         time: new Date(),
       });
-      alert("添加成功");
+
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -69,9 +55,9 @@ export default function HistoryRecord() {
 
   const deleteRecord = async (id) => {
     try {
+      alert("刪除成功");
       const docRef = doc(db, "record", "2001henry99@gmail.com", "history", id);
       await deleteDoc(docRef);
-      alert("刪除成功");
     } catch (e) {
       console.error(e);
     }

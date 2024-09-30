@@ -31,13 +31,14 @@ export default function AddNewFunction() {
   };
   const onSubmit = async (data) => {
     try {
+      reset();
+      alert("新增成功");
+      setAddProperty(false);
       const docRef = await addDoc(propertyCollectionRef, {
         account: data.account,
         account_type: data.account_type,
         balance: Number(data.balance),
       });
-      reset();
-      alert("新增成功");
 
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {

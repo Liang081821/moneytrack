@@ -367,6 +367,8 @@ export default function DailyRecord() {
       console.log(amountChangeForNewTargetAccount);
       console.log(watchTargetAccount);
 
+      alert("編輯成功");
+      handleCloseEdit();
       if (querySnapshotNewTarget && !querySnapshotNewTarget.empty) {
         querySnapshotNewTarget.forEach(async (docSnap) => {
           if (amountChangeForNewTargetAccount !== 0) {
@@ -405,8 +407,7 @@ export default function DailyRecord() {
       }
 
       await setDoc(docRef, cleanData, { merge: true });
-      handleCloseEdit();
-      alert("編輯成功");
+
       console.log("Document successfully updated!");
     } catch (error) {
       console.error("Error updating document:", error);
@@ -466,14 +467,13 @@ export default function DailyRecord() {
                 ? currentBalance + originalAmount
                 : currentBalance;
           }
-
+          alert("刪除成功");
+          setEditing(false);
           await updateDoc(docSnap.ref, { balance: adjustedBalance });
         });
       }
-      setEditing(false);
-      await deleteDoc(docRef);
 
-      alert("刪除成功");
+      await deleteDoc(docRef);
     } catch (error) {
       console.error("Error updating document:", error);
     }

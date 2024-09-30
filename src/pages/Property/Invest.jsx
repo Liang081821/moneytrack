@@ -29,9 +29,14 @@ export default function Consume() {
   const handleDeleteAccount = async (deleteOption) => {
     try {
       if (deleteOption === "保留帳單") {
-        await deleteDoc(doc(propertyCollectionRef, selectedAccount.id));
         alert("帳戶已刪除");
+        setSelectedAccount(null);
+        setAccountRecord([]);
+        await deleteDoc(doc(propertyCollectionRef, selectedAccount.id));
       } else if (deleteOption === "刪除帳單") {
+        alert("帳戶及其所有帳單已刪除");
+        setSelectedAccount(null);
+        setAccountRecord([]);
         const q = query(
           accountingCollectionRef,
           where("account", "==", selectedAccount.account),
@@ -40,12 +45,9 @@ export default function Consume() {
         qSnapShot.forEach(async (docSnap) => {
           await deleteDoc(doc(accountingCollectionRef, docSnap.id));
         });
-        await deleteDoc(doc(propertyCollectionRef, selectedAccount.id));
-        alert("帳戶及其所有帳單已刪除");
-      }
 
-      setSelectedAccount(null);
-      setAccountRecord([]);
+        await deleteDoc(doc(propertyCollectionRef, selectedAccount.id));
+      }
     } catch (e) {
       console.error(e);
     }

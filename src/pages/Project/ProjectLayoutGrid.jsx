@@ -80,14 +80,12 @@ export default function ProjectLayoutGrid() {
         imageUrl: imageUrl,
         isediting: true,
       };
-
-      const docRef = await addDoc(projectCollectionRef, newProject);
-      setProjects([...projects, { id: docRef.id, ...newProject }]);
-
       setIsEditing(false);
       reset();
       alert("新增成功");
       setImagePreview(null);
+      const docRef = await addDoc(projectCollectionRef, newProject);
+      setProjects([...projects, { id: docRef.id, ...newProject }]);
     } catch (error) {
       console.error("Error adding project: ", error);
     } finally {
@@ -142,8 +140,18 @@ export default function ProjectLayoutGrid() {
   const deleteProject = async (deleteOption, id) => {
     try {
       if (deleteOption === "保留帳單") {
+        setProjects(projects.filter((project) => project.id !== id));
+        setSelectedProject(null);
+        setselectedProjectData(null);
+        alert("專案已刪除");
+        showDeleteConfirm(false);
         await deleteDoc(doc(projectCollectionRef, id));
       } else if (deleteOption === "刪除帳單") {
+        setProjects(projects.filter((project) => project.id !== id));
+        setSelectedProject(null);
+        setselectedProjectData(null);
+        alert("專案已刪除");
+        showDeleteConfirm(false);
         await deleteDoc(doc(projectCollectionRef, id));
         const q = query(
           accountingCollectionRef,
@@ -154,11 +162,11 @@ export default function ProjectLayoutGrid() {
           await deleteDoc(doc(accountingCollectionRef, docSnap.id));
         });
       }
-      setProjects(projects.filter((project) => project.id !== id));
-      setSelectedProject(null);
-      setselectedProjectData(null);
-      alert("專案已刪除");
-      showDeleteConfirm(false);
+      // setProjects(projects.filter((project) => project.id !== id));
+      // setSelectedProject(null);
+      // setselectedProjectData(null);
+      // alert("專案已刪除");
+      // showDeleteConfirm(false);
     } catch (error) {
       console.error("Error deleting project: ", error);
     }
@@ -172,13 +180,12 @@ export default function ProjectLayoutGrid() {
   const closeProject = async (projectId) => {
     try {
       const projectDocRef = doc(projectCollectionRef, projectId);
-
+      setSelectedProject(null);
+      setselectedProjectData(null);
+      alert("成功關閉專案");
       await updateDoc(projectDocRef, {
         isediting: false,
       });
-
-      setSelectedProject(null);
-      setselectedProjectData(null);
 
       console.log("Project deleted successfully!");
     } catch (error) {
@@ -231,7 +238,7 @@ export default function ProjectLayoutGrid() {
                   {project.imageUrl && (
                     <img
                       src={project.imageUrl}
-                      alt="Project"
+                      alt="離線時無法載入圖片"
                       className="h-[70%] w-full overflow-hidden rounded-xl object-cover"
                     />
                   )}

@@ -94,6 +94,8 @@ export default function DailyAccounting() {
         : "";
 
       try {
+        alert("新增成功");
+        reset();
         if (watchType === "轉帳") {
           docRef = await addDoc(accountingCollectionRef, {
             account: data.account,
@@ -104,8 +106,6 @@ export default function DailyAccounting() {
             record_type: data.type,
             project: data.project || null,
           });
-          alert("新增成功");
-          reset();
         } else {
           docRef = await addDoc(accountingCollectionRef, {
             account: data.account,
@@ -116,8 +116,6 @@ export default function DailyAccounting() {
             record_type: data.type,
             project: data.project || null,
           });
-          alert("新增成功");
-          reset();
         }
       } catch (error) {
         console.error("寫入資料時出錯：", error);

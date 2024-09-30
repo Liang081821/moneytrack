@@ -35,13 +35,12 @@ export default function AddNewClass() {
   const onSubmit = async (data) => {
     try {
       const fieldToUpdate = selectedCategory === "收入" ? "income" : "expense";
-      await updateDoc(docRef, {
-        [fieldToUpdate]: arrayUnion(data.class), // 添加分類到 Firestore
-      });
-
       reset();
       alert("新增成功");
       setNewclass(false);
+      await updateDoc(docRef, {
+        [fieldToUpdate]: arrayUnion(data.class),
+      });
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -62,11 +61,10 @@ export default function AddNewClass() {
   const handleDeleteClass = async (item) => {
     try {
       const fieldToUpdate = selectedCategory === "收入" ? "income" : "expense";
-      await updateDoc(docRef, {
-        [fieldToUpdate]: arrayRemove(item), // 從 Firestore 刪除分類
-      });
-
       alert("刪除成功");
+      await updateDoc(docRef, {
+        [fieldToUpdate]: arrayRemove(item),
+      });
     } catch (e) {
       console.error("Error removing document: ", e);
     }
