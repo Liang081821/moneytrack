@@ -9,10 +9,15 @@ export default function Nav() {
   const handleClickMenuOpen = () => {
     setHidden(false);
   };
+  const handleNavLinkClick = () => {
+    if (window.innerWidth < 768) {
+      setHidden(true);
+    }
+  };
   return (
     <>
       <div
-        className={`absolute rounded-r-xl p-1 py-3 transition-all duration-300 ease-in md:relative md:h-auto md:rounded-r-none md:px-3 ${hidden ? "md:bg-[#bbe0e1]" : "z-10 flex min-w-48 flex-col gap-8 bg-white px-3"} `}
+        className={`fixed rounded-r-xl p-1 py-3 transition-all duration-300 ease-in md:relative md:h-auto md:rounded-r-none md:px-3 ${hidden ? "md:bg-[#bbe0e1]" : "z-10 flex min-w-48 flex-col gap-8 bg-white px-3"} `}
       >
         {hidden ? (
           <>
@@ -62,6 +67,7 @@ export default function Nav() {
             <>
               <NavLink
                 to="/accounting"
+                onClick={handleNavLinkClick}
                 className={({ isActive, isPending, isTransitioning }) =>
                   `transform transition-all duration-300 ${isActive ? "font-base scale-105 rounded-xl bg-[#bbe0e1] opacity-100" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "text-red-500" : "text-black"} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
                 }
@@ -86,6 +92,7 @@ export default function Nav() {
               </NavLink>
               <NavLink
                 to="/property"
+                onClick={handleNavLinkClick}
                 className={({ isActive, isPending, isTransitioning }) =>
                   `transform transition-all duration-300 ${isActive ? "font-base scale-105 rounded-xl bg-[#bbe0e1] opacity-100" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "text-red-500" : "text-black"} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
                 }
@@ -110,6 +117,7 @@ export default function Nav() {
               </NavLink>
               <NavLink
                 to="/analysis"
+                onClick={handleNavLinkClick}
                 className={({ isActive, isPending, isTransitioning }) =>
                   `transform transition-all duration-300 ${isActive ? "font-base scale-105 rounded-xl bg-[#bbe0e1] opacity-100" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "text-red-500" : "text-black"} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
                 }
@@ -139,6 +147,7 @@ export default function Nav() {
               </NavLink>
               <NavLink
                 to="/project"
+                onClick={handleNavLinkClick}
                 className={({ isActive, isPending, isTransitioning }) =>
                   `transform transition-all duration-300 ${isActive ? "font-base scale-105 rounded-xl bg-[#bbe0e1] opacity-100" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "text-red-500" : "text-black"} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
                 }

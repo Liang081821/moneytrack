@@ -55,8 +55,9 @@ export default function HistoryRecord() {
 
   const deleteRecord = async (id) => {
     try {
+      const docRef = doc(db, "record", loginEmail, "history", id);
+
       alert("刪除成功");
-      const docRef = doc(db, "record", "2001henry99@gmail.com", "history", id);
       await deleteDoc(docRef);
     } catch (e) {
       console.error(e);
@@ -72,7 +73,7 @@ export default function HistoryRecord() {
         <div className="mb-5 flex w-full justify-end">
           <button
             onClick={calculateProperty}
-            className="w-25 fixed right-0 top-56 overflow-hidden rounded-xl bg-[#607196] p-2 text-white transition-all"
+            className="fixed right-0 top-56 z-10 overflow-hidden rounded-xl bg-[#607196] p-1 text-sm text-white transition-all md:p-2 md:text-base"
           >
             統計最新資產
           </button>

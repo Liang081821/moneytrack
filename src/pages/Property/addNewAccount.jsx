@@ -47,10 +47,10 @@ export default function AddNewFunction() {
   };
   return (
     <div
-      className={`fixed right-0 top-40 p-2 transition-all ${
+      className={`fixed right-0 top-40 z-50 p-1 transition-all md:p-2 ${
         addProperty
-          ? "z-50"
-          : "w-25 overflow-hidden rounded-xl bg-[#BABFD1] text-white"
+          ? ""
+          : "overflow-hidden rounded-xl bg-[#BABFD1] text-sm text-white md:text-base"
       }`}
     >
       <button

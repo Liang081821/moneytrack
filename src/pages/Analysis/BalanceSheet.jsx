@@ -7,7 +7,7 @@ export default function BalanceSheet() {
   const groupPropertyLiability = property.filter((item) => item.balance < 0);
   if (property.length === 0) {
     return (
-      <div className="flex h-[595px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="flex w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[595px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

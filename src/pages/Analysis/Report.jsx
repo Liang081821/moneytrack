@@ -137,7 +137,7 @@ export default function Report() {
     <div className="flex w-full flex-col items-center">
       <button
         onClick={() => handleAddReport()}
-        className="transition-allw-25 fixed right-0 top-40 overflow-hidden rounded-xl bg-[#607196] p-2 text-white"
+        className="md:w-25 fixed right-0 top-40 z-10 w-24 overflow-hidden rounded-xl bg-[#607196] p-1 text-sm text-white transition-all md:p-2 md:text-base"
       >
         我要進行分析
       </button>

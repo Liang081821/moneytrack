@@ -131,7 +131,7 @@ export default function MonthlyData({
     Object.keys(incomeTotals).length === 0
   ) {
     return (
-      <div className="flex h-[595px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="flex w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[595px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -146,7 +146,7 @@ export default function MonthlyData({
             d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
           />
         </svg>
-        <p>前月份沒有記帳資料，無法帶入..</p>
+        <p>上新增上月數據</p>
       </div>
     );
   }

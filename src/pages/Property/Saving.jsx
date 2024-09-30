@@ -64,7 +64,7 @@ export default function Consume() {
 
   if (!consumeAccounts || consumeAccounts.length === 0) {
     return (
-      <div className="mb-4 mt-4 flex h-[300px] w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[595px] md:w-[420px]">
+      <div className="mb-4 mt-4 flex h-[300px] w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[595px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

@@ -480,7 +480,7 @@ export default function DailyRecord() {
   };
   if (transaction.length === 0) {
     return (
-      <div className="flex h-[450px] w-[500px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="flex h-[300px] w-[280px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[450px] md:w-[500px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
