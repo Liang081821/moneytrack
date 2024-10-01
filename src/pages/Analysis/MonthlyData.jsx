@@ -71,21 +71,21 @@ export default function MonthlyData({
 
         // 分組並計算支出總和
         const expenseGroupedTotals = expenseRecords.reduce((acc, record) => {
-          const { class: recordClass, amount } = record;
+          const { class: recordClass, convertedAmountTWD } = record;
           if (!acc[recordClass]) {
             acc[recordClass] = 0;
           }
-          acc[recordClass] += amount;
+          acc[recordClass] += convertedAmountTWD;
           return acc;
         }, {});
 
         // 分組並計算收入總和
         const incomeGroupedTotals = incomeRecords.reduce((acc, record) => {
-          const { class: recordClass, amount } = record;
+          const { class: recordClass, convertedAmountTWD } = record;
           if (!acc[recordClass]) {
             acc[recordClass] = 0;
           }
-          acc[recordClass] += amount;
+          acc[recordClass] += convertedAmountTWD;
           return acc;
         }, {});
 
@@ -163,7 +163,11 @@ export default function MonthlyData({
               {recordClass}
             </div>
             <div className="text-sm sm:text-lg">
-              NT${totalAmount.toFixed(0)}
+              NT$
+              {totalAmount.toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              })}
             </div>
             <div className="text-sm text-gray-600 sm:text-base">支出</div>
           </div>
@@ -177,8 +181,12 @@ export default function MonthlyData({
             <div className="text-xs font-semibold sm:text-sm">
               {recordClass}
             </div>
-            <div className="text-sm sm:text-lg">
-              NT${totalAmount.toFixed(0)}
+            <div className="text-xs font-semibold sm:text-sm">
+              NT$
+              {totalAmount.toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              })}
             </div>
             <div className="text-sm text-gray-600 sm:text-base">收入</div>
           </div>
@@ -186,7 +194,13 @@ export default function MonthlyData({
 
         <div className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48">
           <div className="text-xs font-semibold sm:text-sm">投資&儲蓄</div>
-          <div className="text-xs font-semibold sm:text-sm">NT${netWorth}</div>
+          <div className="text-xs font-semibold sm:text-sm">
+            NT$
+            {netWorth.toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2,
+            })}
+          </div>
           <div className="text-sm text-gray-600 sm:text-base">淨現金流</div>
         </div>
       </div>

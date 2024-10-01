@@ -29,12 +29,12 @@ export default function BalanceDoughnutChart({
 
         const totalIncome = filteredTransactions
           .filter((transaction) => transaction.record_type === "收入")
-          .reduce((acc, record) => acc + record.amount, 0);
+          .reduce((acc, record) => acc + record.convertedAmountTWD, 0);
         setIncomeRecord(totalIncome);
 
         const totalExpense = filteredTransactions
           .filter((transaction) => transaction.record_type === "支出")
-          .reduce((acc, record) => acc + record.amount, 0);
+          .reduce((acc, record) => acc + record.convertedAmountTWD, 0);
         setExpenseRecord(totalExpense);
 
         const surplusValue = totalIncome - totalExpense;
@@ -129,7 +129,10 @@ export default function BalanceDoughnutChart({
         },
         formatter: (value, context) => {
           const label = context.chart.data.labels[context.dataIndex];
-          return `${label}: $${value}`;
+          return `${label}: $${value.toLocaleString(undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2,
+          })}`;
         },
       },
     },
@@ -143,7 +146,11 @@ export default function BalanceDoughnutChart({
         {/* 在中間顯示盈餘 */}
         <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center pt-10 text-center">
           <div className="text-xl font-semibold">
-            月結餘 <br />${surplus}
+            月結餘 <br />$
+            {surplus.toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2,
+            })}
           </div>
         </div>
       </div>

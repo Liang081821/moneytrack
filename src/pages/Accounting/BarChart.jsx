@@ -35,7 +35,7 @@ export default function BarChart({ firstDayOfLastMonth, lastDayOfLastMonth }) {
             if (!acc[dateKey]) {
               acc[dateKey] = 0;
             }
-            acc[dateKey] += transaction.amount;
+            acc[dateKey] += transaction.convertedAmountTWD;
             return acc;
           },
           {},

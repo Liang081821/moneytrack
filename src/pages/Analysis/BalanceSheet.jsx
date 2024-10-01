@@ -39,7 +39,11 @@ export default function BalanceSheet() {
               {item.account}
             </div>
             <div className="text-xs font-semibold sm:text-sm">
-              NT${item.balance}
+              NT$
+              {item.balance.toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              })}
             </div>
             <div className="text-sm text-gray-600 sm:text-base">
               {item.account_type}帳
@@ -56,7 +60,11 @@ export default function BalanceSheet() {
               {item.account}
             </div>
             <div className="text-xs font-semibold sm:text-sm">
-              NT${item.balance}
+              NT$
+              {item.balance.toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              })}
             </div>
             <div className="text-sm text-gray-600 sm:text-base">
               {item.account_type}帳

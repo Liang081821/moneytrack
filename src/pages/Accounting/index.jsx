@@ -37,7 +37,6 @@ export default function Accounting() {
   const handleDragEnd = (event) => {
     const { source, destination } = event;
     if (!destination) return;
-
     if (
       source.droppableId === destination.droppableId &&
       source.index === destination.index
@@ -45,17 +44,30 @@ export default function Accounting() {
       return;
 
     const newItemObj = JSON.parse(JSON.stringify(itemObj));
-
     const [removed] = newItemObj[source.droppableId].items.splice(
       source.index,
       1,
     );
+    if (destination.index !== 0) {
+      newItemObj[destination.droppableId].items.splice(
+        destination.index,
+        0,
+        removed,
+      );
+    } else {
+      newItemObj[destination.droppableId].items.splice(1, 0, removed);
+    }
 
-    newItemObj[destination.droppableId].items.splice(
-      destination.index,
-      0,
-      removed,
+    const dailyAccountingIndex = newItemObj.candidate.items.findIndex(
+      (item) => item.content === "DailyAccounting",
     );
+    if (dailyAccountingIndex !== 0) {
+      const [dailyAccountingItem] = newItemObj.candidate.items.splice(
+        dailyAccountingIndex,
+        1,
+      );
+      newItemObj.candidate.items.unshift(dailyAccountingItem);
+    }
 
     setItemObj(newItemObj);
   };
@@ -178,7 +190,7 @@ export default function Accounting() {
         <Droppable droppableId="candidate">
           {(provided) => (
             <div
-              className="flex flex-wrap items-start justify-center gap-4 md:p-4"
+              className="flex flex-wrap items-start justify-center gap-2"
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
@@ -187,14 +199,14 @@ export default function Accounting() {
                   key={item.id}
                   draggableId={item.id}
                   index={index}
-                  isDragDisabled={itemObj.candidate.items.length === 1}
+                  isDragDisabled={item.content === "DailyAccounting"}
                 >
                   {(provided) => (
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className="rounded-md py-3 pr-3 md:p-4"
+                      className="rounded-md py-3 pr-3"
                     >
                       {renderContent(item.content)}
                     </div>

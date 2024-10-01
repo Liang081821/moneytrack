@@ -98,7 +98,13 @@ export default function Consume() {
           <div>
             <div className="text-md text-balck">{account.account}</div>
             <div className="h-1 w-6 rounded-xl bg-[#031926]"></div>
-            <div className="text-2xl">${account.balance}</div>
+            <div className="text-2xl">
+              NT$
+              {account.balance.toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              })}
+            </div>
           </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +176,11 @@ export default function Consume() {
                       }
                     >
                       {record.record_type === "支出" ? "-" : ""}
-                      NT${record.amount}
+                      {record.currency}$
+                      {record.amount.toLocaleString(undefined, {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 2,
+                      })}
                     </div>
                   </div>
                   <div className="flex justify-between">

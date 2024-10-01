@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Header />
-      <div className="mt-[80px] flex min-h-[90vh] items-stretch justify-start">
+      <div className="mt-[80px] flex min-h-[100vh] items-stretch justify-start">
         <Nav className="h-auto" />
         <Outlet />
         {/* <RightNav /> */}

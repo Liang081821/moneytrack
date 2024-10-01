@@ -138,19 +138,43 @@ export default function HistoryRecord() {
                     <div className="flex w-full flex-col items-center justify-center md:flex-row">
                       <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-3">
                         <div>儲蓄</div>
-                        <div>NT${item.saving}</div>
+                        <div>
+                          NT$
+                          {item.saving.toLocaleString(undefined, {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 2,
+                          })}
+                        </div>
                       </div>
                       <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-3">
                         <div>消費</div>
-                        <div>NT${item.expense}</div>
+                        <div>
+                          NT$
+                          {item.expense.toLocaleString(undefined, {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 2,
+                          })}
+                        </div>
                       </div>
                       <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border bg-[#D4BEBE] p-3">
                         <div>投資</div>
-                        <div>NT${item.investment}</div>
+                        <div>
+                          NT$
+                          {item.investment.toLocaleString(undefined, {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 2,
+                          })}
+                        </div>
                       </div>
                       <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl p-3">
                         <div>總資產</div>
-                        <div>NT${item.totalAssets}</div>
+                        <div>
+                          NT$
+                          {item.totalAssets.toLocaleString(undefined, {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 2,
+                          })}
+                        </div>
                       </div>
 
                       <button

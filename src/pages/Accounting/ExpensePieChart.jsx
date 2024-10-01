@@ -30,11 +30,11 @@ export default function ExpensePieChart({
 
         const expenseGroupedTotals = filteredTransactions.reduce(
           (acc, record) => {
-            const { class: recordClass, amount } = record;
+            const { class: recordClass, convertedAmountTWD } = record;
             if (!acc[recordClass]) {
               acc[recordClass] = 0;
             }
-            acc[recordClass] += amount;
+            acc[recordClass] += convertedAmountTWD;
             return acc;
           },
           {},
@@ -146,7 +146,13 @@ export default function ExpensePieChart({
           // 如果百分比小于 5，则返回空字符串，仍然占据位置
           return percentage < 5
             ? ""
-            : `${context.chart.data.labels[context.dataIndex]}: $${value}`;
+            : `${context.chart.data.labels[context.dataIndex]}: $${value.toLocaleString(
+                undefined,
+                {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2,
+                },
+              )}`;
         },
       },
       legend: {

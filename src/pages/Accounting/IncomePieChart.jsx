@@ -30,11 +30,11 @@ export default function IncomePieChart({
 
         const incomeGroupedTotals = filteredTransactions.reduce(
           (acc, record) => {
-            const { class: recordClass, amount } = record;
+            const { class: recordClass, convertedAmountTWD } = record;
             if (!acc[recordClass]) {
               acc[recordClass] = 0;
             }
-            acc[recordClass] += amount;
+            acc[recordClass] += convertedAmountTWD;
             return acc;
           },
           {},
@@ -145,7 +145,13 @@ export default function IncomePieChart({
 
           return percentage < 5
             ? ""
-            : `${context.chart.data.labels[context.dataIndex]}: $${value}`;
+            : `${context.chart.data.labels[context.dataIndex]}: $${value.toLocaleString(
+                undefined,
+                {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2,
+                },
+              )}`;
         },
       },
       legend: {

@@ -107,6 +107,7 @@ export default function DailyRecord() {
       setValue("targetaccount", "");
     }
   }, [watchAccount, setValue, editing, currentTransaction?.account]);
+  const { rates } = useGlobalContext();
 
   const handleSaveEdit = async (data) => {
     try {
@@ -117,24 +118,21 @@ export default function DailyRecord() {
         "accounting",
         currentTransaction.id,
       );
-      const cleanData = {
-        ...data,
-        class: data.class || null,
-        targetaccount: data.targetaccount || null,
-        time: startDate || currentTransaction.time,
-      };
+
       const originalAccount = currentTransaction.account;
       const newAccount = data.account;
       const originalAmount = Number(currentTransaction.amount);
       const newAmount = Number(data.amount);
       const originalTargetAccount = currentTransaction.targetaccount;
       const newTargetAccount = data.targetaccount;
+
       const isOriginalIncome = currentTransaction.record_type === "收入";
       const isOriginalExpense = currentTransaction.record_type === "支出";
       const isOriginalTransfer = currentTransaction.record_type === "轉帳";
       const isNewIncome = data.record_type === "收入";
       const isNewExpense = data.record_type === "支出";
       const isNewTransfer = data.record_type === "轉帳";
+      const currencyType = currentTransaction.currency;
 
       const areDatesEqual =
         startDate.getTime() === currentTransaction.time.toDate().getTime();
@@ -359,6 +357,26 @@ export default function DailyRecord() {
               : 0;
         }
       }
+      let convertedAmountTWD = data.amount;
+
+      if (currencyType !== "TWD") {
+        if (rates[currencyType] && rates["TWD"]) {
+          const rateToUSD = 1 / rates[currencyType];
+          const rateToTWD = rates["TWD"];
+          convertedAmountTWD = data.amount * rateToUSD * rateToTWD;
+          amountChangeForOriginalAccount =
+            amountChangeForOriginalAccount * rateToUSD * rateToTWD;
+          amountChangeForNewAccount =
+            amountChangeForNewAccount * rateToUSD * rateToTWD;
+          amountChangeForOriginalTargetAccount =
+            amountChangeForOriginalTargetAccount * rateToUSD * rateToTWD;
+          amountChangeForNewTargetAccount =
+            amountChangeForNewTargetAccount * rateToUSD * rateToTWD;
+        } else {
+          alert("匯率資料不可用，無法轉換成 TWD");
+          return;
+        }
+      }
 
       console.log(amountChangeForOriginalAccount);
       console.log(amountChangeForNewAccount);
@@ -405,7 +423,13 @@ export default function DailyRecord() {
           }
         });
       }
-
+      const cleanData = {
+        ...data,
+        class: data.class || null,
+        targetaccount: data.targetaccount || null,
+        time: startDate || currentTransaction.time,
+        convertedAmountTWD: convertedAmountTWD,
+      };
       await setDoc(docRef, cleanData, { merge: true });
 
       console.log("Document successfully updated!");
@@ -436,7 +460,7 @@ export default function DailyRecord() {
         );
 
         const querySnapshotTarget = await getDocs(qTargetAccount);
-        const targetAmount = Number(currentTransaction.amount);
+        const targetAmount = Number(currentTransaction.convertedAmountTWD);
 
         if (!querySnapshotTarget.empty) {
           querySnapshotTarget.forEach(async (docSnap) => {
@@ -448,7 +472,7 @@ export default function DailyRecord() {
       }
 
       const querySnapshotOriginal = await getDocs(qOriginal);
-      const originalAmount = Number(currentTransaction.amount);
+      const originalAmount = Number(currentTransaction.convertedAmountTWD);
       const isOriginalIncome = currentTransaction.record_type === "收入";
       const isOriginalExpense = currentTransaction.record_type === "支出";
       const isTransfer = currentTransaction.record_type === "轉帳";
@@ -480,7 +504,7 @@ export default function DailyRecord() {
   };
   if (transaction.length === 0) {
     return (
-      <div className="flex h-[300px] w-[280px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[450px] md:w-[500px]">
+      <div className="flex h-[300px] w-[280px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[908px] md:w-[500px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -500,7 +524,7 @@ export default function DailyRecord() {
     );
   }
   return (
-    <div className="flex h-[300px] w-[280px] flex-col overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-lg md:h-[450px] md:w-[500px]">
+    <div className="flex h-[300px] w-[280px] flex-col overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-lg md:h-[908px] md:w-[500px]">
       <div className="mb-3 self-center font-semibold">交易紀錄</div>
       <div>
         {Object.entries(groupedTransactions).map(([date, items]) => (
@@ -515,8 +539,8 @@ export default function DailyRecord() {
 
                   const amount =
                     item.record_type === "支出"
-                      ? -Number(item.amount)
-                      : Number(item.amount);
+                      ? -Number(item.convertedAmountTWD)
+                      : Number(item.convertedAmountTWD);
                   return total + amount;
                 }, 0)}
               </div>
@@ -539,7 +563,11 @@ export default function DailyRecord() {
                     <div>{item.record_type}</div>
                     <div>
                       {item.record_type === "支出" ? "-" : ""}
-                      NT${item.amount}
+                      {item.currency}$
+                      {item.amount.toLocaleString(undefined, {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 2,
+                      })}
                     </div>
                   </div>
                   <div className="flex justify-between">
@@ -674,7 +702,13 @@ export default function DailyRecord() {
                       </select>
                     </div>
                   )}
+                <div className="mb-4 flex flex-col">
+                  <div className="mb-1 text-gray-700">幣別</div>
 
+                  <div className="flex cursor-pointer items-center justify-center rounded-lg border p-1">
+                    {currentTransaction.currency}
+                  </div>
+                </div>
                 <div className="mb-4 flex flex-col">
                   <label className="mb-1 text-gray-700">金額</label>
                   <input

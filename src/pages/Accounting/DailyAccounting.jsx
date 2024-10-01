@@ -1,5 +1,5 @@
 import { getFirestoreRefs } from "../../firebase/api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { addDoc, query, getDocs, updateDoc, where } from "firebase/firestore";
 import { useForm } from "react-hook-form";
 import { useGlobalContext } from "@/context/GlobalContext";
@@ -25,11 +25,15 @@ export default function DailyAccounting() {
       type: "",
       class: "",
       targetaccount: "",
+      currency: "TWD",
     },
   });
 
   const watchType = watch("type");
   const watchAccount = watch("account");
+  const selectedCurrency = watch("currency", "TWD"); // 使用 watch 來獲取當前選中的幣別
+  const amount = watch("amount");
+
   // const watchTargetAccount = watch("targetaccount");
 
   const optionsToRender =
@@ -43,9 +47,40 @@ export default function DailyAccounting() {
   const accountsToRender = property.filter((item) => {
     return item.account !== watchAccount;
   });
+  const { currencies, rates } = useGlobalContext();
+  const [convertedAmountDisplay, setConvertedAmountDisplay] = useState(0);
+
+  useEffect(() => {
+    let convertedAmountTWD = amount;
+    if (selectedCurrency !== "TWD" && amount > 0) {
+      if (rates[selectedCurrency] && rates["TWD"]) {
+        const rateToUSD = 1 / rates[selectedCurrency];
+        const rateToTWD = rates["TWD"];
+        convertedAmountTWD = (amount * rateToUSD * rateToTWD).toFixed(2);
+      } else {
+        alert("匯率資料不可用，無法轉換成 TWD");
+        return;
+      }
+    }
+    setConvertedAmountDisplay(convertedAmountTWD);
+  }, [amount, selectedCurrency, rates]);
 
   const onSubmit = async (data) => {
     try {
+      const { amount, currency } = data;
+
+      // 將金額轉換為 TWD
+      let convertedAmountTWD = amount;
+      if (currency !== "TWD") {
+        if (rates[currency] && rates["TWD"]) {
+          const rateToUSD = 1 / rates[currency];
+          const rateToTWD = rates["TWD"];
+          convertedAmountTWD = (amount * rateToUSD * rateToTWD).toFixed(2);
+        } else {
+          alert("匯率資料不可用，無法轉換成 TWD");
+          return;
+        }
+      }
       const q = query(
         propertyCollectionRef,
         where("account", "==", data.account),
@@ -63,7 +98,7 @@ export default function DailyAccounting() {
             const currentBalance = docSnap.data().balance || 0;
             const newBalance =
               data.type === "轉帳"
-                ? currentBalance + Number(data.amount)
+                ? currentBalance + Number(convertedAmountTWD)
                 : currentBalance;
             await updateDoc(docSnap.ref, { balance: newBalance });
           });
@@ -78,8 +113,8 @@ export default function DailyAccounting() {
           console.log(currentBalance);
           const newBalance =
             data.type === "收入"
-              ? currentBalance + Number(data.amount)
-              : currentBalance - Number(data.amount);
+              ? currentBalance + Number(convertedAmountTWD)
+              : currentBalance - Number(convertedAmountTWD);
 
           await updateDoc(docSnap.ref, { balance: newBalance });
         });
@@ -105,6 +140,8 @@ export default function DailyAccounting() {
             targetaccount: data.targetaccount,
             record_type: data.type,
             project: data.project || null,
+            currency: data.currency,
+            convertedAmountTWD: Number(convertedAmountTWD),
           });
         } else {
           docRef = await addDoc(accountingCollectionRef, {
@@ -115,6 +152,8 @@ export default function DailyAccounting() {
             class: data.class,
             record_type: data.type,
             project: data.project || null,
+            currency: data.currency,
+            convertedAmountTWD: Number(convertedAmountTWD),
           });
         }
       } catch (error) {
@@ -147,7 +186,7 @@ export default function DailyAccounting() {
             timeIntervals={5}
             timeCaption="時間"
             dateFormat="yyyy/MM/dd h:mm aa"
-            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center focus:outline-none focus:ring-2 focus:ring-blue-500 md:h-[48px] md:w-[250px]"
+            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center focus:outline-none focus:ring-2 focus:ring-blue-500 md:h-[44px] md:w-[250px]"
           />
         </div>
       </div>
@@ -161,7 +200,7 @@ export default function DailyAccounting() {
             帳戶
           </div>
           <select
-            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[48px] md:w-[250px]"
+            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[44px] md:w-[250px]"
             {...register("account", {
               required: "請選擇帳戶",
             })}
@@ -180,7 +219,7 @@ export default function DailyAccounting() {
             類型
           </div>
           <select
-            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[48px] md:w-[250px]"
+            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[44px] md:w-[250px]"
             {...register("type", {
               required: "請選擇類型",
             })}
@@ -197,7 +236,7 @@ export default function DailyAccounting() {
               轉入
             </div>
             <select
-              className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[48px] md:w-[250px]"
+              className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[44px] md:w-[250px]"
               {...register("targetaccount", {
                 required: watchType === "轉帳" ? "請選擇目標轉入帳戶" : false,
               })}
@@ -217,7 +256,7 @@ export default function DailyAccounting() {
               分類
             </div>
             <select
-              className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[48px] md:w-[250px]"
+              className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[44px] md:w-[250px]"
               {...register("class", {
                 required: watchType !== "轉帳" ? "請選擇目標轉入帳戶" : false,
               })}
@@ -240,7 +279,7 @@ export default function DailyAccounting() {
               </div>
 
               <select
-                className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[48px] md:w-[250px]"
+                className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[44px] md:w-[250px]"
                 {...register("project")}
               >
                 <option value="">請選擇</option>
@@ -254,13 +293,42 @@ export default function DailyAccounting() {
               </select>
             </div>
           )}
-
+        <div className="flex items-center gap-3">
+          <div className="text-sm font-semibold md:text-base">幣別</div>
+          <div className="grid grid-cols-6 gap-1 md:h-[44px] md:w-[250px]">
+            {currencies.map(([code]) => (
+              <label
+                key={code}
+                className={`flex cursor-pointer items-center justify-center rounded-lg border p-1 ${
+                  selectedCurrency === code
+                    ? "bg-[#9DBEBB] text-white"
+                    : "bg-gray-100"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="currency"
+                  value={code}
+                  checked={selectedCurrency === code}
+                  // onChange={() => {
+                  //   setSelectedCurrency(code);
+                  // }}
+                  className="hidden"
+                  {...register("currency", { required: "請選擇幣別" })}
+                />
+                <div className="text-center">
+                  <p className="text-sm font-semibold">{code}</p>
+                </div>
+              </label>
+            ))}
+          </div>
+        </div>
         <div className="flex items-center gap-3">
           <div className="text-[##BABFD1 text-sm font-semibold md:text-base">
             金額
           </div>
           <input
-            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[48px] md:w-[250px]"
+            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[44px] md:w-[250px]"
             type="number"
             placeholder={errors.amount ? errors.amount.message : "金額不為 0"}
             {...register("amount", {
@@ -270,6 +338,13 @@ export default function DailyAccounting() {
             })}
           />
         </div>
+        {selectedCurrency !== "TWD" && amount ? (
+          <div className="font-semibold text-red-400">
+            等值 TWD${convertedAmountDisplay}
+          </div>
+        ) : (
+          <></>
+        )}
 
         <button
           type="submit"
