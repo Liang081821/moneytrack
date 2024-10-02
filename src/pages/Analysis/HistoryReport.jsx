@@ -42,10 +42,10 @@ export default function HistoryReport() {
   const currentReport = reportData[currentIndex] || {};
 
   return (
-    <div className="mt-3 w-full">
-      <div className="mx-auto mb-4 w-full rounded-xl bg-white p-6 shadow-md">
-        <h3 className="mb-6 text-center font-semibold">
-          {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}{" "}
+    <div className="mx-auto mt-3 w-[90%]">
+      <div className="mx-auto mb-4 w-full rounded-xl border-2 border-gray-500 bg-white p-6 shadow-md">
+        <h3 className="mb-6 text-center text-xl font-semibold">
+          {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}
           月 報告
         </h3>
 
@@ -53,55 +53,71 @@ export default function HistoryReport() {
         <div className="grid grid-cols-2 gap-3">
           <div className="rounded-lg bg-[#F4E9CD] p-4 shadow-sm">
             <h4 className="text-base font-semibold">建議緊急備用金</h4>
-            <p className="text-xl font-bold">
-              {currentReport.emergynumberrecommend || "N/A"}
+            <p className="text-xl">
+              NT$
+              {currentReport.emergynumberrecommend.toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              }) || "無數據"}
             </p>
           </div>
 
           <div className="rounded-lg bg-[#F4E9CD] p-4 shadow-sm">
             <h4 className="text-base font-semibold">房租率</h4>
-            <p className="text-xl font-bold">
-              {currentReport.houseingRate || "N/A"}%
-            </p>
+            <p className="text-xl">{currentReport.houseingRate || "無數據"}%</p>
           </div>
 
           <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
             <h4 className="text-base font-semibold">保險率</h4>
-            <p className="text-xl font-bold">
-              {currentReport.insureRate || "N/A"}%
-            </p>
+            <p className="text-xl">{currentReport.insureRate || "無數據"}%</p>
           </div>
 
           <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
             <h4 className="text-base font-semibold">每月支出</h4>
-            <p className="text-xl font-bold">
-              {currentReport.monthexpense || "N/A"}
+            <p className="text-xl">
+              NT$
+              {currentReport.monthexpense.toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              }) || "無數據"}
             </p>
           </div>
 
           <div className="rounded-lg bg-[#F4E9CD] p-4 shadow-sm">
             <h4 className="text-base font-semibold">每月收入</h4>
-            <p className="text-xl font-bold">
-              {currentReport.monthincome || "N/A"}
+            <p className="text-xl">
+              NT$
+              {currentReport.monthincome.toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              }) || "無數據"}
             </p>
           </div>
 
           <div className="rounded-lg bg-[#F4E9CD] p-4 shadow-sm">
             <h4 className="text-base font-semibold">淨收入</h4>
-            <p className="text-xl font-bold">{currentReport.net || "N/A"}</p>
-          </div>
-
-          <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
-            <h4 className="text-base font-semibold">儲蓄率</h4>
-            <p className="text-xl font-bold">
-              {currentReport.savingRate || "N/A"}%
+            <p className="text-xl">
+              NT$
+              {currentReport.net.toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              }) || "N/A"}
             </p>
           </div>
 
           <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
+            <h4 className="text-base font-semibold">儲蓄率</h4>
+            <p className="text-xl">{currentReport.savingRate || "無數據"}%</p>
+          </div>
+
+          <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
             <h4 className="text-base font-semibold">總資產</h4>
-            <p className="text-xl font-bold">
-              {currentReport.totalProperty || "N/A"}
+            <p className="text-xl">
+              NT$
+              {currentReport.totalProperty.toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              }) || "無數據"}
             </p>
           </div>
         </div>

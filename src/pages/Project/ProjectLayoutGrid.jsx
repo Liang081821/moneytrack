@@ -122,9 +122,9 @@ export default function ProjectLayoutGrid() {
 
     const total = filteredTransactions.reduce((accumulate, value) => {
       if (value.record_type === "支出") {
-        return accumulate - value.amount;
+        return accumulate - value.convertedAmountTWD;
       } else if (value.record_type === "收入") {
-        return accumulate + value.amount;
+        return accumulate + value.convertedAmountTWD;
       } else {
         return accumulate;
       }
@@ -140,18 +140,18 @@ export default function ProjectLayoutGrid() {
   const deleteProject = async (deleteOption, id) => {
     try {
       if (deleteOption === "保留帳單") {
-        setProjects(projects.filter((project) => project.id !== id));
-        setSelectedProject(null);
-        setselectedProjectData(null);
-        alert("專案已刪除");
-        showDeleteConfirm(false);
+        // setProjects(projects.filter((project) => project.id !== id));
+        // setSelectedProject(null);
+        // setselectedProjectData(null);
+        // alert("專案已刪除");
+        // showDeleteConfirm(false);
         await deleteDoc(doc(projectCollectionRef, id));
       } else if (deleteOption === "刪除帳單") {
-        setProjects(projects.filter((project) => project.id !== id));
-        setSelectedProject(null);
-        setselectedProjectData(null);
-        alert("專案已刪除");
-        showDeleteConfirm(false);
+        // setProjects(projects.filter((project) => project.id !== id));
+        // setSelectedProject(null);
+        // setselectedProjectData(null);
+        // alert("專案已刪除");
+        // showDeleteConfirm(false);
         await deleteDoc(doc(projectCollectionRef, id));
         const q = query(
           accountingCollectionRef,
@@ -162,11 +162,11 @@ export default function ProjectLayoutGrid() {
           await deleteDoc(doc(accountingCollectionRef, docSnap.id));
         });
       }
-      // setProjects(projects.filter((project) => project.id !== id));
-      // setSelectedProject(null);
-      // setselectedProjectData(null);
-      // alert("專案已刪除");
-      // showDeleteConfirm(false);
+      setProjects(projects.filter((project) => project.id !== id));
+      setSelectedProject(null);
+      setselectedProjectData(null);
+      alert("專案已刪除");
+      showDeleteConfirm(false);
     } catch (error) {
       console.error("Error deleting project: ", error);
     }
@@ -195,8 +195,8 @@ export default function ProjectLayoutGrid() {
 
   return (
     <>
-      <div className="w-full bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1] py-10 pl-24 pr-8 md:pl-12">
-        <div className="flex h-auto w-full flex-wrap items-start justify-start gap-3">
+      <div className="w-full bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1] py-10">
+        <div className="mx-auto flex h-auto w-[90%] flex-wrap items-start justify-start gap-3">
           {/* 新增專案按鈕 */}
           <div className="relative h-[200px] w-full md:h-[300px] md:w-[32%]">
             <div className="h-[200px] w-full rounded-xl border border-[#8b91a1] bg-[#8b91a1] p-4 opacity-20 md:h-[300px]"></div>
@@ -232,14 +232,14 @@ export default function ProjectLayoutGrid() {
               {projects.map((project) => (
                 <div
                   key={project.id}
-                  className={`relative flex h-[200px] w-full flex-col items-center justify-center gap-4 rounded-xl md:h-[300px] md:w-[32%] ${project.isediting ? "bg-[#9DBEBB]" : "bg-[#E8E9ED]"} p-3 shadow-md`}
+                  className={`relative flex h-[200px] w-full flex-col items-center justify-center gap-4 rounded-xl border-2 border-gray-500 md:h-[300px] md:w-[32%] ${project.isediting ? "bg-[#9DBEBB]" : "bg-[#E8E9ED]"} p-3 shadow-md`}
                   onClick={() => showProjectDetails(project, project.name)}
                 >
                   {project.imageUrl && (
                     <img
                       src={project.imageUrl}
                       alt="離線時無法載入圖片"
-                      className="h-[70%] w-full overflow-hidden rounded-xl object-cover"
+                      className="w-full overflow-hidden rounded-xl object-cover"
                     />
                   )}
                   <p className="text-xl font-semibold">{project.name}</p>
@@ -347,7 +347,7 @@ export default function ProjectLayoutGrid() {
                         }
                       >
                         {item.record_type === "支出" ? "-" : ""}
-                        NT${item.amount}
+                        {item.currency}${item.amount}
                       </div>
                     </div>
                     <div className="flex justify-between">

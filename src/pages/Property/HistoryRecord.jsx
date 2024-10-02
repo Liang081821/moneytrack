@@ -69,7 +69,7 @@ export default function HistoryRecord() {
 
   return (
     <div className="w-full bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1] pl-11 pt-10 md:pl-0">
-      <div className="flex flex-col px-10">
+      <div className="mx-auto flex w-[90%] flex-col">
         <div className="mb-5 flex w-full justify-end">
           <button
             onClick={calculateProperty}
@@ -79,14 +79,14 @@ export default function HistoryRecord() {
           </button>
           <AddNewFunction></AddNewFunction>
         </div>
-        <div className="flex flex-col items-center justify-center gap-2 md:flex-row md:flex-nowrap">
+        <div className="flex h-full flex-col items-center justify-center gap-2 md:flex-row md:flex-nowrap">
           <Saving />
           <Consume />
           <Invest />
         </div>
         <div className="mx-auto w-full">
           {historyData.length !== 0 ? (
-            <div className="mb-9 mt-5 flex w-full flex-col items-center justify-center rounded-xl bg-white p-2">
+            <div className="mb-9 mt-5 flex w-full flex-col items-center justify-center rounded-xl border-2 border-gray-500 bg-white p-2">
               <div className="font-semibold">資產紀錄</div>
               {historyData
                 .slice()
@@ -94,7 +94,7 @@ export default function HistoryRecord() {
                 .map((item) => (
                   <div
                     key={item.id}
-                    className="m-1 flex min-h-[100px] w-full flex-col items-center gap-3 rounded-xl bg-[#E8E9ED] p-2 md:flex-row"
+                    className="m-1 flex min-h-[100px] w-full flex-col items-center gap-3 rounded-xl p-2 md:flex-row"
                   >
                     <div className="w-[110px] rounded-xl p-2 text-center">
                       {item.time.toDate().toLocaleDateString()}

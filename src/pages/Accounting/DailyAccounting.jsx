@@ -168,16 +168,13 @@ export default function DailyAccounting() {
   const [startDate, setStartDate] = useState(new Date());
 
   return (
-    <div className="relative flex h-[300px] w-[280px] flex-col items-center rounded-xl border border-gray-200 bg-white p-2 shadow-lg md:h-[450px] md:w-[500px] md:p-4">
-      <div className="h-[48px] text-center font-semibold md:w-[345px]">
-        每日記帳
-      </div>
+    <div className="flex w-full flex-1 flex-col items-center justify-center rounded-xl bg-white p-4">
       {/* <AddNewClass /> */}
-      <div className="mb-2 flex items-center gap-3">
-        <div className="text-sm font-semibold text-[##BABFD1] md:text-base">
+      <div className="mb-2 flex w-full items-center gap-3">
+        <div className="text-nowrap text-sm font-semibold md:text-base">
           日期
         </div>
-        <div>
+        <div className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center focus:outline-none focus:ring-2 focus:ring-blue-500 md:h-[44px]">
           <DatePicker
             selected={startDate}
             onChange={(date) => setStartDate(date)}
@@ -186,21 +183,21 @@ export default function DailyAccounting() {
             timeIntervals={5}
             timeCaption="時間"
             dateFormat="yyyy/MM/dd h:mm aa"
-            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center focus:outline-none focus:ring-2 focus:ring-blue-500 md:h-[44px] md:w-[250px]"
+            className="outline-none"
           />
         </div>
       </div>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center gap-2"
+        className="flex w-full flex-col items-center gap-2"
       >
-        <div className="flex items-center gap-3">
-          <div className="text-sm font-semibold text-[##BABFD1] md:text-base">
+        <div className="flex w-full items-center gap-3">
+          <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
             帳戶
           </div>
           <select
-            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[44px] md:w-[250px]"
+            className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
             {...register("account", {
               required: "請選擇帳戶",
             })}
@@ -214,12 +211,12 @@ export default function DailyAccounting() {
               ))}
           </select>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="text-sm font-semibold text-[##BABFD1] md:text-base">
+        <div className="flex w-full items-center gap-3">
+          <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
             類型
           </div>
           <select
-            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[44px] md:w-[250px]"
+            className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
             {...register("type", {
               required: "請選擇類型",
             })}
@@ -251,12 +248,12 @@ export default function DailyAccounting() {
             </select>
           </div>
         ) : (
-          <div className="flex items-center gap-3">
-            <div className="text-sm font-semibold text-[##BABFD1] md:text-base">
+          <div className="flex w-full items-center gap-3">
+            <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
               分類
             </div>
             <select
-              className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[44px] md:w-[250px]"
+              className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
               {...register("class", {
                 required: watchType !== "轉帳" ? "請選擇目標轉入帳戶" : false,
               })}
@@ -273,13 +270,13 @@ export default function DailyAccounting() {
         )}
         {Array.isArray(projectData) &&
           projectData.some((item) => item.isediting) && (
-            <div className="flex items-center gap-3">
-              <div className="text-sm font-semibold text-[##BABFD1] md:text-base">
+            <div className="flex w-full items-center gap-3">
+              <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
                 專案
               </div>
 
               <select
-                className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[44px] md:w-[250px]"
+                className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
                 {...register("project")}
               >
                 <option value="">請選擇</option>
@@ -293,9 +290,11 @@ export default function DailyAccounting() {
               </select>
             </div>
           )}
-        <div className="flex items-center gap-3">
-          <div className="text-sm font-semibold md:text-base">幣別</div>
-          <div className="grid grid-cols-6 gap-1 md:h-[44px] md:w-[250px]">
+        <div className="flex w-full items-center gap-3">
+          <div className="text-nowrap text-sm font-semibold md:text-base">
+            幣別
+          </div>
+          <div className="grid w-full grid-cols-6 gap-1 md:h-[44px]">
             {currencies.map(([code]) => (
               <label
                 key={code}
@@ -323,12 +322,12 @@ export default function DailyAccounting() {
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="text-[##BABFD1 text-sm font-semibold md:text-base">
+        <div className="flex w-full items-center gap-3">
+          <div className="text-nowrap text-sm font-semibold md:text-base">
             金額
           </div>
           <input
-            className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[44px] md:w-[250px]"
+            className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
             type="number"
             placeholder={errors.amount ? errors.amount.message : "金額不為 0"}
             {...register("amount", {
@@ -339,7 +338,7 @@ export default function DailyAccounting() {
           />
         </div>
         {selectedCurrency !== "TWD" && amount ? (
-          <div className="font-semibold text-red-400">
+          <div className="font-semibold text-red-400 fade-in">
             等值 TWD${convertedAmountDisplay}
           </div>
         ) : (

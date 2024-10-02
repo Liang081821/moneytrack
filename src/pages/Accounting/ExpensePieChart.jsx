@@ -8,8 +8,8 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 Chart.register(...registerables, ChartDataLabels);
 
 export default function ExpensePieChart({
-  firstDayOfLastMonth,
-  lastDayOfLastMonth,
+  firstDayOfSelectedMonth,
+  lastDayOfSelectedMonth,
 }) {
   const { transactionData } = useGlobalContext();
   const [expenseRecord, setExpenseRecord] = useState([]);
@@ -22,8 +22,8 @@ export default function ExpensePieChart({
 
           const transactionTime = transaction.time.toDate();
           const isInDateRange =
-            transactionTime >= firstDayOfLastMonth &&
-            transactionTime <= lastDayOfLastMonth;
+            transactionTime >= firstDayOfSelectedMonth &&
+            transactionTime <= lastDayOfSelectedMonth;
 
           return isExpense && isInDateRange;
         });
@@ -54,16 +54,16 @@ export default function ExpensePieChart({
     };
 
     fetchRecords();
-  }, [transactionData, firstDayOfLastMonth, lastDayOfLastMonth]);
+  }, [transactionData, firstDayOfSelectedMonth, lastDayOfSelectedMonth]);
 
   ExpensePieChart.propTypes = {
-    firstDayOfLastMonth: PropTypes.instanceOf(Date).isRequired,
-    lastDayOfLastMonth: PropTypes.instanceOf(Date).isRequired,
+    firstDayOfSelectedMonth: PropTypes.instanceOf(Date).isRequired,
+    lastDayOfSelectedMonth: PropTypes.instanceOf(Date).isRequired,
   };
 
   if (expenseRecord.length === 0) {
     return (
-      <div className="flex h-[300px] w-[280px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[450px] md:w-[500px]">
+      <div className="flex flex-1 items-center justify-center rounded-lg bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -162,9 +162,8 @@ export default function ExpensePieChart({
   };
 
   return (
-    <div className="flex h-[300px] w-[280px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg md:h-[450px] md:w-[500px]">
-      <div className="text-base font-medium">本月支出分佈</div>
-      <div className="flex h-full w-full justify-center p-10">
+    <div className="flex flex-1 items-center justify-center rounded-xl bg-white p-4 shadow-lg">
+      <div className="flex w-[300px] justify-center lg:w-[400px]">
         <Pie data={data} options={options} />
       </div>
     </div>

@@ -7,8 +7,8 @@ import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
 export default function BalanceDoughnutChart({
-  firstDayOfLastMonth,
-  lastDayOfLastMonth,
+  firstDayOfSelectedMonth,
+  lastDayOfSelectedMonth,
 }) {
   const { transactionData } = useGlobalContext();
   const [balanceData, setBalanceData] = useState([]);
@@ -22,8 +22,8 @@ export default function BalanceDoughnutChart({
         const filteredTransactions = transactionData.filter((transaction) => {
           const transactionTime = transaction.time.toDate();
           return (
-            transactionTime >= firstDayOfLastMonth &&
-            transactionTime <= lastDayOfLastMonth
+            transactionTime >= firstDayOfSelectedMonth &&
+            transactionTime <= lastDayOfSelectedMonth
           );
         });
 
@@ -52,11 +52,11 @@ export default function BalanceDoughnutChart({
     };
 
     fetchBalanceData();
-  }, [transactionData, firstDayOfLastMonth, lastDayOfLastMonth]);
+  }, [transactionData, firstDayOfSelectedMonth, lastDayOfSelectedMonth]);
 
   BalanceDoughnutChart.propTypes = {
-    firstDayOfLastMonth: PropTypes.instanceOf(Date).isRequired,
-    lastDayOfLastMonth: PropTypes.instanceOf(Date).isRequired,
+    firstDayOfSelectedMonth: PropTypes.instanceOf(Date).isRequired,
+    lastDayOfSelectedMonth: PropTypes.instanceOf(Date).isRequired,
   };
 
   if (
@@ -64,7 +64,7 @@ export default function BalanceDoughnutChart({
     (expenseRecord === 0 || expenseRecord === undefined)
   ) {
     return (
-      <div className="flex h-[300px] w-[280px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[450px] md:w-[500px]">
+      <div className="flex flex-1 items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -139,12 +139,11 @@ export default function BalanceDoughnutChart({
   };
 
   return (
-    <div className="relative flex h-[300px] w-[280px] flex-col items-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg md:h-[450px] md:w-[500px]">
-      <div className="text-base font-medium">本月盈餘</div>
-      <div className="flex h-full w-full justify-center p-10">
+    <div className="flex flex-1 items-center justify-center rounded-xl bg-white p-4 shadow-lg">
+      <div className="relative flex w-[300px] items-center justify-center lg:w-[400px]">
         <Doughnut data={data} options={options} />
         {/* 在中間顯示盈餘 */}
-        <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center pt-10 text-center">
+        <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center text-center">
           <div className="text-xl font-semibold">
             月結餘 <br />$
             {surplus.toLocaleString(undefined, {

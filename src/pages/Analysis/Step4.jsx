@@ -58,9 +58,30 @@ export default function Step4({
   const handleSaveReport = async () => {
     const rows = [
       ["健檢項目", "總金額", "說明"],
-      ["淨資產", `NT$${totalProperty}`, ""],
-      ["總支出", `-NT$${monthexpense}`, ""],
-      ["總收入", `NT$${monthincome}`, ""],
+      [
+        "淨資產",
+        `NT$${totalProperty.toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        })}`,
+        "",
+      ],
+      [
+        "總支出",
+        `-NT$${monthexpense.toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        })}`,
+        "",
+      ],
+      [
+        "總收入",
+        `NT$${monthincome.toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        })}`,
+        "",
+      ],
       [
         "每月淨現金流",
         `NT$${monthincome - monthexpense}`,
@@ -169,21 +190,33 @@ export default function Step4({
                 <tr>
                   <td className="border border-gray-300 px-4 py-2">淨資產</td>
                   <td className="border border-gray-300 px-4 py-2">
-                    NT${totalProperty}
+                    NT$
+                    {totalProperty.toLocaleString(undefined, {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2,
+                    })}
                   </td>
                   <td className="border border-gray-300 px-4 py-2"></td>
                 </tr>
                 <tr>
                   <td className="border border-gray-300 px-4 py-2">總支出</td>
                   <td className="border border-gray-300 px-4 py-2">
-                    -NT${monthexpense}
+                    -NT$
+                    {monthexpense.toLocaleString(undefined, {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2,
+                    })}
                   </td>
                   <td className="border border-gray-300 px-4 py-2"></td>
                 </tr>
                 <tr>
                   <td className="border border-gray-300 px-4 py-2">總收入</td>
                   <td className="border border-gray-300 px-4 py-2">
-                    NT${monthincome}
+                    NT$
+                    {monthincome.toLocaleString(undefined, {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2,
+                    })}
                   </td>
                   <td className="border border-gray-300 px-4 py-2"></td>
                 </tr>
@@ -192,7 +225,11 @@ export default function Step4({
                     每月淨現金流
                   </td>
                   <td className="border border-gray-300 px-4 py-2">
-                    NT${monthincome - monthexpense}
+                    NT$
+                    {(monthincome - monthexpense).toLocaleString(undefined, {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2,
+                    })}
                   </td>
                   <td className="border border-gray-300 px-4 py-2">
                     您每月可以存下的錢

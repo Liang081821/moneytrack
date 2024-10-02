@@ -84,10 +84,10 @@ export default function Consume() {
     );
   }
   return (
-    <div className="flex h-auto w-full flex-col items-center rounded-2xl bg-white p-3 shadow-md md:min-h-[595px]">
+    <div className="flex h-auto w-full flex-col items-center rounded-2xl border-2 border-gray-500 bg-white p-3 shadow-md md:min-h-[595px]">
       <div className="flex items-center gap-3">
         <img src={InvestPic} alt="" className="h-8 w-8" />
-        <div className="font-semibold">投資</div>
+        <div className="text-xl font-semibold">投資</div>
       </div>
       {/* 動態渲染篩選後的帳戶 */}
       {consumeAccounts.map((account) => (
@@ -140,7 +140,7 @@ export default function Consume() {
               <div>
                 <button
                   onClick={() => setShowDeleteConfirm(true)}
-                  className="rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"
+                  className="mr-2 rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"
                 >
                   刪除帳戶
                 </button>

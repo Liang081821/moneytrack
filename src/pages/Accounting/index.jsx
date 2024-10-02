@@ -1,77 +1,58 @@
-import { useState, useEffect } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { nanoid } from "nanoid";
+import { useState } from "react";
+import { Responsive, WidthProvider } from "react-grid-layout";
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 import DailyAccounting from "./DailyAccounting";
 import DailyRecord from "./DailyRecord";
 import ExpensePieChart from "./ExpensePieChart";
 import IncomePieChart from "./IncomePieChart";
 import BalanceChart from "./BalanceChart";
 import BarChart from "./BarChart";
-// import CustomBudget from "./CustomBudget";
 import AddNewClass from "./AddNewClass";
 
+const ResponsiveGridLayout = WidthProvider(Responsive);
+
 export default function Accounting() {
-  const initialItemObj = JSON.parse(localStorage.getItem("itemObj")) || {
-    candidate: {
-      items: [
-        { content: "DailyAccounting", id: nanoid(), priority: "3" },
-        { content: "DailyRecord", id: nanoid(), priority: "2" },
-        { content: "ExpensePieChart", id: nanoid(), priority: "1" },
-        { content: "IncomePieChart", id: nanoid(), priority: "1" },
-        { content: "BarChart", id: nanoid(), priority: "6" },
-        { content: "BalanceChart", id: nanoid(), priority: "4" },
-      ],
-    },
-    productBacklog: {
-      items: [],
-    },
+  const defaultLayouts = {
+    lg: [
+      { i: "a", x: 0, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
+      { i: "b", x: 4, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
+      { i: "c", x: 8, y: 0, w: 4, h: 100, minH: 100, minW: 4 },
+      { i: "d", x: 0, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
+      { i: "e", x: 4, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
+      { i: "f", x: 8, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
+      { i: "g", x: 0, y: 2, w: 8, h: 50, minH: 50, minW: 8 },
+    ],
+    md: [
+      { i: "a", x: 0, y: 0, w: 5, h: 60, minH: 60, minW: 4 },
+      { i: "b", x: 5, y: 0, w: 5, h: 60, minH: 60, minW: 4 },
+      { i: "c", x: 0, y: 1, w: 10, h: 100, minH: 100, minW: 4 },
+      { i: "d", x: 0, y: 2, w: 5, h: 50, minH: 50, minW: 4 },
+      { i: "e", x: 5, y: 2, w: 5, h: 50, minH: 50, minW: 4 },
+      { i: "f", x: 0, y: 3, w: 5, h: 50, minH: 50, minW: 4 },
+      { i: "g", x: 5, y: 3, w: 5, h: 50, minH: 50, minW: 8 },
+    ],
+    sm: [
+      { i: "a", x: 0, y: 0, w: 6, h: 50, minH: 50, minW: 6 },
+      { i: "b", x: 0, y: 1, w: 6, h: 50, minH: 50, minW: 6 },
+      { i: "c", x: 0, y: 2, w: 6, h: 40, minH: 40, minW: 6 },
+      { i: "d", x: 0, y: 4, w: 6, h: 40, minH: 40, minW: 6 },
+      { i: "e", x: 0, y: 5, w: 6, h: 40, minH: 40, minW: 6 },
+      { i: "f", x: 0, y: 6, w: 6, h: 40, minH: 40, minW: 6 },
+      { i: "g", x: 0, y: 7, w: 6, h: 20, minH: 20, minW: 6 },
+    ],
   };
 
-  const [itemObj, setItemObj] = useState(initialItemObj);
+  const [layouts, setLayouts] = useState(() => {
+    const savedLayouts = localStorage.getItem("accountingLayouts");
+    return savedLayouts ? JSON.parse(savedLayouts) : defaultLayouts;
+  });
+  const handleLayoutChange = (currentLayout, allLayouts) => {
+    localStorage.setItem("accountingLayouts", JSON.stringify(allLayouts));
+    setLayouts(allLayouts);
+  };
+
   const [selectedMonth, setSelectedMonth] = useState(new Date());
-
-  useEffect(() => {
-    localStorage.setItem("itemObj", JSON.stringify(itemObj));
-  }, [itemObj]);
-
-  const handleDragEnd = (event) => {
-    const { source, destination } = event;
-    if (!destination) return;
-    if (
-      source.droppableId === destination.droppableId &&
-      source.index === destination.index
-    )
-      return;
-
-    const newItemObj = JSON.parse(JSON.stringify(itemObj));
-    const [removed] = newItemObj[source.droppableId].items.splice(
-      source.index,
-      1,
-    );
-    if (destination.index !== 0) {
-      newItemObj[destination.droppableId].items.splice(
-        destination.index,
-        0,
-        removed,
-      );
-    } else {
-      newItemObj[destination.droppableId].items.splice(1, 0, removed);
-    }
-
-    const dailyAccountingIndex = newItemObj.candidate.items.findIndex(
-      (item) => item.content === "DailyAccounting",
-    );
-    if (dailyAccountingIndex !== 0) {
-      const [dailyAccountingItem] = newItemObj.candidate.items.splice(
-        dailyAccountingIndex,
-        1,
-      );
-      newItemObj.candidate.items.unshift(dailyAccountingItem);
-    }
-
-    setItemObj(newItemObj);
-  };
-
   const handleMonthChange = (direction) => {
     setSelectedMonth((prev) => {
       const newDate = new Date(prev);
@@ -98,74 +79,35 @@ export default function Accounting() {
     59,
   );
 
-  const renderContent = (content) => {
-    switch (content) {
-      case "DailyAccounting":
-        return <DailyAccounting />;
-      case "DailyRecord":
-        return <DailyRecord />;
-      case "ExpensePieChart":
-        return (
-          <ExpensePieChart
-            firstDayOfLastMonth={firstDayOfSelectedMonth}
-            lastDayOfLastMonth={lastDayOfSelectedMonth}
-          />
-        );
-      case "IncomePieChart":
-        return (
-          <IncomePieChart
-            firstDayOfLastMonth={firstDayOfSelectedMonth}
-            lastDayOfLastMonth={lastDayOfSelectedMonth}
-          />
-        );
-      case "BalanceChart":
-        return (
-          <BalanceChart
-            firstDayOfLastMonth={firstDayOfSelectedMonth}
-            lastDayOfLastMonth={lastDayOfSelectedMonth}
-          />
-        );
-      case "BarChart":
-        return (
-          <BarChart
-            firstDayOfLastMonth={firstDayOfSelectedMonth}
-            lastDayOfLastMonth={lastDayOfSelectedMonth}
-          />
-        );
-      default:
-        return <div>未知內容</div>;
-    }
-  };
-
   return (
-    <div className="bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1] pl-11 md:pl-0">
-      <div>
+    <div className="flex w-full flex-col items-center justify-center bg-gradient-to-r from-[#bbe0e1] via-[#ebf6f2] to-[#bbe0e1] pb-[10vh]">
+      <div className="my-2 w-[90%]">
         <div className="flex items-center justify-between p-3">
           <div
-            className="flex cursor-pointer items-center justify-center gap-1 rounded-xl bg-[#607196] p-1 text-sm text-white md:gap-2 md:p-2 md:text-base"
+            className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
             onClick={() => handleMonthChange("prev")}
           >
-            <button>上個月</button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth="1.5"
+              strokeWidth="2"
               stroke="currentColor"
               className="size-5"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M21 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061A1.125 1.125 0 0 1 21 8.689v8.122ZM11.25 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061a1.125 1.125 0 0 1 1.683.977v8.122Z"
+                d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"
               />
             </svg>
+            <button>上個月</button>
           </div>
-          <span className="font-bold">
+          <span className="text-xl font-bold">
             {`${selectedMonth.getFullYear()}年 ${selectedMonth.getMonth() + 1}月`}
           </span>
           <div
-            className="flex cursor-pointer items-center justify-center gap-1 rounded-xl bg-[#607196] p-1 text-sm text-white md:gap-2 md:p-2 md:text-base"
+            className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
             onClick={() => handleMonthChange("next")}
           >
             <button>下個月</button>
@@ -173,53 +115,108 @@ export default function Accounting() {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth="1.5"
+              strokeWidth="2"
               stroke="currentColor"
               className="size-5"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061A1.125 1.125 0 0 1 3 16.811V8.69ZM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 1 0 1.954l-7.108 4.061a1.125 1.125 0 0 1-1.683-.977V8.69Z"
+                d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5"
               />
             </svg>
           </div>
         </div>
       </div>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="candidate">
-          {(provided) => (
-            <div
-              className="flex flex-wrap items-start justify-center gap-2"
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {itemObj.candidate.items.map((item, index) => (
-                <Draggable
-                  key={item.id}
-                  draggableId={item.id}
-                  index={index}
-                  isDragDisabled={item.content === "DailyAccounting"}
-                >
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      className="rounded-md py-3 pr-3"
-                    >
-                      {renderContent(item.content)}
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
+      <div style={{ width: "90%", margin: "0 auto", borderRadius: "8px" }}>
+        <ResponsiveGridLayout
+          className="layout"
+          layouts={layouts}
+          breakpoints={{ lg: 1200, md: 996, sm: 768 }}
+          cols={{ lg: 12, md: 10, sm: 6 }}
+          rowHeight={1}
+          draggableHandle=".drag-handle"
+          onLayoutChange={(currentLayout, allLayouts) =>
+            handleLayoutChange(currentLayout, allLayouts)
+          }
+        >
+          <div
+            key="a"
+            className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+          >
+            <div className="drag-handle rounded-lg p-4 text-center text-xl font-semibold">
+              本月支出變化表
             </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-      {/* <CustomBudget /> */}
-      <AddNewClass />
+            <BarChart
+              firstDayOfSelectedMonth={firstDayOfSelectedMonth}
+              lastDayOfSelectedMonth={lastDayOfSelectedMonth}
+            />
+          </div>
+          <div
+            key="b"
+            className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+          >
+            <div className="drag-handle rounded-lg p-4 text-center text-xl font-semibold">
+              每日紀錄
+            </div>
+            <DailyAccounting />
+          </div>
+          <div
+            key="c"
+            className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+          >
+            <div className="drag-handle rounded-lg p-4 text-center text-xl font-semibold">
+              交易紀錄
+            </div>
+            <DailyRecord />
+          </div>
+          <div
+            key="d"
+            className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+          >
+            <div className="drag-handle rounded-lg p-4 text-center text-xl font-semibold">
+              本月支出分佈
+            </div>
+            <ExpensePieChart
+              firstDayOfSelectedMonth={firstDayOfSelectedMonth}
+              lastDayOfSelectedMonth={lastDayOfSelectedMonth}
+            />
+          </div>
+          <div
+            key="e"
+            className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+          >
+            <div className="drag-handle rounded-lg p-4 text-center text-xl font-semibold">
+              本月收入分佈
+            </div>
+            <IncomePieChart
+              firstDayOfSelectedMonth={firstDayOfSelectedMonth}
+              lastDayOfSelectedMonth={lastDayOfSelectedMonth}
+            />
+          </div>
+          <div
+            key="f"
+            className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+          >
+            <div className="drag-handle rounded-lg p-4 text-center text-xl font-semibold">
+              本月盈餘
+            </div>
+            <BalanceChart
+              firstDayOfSelectedMonth={firstDayOfSelectedMonth}
+              lastDayOfSelectedMonth={lastDayOfSelectedMonth}
+            />
+          </div>
+          {/* <div
+            key="g"
+            className="flex flex-col rounded-xl border-2 border-gray-500"
+          >
+            <div className="drag-handle rounded-lg p-4 text-xl font-semibold">
+              g (拖動我)
+            </div>
+          </div> */}
+        </ResponsiveGridLayout>
+        <AddNewClass />
+      </div>
     </div>
   );
 }

@@ -114,7 +114,7 @@ export default function DailyRecord() {
       const docRef = doc(
         db,
         "record",
-        "2001henry99@gmail.com",
+        loginEmail,
         "accounting",
         currentTransaction.id,
       );
@@ -443,7 +443,7 @@ export default function DailyRecord() {
       const docRef = doc(
         db,
         "record",
-        "2001henry99@gmail.com",
+        loginEmail,
         "accounting",
         currentTransaction.id,
       );
@@ -524,14 +524,15 @@ export default function DailyRecord() {
     );
   }
   return (
-    <div className="flex h-[300px] w-[280px] flex-col overflow-scroll rounded-xl border border-gray-200 bg-white p-4 shadow-lg md:h-[908px] md:w-[500px]">
-      <div className="mb-3 self-center font-semibold">交易紀錄</div>
+    <div className="flex flex-1 flex-col overflow-scroll rounded-lg bg-white p-4 shadow-lg">
       <div>
         {Object.entries(groupedTransactions).map(([date, items]) => (
           <div key={date} className="mb-6">
-            <div className="mb-2 flex items-center">
-              <div className="font-semibold text-gray-800">{date}</div>
-              <div className="mx-auto w-48 border-[0.5px] border-gray-400"></div>
+            <div className="mb-2 flex items-center gap-3">
+              <div className="text-nowrap font-semibold text-gray-800">
+                {date}
+              </div>
+              <div className="mx-auto w-full border-[0.5px] border-gray-400"></div>
               <div className="font-bold text-gray-800">
                 NT$
                 {items.reduce((total, item) => {

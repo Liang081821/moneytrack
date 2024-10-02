@@ -142,7 +142,7 @@ export default function Report() {
         我要進行分析
       </button>
 
-      <div className="flex w-full flex-col justify-center gap-3 md:flex-row">
+      <div className="mx-auto flex w-[90%] flex-col justify-center gap-3 md:flex-row">
         <MonthlyData
           setmonthExpense={setmonthExpense}
           setmonthIncome={setmonthIncome}
@@ -178,7 +178,9 @@ export default function Report() {
                   <div
                     key={index}
                     className={`mx-1 h-2 flex-1 rounded-full ${
-                      index + 1 <= step ? "bg-[#77ACA2]" : "bg-gray-300"
+                      index + 1 <= step
+                        ? "border-2 border-gray-500 bg-gray-500"
+                        : "border border-gray-500"
                     }`}
                   ></div>
                 ))}
@@ -186,7 +188,7 @@ export default function Report() {
             </div>
 
             {/* 步驟內容 */}
-            <div className="h-[540px] rounded-xl border border-black">
+            <div className="h-[540px] rounded-xl border-2 border-gray-500">
               {renderStepContent()}
             </div>
 

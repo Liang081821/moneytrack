@@ -10,7 +10,10 @@ import {
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-export default function BarChart({ firstDayOfLastMonth, lastDayOfLastMonth }) {
+export default function BarChart({
+  firstDayOfSelectedMonth,
+  lastDayOfSelectedMonth,
+}) {
   const { transactionData } = useGlobalContext();
   const [dailyExpenses, setDailyExpenses] = useState([]);
 
@@ -21,8 +24,8 @@ export default function BarChart({ firstDayOfLastMonth, lastDayOfLastMonth }) {
           const isExpense = transaction.record_type === "支出";
           const transactionTime = transaction.time.toDate();
           const isInDateRange =
-            transactionTime >= firstDayOfLastMonth &&
-            transactionTime <= lastDayOfLastMonth;
+            transactionTime >= firstDayOfSelectedMonth &&
+            transactionTime <= lastDayOfSelectedMonth;
 
           return isExpense && isInDateRange;
         });
@@ -60,15 +63,15 @@ export default function BarChart({ firstDayOfLastMonth, lastDayOfLastMonth }) {
     };
 
     fetchRecords();
-  }, [transactionData, firstDayOfLastMonth, lastDayOfLastMonth]);
+  }, [transactionData, firstDayOfSelectedMonth, lastDayOfSelectedMonth]);
 
   BarChart.propTypes = {
-    firstDayOfLastMonth: PropTypes.instanceOf(Date).isRequired,
-    lastDayOfLastMonth: PropTypes.instanceOf(Date).isRequired,
+    firstDayOfSelectedMonth: PropTypes.instanceOf(Date).isRequired,
+    lastDayOfSelectedMonth: PropTypes.instanceOf(Date).isRequired,
   };
   if (dailyExpenses.length === 0) {
     return (
-      <div className="flex h-[300px] w-[280px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[450px] md:w-[500px]">
+      <div className="flex w-full flex-1 items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -88,43 +91,44 @@ export default function BarChart({ firstDayOfLastMonth, lastDayOfLastMonth }) {
     );
   }
   return (
-    <div className="h-[300px] w-[280px] flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-4 shadow-lg md:h-[450px] md:w-[500px]">
-      <div className="text-center text-base font-medium">本月支出變化表</div>
-      <VictoryChart
-        theme={VictoryTheme.material}
-        containerComponent={
-          <VictoryZoomContainer
-            zoomDimension="x"
-            allowZoom
-            allowPan
-            voronoiDimension="x"
-            labels={({ datum }) =>
-              `${datum.x.toLocaleDateString("zh-TW")}: $${datum.y}`
-            }
-            labelComponent={<VictoryTooltip />}
-          />
-        }
-      >
-        {/* X軸 */}
-        <VictoryAxis
-          tickFormat={(x) =>
-            new Date(x).toLocaleDateString("zh-TW", {
-              month: "numeric",
-              day: "numeric",
-            })
+    <div className="flex flex-1 items-center justify-center rounded-xl bg-white p-4 shadow-lg">
+      <div className="w-[300px] lg:w-[400px]">
+        <VictoryChart
+          theme={VictoryTheme.material}
+          containerComponent={
+            <VictoryZoomContainer
+              zoomDimension="x"
+              allowZoom
+              allowPan
+              voronoiDimension="x"
+              labels={({ datum }) =>
+                `${datum.x.toLocaleDateString("zh-TW")}: $${datum.y}`
+              }
+              labelComponent={<VictoryTooltip />}
+            />
           }
-        />
-        {/* Y軸 */}
-        <VictoryAxis dependentAxis tickFormat={(y) => `$${y}`} />
+        >
+          {/* X軸 */}
+          <VictoryAxis
+            tickFormat={(x) =>
+              new Date(x).toLocaleDateString("zh-TW", {
+                month: "numeric",
+                day: "numeric",
+              })
+            }
+          />
+          {/* Y軸 */}
+          <VictoryAxis dependentAxis tickFormat={(y) => `$${y}`} />
 
-        <VictoryLine
-          style={{
-            data: { stroke: "#c43a31" },
-            parent: { border: "1px solid #ccc" },
-          }}
-          data={dailyExpenses}
-        />
-      </VictoryChart>
+          <VictoryLine
+            style={{
+              data: { stroke: "#c43a31" },
+              parent: { border: "1px solid #ccc" },
+            }}
+            data={dailyExpenses}
+          />
+        </VictoryChart>
+      </div>
     </div>
   );
 }

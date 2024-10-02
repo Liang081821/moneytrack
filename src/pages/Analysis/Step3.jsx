@@ -29,7 +29,13 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
                 className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-4"
               >
                 <div className="text-sm font-semibold">{recordClass}</div>
-                <div className="text-lg">NT${totalAmount.toFixed(0)}</div>
+                <div className="text-lg">
+                  NT$
+                  {totalAmount.toLocaleString(undefined, {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2,
+                  })}
+                </div>
                 <div className="text-base text-gray-600">支出</div>
               </div>
             ))}
@@ -40,14 +46,26 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
                 className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#E8E9ED] p-4"
               >
                 <div className="text-sm font-semibold">{recordClass}</div>
-                <div className="text-lg">NT${totalAmount.toFixed(0)}</div>
+                <div className="text-lg">
+                  NT$
+                  {totalAmount.toLocaleString(undefined, {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2,
+                  })}
+                </div>
                 <div className="text-base text-gray-600">收入</div>
               </div>
             ))}
 
             <div className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-4">
               <div className="h-6 text-sm font-semibold">投資&儲蓄</div>
-              <div className="text-lg">NT${netWorth}</div>
+              <div className="text-lg">
+                NT$
+                {netWorth.toLocaleString(undefined, {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2,
+                })}
+              </div>
               <div className="text-base text-gray-600">淨現金流</div>
             </div>
           </div>
@@ -63,7 +81,13 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
                 className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#C4CAD0] p-4"
               >
                 <div className="text-sm">{item.account}</div>
-                <div className="text-lg">NT${item.balance}</div>
+                <div className="text-lg">
+                  NT$
+                  {item.balance.toLocaleString(undefined, {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2,
+                  })}
+                </div>
                 <div className="text-base">{item.account_type}帳</div>
               </div>
             ))}
@@ -73,7 +97,13 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
                 className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#D4BEBE] p-4"
               >
                 <div className="text-sm">{item.account}</div>
-                <div className="text-lg">NT${item.balance}</div>
+                <div className="text-lg">
+                  NT$
+                  {item.balance.toLocaleString(undefined, {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2,
+                  })}
+                </div>
                 <div className="text-base">{item.account_type}帳</div>
               </div>
             ))}

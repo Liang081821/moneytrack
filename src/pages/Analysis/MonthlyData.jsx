@@ -146,13 +146,13 @@ export default function MonthlyData({
             d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
           />
         </svg>
-        <p>上新增上月數據</p>
+        <p>新增上月數據</p>
       </div>
     );
   }
   return (
-    <div className="flex w-full flex-col items-center rounded-xl bg-white p-3 sm:min-h-[595px]">
-      <h2 className="mb-4 font-semibold">上月數據</h2>
+    <div className="flex w-full flex-col items-center rounded-xl border-2 border-gray-500 bg-white p-3 sm:min-h-[595px]">
+      <h2 className="mb-4 text-xl font-semibold">上月數據</h2>
       <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
         {Object.entries(expenseTotals).map(([recordClass, totalAmount]) => (
           <div
