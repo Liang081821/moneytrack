@@ -347,8 +347,6 @@ export default function DailyAccounting() {
         )}
 
         <div className="flex w-full gap-2">
-          <AddNewClass />
-
           <button
             type="submit"
             className="flex-1 rounded-xl bg-[#82A0BC] p-1 text-sm md:p-2 md:text-base"
@@ -357,6 +355,7 @@ export default function DailyAccounting() {
           </button>
         </div>
       </form>
+      <AddNewClass />
     </div>
   );
 }
