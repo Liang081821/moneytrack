@@ -89,7 +89,7 @@ export default function BalanceDoughnutChart({
     datasets: [
       {
         data: balanceData.map((record) => record.value),
-        backgroundColor: ["#77ACA2", "#E8E9ED"],
+        backgroundColor: ["#545E75", "#82A0BC"],
         borderWidth: 0,
       },
     ],
@@ -124,7 +124,7 @@ export default function BalanceDoughnutChart({
         align: "center",
         color: "black",
         font: {
-          size: 14,
+          size: 18,
           weight: "bold",
         },
         formatter: (value, context) => {

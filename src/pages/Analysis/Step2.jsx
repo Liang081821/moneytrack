@@ -27,10 +27,12 @@ export default function Step2({
   };
 
   return (
-    <div className="flex h-full flex-col items-center pt-10 fade-in">
-      <h2 className="mb-10 text-2xl font-semibold">設定統計數據</h2>
+    <div className="flex h-full flex-col items-center justify-center pt-10 fade-in">
+      <h2 className="text-2xl font-semibold">設定統計數據</h2>
       <div>
-        <h2 className="mt-7 text-xl">1. 選擇您房貸/房租使用的支出分類</h2>
+        <h2 className="mt-7 text-xl font-semibold">
+          1. 選擇您房貸/房租使用的支出分類
+        </h2>
 
         {/* 渲染按鈕組合 */}
         <div className="mt-4 flex space-x-2">
@@ -40,7 +42,7 @@ export default function Step2({
               onClick={() => handleHouseCategoryClick(category)}
               className={`rounded-md border p-2 ${
                 selectedHouseCategory === category
-                  ? "bg-[#F4E9CD]"
+                  ? "bg-[#545E75] text-gray-200"
                   : "bg-gray-200"
               }`}
             >
@@ -50,14 +52,16 @@ export default function Step2({
           <button
             onClick={() => handleHouseCategoryClick("無")}
             className={`rounded-md border p-2 ${
-              selectedHouseCategory === "無" ? "bg-[#F4E9CD]" : "bg-gray-200"
+              selectedHouseCategory === "無" ? "bg-[#A7CCED]" : "bg-gray-200"
             }`}
           >
             無
           </button>
         </div>
 
-        <h2 className="mt-7 text-xl">2. 選擇您保險使用的支出分類</h2>
+        <h2 className="mt-7 text-xl font-semibold">
+          2. 選擇您保險使用的支出分類
+        </h2>
 
         {/* 渲染按鈕組合 */}
         <div className="mt-4 flex space-x-2">
@@ -67,7 +71,7 @@ export default function Step2({
               onClick={() => handleInsureCategoryClick(category)}
               className={`rounded-md border p-2 ${
                 selectedInsureCategory === category
-                  ? "bg-[#F4E9CD]"
+                  ? "bg-[#545E75] text-gray-200"
                   : "bg-gray-200"
               }`}
             >
@@ -77,7 +81,7 @@ export default function Step2({
           <button
             onClick={() => handleInsureCategoryClick("無")}
             className={`rounded-md border p-2 ${
-              selectedInsureCategory === "無" ? "bg-[#F4E9CD]" : "bg-gray-200"
+              selectedInsureCategory === "無" ? "bg-[#A7CCED]" : "bg-gray-200"
             }`}
           >
             無

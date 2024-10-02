@@ -89,11 +89,11 @@ export default function IncomePieChart({
       {
         data: incomeRecord.map((record) => record.value),
         backgroundColor: [
-          "#E8E9ED",
-          "#9DBEBB",
-          "#F4E9CD",
-          "#8BB174",
-          "#468189",
+          "#304D6D",
+          "#A7CCED",
+          "#63ADF2",
+          "#82A0BC",
+          "#545E75",
         ],
         borderWidth: 0,
       },
@@ -133,7 +133,7 @@ export default function IncomePieChart({
         align: "center",
         color: "black",
         font: {
-          size: 14,
+          size: 18,
           weight: "bold",
         },
         formatter: (value, context) => {

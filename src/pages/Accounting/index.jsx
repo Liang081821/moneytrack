@@ -8,7 +8,6 @@ import ExpensePieChart from "./ExpensePieChart";
 import IncomePieChart from "./IncomePieChart";
 import BalanceChart from "./BalanceChart";
 import BarChart from "./BarChart";
-import AddNewClass from "./AddNewClass";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -80,7 +79,7 @@ export default function Accounting() {
   );
 
   return (
-    <div className="flex w-full flex-col items-center justify-center bg-gradient-to-r from-[#bbe0e1] via-[#ebf6f2] to-[#bbe0e1] pb-[10vh]">
+    <div className="to-[#e3e3e3]] flex w-full flex-col items-center justify-center bg-gradient-to-r from-[#e3e3e3] via-[#efefef] pb-[10vh]">
       <div className="my-2 w-[90%]">
         <div className="flex items-center justify-between p-3">
           <div
@@ -215,7 +214,6 @@ export default function Accounting() {
             </div>
           </div> */}
         </ResponsiveGridLayout>
-        <AddNewClass />
       </div>
     </div>
   );

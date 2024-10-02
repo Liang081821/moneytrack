@@ -3,7 +3,7 @@ import HistoryReport from "./HistoryReport";
 
 export default function Analysis() {
   return (
-    <div className="flex w-full flex-col items-center bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1] pt-10">
+    <div className="flex w-full flex-col items-center bg-gradient-to-r from-[#e3e3e3] via-[#efefef] pt-10">
       <Report />
       <HistoryReport />
     </div>

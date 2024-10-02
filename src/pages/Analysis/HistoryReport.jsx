@@ -51,8 +51,8 @@ export default function HistoryReport() {
 
         {/* 卡片風格報表 */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-lg bg-[#F4E9CD] p-4 shadow-sm">
-            <h4 className="text-base font-semibold">建議緊急備用金</h4>
+          <div className="rounded-lg bg-[#BABFD1] p-4 shadow-sm">
+            <h4 className="text-lg font-semibold">建議緊急備用金</h4>
             <p className="text-xl">
               NT$
               {currentReport.emergynumberrecommend.toLocaleString(undefined, {
@@ -62,18 +62,18 @@ export default function HistoryReport() {
             </p>
           </div>
 
-          <div className="rounded-lg bg-[#F4E9CD] p-4 shadow-sm">
-            <h4 className="text-base font-semibold">房租率</h4>
+          <div className="rounded-lg bg-[#BABFD1] p-4 shadow-sm">
+            <h4 className="text-lg font-semibold">房租率</h4>
             <p className="text-xl">{currentReport.houseingRate || "無數據"}%</p>
           </div>
 
           <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
-            <h4 className="text-base font-semibold">保險率</h4>
+            <h4 className="text-lg font-semibold">保險率</h4>
             <p className="text-xl">{currentReport.insureRate || "無數據"}%</p>
           </div>
 
           <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
-            <h4 className="text-base font-semibold">每月支出</h4>
+            <h4 className="text-lg font-semibold">每月支出</h4>
             <p className="text-xl">
               NT$
               {currentReport.monthexpense.toLocaleString(undefined, {
@@ -83,8 +83,8 @@ export default function HistoryReport() {
             </p>
           </div>
 
-          <div className="rounded-lg bg-[#F4E9CD] p-4 shadow-sm">
-            <h4 className="text-base font-semibold">每月收入</h4>
+          <div className="rounded-lg bg-[#BABFD1] p-4 shadow-sm">
+            <h4 className="text-lg font-semibold">每月收入</h4>
             <p className="text-xl">
               NT$
               {currentReport.monthincome.toLocaleString(undefined, {
@@ -94,8 +94,8 @@ export default function HistoryReport() {
             </p>
           </div>
 
-          <div className="rounded-lg bg-[#F4E9CD] p-4 shadow-sm">
-            <h4 className="text-base font-semibold">淨收入</h4>
+          <div className="rounded-lg bg-[#BABFD1] p-4 shadow-sm">
+            <h4 className="text-lg font-semibold">淨收入</h4>
             <p className="text-xl">
               NT$
               {currentReport.net.toLocaleString(undefined, {
@@ -106,12 +106,12 @@ export default function HistoryReport() {
           </div>
 
           <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
-            <h4 className="text-base font-semibold">儲蓄率</h4>
+            <h4 className="text-lg font-semibold">儲蓄率</h4>
             <p className="text-xl">{currentReport.savingRate || "無數據"}%</p>
           </div>
 
           <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
-            <h4 className="text-base font-semibold">總資產</h4>
+            <h4 className="text-lg font-semibold">總資產</h4>
             <p className="text-xl">
               NT$
               {currentReport.totalProperty.toLocaleString(undefined, {

@@ -14,7 +14,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
   };
 
   return (
-    <div className="flex flex-col items-center rounded-2xl pt-10 fade-in">
+    <div className="flex flex-col items-center rounded-2xl px-2 pt-10 fade-in">
       <h2 className="mb-10 text-2xl font-semibold">數據報表</h2>
 
       {/* Flex 容器，將左右兩邊分開 */}
@@ -26,9 +26,9 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
             {Object.entries(expenseTotals).map(([recordClass, totalAmount]) => (
               <div
                 key={recordClass}
-                className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-4"
+                className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#545E75] p-4 text-gray-200"
               >
-                <div className="text-sm font-semibold">{recordClass}</div>
+                <div className="text-sm">{recordClass}</div>
                 <div className="text-lg">
                   NT$
                   {totalAmount.toLocaleString(undefined, {
@@ -36,16 +36,16 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
                     maximumFractionDigits: 2,
                   })}
                 </div>
-                <div className="text-base text-gray-600">支出</div>
+                <div className="text-base">支出</div>
               </div>
             ))}
 
             {Object.entries(incomeTotals).map(([recordClass, totalAmount]) => (
               <div
                 key={recordClass}
-                className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#E8E9ED] p-4"
+                className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#82A0BC] p-4"
               >
-                <div className="text-sm font-semibold">{recordClass}</div>
+                <div className="text-sm">{recordClass}</div>
                 <div className="text-lg">
                   NT$
                   {totalAmount.toLocaleString(undefined, {
@@ -57,8 +57,8 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
               </div>
             ))}
 
-            <div className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-4">
-              <div className="h-6 text-sm font-semibold">投資&儲蓄</div>
+            <div className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#BABFD1] p-4">
+              <div className="h-6 text-sm">投資&儲蓄</div>
               <div className="text-lg">
                 NT$
                 {netWorth.toLocaleString(undefined, {
@@ -66,7 +66,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
                   maximumFractionDigits: 2,
                 })}
               </div>
-              <div className="text-base text-gray-600">淨現金流</div>
+              <div className="text-base">淨現金流</div>
             </div>
           </div>
         </div>
@@ -78,7 +78,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
             {groupProperty.map((item) => (
               <div
                 key={item.account}
-                className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#C4CAD0] p-4"
+                className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#A7CCED] p-4"
               >
                 <div className="text-sm">{item.account}</div>
                 <div className="text-lg">
@@ -94,7 +94,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
             {groupPropertyLiability.map((item) => (
               <div
                 key={item.account}
-                className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#D4BEBE] p-4"
+                className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#545E75] p-4 text-gray-200"
               >
                 <div className="text-sm">{item.account}</div>
                 <div className="text-lg">

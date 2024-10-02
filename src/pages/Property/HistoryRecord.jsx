@@ -68,7 +68,7 @@ export default function HistoryRecord() {
     total ? (Math.abs(amount) / Math.abs(total)) * 100 : 0;
 
   return (
-    <div className="w-full bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1] pl-11 pt-10 md:pl-0">
+    <div className="w-full bg-gradient-to-r from-[#e3e3e3] via-[#efefef] pl-11 pt-10 md:pl-0">
       <div className="mx-auto flex w-[90%] flex-col">
         <div className="mb-5 flex w-full justify-end">
           <button
@@ -87,7 +87,7 @@ export default function HistoryRecord() {
         <div className="mx-auto w-full">
           {historyData.length !== 0 ? (
             <div className="mb-9 mt-5 flex w-full flex-col items-center justify-center rounded-xl border-2 border-gray-500 bg-white p-2">
-              <div className="font-semibold">資產紀錄</div>
+              <div className="text-xl font-semibold">資產紀錄</div>
               {historyData
                 .slice()
                 .sort((a, b) => b.time.toDate() - a.time.toDate())
@@ -101,7 +101,7 @@ export default function HistoryRecord() {
                     </div>
                     <div className="flex w-full">
                       <div
-                        className="t flex h-8 w-14 items-center justify-center rounded-xl bg-[#9DBEBB]"
+                        className="t flex h-8 w-14 items-center justify-center rounded-xl bg-[#82A0BC] font-semibold"
                         style={{
                           width: `${getPercentage(item.saving, item.totalAssets)}%`,
                         }}
@@ -112,7 +112,7 @@ export default function HistoryRecord() {
                         %
                       </div>
                       <div
-                        className="flex h-8 w-full items-center justify-center rounded-xl bg-[#F4E9CD]"
+                        className="flex h-8 w-full items-center justify-center rounded-xl bg-[#545E75] font-semibold text-white"
                         style={{
                           width: `${getPercentage(item.expense, item.totalAssets)}%`,
                         }}
@@ -123,7 +123,7 @@ export default function HistoryRecord() {
                         %
                       </div>
                       <div
-                        className="flex h-8 w-14 items-center justify-center rounded-xl bg-[#D4BEBE]"
+                        className="flex h-8 w-14 items-center justify-center rounded-xl bg-[#A7CCED] font-semibold"
                         style={{
                           width: `${getPercentage(item.investment, item.totalAssets)}%`,
                         }}
@@ -135,9 +135,9 @@ export default function HistoryRecord() {
                         %
                       </div>
                     </div>
-                    <div className="flex w-full flex-col items-center justify-center md:flex-row">
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-3">
-                        <div>儲蓄</div>
+                    <div className="flex w-full flex-col items-center justify-center gap-2 md:flex-row">
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border-2 border-[#82A0BC] p-3">
+                        <div className="text-lg font-semibold">儲蓄</div>
                         <div>
                           NT$
                           {item.saving.toLocaleString(undefined, {
@@ -146,8 +146,8 @@ export default function HistoryRecord() {
                           })}
                         </div>
                       </div>
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-3">
-                        <div>消費</div>
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border-2 border-[#545E75] p-3">
+                        <div className="text-lg font-semibold">消費</div>
                         <div>
                           NT$
                           {item.expense.toLocaleString(undefined, {
@@ -156,8 +156,8 @@ export default function HistoryRecord() {
                           })}
                         </div>
                       </div>
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border bg-[#D4BEBE] p-3">
-                        <div>投資</div>
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border-2 border-[#A7CCED] p-3">
+                        <div className="text-lg font-semibold">投資</div>
                         <div>
                           NT$
                           {item.investment.toLocaleString(undefined, {
@@ -166,8 +166,8 @@ export default function HistoryRecord() {
                           })}
                         </div>
                       </div>
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl p-3">
-                        <div>總資產</div>
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl bg-[#BABFD1] p-3">
+                        <div className="text-lg font-semibold">總資產</div>
                         <div>
                           NT$
                           {item.totalAssets.toLocaleString(undefined, {
@@ -179,7 +179,7 @@ export default function HistoryRecord() {
 
                       <button
                         onClick={() => deleteRecord(item.id)}
-                        className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border bg-[#89023E] p-2 text-white transition duration-200 hover:bg-[#CC7178]"
+                        className="flex h-[60px] flex-col items-center justify-center text-nowrap rounded-xl border bg-[#89023E] p-2 text-white transition duration-200 hover:bg-[#CC7178]"
                       >
                         刪除
                       </button>

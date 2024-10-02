@@ -157,51 +157,55 @@ export default function MonthlyData({
         {Object.entries(expenseTotals).map(([recordClass, totalAmount]) => (
           <div
             key={recordClass}
-            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
+            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#545E75] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
           >
-            <div className="text-xs font-semibold sm:text-sm">
+            <div className="text-sm text-gray-200 sm:text-sm lg:text-xl">
               {recordClass}
             </div>
-            <div className="text-sm sm:text-lg">
+            <div className="text-sm text-gray-200 sm:text-lg lg:text-xl">
               NT$
               {totalAmount.toLocaleString(undefined, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 2,
               })}
             </div>
-            <div className="text-sm text-gray-600 sm:text-base">支出</div>
+            <div className="text-sm text-gray-200 sm:text-base lg:text-xl">
+              支出
+            </div>
           </div>
         ))}
 
         {Object.entries(incomeTotals).map(([recordClass, totalAmount]) => (
           <div
             key={recordClass}
-            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#E8E9ED] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
+            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#82A0BC] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
           >
-            <div className="text-xs font-semibold sm:text-sm">
-              {recordClass}
-            </div>
-            <div className="text-xs font-semibold sm:text-sm">
+            <div className="text-xs sm:text-sm lg:text-xl">{recordClass}</div>
+            <div className="text-xs sm:text-sm lg:text-xl">
               NT$
               {totalAmount.toLocaleString(undefined, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 2,
               })}
             </div>
-            <div className="text-sm text-gray-600 sm:text-base">收入</div>
+            <div className="text-sm text-gray-600 sm:text-base lg:text-xl">
+              收入
+            </div>
           </div>
         ))}
 
-        <div className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#F4E9CD] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48">
-          <div className="text-xs font-semibold sm:text-sm">投資&儲蓄</div>
-          <div className="text-xs font-semibold sm:text-sm">
+        <div className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#BABFD1] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48">
+          <div className="text-xs sm:text-sm lg:text-xl">投資&儲蓄</div>
+          <div className="text-xs sm:text-sm lg:text-xl">
             NT$
             {netWorth.toLocaleString(undefined, {
               minimumFractionDigits: 0,
               maximumFractionDigits: 2,
             })}
           </div>
-          <div className="text-sm text-gray-600 sm:text-base">淨現金流</div>
+          <div className="text-sm text-gray-600 sm:text-base lg:text-xl">
+            淨現金流
+          </div>
         </div>
       </div>
     </div>

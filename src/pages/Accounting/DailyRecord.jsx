@@ -504,7 +504,7 @@ export default function DailyRecord() {
   };
   if (transaction.length === 0) {
     return (
-      <div className="flex h-[300px] w-[280px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[908px] md:w-[500px]">
+      <div className="flex h-[300px] w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[908px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -529,11 +529,11 @@ export default function DailyRecord() {
         {Object.entries(groupedTransactions).map(([date, items]) => (
           <div key={date} className="mb-6">
             <div className="mb-2 flex items-center gap-3">
-              <div className="text-nowrap font-semibold text-gray-800">
+              <div className="text-nowrap text-lg font-semibold text-gray-800">
                 {date}
               </div>
               <div className="mx-auto w-full border-[0.5px] border-gray-400"></div>
-              <div className="font-bold text-gray-800">
+              <div className="text-lg font-bold text-gray-800">
                 NT$
                 {items.reduce((total, item) => {
                   if (item.record_type === "轉帳") return total;
@@ -553,16 +553,16 @@ export default function DailyRecord() {
                   key={item.id}
                   className={`rounded-xl border p-3 transition-all duration-200 ${
                     item.record_type === "支出"
-                      ? "bg-[#9DBEBB] text-gray-800"
+                      ? "bg-[#5e687f] text-white"
                       : item.record_type === "轉帳"
-                        ? "bg-[#F4E9CD] text-gray-800"
-                        : "bg-[#E8E9ED] text-gray-800"
+                        ? "bg-[#A7CCED] text-gray-800"
+                        : "bg-[#82A0BC] text-gray-800"
                   }`}
                   onClick={() => handleEditClick(item)}
                 >
                   <div className="flex justify-between">
-                    <div>{item.record_type}</div>
-                    <div>
+                    <div className="text-xl">{item.record_type}</div>
+                    <div className="text-xl">
                       {item.record_type === "支出" ? "-" : ""}
                       {item.currency}$
                       {item.amount.toLocaleString(undefined, {
@@ -571,15 +571,31 @@ export default function DailyRecord() {
                       })}
                     </div>
                   </div>
-                  <div className="flex justify-between">
-                    <div className="text-sm text-gray-600">
+                  <div
+                    className={`flex justify-between ${
+                      item.record_type === "支出"
+                        ? "text-gray-300"
+                        : item.record_type === "轉帳"
+                          ? "text-gray-800"
+                          : "text-gray-800"
+                    }`}
+                  >
+                    <div className="text-sm">
                       {item.class ? item.class : `轉入 ${item.targetaccount}`}
                     </div>
-                    <div className="text-sm text-gray-600">{item.account}</div>
+                    <div className="text-sm">{item.account}</div>
                   </div>
                   {item.project && (
-                    <div>
-                      <p className="text-[#468189]">{item.project}</p>
+                    <div
+                      className={`${
+                        item.record_type === "支出"
+                          ? "text-white"
+                          : item.record_type === "轉帳"
+                            ? "text-gray-800"
+                            : "text-gray-800"
+                      }`}
+                    >
+                      <p>{item.project}</p>
                     </div>
                   )}
                 </div>
@@ -726,7 +742,7 @@ export default function DailyRecord() {
                 <div className="flex justify-end">
                   <button
                     type="button"
-                    className="mr-2 rounded-xl bg-[#F4E9CD] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
+                    className="mr-2 rounded-xl bg-[#A7CCED] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
                     onClick={handleCloseEdit}
                   >
                     取消

@@ -47,10 +47,8 @@ export default function AddNewFunction() {
   };
   return (
     <div
-      className={`fixed right-0 top-40 z-50 p-1 transition-all md:p-2 ${
-        addProperty
-          ? ""
-          : "overflow-hidden rounded-xl bg-[#BABFD1] text-sm text-white md:text-base"
+      className={`fixed right-0 top-40 z-50 rounded-xl bg-[#BABFD1] p-1 transition-all md:p-2 ${
+        addProperty ? "" : "overflow-hidden text-sm text-white md:text-base"
       }`}
     >
       <button
@@ -65,7 +63,7 @@ export default function AddNewFunction() {
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
             <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
               <button
-                className="absolute right-3 top-3 mr-2 rounded-xl bg-[#F4E9CD] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
+                className="absolute right-3 top-3 mr-2 rounded-xl bg-[#A7CCED] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
                 onClick={handleCloseButton}
               >
                 取消
@@ -89,7 +87,7 @@ export default function AddNewFunction() {
                   <label
                     className={`flex cursor-pointer items-center justify-center rounded-xl border px-4 py-2 ${
                       watch("account_type") === "儲蓄"
-                        ? "border-[#77ACA2] bg-[#77ACA2] text-white"
+                        ? "bg-[#82A0BC] text-white"
                         : "border-gray-300 bg-white text-gray-700"
                     }`}
                   >
@@ -108,7 +106,7 @@ export default function AddNewFunction() {
                   <label
                     className={`flex cursor-pointer items-center justify-center rounded-xl border px-4 py-2 ${
                       watch("account_type") === "消費"
-                        ? "border-[#77ACA2] bg-[#77ACA2] text-white"
+                        ? "bg-[#82A0BC] text-white"
                         : "border-gray-300 bg-white text-gray-700"
                     }`}
                   >
@@ -127,7 +125,7 @@ export default function AddNewFunction() {
                   <label
                     className={`flex cursor-pointer items-center justify-center rounded-xl border px-4 py-2 ${
                       watch("account_type") === "投資"
-                        ? "border-[#77ACA2] bg-[#77ACA2] text-white"
+                        ? "bg-[#82A0BC] text-white"
                         : "border-gray-300 bg-white text-gray-700"
                     }`}
                   >
@@ -164,7 +162,7 @@ export default function AddNewFunction() {
               </div>
               <button
                 type="submit"
-                className="rounded-xl bg-[#9DBEBB] p-2 text-white"
+                className="rounded-xl bg-[#82A0BC] p-2 text-white"
               >
                 新增
               </button>

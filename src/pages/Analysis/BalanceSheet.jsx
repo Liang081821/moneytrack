@@ -33,19 +33,17 @@ export default function BalanceSheet() {
         {groupProperty.map((item) => (
           <div
             key={item.account}
-            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#9DBEBB] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
+            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#A7CCED] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
           >
-            <div className="text-xs font-semibold sm:text-sm">
-              {item.account}
-            </div>
-            <div className="text-xs font-semibold sm:text-sm">
+            <div className="text-xs sm:text-sm lg:text-xl">{item.account}</div>
+            <div className="text-xs sm:text-sm lg:text-xl">
               NT$
               {item.balance.toLocaleString(undefined, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 2,
               })}
             </div>
-            <div className="text-sm text-gray-600 sm:text-base">
+            <div className="text-sm sm:text-base lg:text-xl">
               {item.account_type}帳
             </div>
           </div>
@@ -54,19 +52,19 @@ export default function BalanceSheet() {
         {groupPropertyLiability.map((item) => (
           <div
             key={item.account}
-            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#E8E9ED] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
+            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#545E75] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
           >
-            <div className="text-xs font-semibold sm:text-sm">
+            <div className="text-xs text-gray-200 sm:text-sm lg:text-xl">
               {item.account}
             </div>
-            <div className="text-xs font-semibold sm:text-sm">
+            <div className="text-xs text-gray-200 sm:text-sm lg:text-xl">
               NT$
               {item.balance.toLocaleString(undefined, {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 2,
               })}
             </div>
-            <div className="text-sm text-gray-600 sm:text-base">
+            <div className="text-sm text-gray-200 sm:text-base lg:text-xl">
               {item.account_type}帳
             </div>
           </div>

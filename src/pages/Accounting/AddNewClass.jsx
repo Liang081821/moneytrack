@@ -75,10 +75,8 @@ export default function AddNewClass() {
 
   return (
     <div
-      className={`fixed right-0 top-56 p-1 transition-all md:p-2 ${
-        newclassEditing
-          ? ""
-          : "overflow-hidden rounded-xl bg-[#BABFD1] text-sm text-white md:text-base"
+      className={`flex-1 rounded-xl bg-[#BABFD1] p-1 text-center transition-all md:p-2 ${
+        newclassEditing ? "" : "overflow-hidden text-sm md:text-base"
       }`}
     >
       <button onClick={handleEditing}>新增分類</button>
@@ -92,7 +90,7 @@ export default function AddNewClass() {
                   <div
                     className={`grow cursor-pointer rounded-xl p-1 text-center transition-all duration-300 ease-in-out ${
                       selectedCategory === "收入"
-                        ? "bg-[#77aca2] text-white"
+                        ? "bg-[#82A0BC] text-white"
                         : "bg-gray-100 opacity-70"
                     }`}
                     onClick={() => setSelectedCategory("收入")}
@@ -102,7 +100,7 @@ export default function AddNewClass() {
                   <div
                     className={`grow cursor-pointer rounded-xl p-1 text-center transition-all duration-300 ease-in-out ${
                       selectedCategory === "支出"
-                        ? "bg-[#77aca2] text-white"
+                        ? "bg-[#82A0BC] text-white"
                         : "bg-gray-100 opacity-70"
                     }`}
                     onClick={() => setSelectedCategory("支出")}
@@ -154,7 +152,7 @@ export default function AddNewClass() {
                 </div>
                 <button
                   onClick={completeEdit}
-                  className="mt-10 rounded-xl bg-[#9DBEBB] p-2 text-white"
+                  className="mt-10 rounded-xl bg-[#82A0BC] p-2 text-white"
                 >
                   編輯完成
                 </button>
@@ -163,12 +161,12 @@ export default function AddNewClass() {
           </div>
           {newclass && (
             <div className="fixed inset-0 flex items-center justify-center">
-              <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
+              <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-2">
                 <form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="flex justify-between"
+                  className="flex items-center justify-between"
                 >
-                  <div className="ml-2 rounded-xl bg-[#9DBEBB] p-2 text-white">
+                  <div className="ml-2 text-nowrap rounded-xl bg-[#82A0BC] p-2 text-white">
                     {selectedCategory}
                   </div>
                   <input
@@ -191,7 +189,7 @@ export default function AddNewClass() {
                     </button>
                     <button
                       onClick={closeAddNewClass}
-                      className="ml-2 rounded-xl bg-[#F4E9CD] p-2 text-[#607196]"
+                      className="ml-2 rounded-xl bg-[#A7CCED] p-2 text-[#607196]"
                     >
                       返回
                     </button>

@@ -195,7 +195,7 @@ export default function ProjectLayoutGrid() {
 
   return (
     <>
-      <div className="w-full bg-gradient-to-r from-[#bbe0e1] via-[#ebf0f6] to-[#bbe0e1] py-10">
+      <div className="w-full bg-gradient-to-r from-[#e3e3e3] via-[#efefef] py-10">
         <div className="mx-auto flex h-auto w-[90%] flex-wrap items-start justify-start gap-3">
           {/* 新增專案按鈕 */}
           <div className="relative h-[200px] w-full md:h-[300px] md:w-[32%]">
@@ -232,7 +232,7 @@ export default function ProjectLayoutGrid() {
               {projects.map((project) => (
                 <div
                   key={project.id}
-                  className={`relative flex h-[200px] w-full flex-col items-center justify-center gap-4 rounded-xl border-2 border-gray-500 md:h-[300px] md:w-[32%] ${project.isediting ? "bg-[#9DBEBB]" : "bg-[#E8E9ED]"} p-3 shadow-md`}
+                  className={`border-1 relative flex h-[200px] w-full flex-col items-center justify-center gap-4 rounded-xl md:h-[300px] md:w-[32%] ${project.isediting ? "bg-[#82A0BC]" : "bg-[#A7CCED]"} p-3 shadow-md`}
                   onClick={() => showProjectDetails(project, project.name)}
                 >
                   {project.imageUrl && (
@@ -256,7 +256,7 @@ export default function ProjectLayoutGrid() {
           <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
             <button
               onClick={closeEditing}
-              className="self-end rounded-xl bg-[#F4E9CD] px-4 py-2 hover:bg-[#E8E9ED]"
+              className="self-end rounded-xl bg-[#A7CCED] px-4 py-2 hover:bg-[#E8E9ED]"
             >
               取消
             </button>
@@ -312,7 +312,7 @@ export default function ProjectLayoutGrid() {
           <div className="relative flex w-[2000px] max-w-lg flex-col gap-3 rounded-xl bg-white p-6">
             <button
               onClick={closeProjectDetails}
-              className="self-end rounded-xl bg-[#F4E9CD] px-4 py-2 hover:bg-[#E8E9ED]"
+              className="self-end rounded-xl bg-[#A7CCED] px-4 py-2 hover:bg-[#E8E9ED]"
             >
               取消
             </button>
@@ -332,7 +332,7 @@ export default function ProjectLayoutGrid() {
                       item.record_type === "支出"
                         ? "bg-[#9DBEBB] text-gray-800"
                         : item.record_type === "轉帳"
-                          ? "bg-[#F4E9CD] text-gray-800"
+                          ? "bg-[#A7CCED] text-gray-800"
                           : "bg-[#E8E9ED] text-gray-800"
                     }`}
                   >
@@ -405,7 +405,7 @@ export default function ProjectLayoutGrid() {
                 我要刪除
               </button>
               <button
-                className="rounded-xl bg-[#F4E9CD] px-4 py-2 hover:bg-[#E8E9ED]"
+                className="rounded-xl bg-[#A7CCED] px-4 py-2 hover:bg-[#E8E9ED]"
                 onClick={() => setShowDeleteConfirm(false)}
               >
                 取消

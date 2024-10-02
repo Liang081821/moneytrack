@@ -85,7 +85,7 @@ export default function Consume() {
   }
   return (
     <div className="flex h-auto w-full flex-col items-center rounded-2xl border-2 border-gray-500 bg-white p-3 shadow-md md:min-h-[595px]">
-      <div className="flex items-center gap-3">
+      <div className="mb-4 flex items-center gap-3">
         <img src={InvestPic} alt="" className="h-8 w-8" />
         <div className="text-xl font-semibold">投資</div>
       </div>
@@ -93,12 +93,14 @@ export default function Consume() {
       {consumeAccounts.map((account) => (
         <div
           key={account.id}
-          className="m-2 flex h-[88px] w-full items-center justify-between rounded-xl bg-[#D4BEBE] p-3"
+          className="m-2 flex h-[88px] w-full items-center justify-between rounded-xl bg-[#A7CCED] p-3"
         >
           <div>
-            <div className="text-md text-black">{account.account}</div>
+            <div className="text-xl font-semibold text-black">
+              {account.account}
+            </div>
             <div className="h-1 w-6 rounded-xl bg-[#031926]"></div>
-            <div className="text-2xl">
+            <div className="text-xl">
               NT$
               {account.balance.toLocaleString(undefined, {
                 minimumFractionDigits: 0,
@@ -146,7 +148,7 @@ export default function Consume() {
                 </button>
                 <button
                   onClick={handleCloseDetail}
-                  className="mr-2 rounded-xl bg-[#F4E9CD] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
+                  className="mr-2 rounded-xl bg-[#A7CCED] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
                 >
                   取消
                 </button>
@@ -159,10 +161,10 @@ export default function Consume() {
                   key={record.id}
                   className={`rounded-xl border p-3 transition-all duration-200 ${
                     record.record_type === "支出"
-                      ? "bg-[#9DBEBB] text-gray-800"
+                      ? "bg-[#5e687f] text-white"
                       : record.record_type === "轉帳"
-                        ? "bg-[#F4E9CD] text-gray-800"
-                        : "bg-[#E8E9ED] text-gray-800"
+                        ? "bg-[#A7CCED] text-gray-800"
+                        : "bg-[#82A0BC] text-gray-800"
                   }`}
                 >
                   <div>{record.time.toDate().toLocaleDateString()}</div>
@@ -171,8 +173,10 @@ export default function Consume() {
                     <div
                       className={
                         record.record_type === "支出"
-                          ? "text-[#468189]"
-                          : "text-[#9DBEBB]"
+                          ? "text-gray-300"
+                          : record.record_type === "轉帳"
+                            ? "text-gray-800"
+                            : "text-gray-800"
                       }
                     >
                       {record.record_type === "支出" ? "-" : ""}
@@ -184,12 +188,28 @@ export default function Consume() {
                     </div>
                   </div>
                   <div className="flex justify-between">
-                    <div className="text-sm text-gray-500">
+                    <div
+                      className={`${
+                        record.record_type === "支出"
+                          ? "text-white"
+                          : record.record_type === "轉帳"
+                            ? "text-gray-800"
+                            : "text-gray-800"
+                      }`}
+                    >
                       {record.class
                         ? record.class
                         : `轉入 ${record.targetaccount}`}
                     </div>
-                    <div className="text-sm text-gray-500">
+                    <div
+                      className={`text-sm ${
+                        record.record_type === "支出"
+                          ? "text-white"
+                          : record.record_type === "轉帳"
+                            ? "text-gray-800"
+                            : "text-gray-800"
+                      }`}
+                    >
                       {record.account}
                     </div>
                   </div>
@@ -225,7 +245,7 @@ export default function Consume() {
                 刪除所有帳單
               </button>
               <button
-                className="rounded-xl bg-[#F4E9CD] px-4 py-2 hover:bg-[#E8E9ED]"
+                className="rounded-xl bg-[#A7CCED] px-4 py-2 hover:bg-[#E8E9ED]"
                 onClick={() => setShowDeleteConfirm(false)}
               >
                 取消

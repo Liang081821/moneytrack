@@ -6,6 +6,7 @@ import { useGlobalContext } from "@/context/GlobalContext";
 // import AddNewClass from "./AddNewClass";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import AddNewClass from "./AddNewClass";
 
 export default function DailyAccounting() {
   const { property, classData, projectData } = useGlobalContext();
@@ -228,12 +229,12 @@ export default function DailyAccounting() {
           </select>
         </div>
         {watchType === "轉帳" ? (
-          <div className="flex items-center gap-3">
-            <div className="text-sm font-semibold text-[##BABFD1] md:text-base">
+          <div className="flex w-full items-center gap-3">
+            <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
               轉入
             </div>
             <select
-              className="flex h-[30px] w-[200px] items-center justify-center rounded-xl border border-black text-center md:h-[44px] md:w-[250px]"
+              className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
               {...register("targetaccount", {
                 required: watchType === "轉帳" ? "請選擇目標轉入帳戶" : false,
               })}
@@ -300,7 +301,7 @@ export default function DailyAccounting() {
                 key={code}
                 className={`flex cursor-pointer items-center justify-center rounded-lg border p-1 ${
                   selectedCurrency === code
-                    ? "bg-[#9DBEBB] text-white"
+                    ? "bg-[#545E75] text-white"
                     : "bg-gray-100"
                 }`}
               >
@@ -345,12 +346,16 @@ export default function DailyAccounting() {
           <></>
         )}
 
-        <button
-          type="submit"
-          className="w-full rounded-xl bg-[#607196] p-1 text-sm text-white md:p-2 md:text-base"
-        >
-          {watchType === "轉帳" ? "我要轉帳" : "我要記一筆"}
-        </button>
+        <div className="flex w-full gap-2">
+          <AddNewClass />
+
+          <button
+            type="submit"
+            className="flex-1 rounded-xl bg-[#82A0BC] p-1 text-sm md:p-2 md:text-base"
+          >
+            {watchType === "轉帳" ? "我要轉帳" : "我要記一筆"}
+          </button>
+        </div>
       </form>
     </div>
   );

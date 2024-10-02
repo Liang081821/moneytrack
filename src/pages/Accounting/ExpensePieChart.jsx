@@ -89,11 +89,11 @@ export default function ExpensePieChart({
       {
         data: expenseRecord.map((record) => record.value),
         backgroundColor: [
-          "#9DBEBB",
-          "#F4E9CD",
-          "#8BB174",
-          "#468189",
-          "#E8E9ED",
+          "#304D6D",
+          "#A7CCED",
+          "#63ADF2",
+          "#82A0BC",
+          "#545E75",
         ],
         borderWidth: 0,
       },
@@ -129,11 +129,11 @@ export default function ExpensePieChart({
         bodyColor: "#fff",
       },
       datalabels: {
-        anchor: "center", // 修改为 "center"
-        align: "center", // 修改为 "center"
+        anchor: "center",
+        align: "center",
         color: "black",
         font: {
-          size: 14,
+          size: 18,
           weight: "bold",
         },
         formatter: (value, context) => {
@@ -143,7 +143,6 @@ export default function ExpensePieChart({
           );
           const percentage = (value / total) * 100;
 
-          // 如果百分比小于 5，则返回空字符串，仍然占据位置
           return percentage < 5
             ? ""
             : `${context.chart.data.labels[context.dataIndex]}: $${value.toLocaleString(
