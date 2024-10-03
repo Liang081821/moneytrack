@@ -1,6 +1,3 @@
-import Saving from "./Saving";
-import Consume from "./Consume";
-import Invest from "./Invest";
 import AddNewFunction from "./addNewAccount";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { getFirestoreRefs } from "@/firebase/api";
@@ -8,6 +5,11 @@ import { addDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 import Alert from "@/components/Alert";
 import { useState } from "react";
+import InvestPic from "../../../public/invest.png";
+import ConsumePic from "../../../public/consume.png";
+import SavingPic from "../../../public/saving.png";
+
+import AccountDetails from "@/components/AccountDetails";
 
 export default function HistoryRecord() {
   const { property } = useGlobalContext();
@@ -88,9 +90,26 @@ export default function HistoryRecord() {
           <AddNewFunction></AddNewFunction>
         </div>
         <div className="flex h-full flex-col items-center justify-center gap-2 md:flex-row md:flex-nowrap">
-          <Saving />
-          <Consume />
-          <Invest />
+          <AccountDetails
+            title="儲蓄"
+            imageSrc={SavingPic}
+            accountType="儲蓄"
+            bgColor="bg-[#82A0BC]"
+          />
+          <AccountDetails
+            title="消費"
+            imageSrc={ConsumePic}
+            accountType="消費"
+            bgColor="bg-[#545E75]"
+            textColor="text-white"
+          />
+
+          <AccountDetails
+            title="投資"
+            imageSrc={InvestPic}
+            accountType="投資"
+            bgColor="bg-[#A7CCED]"
+          />
         </div>
         <div className="mx-auto w-full">
           {historyData.length !== 0 ? (

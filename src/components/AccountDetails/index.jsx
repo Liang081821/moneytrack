@@ -1,24 +1,30 @@
-import { useGlobalContext } from "../../context/GlobalContext";
 import { useState, useEffect } from "react";
+import { useGlobalContext } from "../../context/GlobalContext";
 import { getFirestoreRefs } from "../../firebase/api";
 import { getDocs, query, where, deleteDoc, doc } from "firebase/firestore";
-import ConsumePic from "../../../public/consume.png";
 import Alert from "@/components/Alert";
 import TransactionCard from "@/components/TransactionCard";
+import PropTypes from "prop-types";
 
-export default function Consume() {
+export default function AccountDetails({
+  title,
+  imageSrc,
+  accountType,
+  bgColor,
+  textColor,
+}) {
   const { property, transactionData } = useGlobalContext();
   const [selectedAccount, setSelectedAccount] = useState(null);
-  const [accountrecord, setAccountRecord] = useState([]);
+  const [accountRecord, setAccountRecord] = useState([]);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const { loginEmail } = useGlobalContext();
   const [alertMessage, setAlertMessage] = useState(null);
 
+  const { loginEmail } = useGlobalContext();
   const { accountingCollectionRef, propertyCollectionRef } =
     getFirestoreRefs(loginEmail);
 
-  const consumeAccounts = Array.isArray(property)
-    ? property.filter((item) => item.account_type === "消費")
+  const filteredAccounts = Array.isArray(property)
+    ? property.filter((item) => item.account_type === accountType)
     : [];
 
   const handleAccountClick = (account) => {
@@ -56,6 +62,7 @@ export default function Consume() {
       console.error(e);
     }
   };
+
   useEffect(() => {
     if (selectedAccount) {
       const records = transactionData.filter(
@@ -66,7 +73,7 @@ export default function Consume() {
     }
   }, [selectedAccount, transactionData]);
 
-  if (!consumeAccounts || consumeAccounts.length === 0) {
+  if (!filteredAccounts || filteredAccounts.length === 0) {
     return (
       <div className="mb-4 mt-4 flex h-[300px] w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[595px]">
         <svg
@@ -83,29 +90,27 @@ export default function Consume() {
             d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
           />
         </svg>
-        <p>新增消費帳戶</p>
+        <p>新增{title}帳戶</p>
       </div>
     );
   }
+
   return (
     <div className="flex h-auto w-full flex-col items-center rounded-2xl border-2 border-gray-500 bg-white p-3 shadow-md md:min-h-[595px]">
-      <div className="mb-3 flex items-center gap-3">
-        <img src={ConsumePic} alt="" className="h-8 w-8" />
-        <div className="text-xl font-semibold">消費</div>
+      <div className="mb-4 flex items-center gap-3">
+        <img src={imageSrc} alt="" className="h-8 w-8" />
+        <div className="text-xl font-semibold">{title}</div>
       </div>
-
       {/* 動態渲染篩選後的帳戶 */}
-      {consumeAccounts.map((account) => (
+      {filteredAccounts.map((account) => (
         <div
           key={account.id}
-          className="m-2 flex h-[88px] w-full items-center justify-between rounded-xl bg-[#545E75] p-3"
+          className={`m-2 flex h-[88px] w-full items-center justify-between rounded-xl p-3 ${bgColor}`}
         >
-          <div>
-            <div className="text-xl font-semibold text-gray-100">
-              {account.account}
-            </div>
+          <div className={`${textColor}`}>
+            <div className="text-xl font-semibold">{account.account}</div>
             <div className="h-1 w-6 rounded-xl bg-[#031926]"></div>
-            <div className="text-xl text-gray-200">
+            <div className="text-xl">
               NT$
               {account.balance.toLocaleString(undefined, {
                 minimumFractionDigits: 0,
@@ -135,7 +140,6 @@ export default function Consume() {
           </svg>
         </div>
       ))}
-
       {/* 帳戶詳細紀錄顯示 */}
       {selectedAccount && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4">
@@ -161,7 +165,7 @@ export default function Consume() {
             </div>
             {/* 渲染帳戶的所有紀錄 */}
             <div className="flex flex-col gap-3">
-              {accountrecord?.map((item) => (
+              {accountRecord?.map((item) => (
                 <TransactionCard key={item.id} item={item} showTime={true} />
               ))}
             </div>
@@ -184,8 +188,8 @@ export default function Consume() {
                   setShowDeleteConfirm(false);
                 }}
               >
-                保留所有帳單
-              </button>
+                保留所有帳單{" "}
+              </button>{" "}
               <button
                 className="rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"
                 onClick={() => {
