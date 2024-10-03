@@ -4,6 +4,7 @@ import { getFirestoreRefs } from "../../firebase/api";
 import { getDocs, query, where, deleteDoc, doc } from "firebase/firestore";
 import ConsumePic from "../../../public/consume.png";
 import Alert from "@/components/Alert";
+import TransactionCard from "@/components/TransactionCard";
 
 export default function Consume() {
   const { property, transactionData } = useGlobalContext();
@@ -160,64 +161,8 @@ export default function Consume() {
             </div>
             {/* 渲染帳戶的所有紀錄 */}
             <div className="flex flex-col gap-3">
-              {accountrecord?.map((record) => (
-                <div
-                  key={record.id}
-                  className={`rounded-xl border p-3 transition-all duration-200 ${
-                    record.record_type === "支出"
-                      ? "bg-[#5e687f] text-white"
-                      : record.record_type === "轉帳"
-                        ? "bg-[#A7CCED] text-gray-800"
-                        : "bg-[#82A0BC] text-gray-800"
-                  }`}
-                >
-                  <div>{record.time.toDate().toLocaleDateString()}</div>
-                  <div className="flex justify-between">
-                    <div>{record.record_type}</div>
-                    <div
-                      className={
-                        record.record_type === "支出"
-                          ? "text-gray-300"
-                          : record.record_type === "轉帳"
-                            ? "text-gray-800"
-                            : "text-gray-800"
-                      }
-                    >
-                      {record.record_type === "支出" ? "-" : ""}
-                      {record.currency}$
-                      {record.amount.toLocaleString(undefined, {
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 2,
-                      })}
-                    </div>
-                  </div>
-                  <div className="flex justify-between">
-                    <div
-                      className={`${
-                        record.record_type === "支出"
-                          ? "text-white"
-                          : record.record_type === "轉帳"
-                            ? "text-gray-800"
-                            : "text-gray-800"
-                      }`}
-                    >
-                      {record.class
-                        ? record.class
-                        : `轉入 ${record.targetaccount}`}
-                    </div>
-                    <div
-                      className={`text-sm ${
-                        record.record_type === "支出"
-                          ? "text-white"
-                          : record.record_type === "轉帳"
-                            ? "text-gray-800"
-                            : "text-gray-800"
-                      }`}
-                    >
-                      {record.account}
-                    </div>
-                  </div>
-                </div>
+              {accountrecord?.map((item) => (
+                <TransactionCard key={item.id} item={item} showTime={true} />
               ))}
             </div>
           </div>

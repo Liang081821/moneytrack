@@ -5,6 +5,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getFirestoreRefs } from "../../firebase/api";
 import { useGlobalContext } from "@/context/GlobalContext";
 import Alert from "@/components/Alert";
+import TransactionCard from "@/components/TransactionCard";
 
 import {
   addDoc,
@@ -195,7 +196,7 @@ export default function ProjectLayoutGrid() {
       console.error("Error deleting project: ", error);
     }
   };
-  const [showOnlyEditing, setShowOnlyEditing] = useState(false);
+  const [showOnlyEditing, setShowOnlyEditing] = useState(true);
 
   return (
     <>
@@ -349,42 +350,16 @@ export default function ProjectLayoutGrid() {
               <p className="font-base mb-4 mt-4 text-xl">
                 總計 NT${totalamount}
               </p>
-              {Array.isArray(selectedProjectData) &&
-                selectedProjectData.map((item) => (
-                  <div
-                    key={item.id}
-                    className={`w-full rounded-xl border p-3 transition-all duration-200 ${
-                      item.record_type === "支出"
-                        ? "bg-[#9DBEBB] text-gray-800"
-                        : item.record_type === "轉帳"
-                          ? "bg-[#A7CCED] text-gray-800"
-                          : "bg-[#E8E9ED] text-gray-800"
-                    }`}
-                  >
-                    <div>{item.time.toDate().toLocaleDateString()}</div>
-                    <div className="flex justify-between">
-                      <div>{item.record_type}</div>
-                      <div
-                        className={
-                          item.record_type === "支出"
-                            ? "text-[#468189]"
-                            : "text-[#9DBEBB]"
-                        }
-                      >
-                        {item.record_type === "支出" ? "-" : ""}
-                        {item.currency}${item.amount}
-                      </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <div className="text-sm text-gray-500">
-                        {item.class ? item.class : `轉入 ${item.targetaccount}`}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        {item.account}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              <div className="flex w-full flex-col gap-3">
+                {Array.isArray(selectedProjectData) &&
+                  selectedProjectData.map((item) => (
+                    <TransactionCard
+                      key={item.id}
+                      item={item}
+                      showProject={false}
+                    />
+                  ))}
+              </div>
               <div className="flex gap-2">
                 {selectedProject.isediting && (
                   <button

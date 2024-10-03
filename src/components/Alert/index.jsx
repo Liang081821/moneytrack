@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function Alert({ message, onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
@@ -13,3 +15,7 @@ export default function Alert({ message, onClose }) {
     </div>
   );
 }
+Alert.propTypes = {
+  message: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+};

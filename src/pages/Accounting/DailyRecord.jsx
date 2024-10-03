@@ -15,6 +15,7 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Alert from "@/components/Alert";
+import TransactionCard from "@/components/TransactionCard";
 
 export default function DailyRecord() {
   const [transaction, setTransaction] = useState([]);
@@ -554,56 +555,12 @@ export default function DailyRecord() {
 
             <div className="flex flex-col gap-3">
               {items.map((item) => (
-                <div
+                <TransactionCard
                   key={item.id}
-                  className={`rounded-xl border p-3 transition-all duration-200 ${
-                    item.record_type === "支出"
-                      ? "bg-[#5e687f] text-white"
-                      : item.record_type === "轉帳"
-                        ? "bg-[#A7CCED] text-gray-800"
-                        : "bg-[#82A0BC] text-gray-800"
-                  }`}
-                  onClick={() => handleEditClick(item)}
-                >
-                  <div className="flex justify-between">
-                    <div className="text-xl">{item.record_type}</div>
-                    <div className="text-xl">
-                      {item.record_type === "支出" ? "-" : ""}
-                      {item.currency}$
-                      {item.amount.toLocaleString(undefined, {
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 2,
-                      })}
-                    </div>
-                  </div>
-                  <div
-                    className={`flex justify-between ${
-                      item.record_type === "支出"
-                        ? "text-gray-300"
-                        : item.record_type === "轉帳"
-                          ? "text-gray-800"
-                          : "text-gray-800"
-                    }`}
-                  >
-                    <div className="text-sm">
-                      {item.class ? item.class : `轉入 ${item.targetaccount}`}
-                    </div>
-                    <div className="text-sm">{item.account}</div>
-                  </div>
-                  {item.project && (
-                    <div
-                      className={`${
-                        item.record_type === "支出"
-                          ? "text-white"
-                          : item.record_type === "轉帳"
-                            ? "text-gray-800"
-                            : "text-gray-800"
-                      }`}
-                    >
-                      <p>{item.project}</p>
-                    </div>
-                  )}
-                </div>
+                  item={item}
+                  onEditClick={handleEditClick}
+                  showTime={false}
+                />
               ))}
             </div>
           </div>

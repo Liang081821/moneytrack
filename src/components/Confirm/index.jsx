@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function Confirm({ message, onConfirm, onCancel }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
@@ -21,3 +23,8 @@ export default function Confirm({ message, onConfirm, onCancel }) {
     </div>
   );
 }
+Confirm.propTypes = {
+  message: PropTypes.string.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+};
