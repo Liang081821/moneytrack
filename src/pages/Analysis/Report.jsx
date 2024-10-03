@@ -1,5 +1,7 @@
 import MonthlyData from "../Analysis/MonthlyData";
 import BalanceSheet from "../Analysis/BalanceSheet";
+import Alert from "@/components/Alert";
+import Confirm from "@/components/Confirm";
 
 import { useState } from "react";
 import Step1 from "./Step1";
@@ -34,29 +36,45 @@ export default function Report() {
     setReportVisible(true);
   };
 
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [confirmData, setConfirmData] = useState({
+    isOpen: false,
+    message: "",
+    onConfirm: null,
+  });
+
   const handleNextStep = () => {
     if (step === 2) {
       if (!selectedHouseCategory || !selectedInsureCategory) {
-        alert("請選擇房屋類別和保險類別才能進入下一步！");
+        setAlertMessage("請選擇房屋類別和保險類別才能進入下一步！");
         return;
       }
     }
     if (step === 3) {
-      const confirmed = window.confirm("即將生成報表，確認後不可返回");
-      if (!confirmed) {
-        return;
-      }
+      setConfirmData({
+        isOpen: true,
+        message: "即將生成報表，確認後不可返回",
+        onConfirm: () => {
+          console.log("報表生成中...");
+          setConfirmData({ ...confirmData, isOpen: false });
+          setStep((prevStep) => prevStep + 1);
+        },
+      });
+      return;
     }
     if (step === 4) {
-      const confirmed = window.confirm(
-        "理財貓規劃師即將替您分析，進入後不可返回",
-      );
-      setPreText(
-        `我的淨資產有 NT$${totalProperty}，上月總支出 NT$${monthexpense}、總收入 NT$${monthincome}，儲蓄率是 ${savingRate}%，大家都說緊急備用金要是生活費的 6 個月，我目前的狀況是這樣，請給我一些理財建議！`,
-      );
-      if (!confirmed) {
-        return;
-      }
+      setConfirmData({
+        isOpen: true,
+        message: "理財貓規劃師即將替您分析，進入後不可返回",
+        onConfirm: () => {
+          setPreText(
+            `我的淨資產有 NT$${totalProperty}，上月總支出 NT$${monthexpense}、總收入 NT$${monthincome}，儲蓄率是 ${savingRate}%，大家都說緊急備用金要是生活費的 6 個月，我目前的狀況是這樣，請給我一些理財建議！`,
+          );
+          setConfirmData({ ...confirmData, isOpen: false });
+          setStep((prevStep) => prevStep + 1);
+        },
+      });
+      return;
     }
 
     setStep((prevStep) => prevStep + 1);
@@ -67,28 +85,35 @@ export default function Report() {
   };
 
   const handleCloseReport = () => {
-    const confirmed = window.confirm("離開後需重新進入，確定離開嗎");
+    setConfirmData({
+      isOpen: true,
+      message: "離開後需重新進入，確定離開嗎",
+      onConfirm: () => {
+        setConfirmData({ ...confirmData, isOpen: false });
+        setReportVisible(false);
+        setStep(1);
+        setSelectedHouseCategory("");
+        setSelectedInsureCategory("");
+      },
+    });
 
-    if (!confirmed) {
-      return;
-    }
-    setReportVisible(false);
-    setStep(1);
-    setSelectedHouseCategory("");
-    setSelectedInsureCategory("");
+    return;
   };
 
   const handleComplete = () => {
-    const confirmed = window.confirm("離開視窗後將關閉諮詢室，確定離開嗎");
+    setConfirmData({
+      isOpen: true,
+      message: "離開視窗後將關閉諮詢室，確定離開嗎",
+      onConfirm: () => {
+        setConfirmData({ ...confirmData, isOpen: false });
+        setReportVisible(false);
+        setStep(1);
+        setSelectedHouseCategory("");
+        setSelectedInsureCategory("");
+      },
+    });
 
-    if (!confirmed) {
-      return;
-    }
-
-    setReportVisible(false);
-    setStep(1);
-    setSelectedHouseCategory("");
-    setSelectedInsureCategory("");
+    return;
   };
 
   const renderStepContent = () => {
@@ -164,6 +189,23 @@ export default function Report() {
             <div className="mb-4">
               <div className="mb-2 flex justify-between">
                 <h2 className="text-2xl font-bold">生成報表 - 步驟 {step}/5</h2>
+                {alertMessage && (
+                  <Alert
+                    message={alertMessage}
+                    onClose={() => setAlertMessage(null)}
+                  />
+                )}
+                {confirmData.isOpen && (
+                  <Confirm
+                    message={confirmData.message}
+                    onConfirm={() => {
+                      confirmData.onConfirm();
+                    }}
+                    onCancel={() =>
+                      setConfirmData({ ...confirmData, isOpen: false })
+                    }
+                  />
+                )}
                 <button
                   onClick={handleCloseReport}
                   className="rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"

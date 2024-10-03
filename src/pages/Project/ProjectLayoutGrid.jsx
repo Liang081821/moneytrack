@@ -4,6 +4,8 @@ import { storage } from "../../firebase/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getFirestoreRefs } from "../../firebase/api";
 import { useGlobalContext } from "@/context/GlobalContext";
+import Alert from "@/components/Alert";
+
 import {
   addDoc,
   getDocs,
@@ -40,6 +42,7 @@ export default function ProjectLayoutGrid() {
       projectimage: null,
     },
   });
+  const [alertMessage, setAlertMessage] = useState(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -82,7 +85,7 @@ export default function ProjectLayoutGrid() {
       };
       setIsEditing(false);
       reset();
-      alert("新增成功");
+      setAlertMessage("新增成功");
       setImagePreview(null);
       const docRef = await addDoc(projectCollectionRef, newProject);
       setProjects([...projects, { id: docRef.id, ...newProject }]);
@@ -165,7 +168,7 @@ export default function ProjectLayoutGrid() {
       setProjects(projects.filter((project) => project.id !== id));
       setSelectedProject(null);
       setselectedProjectData(null);
-      alert("專案已刪除");
+      setAlertMessage("專案已刪除");
       showDeleteConfirm(false);
     } catch (error) {
       console.error("Error deleting project: ", error);
@@ -182,7 +185,7 @@ export default function ProjectLayoutGrid() {
       const projectDocRef = doc(projectCollectionRef, projectId);
       setSelectedProject(null);
       setselectedProjectData(null);
-      alert("成功關閉專案");
+      setAlertMessage("已關閉專案");
       await updateDoc(projectDocRef, {
         isediting: false,
       });
@@ -192,10 +195,14 @@ export default function ProjectLayoutGrid() {
       console.error("Error deleting project: ", error);
     }
   };
+  const [showOnlyEditing, setShowOnlyEditing] = useState(false);
 
   return (
     <>
-      <div className="w-full bg-gradient-to-r from-[#e3e3e3] via-[#efefef] py-10">
+      {alertMessage && (
+        <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+      )}
+      <div className="w-full bg-gradient-to-r from-[#e3e3e3] via-[#efefef] py-16">
         <div className="mx-auto flex h-auto w-[90%] flex-wrap items-start justify-start gap-3">
           {/* 新增專案按鈕 */}
           <div className="relative h-[200px] w-full md:h-[300px] md:w-[32%]">
@@ -205,6 +212,20 @@ export default function ProjectLayoutGrid() {
               className="absolute left-1/2 top-1/2 flex h-[70px] w-[70px] -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-gray-400 pb-4 text-5xl font-semibold opacity-100 md:h-[100px] md:w-[100px] md:text-7xl"
             >
               +
+            </button>
+          </div>
+          <div className="absolute right-4 top-24 flex">
+            <button
+              onClick={() => setShowOnlyEditing(true)}
+              className={`${showOnlyEditing ? "bg-[#607196] text-white" : "bg-gray-200 text-black"} mb-4 rounded-xl px-4 py-2`}
+            >
+              進行中
+            </button>
+            <button
+              onClick={() => setShowOnlyEditing(false)}
+              className={`${!showOnlyEditing ? "bg-[#607196] text-white" : "bg-gray-200 text-black"} mb-4 rounded-xl px-4 py-2`}
+            >
+              已結束
             </button>
           </div>
 
@@ -229,22 +250,26 @@ export default function ProjectLayoutGrid() {
             </div>
           ) : (
             <>
-              {projects.map((project) => (
-                <div
-                  key={project.id}
-                  className={`border-1 relative flex h-[200px] w-full flex-col items-center justify-center gap-4 rounded-xl md:h-[300px] md:w-[32%] ${project.isediting ? "bg-[#82A0BC]" : "bg-[#A7CCED]"} p-3 shadow-md`}
-                  onClick={() => showProjectDetails(project, project.name)}
-                >
-                  {project.imageUrl && (
-                    <img
-                      src={project.imageUrl}
-                      alt="離線時無法載入圖片"
-                      className="w-full overflow-hidden rounded-xl object-cover"
-                    />
-                  )}
-                  <p className="text-xl font-semibold">{project.name}</p>
-                </div>
-              ))}
+              {projects
+                .filter((project) =>
+                  showOnlyEditing ? project.isediting : !project.isediting,
+                )
+                .map((project) => (
+                  <div
+                    key={project.id}
+                    className={`border-1 relative flex h-[200px] w-full flex-col items-center justify-center gap-4 rounded-xl md:h-[300px] md:w-[32%] ${project.isediting ? "bg-[#82A0BC]" : "bg-[#A7CCED]"} p-3 shadow-md`}
+                    onClick={() => showProjectDetails(project, project.name)}
+                  >
+                    {project.imageUrl && (
+                      <img
+                        src={project.imageUrl}
+                        alt="離線時無法載入圖片"
+                        className="w-full overflow-hidden rounded-xl object-cover"
+                      />
+                    )}
+                    <p className="text-xl font-semibold">{project.name}</p>
+                  </div>
+                ))}
             </>
           )}
         </div>

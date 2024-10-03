@@ -14,12 +14,14 @@ import { useForm } from "react-hook-form";
 import { useGlobalContext } from "@/context/GlobalContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Alert from "@/components/Alert";
 
 export default function DailyRecord() {
   const [transaction, setTransaction] = useState([]);
   const { property, classData, projectData } = useGlobalContext();
   const [startDate, setStartDate] = useState();
   const { loginEmail } = useGlobalContext();
+  const [alertMessage, setAlertMessage] = useState(null);
 
   const { propertyCollectionRef } = getFirestoreRefs(loginEmail);
 
@@ -146,7 +148,7 @@ export default function DailyRecord() {
         areDatesEqual &&
         currentTransaction.project === data.project
       ) {
-        alert("沒有變更，不需要保存。");
+        setAlertMessage("沒有變更，不需儲存");
         return;
       }
 
@@ -385,7 +387,7 @@ export default function DailyRecord() {
       console.log(amountChangeForNewTargetAccount);
       console.log(watchTargetAccount);
 
-      alert("編輯成功");
+      setAlertMessage("編輯成功");
       handleCloseEdit();
       if (querySnapshotNewTarget && !querySnapshotNewTarget.empty) {
         querySnapshotNewTarget.forEach(async (docSnap) => {
@@ -491,7 +493,7 @@ export default function DailyRecord() {
                 ? currentBalance + originalAmount
                 : currentBalance;
           }
-          alert("刪除成功");
+          setAlertMessage("刪除成功");
           setEditing(false);
           await updateDoc(docSnap.ref, { balance: adjustedBalance });
         });
@@ -525,6 +527,9 @@ export default function DailyRecord() {
   }
   return (
     <div className="flex flex-1 flex-col overflow-scroll rounded-lg bg-white p-4 shadow-lg">
+      {alertMessage && (
+        <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+      )}
       <div>
         {Object.entries(groupedTransactions).map(([date, items]) => (
           <div key={date} className="mb-6">
@@ -605,7 +610,7 @@ export default function DailyRecord() {
         ))}
 
         {editing && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+          <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-800 bg-opacity-75">
             <div className="w-[90%] max-w-lg rounded-lg bg-white p-8 shadow-lg">
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-gray-800">

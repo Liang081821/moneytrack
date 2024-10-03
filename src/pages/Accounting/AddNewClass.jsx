@@ -3,13 +3,20 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import { updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { getFirestoreRefs } from "../../firebase/api";
 import { useForm } from "react-hook-form";
+import Alert from "@/components/Alert";
+import Confirm from "@/components/Confirm";
 
 export default function AddNewClass() {
   const [newclassEditing, setNewClassEditing] = useState(false);
   const [newclass, setNewclass] = useState(false);
   const { loginEmail } = useGlobalContext();
   const { docRef } = getFirestoreRefs(loginEmail);
-
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [confirmData, setConfirmData] = useState({
+    isOpen: false,
+    message: "",
+    onConfirm: null,
+  });
   const [selectedCategory, setSelectedCategory] = useState("收入");
   const { classData } = useGlobalContext();
   const {
@@ -36,8 +43,9 @@ export default function AddNewClass() {
     try {
       const fieldToUpdate = selectedCategory === "收入" ? "income" : "expense";
       reset();
-      alert("新增成功");
+
       setNewclass(false);
+      setAlertMessage("新增成功");
       await updateDoc(docRef, {
         [fieldToUpdate]: arrayUnion(data.class),
       });
@@ -61,7 +69,7 @@ export default function AddNewClass() {
   const handleDeleteClass = async (item) => {
     try {
       const fieldToUpdate = selectedCategory === "收入" ? "income" : "expense";
-      alert("刪除成功");
+      setAlertMessage("刪除成功");
       await updateDoc(docRef, {
         [fieldToUpdate]: arrayRemove(item),
       });
@@ -79,10 +87,23 @@ export default function AddNewClass() {
         newclassEditing ? "" : "overflow-hidden text-sm md:text-base"
       }`}
     >
+      {alertMessage && (
+        <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+      )}
+      {confirmData.isOpen && (
+        <Confirm
+          message={confirmData.message}
+          onConfirm={() => {
+            confirmData.onConfirm();
+            setConfirmData({ ...confirmData, isOpen: false });
+          }}
+          onCancel={() => setConfirmData({ ...confirmData, isOpen: false })}
+        />
+      )}
       <button onClick={handleEditing}>新增分類</button>
 
       {newclassEditing && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+        <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-800 bg-opacity-75">
           <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
             {!newclass && (
               <div className="flex flex-col items-center gap-3">
@@ -127,12 +148,11 @@ export default function AddNewClass() {
                           stroke="currentColor"
                           className="ml-1 size-5 cursor-pointer"
                           onClick={() => {
-                            const isConfirmed = window.confirm(
-                              `確定要刪除 "${item}" 嗎？ 刪除後該紀錄仍會保留`,
-                            );
-                            if (isConfirmed) {
-                              handleDeleteClass(item);
-                            }
+                            setConfirmData({
+                              isOpen: true,
+                              message: `確定要刪除「${item}」嗎？ 刪除後該紀錄仍會保留`,
+                              onConfirm: () => handleDeleteClass(item),
+                            });
                           }}
                         >
                           <path

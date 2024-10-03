@@ -3,14 +3,16 @@ import { useState, useEffect } from "react";
 import { addDoc, query, getDocs, updateDoc, where } from "firebase/firestore";
 import { useForm } from "react-hook-form";
 import { useGlobalContext } from "@/context/GlobalContext";
-// import AddNewClass from "./AddNewClass";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AddNewClass from "./AddNewClass";
+import Alert from "@/components/Alert";
 
 export default function DailyAccounting() {
   const { property, classData, projectData } = useGlobalContext();
   const { loginEmail } = useGlobalContext();
+  const [alertMessage, setAlertMessage] = useState(null);
+
   const { accountingCollectionRef, propertyCollectionRef } =
     getFirestoreRefs(loginEmail);
 
@@ -130,7 +132,7 @@ export default function DailyAccounting() {
         : "";
 
       try {
-        alert("新增成功");
+        setAlertMessage("新增成功");
         reset();
         if (watchType === "轉帳") {
           docRef = await addDoc(accountingCollectionRef, {
@@ -159,7 +161,7 @@ export default function DailyAccounting() {
         }
       } catch (error) {
         console.error("寫入資料時出錯：", error);
-        alert("新增失敗：" + error.message);
+        setAlertMessage("新增失敗，請稍後再試");
       }
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -170,7 +172,9 @@ export default function DailyAccounting() {
 
   return (
     <div className="flex w-full flex-1 flex-col items-center justify-center rounded-xl bg-white p-4">
-      {/* <AddNewClass /> */}
+      {alertMessage && (
+        <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+      )}
       <div className="mb-2 flex w-full items-center gap-3">
         <div className="text-nowrap text-sm font-semibold md:text-base">
           日期

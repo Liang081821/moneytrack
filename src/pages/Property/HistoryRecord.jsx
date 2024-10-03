@@ -6,9 +6,13 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import { getFirestoreRefs } from "@/firebase/api";
 import { addDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
+import Alert from "@/components/Alert";
+import { useState } from "react";
+
 export default function HistoryRecord() {
   const { property } = useGlobalContext();
   const { historyData } = useGlobalContext();
+  const [alertMessage, setAlertMessage] = useState(null);
 
   const { loginEmail } = useGlobalContext();
   const { historyCollectionRef } = getFirestoreRefs(loginEmail);
@@ -38,7 +42,7 @@ export default function HistoryRecord() {
     );
 
     try {
-      alert("添加成功");
+      setAlertMessage("添加成功");
       const docRef = await addDoc(historyCollectionRef, {
         saving: newTotals.saving,
         expense: newTotals.expense,
@@ -57,7 +61,7 @@ export default function HistoryRecord() {
     try {
       const docRef = doc(db, "record", loginEmail, "history", id);
 
-      alert("刪除成功");
+      setAlertMessage("刪除成功");
       await deleteDoc(docRef);
     } catch (e) {
       console.error(e);
@@ -70,6 +74,10 @@ export default function HistoryRecord() {
   return (
     <div className="w-full bg-gradient-to-r from-[#e3e3e3] via-[#efefef] pl-11 pt-10 md:pl-0">
       <div className="mx-auto flex w-[90%] flex-col">
+        {alertMessage && (
+          <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+        )}
+
         <div className="mb-5 flex w-full justify-end">
           <button
             onClick={calculateProperty}

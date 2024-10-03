@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { getFirestoreRefs } from "../../firebase/api";
 import { getDocs, query, where, deleteDoc, doc } from "firebase/firestore";
 import ConsumePic from "../../../public/consume.png";
+import Alert from "@/components/Alert";
 
 export default function Consume() {
   const { property, transactionData } = useGlobalContext();
@@ -10,6 +11,8 @@ export default function Consume() {
   const [accountrecord, setAccountRecord] = useState([]);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const { loginEmail } = useGlobalContext();
+  const [alertMessage, setAlertMessage] = useState(null);
+
   const { accountingCollectionRef, propertyCollectionRef } =
     getFirestoreRefs(loginEmail);
 
@@ -29,12 +32,12 @@ export default function Consume() {
   const handleDeleteAccount = async (deleteOption) => {
     try {
       if (deleteOption === "保留帳單") {
-        alert("帳戶已刪除");
+        setAlertMessage("帳戶已刪除");
         setSelectedAccount(null);
         setAccountRecord([]);
         await deleteDoc(doc(propertyCollectionRef, selectedAccount.id));
       } else if (deleteOption === "刪除帳單") {
-        alert("帳戶及其所有帳單已刪除");
+        setAlertMessage("帳戶及其所有帳單已刪除");
         setSelectedAccount(null);
         setAccountRecord([]);
         const q = query(
@@ -89,6 +92,7 @@ export default function Consume() {
         <img src={ConsumePic} alt="" className="h-8 w-8" />
         <div className="text-xl font-semibold">消費</div>
       </div>
+
       {/* 動態渲染篩選後的帳戶 */}
       {consumeAccounts.map((account) => (
         <div
@@ -219,7 +223,9 @@ export default function Consume() {
           </div>
         </div>
       )}
-
+      {alertMessage && (
+        <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+      )}
       {/* 刪除確認彈窗 */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4">

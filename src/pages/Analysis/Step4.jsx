@@ -3,6 +3,7 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import { getFirestoreRefs } from "../../firebase/api";
 import { addDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
+import Alert from "@/components/Alert";
 
 export default function Step4({
   monthexpense,
@@ -18,6 +19,7 @@ export default function Step4({
   const { property, loginEmail } = useGlobalContext();
   const { reportCollectionRef } = getFirestoreRefs(loginEmail);
   const [loading, setLoading] = useState(true);
+  const [alertMessage, setAlertMessage] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -149,7 +151,7 @@ export default function Step4({
         },
         timestamp: new Date(),
       });
-      alert("成功儲存");
+      setAlertMessage("成功儲存");
     } catch (error) {
       console.error("儲存到 Firebase 時發生錯誤：", error);
       alert("儲存時發生錯誤");
@@ -169,7 +171,9 @@ export default function Step4({
   return (
     <div className="flex h-full flex-col items-center justify-center pt-10 fade-in">
       <h2 className="pb-2 text-2xl font-bold">報表</h2>
-
+      {alertMessage && (
+        <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+      )}
       {loading && (
         <div className="flex items-center justify-center">載入中 ...</div>
       )}
