@@ -81,7 +81,7 @@ export default function Accounting() {
   );
 
   return (
-    <div className="to-[#e3e3e3]] flex w-full flex-col items-center justify-center bg-gradient-to-r from-[#e3e3e3] via-[#efefef] pb-[10vh]">
+    <div className="flex w-full flex-col items-center justify-center bg-gradient-to-r from-[#e3e3e3] via-[#efefef] to-[#e3e3e3] pb-[10vh]">
       <div className="my-2 w-[90%]">
         <div className="flex items-center justify-between p-3">
           <div

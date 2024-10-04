@@ -69,7 +69,7 @@ export default function Nav() {
                 to="/accounting"
                 onClick={handleNavLinkClick}
                 className={({ isActive, isPending, isTransitioning }) =>
-                  `transform transition-all duration-300 ${isActive ? "font-2xl scale-105 rounded-xl border-2 border-gray-500 font-semibold" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "text-red-500" : "text-black"} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
+                  `transform transition-all duration-300 ${isActive ? "font-2xl scale-105 rounded-xl bg-[#e3e3e3]" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "" : ""} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
                 }
               >
                 <div className="flex items-center gap-1">
@@ -94,7 +94,7 @@ export default function Nav() {
                 to="/property"
                 onClick={handleNavLinkClick}
                 className={({ isActive, isPending, isTransitioning }) =>
-                  `transform transition-all duration-300 ${isActive ? "font-2xl scale-105 rounded-xl border-2 border-gray-500 font-semibold" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "text-red-500" : "text-black"} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
+                  `transform transition-all duration-300 ${isActive ? "font-2xl scale-105 rounded-xl bg-[#e3e3e3]" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "text-red-500" : "text-black"} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
                 }
               >
                 <div className="flex items-center gap-1">
@@ -119,7 +119,7 @@ export default function Nav() {
                 to="/analysis"
                 onClick={handleNavLinkClick}
                 className={({ isActive, isPending, isTransitioning }) =>
-                  `transform transition-all duration-300 ${isActive ? "font-2xl scale-105 rounded-xl border-2 border-gray-500 font-semibold" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "text-red-500" : "text-black"} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
+                  `transform transition-all duration-300 ${isActive ? "font-2xl scale-105 rounded-xl bg-[#e3e3e3]" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "text-red-500" : "text-black"} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
                 }
               >
                 <div className="flex items-center gap-1">
@@ -149,7 +149,7 @@ export default function Nav() {
                 to="/project"
                 onClick={handleNavLinkClick}
                 className={({ isActive, isPending, isTransitioning }) =>
-                  `transform transition-all duration-300 ${isActive ? "font-2xl scale-105 rounded-xl border-2 border-gray-500 font-semibold opacity-100" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "text-red-500" : "text-black"} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
+                  `transform transition-all duration-300 ${isActive ? "font-2xl scale-105 rounded-xl bg-[#e3e3e3] opacity-100" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "text-red-500" : "text-black"} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
                 }
               >
                 <div className="flex items-center gap-1">
