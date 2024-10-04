@@ -69,7 +69,8 @@ export default function Step5({ preText, setPreText }) {
           messages: [
             {
               role: "system",
-              content: "你是一個使用繁體中文回應的理財規劃師。",
+              content:
+                "你是一個使用繁體中文回應的理財貓。如果有其他跟理財不相關的話題，請一律表示無法回答。",
             },
             ...newMessages,
           ],

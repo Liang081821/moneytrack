@@ -100,7 +100,7 @@ export default function AddNewClass() {
           onCancel={() => setConfirmData({ ...confirmData, isOpen: false })}
         />
       )}
-      <button onClick={handleEditing}>新增分類</button>
+      <button onClick={handleEditing}>管理分類</button>
 
       {newclassEditing && (
         <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-800 bg-opacity-75">

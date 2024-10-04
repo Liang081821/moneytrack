@@ -148,14 +148,14 @@ export default function LoginSide() {
             alt="Banner"
             className="inset-0 h-[80vh] w-full object-cover"
           /> */}
-          <div className="3xl:mt-[20vh] ml-[5vw] mt-[10vh] flex flex-col items-start gap-4 pr-6 sm:p-0 xl:mt-[17vh]">
+          <div className="ml-[5vw] mt-[10vh] flex flex-col items-start gap-4 pr-6 sm:p-0 xl:mt-[17vh] 3xl:mt-[20vh]">
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
-                <h1 className="xs:text-3xl text-2xl text-[#9DBEBB] xl:text-4xl">
-                  4.8
+                <h1 className="text-2xl text-[#9DBEBB] xs:text-3xl xl:text-4xl">
+                  用戶
                 </h1>
-                <h1 className="xs:text-3xl text-2xl text-white xl:text-4xl">
-                  顆星好評推薦
+                <h1 className="text-2xl text-white xs:text-3xl xl:text-4xl">
+                  好評推薦
                 </h1>
               </div>
               <div className="flex gap-3">
@@ -212,7 +212,7 @@ export default function LoginSide() {
               </div>
             </div>
 
-            <h1 className="xs:text-4xl mt-4 text-3xl font-semibold text-[#bbe0e1] xl:text-5xl">
+            <h1 className="mt-4 text-3xl font-semibold text-[#bbe0e1] xs:text-4xl xl:text-5xl">
               最創新的理財記帳網頁
             </h1>
             <h1 className="mt-2 text-white xl:text-xl">
@@ -232,18 +232,18 @@ export default function LoginSide() {
               <img
                 src={content[currentPage].img}
                 alt=""
-                className="3xl:h-[630px] xs:h-[350px] h-[250px] w-auto sm:h-[400px] lg:h-[300px] xl:h-[500px] 2xl:h-[550px]"
+                className="h-[250px] w-auto xs:h-[350px] sm:h-[400px] lg:h-[300px] xl:h-[500px] 2xl:h-[550px] 3xl:h-[630px]"
               />
-              <div className="xs:w-[400px] flex w-[340px] flex-col flex-nowrap">
+              <div className="flex w-[340px] flex-col flex-nowrap xs:w-[400px]">
                 <p className="mb-4 text-xl font-semibold text-[#bbe0e1] sm:text-2xl xl:text-3xl">
                   {content[currentPage].text}
                 </p>
-                <p className="3xl:text-6xl 3xl:leading-snug xs:text-5xl xs:leading-tight text-nowrap text-4xl font-semibold">
+                <p className="text-nowrap text-4xl font-semibold xs:text-5xl xs:leading-tight 3xl:text-6xl 3xl:leading-snug">
                   {content[currentPage].content}
                   <br />
                   {content[currentPage].contenttwo}
                 </p>
-                <p className="xs:text-lg mt-4 text-sm leading-snug text-[#374151] xl:text-2xl">
+                <p className="mt-4 text-sm leading-snug text-[#374151] xs:text-lg xl:text-2xl">
                   {content[currentPage].smalltext}
 
                   {content[currentPage].smalltexttwo}
@@ -386,7 +386,7 @@ export default function LoginSide() {
               MoneyTrack 用戶這麽說
             </h2>
             <h2 className="mb-2 ml-[5vh] self-start rounded-xl px-2 font-semibold sm:ml-[10vh] lg:ml-[20vh] lg:text-xl">
-              500+ 則真實評價
+              使用者真實評價
             </h2>
             <Carousel className="max-w-7xl lg:w-[80vw]">
               <CarouselContent className="mx-auto w-[60vw] sm:w-[80vw] lg:w-[50vw]">

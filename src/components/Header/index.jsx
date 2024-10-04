@@ -4,10 +4,11 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 import Logo from "./Logo.png";
 
-export default function Header() {
+export default function Header({ linkToBackstage = true }) {
   const { loginState } = useGlobalContext();
   const { loginEmail } = useGlobalContext();
 
@@ -81,10 +82,14 @@ export default function Header() {
       localStorage.removeItem("userEmail");
       localStorage.removeItem("user");
       console.log("登出成功");
-      window.location.href = "/login";
+      window.location.href = "/";
     } catch (error) {
       console.log("登出失敗", error);
     }
+  };
+
+  const goToBackstage = () => {
+    window.location.href = "/accounting";
   };
 
   return (
@@ -93,17 +98,25 @@ export default function Header() {
         <div className="fixed top-0 z-20 flex h-[80px] w-full items-center justify-between bg-[#222E50] p-6">
           <div className="flex items-center gap-2">
             <img src={Logo} alt="Logo" className="flex h-[47px] w-[42px]" />
-            <div className="xs:text-sm text-xs text-white sm:text-base">
+            <div className="text-xs text-white xs:text-sm sm:text-base">
               MoneyTrack
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <p className="xs:text-sm text-xs text-white sm:text-base">
+            <p className="text-xs text-white xs:text-sm sm:text-base">
               歡迎！{loginState}
             </p>
+            {linkToBackstage && (
+              <button
+                onClick={goToBackstage}
+                className="rounded-xl border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] xs:text-sm sm:text-base"
+              >
+                進入後台
+              </button>
+            )}
             <button
               onClick={handleLogout}
-              className="xs:text-sm rounded-xl border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] sm:text-base"
+              className="rounded-xl border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] xs:text-sm sm:text-base"
             >
               登出
             </button>
@@ -118,37 +131,24 @@ export default function Header() {
           >
             <div className="flex items-center gap-2">
               <img src={Logo} alt="Logo" className="flex h-[47px] w-[42px]" />
-              <div className="xs:text-sm text-xs text-white sm:text-base">
+              <div className="text-xs text-white xs:text-sm sm:text-base">
                 MoneyTrack
               </div>
             </div>
             <div className="flex items-center gap-3">
               <button
                 onClick={handleGoogleLogin}
-                className="xs:text-sm rounded-xl border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] sm:text-base"
+                className="rounded-xl border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] xs:text-sm sm:text-base"
               >
                 註冊/登入
               </button>
             </div>
           </div>
         </div>
-        // <div className="fixed w-full p-5">
-        //   <div className="flex h-[80px] items-center justify-between rounded-xl bg-[#222E50] p-6">
-        //     <div className="flex items-center gap-2">
-        //       <img src={Logo} alt="Logo" className="flex h-[47px] w-[42px]" />
-        //       <div className="text-white">MoneyTrack</div>
-        //     </div>
-        //     <div className="flex items-center gap-3">
-        //       <button
-        //         onClick={handleGoogleLogin}
-        //         className="rounded-xl border border-white p-2 text-white hover:bg-white hover:text-[#222E50]"
-        //       >
-        //         註冊/登入
-        //       </button>
-        //     </div>
-        //   </div>
-        // </div>
       )}
     </>
   );
 }
+Header.propTypes = {
+  linkToBackstage: PropTypes.bool,
+};

@@ -143,7 +143,7 @@ export default function Accounting() {
             key="a"
             className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="drag-handle cursor-pointer rounded-lg p-4 text-center text-xl font-semibold">
               本月支出變化表
             </div>
             <BarChart
@@ -155,7 +155,7 @@ export default function Accounting() {
             key="b"
             className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="drag-handle cursor-pointer rounded-lg p-4 text-center text-xl font-semibold">
               每日紀錄
             </div>
             <DailyAccounting />
@@ -164,7 +164,7 @@ export default function Accounting() {
             key="c"
             className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="drag-handle cursor-pointer rounded-lg p-4 text-center text-xl font-semibold">
               交易紀錄
             </div>
             <DailyRecord />
@@ -173,7 +173,7 @@ export default function Accounting() {
             key="d"
             className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="drag-handle cursor-pointer rounded-lg p-4 text-center text-xl font-semibold">
               本月支出分佈
             </div>
             <ExpensePieChart
@@ -185,7 +185,7 @@ export default function Accounting() {
             key="e"
             className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="drag-handle cursor-pointer rounded-lg p-4 text-center text-xl font-semibold">
               本月收入分佈
             </div>
             <IncomePieChart
@@ -197,7 +197,7 @@ export default function Accounting() {
             key="f"
             className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="drag-handle cursor-pointer rounded-lg p-4 text-center text-xl font-semibold">
               本月盈餘
             </div>
             <BalanceChart

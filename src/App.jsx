@@ -7,7 +7,7 @@ import Nav from "./components/Nav";
 function App() {
   return (
     <>
-      <Header />
+      <Header linkToBackstage={false} />
       <div className="mt-[80px] flex min-h-[100vh] items-stretch justify-start">
         <Nav className="h-auto" />
         <Outlet />

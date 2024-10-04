@@ -8,7 +8,7 @@ const PrivateRoute = ({ children }) => {
   const isAuthenticated = Boolean(loginEmail);
 
   console.log("Is authenticated:", isAuthenticated);
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  return isAuthenticated ? children : <Navigate to="/" replace />;
 };
 PrivateRoute.propTypes = {
   children: PropTypes.node.isRequired,

@@ -96,7 +96,7 @@ export default function AccountDetails({
   }
 
   return (
-    <div className="flex h-auto w-full flex-col items-center rounded-2xl border-2 border-gray-500 bg-white p-3 shadow-md md:min-h-[595px]">
+    <div className="flex h-auto w-full flex-col items-center overflow-y-scroll rounded-2xl border-2 border-gray-500 bg-white p-3 shadow-md md:h-[595px]">
       <div className="mb-4 flex items-center gap-3">
         <img src={imageSrc} alt="" className="h-8 w-8" />
         <div className="text-xl font-semibold">{title}</div>
@@ -212,3 +212,10 @@ export default function AccountDetails({
     </div>
   );
 }
+AccountDetails.propTypes = {
+  title: PropTypes.string.isRequired,
+  imageSrc: PropTypes.string.isRequired,
+  accountType: PropTypes.string.isRequired,
+  bgColor: PropTypes.string.isRequired,
+  textColor: PropTypes.string.isRequired,
+};
