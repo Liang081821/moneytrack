@@ -5,6 +5,7 @@ import { getDocs, query, where, deleteDoc, doc } from "firebase/firestore";
 import Alert from "@/components/Alert";
 import TransactionCard from "@/components/TransactionCard";
 import PropTypes from "prop-types";
+import AddNewFunction from "../../pages/Property/addNewAccount";
 
 export default function AccountDetails({
   title,
@@ -97,10 +98,12 @@ export default function AccountDetails({
 
   return (
     <div className="flex h-auto w-full flex-col items-center overflow-y-scroll rounded-2xl border-2 border-gray-500 bg-white p-3 shadow-md md:h-[595px]">
-      <div className="mb-4 flex items-center gap-3">
+      <div className="relative mb-4 flex w-full items-center justify-center gap-3">
         <img src={imageSrc} alt="" className="h-8 w-8" />
         <div className="text-xl font-semibold">{title}</div>
+        <AddNewFunction account_type={accountType} />
       </div>
+
       {/* 動態渲染篩選後的帳戶 */}
       {filteredAccounts.map((account) => (
         <div
@@ -140,6 +143,7 @@ export default function AccountDetails({
           </svg>
         </div>
       ))}
+
       {/* 帳戶詳細紀錄顯示 */}
       {selectedAccount && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4">

@@ -203,76 +203,78 @@ export default function ProjectLayoutGrid() {
       {alertMessage && (
         <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
       )}
-      <div className="w-full bg-gradient-to-r from-[#e3e3e3] via-[#efefef] py-16">
-        <div className="mx-auto flex h-auto w-[90%] flex-wrap items-start justify-start gap-3">
+      <div className="w-[90%] py-5">
+        <div className="flex h-auto flex-col flex-wrap items-start justify-start gap-3">
           {/* 新增專案按鈕 */}
-          <div className="relative h-[200px] w-full md:h-[300px] md:w-[32%]">
-            <div className="h-[200px] w-full rounded-xl border border-[#8b91a1] bg-[#8b91a1] p-4 opacity-20 md:h-[300px]"></div>
-            <button
-              onClick={startEditing}
-              className="absolute left-1/2 top-1/2 flex h-[70px] w-[70px] -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-gray-400 pb-4 text-5xl font-semibold opacity-100 md:h-[100px] md:w-[100px] md:text-7xl"
-            >
-              +
-            </button>
-          </div>
-          <div className="absolute right-4 top-24 flex">
-            <button
+          <div className="flex gap-2 self-end">
+            <div
               onClick={() => setShowOnlyEditing(true)}
-              className={`${showOnlyEditing ? "bg-[#607196] text-white" : "bg-gray-200 text-black"} mb-4 rounded-xl px-4 py-2`}
+              className={`${showOnlyEditing ? "bg-[#607196] text-white" : "border-2 border-gray-500 bg-none"} mb-4 rounded-xl p-2`}
             >
-              進行中
-            </button>
+              <button>進行中</button>
+            </div>
             <button
               onClick={() => setShowOnlyEditing(false)}
-              className={`${!showOnlyEditing ? "bg-[#607196] text-white" : "bg-gray-200 text-black"} mb-4 rounded-xl px-4 py-2`}
+              className={`${!showOnlyEditing ? "bg-[#607196] text-white" : "border-2 border-gray-500 bg-none"} mb-4 rounded-xl p-2`}
             >
               已結束
             </button>
           </div>
-
-          {/* 動態生成的專案 */}
-          {projects.length === 0 ? (
-            <div className="flex h-[200px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[300px]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="mb-2 h-12 w-12"
+          <div className="flex w-full gap-3">
+            <div className="relative h-[200px] w-full md:h-[300px] md:w-[32%]">
+              <div className="h-[200px] w-full rounded-xl border border-[#8b91a1] bg-[#8b91a1] p-4 opacity-20 md:h-[300px]"></div>
+              <button
+                onClick={startEditing}
+                className="absolute left-1/2 top-1/2 flex h-[70px] w-[70px] -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-gray-400 pb-4 text-5xl font-semibold opacity-100 md:h-[100px] md:w-[100px] md:text-7xl"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
-                />
-              </svg>
-              <p>新增第一個專案</p>
+                +
+              </button>
             </div>
-          ) : (
-            <>
-              {projects
-                .filter((project) =>
-                  showOnlyEditing ? project.isediting : !project.isediting,
-                )
-                .map((project) => (
-                  <div
-                    key={project.id}
-                    className={`border-1 relative flex h-[200px] w-full flex-col items-center justify-center gap-4 rounded-xl md:h-[300px] md:w-[32%] ${project.isediting ? "bg-[#82A0BC]" : "bg-[#A7CCED]"} p-3 shadow-md`}
-                    onClick={() => showProjectDetails(project, project.name)}
-                  >
-                    {project.imageUrl && (
-                      <img
-                        src={project.imageUrl}
-                        alt="離線時無法載入圖片"
-                        className="w-full overflow-hidden rounded-xl object-cover"
-                      />
-                    )}
-                    <p className="text-xl font-semibold">{project.name}</p>
-                  </div>
-                ))}
-            </>
-          )}
+
+            {/* 動態生成的專案 */}
+            {projects.length === 0 ? (
+              <div className="flex h-[200px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[300px]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="mb-2 h-12 w-12"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
+                  />
+                </svg>
+                <p>新增第一個專案</p>
+              </div>
+            ) : (
+              <>
+                {projects
+                  .filter((project) =>
+                    showOnlyEditing ? project.isediting : !project.isediting,
+                  )
+                  .map((project) => (
+                    <div
+                      key={project.id}
+                      className={`border-1 relative flex h-[200px] w-full flex-col items-center justify-center gap-4 rounded-xl md:h-[300px] md:w-[32%] ${project.isediting ? "bg-[#82A0BC]" : "bg-[#A7CCED]"} p-3 shadow-md`}
+                      onClick={() => showProjectDetails(project, project.name)}
+                    >
+                      {project.imageUrl && (
+                        <img
+                          src={project.imageUrl}
+                          alt="離線時無法載入圖片"
+                          className="w-full overflow-hidden rounded-xl object-cover"
+                        />
+                      )}
+                      <p className="text-xl font-semibold">{project.name}</p>
+                    </div>
+                  ))}
+              </>
+            )}
+          </div>
         </div>
       </div>
 

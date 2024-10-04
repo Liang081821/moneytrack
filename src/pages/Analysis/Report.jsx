@@ -159,15 +159,25 @@ export default function Report() {
   };
 
   return (
-    <div className="flex w-full flex-col items-center">
-      <button
-        onClick={() => handleAddReport()}
-        className="md:w-25 fixed right-0 top-40 z-10 w-24 overflow-hidden rounded-xl bg-[#607196] p-1 text-sm text-white transition-all md:p-2 md:text-base"
-      >
-        我要進行分析
-      </button>
-
-      <div className="mx-auto flex w-[90%] flex-col justify-center gap-3 md:flex-row">
+    <div className="flex w-[90%] flex-col items-center">
+      <div className="mb-5 flex cursor-pointer items-center justify-center gap-1 self-end rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
+        <button onClick={() => handleAddReport()}>我要進行分析</button>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="size-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"
+          />
+        </svg>
+      </div>
+      <div className="mx-auto flex w-full flex-col justify-center gap-3 md:flex-row">
         <MonthlyData
           setmonthExpense={setmonthExpense}
           setmonthIncome={setmonthIncome}

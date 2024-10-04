@@ -568,8 +568,8 @@ export default function DailyRecord() {
 
         {editing && (
           <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-800 bg-opacity-75">
-            <div className="w-[90%] max-w-lg rounded-lg bg-white p-8 shadow-lg">
-              <div className="mb-4 flex items-center justify-between">
+            <div className="w-[90%] max-w-lg rounded-lg bg-white p-4 shadow-lg">
+              <div className="mb-2 flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-gray-800">
                   編輯帳單
                 </h2>
@@ -582,9 +582,9 @@ export default function DailyRecord() {
                 </button>
               </div>
               <form onSubmit={handleSubmit(handleSaveEdit)}>
-                <div className="mb-4 flex flex-col">
-                  <label className="mb-1 text-gray-700">日期</label>
-                  <div>
+                <div className="mb-4 flex w-full items-center gap-2">
+                  <label className="mb-1 text-nowrap text-gray-700">日期</label>
+                  <div className="w-full rounded-xl border p-2">
                     <DatePicker
                       selected={startDate}
                       onChange={(date) => setStartDate(date)}
@@ -593,15 +593,15 @@ export default function DailyRecord() {
                       timeIntervals={5}
                       timeCaption="時間"
                       dateFormat="yyyy/MM/dd h:mm aa"
-                      className="rounded-xl border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                 </div>
 
-                <div className="mb-4 flex flex-col">
-                  <label className="mb-1 text-gray-700">帳戶</label>
+                <div className="mb-4 flex items-center gap-2">
+                  <label className="mb-1 text-nowrap text-gray-700">帳戶</label>
                   <select
-                    className="rounded-xl border p-2"
+                    className="w-full rounded-xl border p-2"
                     {...register("account", { required: "請選擇帳戶" })}
                   >
                     {Array.isArray(property) &&
@@ -613,10 +613,10 @@ export default function DailyRecord() {
                   </select>
                 </div>
 
-                <div className="mb-4 flex flex-col">
-                  <label className="mb-1 text-gray-700">類別</label>
+                <div className="mb-4 flex items-center gap-2">
+                  <label className="mb-1 text-nowrap text-gray-700">類別</label>
                   <select
-                    className="rounded-xl border p-2"
+                    className="w-full rounded-xl border p-2"
                     {...register("record_type", { required: "請選擇類別" })}
                   >
                     <option value="收入">收入</option>
@@ -626,10 +626,12 @@ export default function DailyRecord() {
                 </div>
 
                 {recordType === "轉帳" ? (
-                  <div className="mb-4 flex flex-col">
-                    <label className="mb-1 text-gray-700">轉入</label>
+                  <div className="mb-4 flex items-center gap-2">
+                    <label className="mb-1 text-nowrap text-gray-700">
+                      轉入
+                    </label>
                     <select
-                      className="rounded-xl border p-2"
+                      className="w-full rounded-xl border p-2"
                       {...register("targetaccount", {
                         required:
                           recordType === "轉帳" ? "請選擇轉入帳戶" : false,
@@ -644,10 +646,12 @@ export default function DailyRecord() {
                     </select>
                   </div>
                 ) : (
-                  <div className="mb-4 flex flex-col">
-                    <label className="mb-1 text-gray-700">分類</label>
+                  <div className="mb-4 flex items-center gap-2">
+                    <label className="mb-1 text-nowrap text-gray-700">
+                      分類
+                    </label>
                     <select
-                      className="rounded-xl border p-2"
+                      className="w-full rounded-xl border p-2"
                       {...register("class", {
                         required:
                           recordType !== "轉帳" ? "請選擇子分類" : false,
@@ -665,10 +669,12 @@ export default function DailyRecord() {
 
                 {Array.isArray(projectData) &&
                   projectData.some((item) => item.isediting) && (
-                    <div className="mb-4 flex flex-col">
-                      <label className="mb-1 text-gray-700">專案</label>
+                    <div className="mb-4 flex items-center gap-2">
+                      <label className="mb-1 text-nowrap text-gray-700">
+                        專案
+                      </label>
                       <select
-                        className="rounded-xl border p-2"
+                        className="w-full rounded-xl border p-2"
                         {...register("project")}
                       >
                         {projectData
@@ -681,17 +687,17 @@ export default function DailyRecord() {
                       </select>
                     </div>
                   )}
-                <div className="mb-4 flex flex-col">
-                  <div className="mb-1 text-gray-700">幣別</div>
+                <div className="mb-4 flex items-center gap-2">
+                  <div className="mb-1 text-nowrap text-gray-700">幣別</div>
 
-                  <div className="flex cursor-pointer items-center justify-center rounded-lg border p-1">
+                  <div className="flex w-full cursor-pointer items-center justify-center rounded-lg border p-1">
                     {currentTransaction.currency}
                   </div>
                 </div>
-                <div className="mb-4 flex flex-col">
-                  <label className="mb-1 text-gray-700">金額</label>
+                <div className="mb-4 flex items-center gap-2">
+                  <label className="mb-1 text-nowrap text-gray-700">金額</label>
                   <input
-                    className="rounded-xl border p-2"
+                    className="w-full rounded-xl border p-2"
                     type="number"
                     {...register("amount", {
                       required: "請輸入金額",

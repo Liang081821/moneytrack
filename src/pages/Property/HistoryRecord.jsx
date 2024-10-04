@@ -1,4 +1,3 @@
-import AddNewFunction from "./addNewAccount";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { getFirestoreRefs } from "@/firebase/api";
 import { addDoc, deleteDoc, doc } from "firebase/firestore";
@@ -74,20 +73,30 @@ export default function HistoryRecord() {
     total ? (Math.abs(amount) / Math.abs(total)) * 100 : 0;
 
   return (
-    <div className="w-full bg-gradient-to-r from-[#e3e3e3] via-[#efefef] pl-11 pt-10 md:pl-0">
+    <div className="w-full bg-gradient-to-r from-[#e3e3e3] via-[#efefef] pl-11 pt-5 md:pl-0">
       <div className="mx-auto flex w-[90%] flex-col">
         {alertMessage && (
           <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
         )}
 
         <div className="mb-5 flex w-full justify-end">
-          <button
-            onClick={calculateProperty}
-            className="fixed right-0 top-56 z-10 overflow-hidden rounded-xl bg-[#607196] p-1 text-sm text-white transition-all md:p-2 md:text-base"
-          >
-            統計最新資產
-          </button>
-          <AddNewFunction></AddNewFunction>
+          <div className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
+            <button onClick={calculateProperty}>統計最新資產</button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+          </div>
         </div>
         <div className="flex h-full flex-col items-center justify-center gap-2 md:flex-row md:flex-nowrap">
           <AccountDetails

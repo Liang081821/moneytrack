@@ -16,7 +16,7 @@ export default function Accounting() {
     lg: [
       { i: "a", x: 0, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "b", x: 4, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
-      { i: "c", x: 8, y: 0, w: 4, h: 100, minH: 100, minW: 4 },
+      { i: "c", x: 8, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "d", x: 0, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "e", x: 4, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "f", x: 8, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
@@ -25,7 +25,7 @@ export default function Accounting() {
     md: [
       { i: "a", x: 0, y: 0, w: 5, h: 60, minH: 60, minW: 4 },
       { i: "b", x: 5, y: 0, w: 5, h: 60, minH: 60, minW: 4 },
-      { i: "c", x: 0, y: 1, w: 10, h: 100, minH: 100, minW: 4 },
+      { i: "c", x: 0, y: 1, w: 10, h: 60, minH: 60, minW: 4 },
       { i: "d", x: 0, y: 2, w: 5, h: 50, minH: 50, minW: 4 },
       { i: "e", x: 5, y: 2, w: 5, h: 50, minH: 50, minW: 4 },
       { i: "f", x: 0, y: 3, w: 5, h: 50, minH: 50, minW: 4 },
@@ -34,7 +34,7 @@ export default function Accounting() {
     sm: [
       { i: "a", x: 0, y: 0, w: 6, h: 50, minH: 50, minW: 6 },
       { i: "b", x: 0, y: 1, w: 6, h: 50, minH: 50, minW: 6 },
-      { i: "c", x: 0, y: 2, w: 6, h: 40, minH: 40, minW: 6 },
+      { i: "c", x: 0, y: 2, w: 6, h: 80, minH: 80, minW: 6 },
       { i: "d", x: 0, y: 4, w: 6, h: 40, minH: 40, minW: 6 },
       { i: "e", x: 0, y: 5, w: 6, h: 40, minH: 40, minW: 6 },
       { i: "f", x: 0, y: 6, w: 6, h: 40, minH: 40, minW: 6 },
@@ -59,6 +59,8 @@ export default function Accounting() {
         newDate.setMonth(newDate.getMonth() + 1);
       } else if (direction === "prev") {
         newDate.setMonth(newDate.getMonth() - 1);
+      } else {
+        return new Date();
       }
       return newDate;
     });
@@ -102,9 +104,18 @@ export default function Accounting() {
             </svg>
             <button>上個月</button>
           </div>
-          <span className="text-xl font-bold">
-            {`${selectedMonth.getFullYear()}年 ${selectedMonth.getMonth() + 1}月`}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-xl font-bold">
+              {`${selectedMonth.getFullYear()}年 ${selectedMonth.getMonth() + 1}月`}
+            </span>
+            <div
+              className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
+              onClick={() => handleMonthChange("")}
+            >
+              <button>回本月</button>
+            </div>
+          </div>
+
           <div
             className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
             onClick={() => handleMonthChange("next")}
