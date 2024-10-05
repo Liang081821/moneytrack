@@ -20,13 +20,20 @@
 }
 
 .fade-in {
-  animation: fadeIn 1s ease-in-out;
+  animation: fadeIn 0.5s ease-in;
 }
 
 .fade-out {
-  animation: fadeOut 1s ease-in-out;
+  animation: fadeOut 0.5s ease-in-out;
+}
+.slide-in {
+  transform: translateX(-100%);
+  transition: transform 1s ease-in-out;
 }
 
+.slide-in.visible {
+  transform: translateX(0);
+}
 body {
   @apply m-0 box-border font-poppins; /* 添加 margin: 0 和 box-sizing: border-box */
 }

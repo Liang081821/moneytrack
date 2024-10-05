@@ -64,7 +64,7 @@ export default function Header({ linkToBackstage = true }) {
       localStorage.setItem("user", user.displayName);
 
       console.log("登入成功", user);
-      window.location.href = "/accounting";
+      window.location.href = "/property";
     } catch (error) {
       console.error(
         "登入失敗",
@@ -89,7 +89,7 @@ export default function Header({ linkToBackstage = true }) {
   };
 
   const goToBackstage = () => {
-    window.location.href = "/accounting";
+    window.location.href = "/property";
   };
 
   return (

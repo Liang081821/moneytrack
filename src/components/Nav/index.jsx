@@ -66,31 +66,6 @@ export default function Nav() {
 
             <>
               <NavLink
-                to="/accounting"
-                onClick={handleNavLinkClick}
-                className={({ isActive, isPending, isTransitioning }) =>
-                  `transform transition-all duration-300 ${isActive ? "font-2xl scale-105 rounded-xl bg-[#e3e3e3]" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "" : ""} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
-                }
-              >
-                <div className="flex items-center gap-1">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="size-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                    />
-                  </svg>
-                  <h1>記帳區</h1>
-                </div>
-              </NavLink>
-              <NavLink
                 to="/property"
                 onClick={handleNavLinkClick}
                 className={({ isActive, isPending, isTransitioning }) =>
@@ -115,6 +90,33 @@ export default function Nav() {
                   <h1>帳戶整合</h1>
                 </div>
               </NavLink>
+              <NavLink
+                to="/accounting"
+                onClick={handleNavLinkClick}
+                className={({ isActive, isPending, isTransitioning }) =>
+                  `transform transition-all duration-300 ${isActive ? "font-2xl scale-105 rounded-xl bg-[#e3e3e3]" : "scale-100 bg-transparent font-normal opacity-80"} ${isPending ? "" : ""} ${isTransitioning ? "transition-transform duration-300" : ""} p-2`
+                }
+              >
+                <div className="flex items-center gap-1">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="size-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                    />
+                  </svg>
+
+                  <h1>數據圖表</h1>
+                </div>
+              </NavLink>
+
               <NavLink
                 to="/analysis"
                 onClick={handleNavLinkClick}

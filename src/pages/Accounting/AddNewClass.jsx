@@ -83,7 +83,7 @@ export default function AddNewClass() {
 
   return (
     <div
-      className={`absolute right-4 top-9 rounded-xl bg-[#BABFD1] p-1 text-center transition-all md:p-2 ${
+      className={`self-end rounded-xl bg-[#BABFD1] p-1 text-center transition-all md:p-2 ${
         newclassEditing ? "" : "overflow-hidden text-sm md:text-base"
       }`}
     >

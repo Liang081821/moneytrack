@@ -33,7 +33,7 @@ export default function BalanceSheet() {
         {groupProperty.map((item) => (
           <div
             key={item.account}
-            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#A7CCED] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
+            className="m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#A7CCED] p-2 xs:h-28 xs:w-28 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
           >
             <div className="text-xs sm:text-sm lg:text-xl">{item.account}</div>
             <div className="text-xs sm:text-sm lg:text-xl">
@@ -52,7 +52,7 @@ export default function BalanceSheet() {
         {groupPropertyLiability.map((item) => (
           <div
             key={item.account}
-            className="xs:h-28 xs:w-28 m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#545E75] p-2 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
+            className="m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#545E75] p-2 xs:h-28 xs:w-28 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
           >
             <div className="text-xs text-gray-200 sm:text-sm lg:text-xl">
               {item.account}

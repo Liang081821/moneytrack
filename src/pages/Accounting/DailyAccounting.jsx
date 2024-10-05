@@ -7,8 +7,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AddNewClass from "./AddNewClass";
 import Alert from "@/components/Alert";
+import PropTypes from "prop-types";
 
-export default function DailyAccounting() {
+export default function DailyAccounting({ setAccounting }) {
   const { property, classData, projectData } = useGlobalContext();
   const { loginEmail } = useGlobalContext();
   const [alertMessage, setAlertMessage] = useState(null);
@@ -169,197 +170,214 @@ export default function DailyAccounting() {
     }
   };
   const [startDate, setStartDate] = useState(new Date());
+  const handleCloseAccounting = () => {
+    setAccounting(false);
+  };
+  DailyAccounting.propTypes = {
+    setAccounting: PropTypes.func.isRequired,
+  };
 
   return (
-    <div className="flex w-full flex-1 flex-col items-center justify-center rounded-xl bg-white p-4">
-      {alertMessage && (
-        <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
-      )}
-      <div className="mb-2 flex w-full items-center gap-3">
-        <div className="text-nowrap text-sm font-semibold md:text-base">
-          日期
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4 fade-in">
+      <div className="relative flex w-[50%] flex-col items-center justify-center gap-3 rounded-xl bg-white p-8">
+        {alertMessage && (
+          <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+        )}
+        <h2 className="text-xl font-semibold"> 記帳面板</h2>
+        <div className="flex gap-2 self-end">
+          <AddNewClass />
+          <button
+            onClick={handleCloseAccounting}
+            className="mr-2 rounded-xl bg-[#A7CCED] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
+          >
+            取消
+          </button>
         </div>
-        <div className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center focus:outline-none focus:ring-2 focus:ring-blue-500 md:h-[44px]">
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={5}
-            timeCaption="時間"
-            dateFormat="yyyy/MM/dd h:mm aa"
-            className="outline-none"
-          />
+        <div className="flex w-full items-center gap-3">
+          <div className="text-nowrap text-sm font-semibold md:text-base">
+            日期
+          </div>
+          <div className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center focus:outline-none focus:ring-2 focus:ring-blue-500 md:h-[44px]">
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={5}
+              timeCaption="時間"
+              dateFormat="yyyy/MM/dd h:mm aa"
+              className="outline-none"
+            />
+          </div>
         </div>
-      </div>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex w-full flex-col items-center gap-2"
-      >
-        <div className="flex w-full items-center gap-3">
-          <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
-            帳戶
-          </div>
-          <select
-            className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
-            {...register("account", {
-              required: "請選擇帳戶",
-            })}
-          >
-            <option value="">請選擇</option>
-            {Array.isArray(property) &&
-              property.map((item) => (
-                <option key={item.id} value={item.account}>
-                  {item.account}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div className="flex w-full items-center gap-3">
-          <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
-            類型
-          </div>
-          <select
-            className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
-            {...register("type", {
-              required: "請選擇類型",
-            })}
-          >
-            <option value="">請選擇</option>
-            <option>收入</option>
-            <option>支出</option>
-            <option>轉帳</option>
-          </select>
-        </div>
-        {watchType === "轉帳" ? (
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex w-full flex-col items-center gap-3"
+        >
           <div className="flex w-full items-center gap-3">
             <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
-              轉入
+              帳戶
             </div>
             <select
               className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
-              {...register("targetaccount", {
-                required: watchType === "轉帳" ? "請選擇目標轉入帳戶" : false,
+              {...register("account", {
+                required: "請選擇帳戶",
               })}
             >
               <option value="">請選擇</option>
-              {Array.isArray(accountsToRender) &&
-                accountsToRender.map((item) => (
+              {Array.isArray(property) &&
+                property.map((item) => (
                   <option key={item.id} value={item.account}>
                     {item.account}
                   </option>
                 ))}
             </select>
           </div>
-        ) : (
           <div className="flex w-full items-center gap-3">
             <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
-              分類
+              類型
             </div>
             <select
               className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
-              {...register("class", {
-                required: watchType !== "轉帳" ? "請選擇目標轉入帳戶" : false,
+              {...register("type", {
+                required: "請選擇類型",
               })}
             >
               <option value="">請選擇</option>
-              {Array.isArray(optionsToRender) &&
-                optionsToRender.map((item) => (
-                  <option key={item.id} value={item.value}>
-                    {item}
-                  </option>
-                ))}
+              <option>收入</option>
+              <option>支出</option>
+              <option>轉帳</option>
             </select>
           </div>
-        )}
-        {Array.isArray(projectData) &&
-          projectData.some((item) => item.isediting) && (
+          {watchType === "轉帳" ? (
             <div className="flex w-full items-center gap-3">
               <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
-                專案
+                轉入
               </div>
-
               <select
                 className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
-                {...register("project")}
+                {...register("targetaccount", {
+                  required: watchType === "轉帳" ? "請選擇目標轉入帳戶" : false,
+                })}
               >
                 <option value="">請選擇</option>
-                {projectData
-                  .filter((item) => item.isediting)
-                  .map((item) => (
-                    <option key={item.id} value={item.name}>
-                      {item.name}
+                {Array.isArray(accountsToRender) &&
+                  accountsToRender.map((item) => (
+                    <option key={item.id} value={item.account}>
+                      {item.account}
+                    </option>
+                  ))}
+              </select>
+            </div>
+          ) : (
+            <div className="flex w-full items-center gap-3">
+              <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
+                分類
+              </div>
+              <select
+                className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
+                {...register("class", {
+                  required: watchType !== "轉帳" ? "請選擇目標轉入帳戶" : false,
+                })}
+              >
+                <option value="">請選擇</option>
+                {Array.isArray(optionsToRender) &&
+                  optionsToRender.map((item) => (
+                    <option key={item.id} value={item.value}>
+                      {item}
                     </option>
                   ))}
               </select>
             </div>
           )}
-        <div className="flex w-full items-center gap-3">
-          <div className="text-nowrap text-sm font-semibold md:text-base">
-            幣別
-          </div>
-          <div className="grid w-full grid-cols-6 gap-1 md:h-[44px]">
-            {currencies.map(([code]) => (
-              <label
-                key={code}
-                className={`flex cursor-pointer items-center justify-center rounded-lg border p-1 ${
-                  selectedCurrency === code
-                    ? "bg-[#545E75] text-white"
-                    : "bg-gray-100"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="currency"
-                  value={code}
-                  checked={selectedCurrency === code}
-                  // onChange={() => {
-                  //   setSelectedCurrency(code);
-                  // }}
-                  className="hidden"
-                  {...register("currency", { required: "請選擇幣別" })}
-                />
-                <div className="text-center">
-                  <p className="text-sm font-semibold">{code}</p>
+          {Array.isArray(projectData) &&
+            projectData.some((item) => item.isediting) && (
+              <div className="flex w-full items-center gap-3">
+                <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
+                  專案
                 </div>
-              </label>
-            ))}
-          </div>
-        </div>
-        <div className="flex w-full items-center gap-3">
-          <div className="text-nowrap text-sm font-semibold md:text-base">
-            金額
-          </div>
-          <input
-            className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
-            type="number"
-            placeholder={errors.amount ? errors.amount.message : "金額不為 0"}
-            {...register("amount", {
-              required: "請輸入金額",
-              valueAsNumber: true,
-              validate: (value) => value > 0 || "金額必須大於 0",
-            })}
-          />
-        </div>
-        {selectedCurrency !== "TWD" && amount ? (
-          <div className="font-semibold text-red-400 fade-in">
-            等值 TWD${convertedAmountDisplay}
-          </div>
-        ) : (
-          <></>
-        )}
 
-        <div className="flex w-full gap-2">
-          <button
-            type="submit"
-            className="flex-1 rounded-xl bg-[#82A0BC] p-1 text-sm md:p-2 md:text-base"
-          >
-            {watchType === "轉帳" ? "我要轉帳" : "我要記一筆"}
-          </button>
-        </div>
-      </form>
-      <AddNewClass />
+                <select
+                  className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
+                  {...register("project")}
+                >
+                  <option value="">請選擇</option>
+                  {projectData
+                    .filter((item) => item.isediting)
+                    .map((item) => (
+                      <option key={item.id} value={item.name}>
+                        {item.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            )}
+          <div className="flex w-full items-center gap-3">
+            <div className="text-nowrap text-sm font-semibold md:text-base">
+              幣別
+            </div>
+            <div className="grid w-full grid-cols-6 gap-1 md:h-[44px]">
+              {currencies.map(([code]) => (
+                <label
+                  key={code}
+                  className={`flex cursor-pointer items-center justify-center rounded-lg border p-1 ${
+                    selectedCurrency === code
+                      ? "bg-[#545E75] text-white"
+                      : "bg-gray-100"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="currency"
+                    value={code}
+                    checked={selectedCurrency === code}
+                    // onChange={() => {
+                    //   setSelectedCurrency(code);
+                    // }}
+                    className="hidden"
+                    {...register("currency", { required: "請選擇幣別" })}
+                  />
+                  <div className="text-center">
+                    <p className="text-sm font-semibold">{code}</p>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </div>
+          <div className="flex w-full items-center gap-3">
+            <div className="text-nowrap text-sm font-semibold md:text-base">
+              金額
+            </div>
+            <input
+              className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
+              type="number"
+              placeholder={errors.amount ? errors.amount.message : "金額不為 0"}
+              {...register("amount", {
+                required: "請輸入金額",
+                valueAsNumber: true,
+                validate: (value) => value > 0 || "金額必須大於 0",
+              })}
+            />
+          </div>
+          {selectedCurrency !== "TWD" && amount ? (
+            <div className="font-semibold text-red-400 fade-in">
+              等值 TWD${convertedAmountDisplay}
+            </div>
+          ) : (
+            <></>
+          )}
+
+          <div className="flex w-full gap-2">
+            <button
+              type="submit"
+              className="flex-1 rounded-xl bg-[#82A0BC] p-1 text-sm md:p-2 md:text-base"
+            >
+              {watchType === "轉帳" ? "我要轉帳" : "我要記一筆"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

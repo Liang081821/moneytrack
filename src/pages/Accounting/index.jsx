@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import DailyAccounting from "./DailyAccounting";
+// import DailyAccounting from "./DailyAccounting";
 import DailyRecord from "./DailyRecord";
 import ExpensePieChart from "./ExpensePieChart";
 import IncomePieChart from "./IncomePieChart";
@@ -15,7 +15,7 @@ export default function Accounting() {
   const defaultLayouts = {
     lg: [
       { i: "a", x: 0, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
-      { i: "b", x: 4, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
+      // { i: "b", x: 4, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "c", x: 8, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "d", x: 0, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "e", x: 4, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
@@ -24,8 +24,8 @@ export default function Accounting() {
     ],
     md: [
       { i: "a", x: 0, y: 0, w: 5, h: 60, minH: 60, minW: 4 },
-      { i: "b", x: 5, y: 0, w: 5, h: 60, minH: 60, minW: 4 },
-      { i: "c", x: 0, y: 1, w: 10, h: 60, minH: 60, minW: 4 },
+      // { i: "b", x: 5, y: 0, w: 5, h: 60, minH: 60, minW: 4 },
+      { i: "c", x: 0, y: 1, w: 5, h: 60, minH: 60, minW: 4 },
       { i: "d", x: 0, y: 2, w: 5, h: 50, minH: 50, minW: 4 },
       { i: "e", x: 5, y: 2, w: 5, h: 50, minH: 50, minW: 4 },
       { i: "f", x: 0, y: 3, w: 5, h: 50, minH: 50, minW: 4 },
@@ -33,7 +33,7 @@ export default function Accounting() {
     ],
     sm: [
       { i: "a", x: 0, y: 0, w: 6, h: 50, minH: 50, minW: 6 },
-      { i: "b", x: 0, y: 1, w: 6, h: 50, minH: 50, minW: 6 },
+      // { i: "b", x: 0, y: 1, w: 6, h: 50, minH: 50, minW: 6 },
       { i: "c", x: 0, y: 2, w: 6, h: 80, minH: 80, minW: 6 },
       { i: "d", x: 0, y: 4, w: 6, h: 40, minH: 40, minW: 6 },
       { i: "e", x: 0, y: 5, w: 6, h: 40, minH: 40, minW: 6 },
@@ -81,8 +81,13 @@ export default function Accounting() {
   );
 
   return (
-    <div className="flex w-full flex-col items-center justify-center bg-gradient-to-r from-[#e3e3e3] via-[#efefef] to-[#e3e3e3] pb-[10vh]">
-      <div className="my-2 w-[90%]">
+    <div className="flex w-full flex-col items-center justify-center bg-gradient-to-r from-[#e3e3e3] via-[#efefef] to-[#e3e3e3] pb-[10vh] fade-in">
+      <div className="mt-5 w-[90%]">
+        <div className="flex w-full justify-center">
+          <span className="text-xl font-bold">
+            {`${selectedMonth.getFullYear()}年 ${selectedMonth.getMonth() + 1}月`}
+          </span>
+        </div>
         <div className="flex items-center justify-between p-3">
           <div
             className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
@@ -104,10 +109,13 @@ export default function Accounting() {
             </svg>
             <button>上個月</button>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xl font-bold">
-              {`${selectedMonth.getFullYear()}年 ${selectedMonth.getMonth() + 1}月`}
-            </span>
+          <div className="flex gap-2">
+            {/* <div
+              className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
+              onClick={() => startAccounting()}
+            >
+              <button>我要記帳</button>
+            </div> */}
             <div
               className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
               onClick={() => handleMonthChange("")}
@@ -115,7 +123,6 @@ export default function Accounting() {
               <button>回本月</button>
             </div>
           </div>
-
           <div
             className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
             onClick={() => handleMonthChange("next")}
@@ -154,7 +161,7 @@ export default function Accounting() {
             key="a"
             className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle cursor-pointer rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月支出變化表
             </div>
             <BarChart
@@ -162,29 +169,32 @@ export default function Accounting() {
               lastDayOfSelectedMonth={lastDayOfSelectedMonth}
             />
           </div>
-          <div
+          {/* <div
             key="b"
             className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle cursor-pointer rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               每日紀錄
             </div>
             <DailyAccounting />
-          </div>
+          </div> */}
           <div
             key="c"
             className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle cursor-pointer rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               交易紀錄
             </div>
-            <DailyRecord />
+            <DailyRecord
+              firstDayOfSelectedMonth={firstDayOfSelectedMonth}
+              lastDayOfSelectedMonth={lastDayOfSelectedMonth}
+            />
           </div>
           <div
             key="d"
             className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle cursor-pointer rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月支出分佈
             </div>
             <ExpensePieChart
@@ -196,7 +206,7 @@ export default function Accounting() {
             key="e"
             className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle cursor-pointer rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月收入分佈
             </div>
             <IncomePieChart
@@ -208,7 +218,7 @@ export default function Accounting() {
             key="f"
             className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle cursor-pointer rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月盈餘
             </div>
             <BalanceChart

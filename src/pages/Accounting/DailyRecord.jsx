@@ -16,8 +16,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Alert from "@/components/Alert";
 import TransactionCard from "@/components/TransactionCard";
+import PropTypes from "prop-types";
 
-export default function DailyRecord() {
+export default function DailyRecord({
+  firstDayOfSelectedMonth,
+  lastDayOfSelectedMonth,
+}) {
   const [transaction, setTransaction] = useState([]);
   const { property, classData, projectData } = useGlobalContext();
   const [startDate, setStartDate] = useState();
@@ -32,7 +36,16 @@ export default function DailyRecord() {
   }, [loginEmail]);
 
   const groupByDate = (transactions) => {
-    const sortedTransactions = transactions.sort((a, b) => {
+    const filteredTransactions = transactions.filter((transaction) => {
+      const transactionTime = transaction.time.toDate();
+      const isInDateRange =
+        transactionTime >= firstDayOfSelectedMonth &&
+        transactionTime <= lastDayOfSelectedMonth;
+
+      return isInDateRange;
+    });
+
+    const sortedTransactions = filteredTransactions.sort((a, b) => {
       return b.time.toDate() - a.time.toDate();
     });
 
@@ -505,9 +518,13 @@ export default function DailyRecord() {
       console.error("Error updating document:", error);
     }
   };
-  if (transaction.length === 0) {
+  DailyRecord.propTypes = {
+    firstDayOfSelectedMonth: PropTypes.instanceOf(Date).isRequired,
+    lastDayOfSelectedMonth: PropTypes.instanceOf(Date).isRequired,
+  };
+  if (Object.keys(groupedTransactions).length === 0) {
     return (
-      <div className="flex h-[300px] w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[908px]">
+      <div className="flex h-full w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
