@@ -35,7 +35,7 @@ export default function DailyAccounting({ setAccounting }) {
 
   const watchType = watch("type");
   const watchAccount = watch("account");
-  const selectedCurrency = watch("currency", "TWD"); // 使用 watch 來獲取當前選中的幣別
+  const selectedCurrency = watch("currency", "TWD");
   const amount = watch("amount");
 
   // const watchTargetAccount = watch("targetaccount");
@@ -179,7 +179,7 @@ export default function DailyAccounting({ setAccounting }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4 fade-in">
-      <div className="relative flex w-[50%] flex-col items-center justify-center gap-3 rounded-xl bg-white p-8">
+      <div className="relative flex w-[30%] flex-col items-center justify-center gap-3 rounded-xl bg-white p-8">
         {alertMessage && (
           <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
         )}

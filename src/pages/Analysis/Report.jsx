@@ -159,7 +159,7 @@ export default function Report() {
   };
 
   return (
-    <div className="flex w-[90%] flex-col items-center">
+    <div className="flex w-[85%] flex-col items-center">
       <div className="mb-5 flex cursor-pointer items-center justify-center gap-1 self-end rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
         <button onClick={() => handleAddReport()}>我要進行分析</button>
         <svg

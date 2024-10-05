@@ -103,6 +103,7 @@ export default function ExpensePieChart({
   const options = {
     maintainAspectRatio: true,
     responsive: true,
+
     devicePixelRatio: window.devicePixelRatio,
     plugins: {
       tooltip: {

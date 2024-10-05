@@ -203,7 +203,7 @@ export default function ProjectLayoutGrid() {
       {alertMessage && (
         <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
       )}
-      <div className="w-[90%] py-5">
+      <div className="w-[85%] py-5">
         <div className="flex h-auto flex-col flex-wrap items-start justify-start gap-3">
           {/* 新增專案按鈕 */}
           <div className="flex gap-2 self-end">

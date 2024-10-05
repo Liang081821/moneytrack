@@ -82,7 +82,7 @@ export default function Accounting() {
 
   return (
     <div className="flex w-full flex-col items-center justify-center bg-gradient-to-r from-[#e3e3e3] via-[#efefef] to-[#e3e3e3] pb-[10vh] fade-in">
-      <div className="mt-5 w-[90%]">
+      <div className="mt-5 w-[85%]">
         <div className="flex w-full justify-center">
           <span className="text-xl font-bold">
             {`${selectedMonth.getFullYear()}年 ${selectedMonth.getMonth() + 1}月`}
@@ -145,7 +145,7 @@ export default function Accounting() {
           </div>
         </div>
       </div>
-      <div style={{ width: "90%", margin: "0 auto", borderRadius: "8px" }}>
+      <div style={{ width: "85%", margin: "0 auto", borderRadius: "8px" }}>
         <ResponsiveGridLayout
           className="layout"
           layouts={layouts}

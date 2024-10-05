@@ -1,14 +1,10 @@
 import { useGlobalContext } from "@/context/GlobalContext";
-import {
-  VictoryLine,
-  VictoryChart,
-  VictoryTheme,
-  VictoryTooltip,
-  VictoryZoomContainer,
-  VictoryAxis,
-} from "victory";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { Line } from "react-chartjs-2";
+import "chart.js/auto";
+import zoomPlugin from "chartjs-plugin-zoom";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 export default function BarChart({
   firstDayOfSelectedMonth,
@@ -29,7 +25,7 @@ export default function BarChart({
 
           return isExpense && isInDateRange;
         });
-        console.log(filteredTransactions);
+
         const expensesByDate = filteredTransactions.reduce(
           (acc, transaction) => {
             const dateKey = transaction.time
@@ -55,8 +51,6 @@ export default function BarChart({
           .sort((a, b) => new Date(a.x) - new Date(b.x));
 
         setDailyExpenses(formattedData);
-
-        console.log(formattedData);
       } catch (e) {
         console.error("查詢錯誤：", e);
       }
@@ -69,6 +63,7 @@ export default function BarChart({
     firstDayOfSelectedMonth: PropTypes.instanceOf(Date).isRequired,
     lastDayOfSelectedMonth: PropTypes.instanceOf(Date).isRequired,
   };
+
   if (dailyExpenses.length === 0) {
     return (
       <div className="flex w-full flex-1 items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
@@ -90,44 +85,101 @@ export default function BarChart({
       </div>
     );
   }
+
+  const data = {
+    labels: dailyExpenses.map((entry) => entry.x),
+    datasets: [
+      {
+        label: "每日支出 (NT$)",
+        data: dailyExpenses.map((entry) => entry.y),
+        fill: false,
+        borderColor: "#63ADF2",
+        borderWidth: 3,
+        backgroundColor: "#304D6D",
+        pointRadius: 5,
+        tension: 0.1,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            return `NT$ ${context.parsed.y}`;
+          },
+        },
+      },
+      legend: {
+        display: false,
+      },
+      datalabels: {
+        display: true,
+        color: "white",
+        backgroundColor: "#304D6D",
+        borderRadius: 4,
+        padding: 6,
+        font: {
+          size: 12,
+          weight: "bold",
+        },
+        formatter: (value) => `NT$ ${value}`,
+      },
+      zoom: {
+        pan: {
+          enabled: true,
+          mode: "x",
+        },
+        zoom: {
+          enabled: true,
+          mode: "x", // 允許水平縮放
+          speed: 0.1,
+        },
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "日期",
+        },
+        ticks: {
+          autoSkip: true,
+          maxTicksLimit: 10,
+        },
+        grid: {
+          drawBorder: false,
+          offset: true,
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "支出 (NT$)",
+        },
+        beginAtZero: true,
+      },
+    },
+    layout: {
+      padding: {
+        right: 40,
+      },
+    },
+  };
+
   return (
     <div className="flex flex-1 items-center justify-center rounded-xl bg-white p-4 shadow-lg">
-      <div className="w-[300px] lg:w-[400px]">
-        <VictoryChart
-          theme={VictoryTheme.material}
-          containerComponent={
-            <VictoryZoomContainer
-              zoomDimension="x"
-              allowZoom
-              allowPan
-              voronoiDimension="x"
-              labels={({ datum }) =>
-                `${datum.x.toLocaleDateString("zh-TW")}: $${datum.y}`
-              }
-              labelComponent={<VictoryTooltip />}
-            />
-          }
-        >
-          {/* X軸 */}
-          <VictoryAxis
-            tickFormat={(x) =>
-              new Date(x).toLocaleDateString("zh-TW", {
-                month: "numeric",
-                day: "numeric",
-              })
-            }
+      <div className="w-full overflow-x-auto">
+        <div className="h-[400px] min-w-[800px]">
+          <Line
+            data={data}
+            options={options}
+            plugins={[ChartDataLabels, zoomPlugin]}
           />
-          {/* Y軸 */}
-          <VictoryAxis dependentAxis tickFormat={(y) => `$${y}`} />
-
-          <VictoryLine
-            style={{
-              data: { stroke: "#c43a31" },
-              parent: { border: "1px solid #ccc" },
-            }}
-            data={dailyExpenses}
-          />
-        </VictoryChart>
+        </div>
       </div>
     </div>
   );

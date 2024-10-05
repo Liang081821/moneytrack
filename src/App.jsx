@@ -19,7 +19,7 @@ function App() {
       </div>
       <div
         onClick={() => startAccounting()}
-        className="group fixed bottom-10 right-4 flex h-16 w-16 cursor-pointer items-center justify-center rounded-[50%] border-2 border-gray-500 bg-white transition-all duration-100 hover:w-56 hover:rounded-full hover:opacity-100"
+        className="group fixed bottom-16 right-4 flex h-16 w-16 cursor-pointer items-center justify-center rounded-[50%] border-2 border-gray-500 bg-white transition-all duration-100 hover:w-56 hover:rounded-full hover:opacity-100"
       >
         <div className="relative flex h-full w-full items-center justify-center">
           {/* SVG 圖標 */}

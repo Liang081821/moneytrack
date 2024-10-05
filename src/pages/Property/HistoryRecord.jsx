@@ -74,7 +74,7 @@ export default function HistoryRecord() {
 
   return (
     <div className="w-full bg-gradient-to-r from-[#e3e3e3] via-[#efefef] to-[#e3e3e3] pl-11 pt-5 fade-in md:pl-0">
-      <div className="mx-auto flex w-[90%] flex-col">
+      <div className="mx-auto flex w-[85%] flex-col">
         {alertMessage && (
           <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
         )}

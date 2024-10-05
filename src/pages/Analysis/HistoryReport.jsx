@@ -19,7 +19,7 @@ export default function HistoryReport() {
 
   if (!reportData || reportData.length === 0) {
     return (
-      <div className="mb-4 mt-4 flex w-[90%] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="mb-4 mt-4 flex w-[85%] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -42,7 +42,7 @@ export default function HistoryReport() {
   const currentReport = reportData[currentIndex] || {};
 
   return (
-    <div className="mx-auto mt-3 w-[90%]">
+    <div className="mx-auto mt-3 w-[85%]">
       <div className="mx-auto mb-4 w-full rounded-xl border-2 border-gray-500 bg-white p-6 shadow-md">
         <h3 className="mb-6 text-center text-xl font-semibold">
           {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}

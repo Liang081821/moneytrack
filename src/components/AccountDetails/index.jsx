@@ -76,7 +76,7 @@ export default function AccountDetails({
 
   if (!filteredAccounts || filteredAccounts.length === 0) {
     return (
-      <div className="mb-4 mt-4 flex h-[300px] w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[595px]">
+      <div className="mb-4 mt-4 flex h-[300px] w-full items-center justify-center rounded-lg border bg-slate-500 bg-opacity-40 p-6 text-white md:h-[595px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -91,7 +91,9 @@ export default function AccountDetails({
             d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
           />
         </svg>
-        <p>新增{title}帳戶</p>
+        <div className="relative h-11 w-28 opacity-100">
+          <AddNewFunction account_type={accountType} bgColor="" />
+        </div>
       </div>
     );
   }
@@ -101,7 +103,7 @@ export default function AccountDetails({
       <div className="relative mb-4 flex w-full items-center justify-center gap-3">
         <img src={imageSrc} alt="" className="h-8 w-8" />
         <div className="text-xl font-semibold">{title}</div>
-        <AddNewFunction account_type={accountType} />
+        <AddNewFunction account_type={accountType} bgColor="bg-[#BABFD1]" />
       </div>
 
       {/* 動態渲染篩選後的帳戶 */}

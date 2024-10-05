@@ -6,7 +6,7 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import Alert from "@/components/Alert";
 import PropTypes from "prop-types";
 
-export default function AddNewFunction({ account_type }) {
+export default function AddNewFunction({ account_type, bgColor }) {
   const [addProperty, setAddProperty] = useState(false);
   const { loginEmail } = useGlobalContext();
   const { propertyCollectionRef } = getFirestoreRefs(loginEmail);
@@ -53,7 +53,9 @@ export default function AddNewFunction({ account_type }) {
       {alertMessage && (
         <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
       )}
-      <div className="absolute right-0 rounded-xl bg-[#BABFD1] p-1 text-sm text-white transition-all md:p-2 md:text-base">
+      <div
+        className={`absolute right-0 rounded-xl ${bgColor} p-1 text-sm text-white transition-all md:p-2 md:text-base`}
+      >
         <button
           onClick={handleAddProperty}
           className="] flex items-center justify-center rounded-2xl"
@@ -61,12 +63,12 @@ export default function AddNewFunction({ account_type }) {
           新增{account_type}帳戶
         </button>
         <div
-          className={`z-10 ${addProperty ? "text-black" : "overflow-hidden"}`}
+          className={`z-50 ${addProperty ? "text-black" : "overflow-hidden"}`}
         >
           {addProperty && (
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-                <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
+                <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8 opacity-100">
                   <button
                     className="absolute right-3 top-3 mr-2 rounded-xl bg-[#A7CCED] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
                     onClick={handleCloseButton}
