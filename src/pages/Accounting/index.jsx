@@ -8,10 +8,20 @@ import ExpensePieChart from "./ExpensePieChart";
 import IncomePieChart from "./IncomePieChart";
 import BalanceChart from "./BalanceChart";
 import BarChart from "./BarChart";
-
+import { useJoyride } from "../../context/JoyrideContext";
+import DataJoyride from "../../components/JoyRide/DataJoyRide";
+import { useEffect } from "react";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Accounting() {
+  const { setDataRun } = useJoyride();
+  useEffect(() => {
+    const hasSeenDataTutorial = localStorage.getItem("hasSeenDataTutorial");
+    if (!hasSeenDataTutorial) {
+      setDataRun(true);
+      localStorage.setItem("hasSeenDataTutorial", "true");
+    }
+  }, [setDataRun]);
   const defaultLayouts = {
     lg: [
       { i: "a", x: 0, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
@@ -79,69 +89,88 @@ export default function Accounting() {
     59,
     59,
   );
-
+  const startTutorial = () => {
+    setDataRun(true);
+  };
   return (
     <div className="flex w-full flex-col items-center justify-center bg-gradient-to-r from-[#e3e3e3] via-[#efefef] to-[#e3e3e3] pb-[10vh] fade-in">
       <div className="mt-5 w-[85%]">
-        <div className="flex w-full justify-center">
-          <span className="text-xl font-bold">
-            {`${selectedMonth.getFullYear()}年 ${selectedMonth.getMonth() + 1}月`}
-          </span>
-        </div>
-        <div className="flex items-center justify-between p-3">
-          <div
-            className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
-            onClick={() => handleMonthChange("prev")}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              className="size-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"
-              />
-            </svg>
-            <button>上個月</button>
-          </div>
-          <div className="flex gap-2">
-            {/* <div
+        <DataJoyride />
+
+        <div className="joyride-changemonth mb-5 flex items-center justify-between px-3">
+          <div className="flex w-[228px]">
+            <div
               className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
-              onClick={() => startAccounting()}
+              onClick={() => handleMonthChange("prev")}
             >
-              <button>我要記帳</button>
-            </div> */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="currentColor"
+                className="size-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"
+                />
+              </svg>
+              <button>上個月</button>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="flex h-full w-full items-center justify-center rounded-xl border-2 border-gray-500 p-1 md:p-2">
+              <div className="flex h-full items-center text-base font-bold">
+                {`${selectedMonth.getFullYear()}年 ${selectedMonth.getMonth() + 1}月`}
+              </div>
+            </div>
             <div
               className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
               onClick={() => handleMonthChange("")}
             >
-              <button>回本月</button>
+              <button className="text-nowrap">回本月</button>
             </div>
           </div>
-          <div
-            className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
-            onClick={() => handleMonthChange("next")}
-          >
-            <button>下個月</button>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              className="size-5"
+          <div className="flex gap-2">
+            <div className="mr-2 flex items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
+              <button onClick={() => startTutorial()}>使用教學</button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="yellow"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+                />
+              </svg>
+            </div>
+            <div
+              className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
+              onClick={() => handleMonthChange("next")}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5"
-              />
-            </svg>
+              <button>下個月</button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="currentColor"
+                className="size-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
@@ -159,9 +188,9 @@ export default function Accounting() {
         >
           <div
             key="a"
-            className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+            className="joyride-datachange flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
-            <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
+            <div className="joyride-drag drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月支出變化表
             </div>
             <BarChart
@@ -180,7 +209,7 @@ export default function Accounting() {
           </div> */}
           <div
             key="c"
-            className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+            className="joyride-transaction flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               交易紀錄
@@ -192,7 +221,7 @@ export default function Accounting() {
           </div>
           <div
             key="d"
-            className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+            className="joyride-expense flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月支出分佈
@@ -204,7 +233,7 @@ export default function Accounting() {
           </div>
           <div
             key="e"
-            className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+            className="joyride-income flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月收入分佈
@@ -216,7 +245,7 @@ export default function Accounting() {
           </div>
           <div
             key="f"
-            className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+            className="joyride-balance flex flex-col rounded-xl border-2 border-gray-500 bg-white"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月盈餘

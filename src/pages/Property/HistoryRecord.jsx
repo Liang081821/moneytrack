@@ -3,14 +3,25 @@ import { getFirestoreRefs } from "@/firebase/api";
 import { addDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 import Alert from "@/components/Alert";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InvestPic from "../../../public/invest.png";
 import ConsumePic from "../../../public/consume.png";
 import SavingPic from "../../../public/saving.png";
+import JoyrideGuide from "../../components/JoyRide/index";
+import { useJoyride } from "../../context/JoyrideContext";
 
 import AccountDetails from "@/components/AccountDetails";
 
 export default function HistoryRecord() {
+  const { setRun } = useJoyride();
+
+  useEffect(() => {
+    const hasSeenTutorial = localStorage.getItem("hasSeenTutorial");
+    if (!hasSeenTutorial) {
+      setRun(true);
+      localStorage.setItem("hasSeenTutorial", "true");
+    }
+  }, [setRun]);
   const { property } = useGlobalContext();
   const { historyData } = useGlobalContext();
   const [alertMessage, setAlertMessage] = useState(null);
@@ -72,15 +83,36 @@ export default function HistoryRecord() {
   const getPercentage = (amount, total) =>
     total ? (Math.abs(amount) / Math.abs(total)) * 100 : 0;
 
+  const startTutorial = () => {
+    setRun(true);
+  };
   return (
     <div className="w-full bg-gradient-to-r from-[#e3e3e3] via-[#efefef] to-[#e3e3e3] pl-11 pt-5 fade-in md:pl-0">
       <div className="mx-auto flex w-[85%] flex-col">
         {alertMessage && (
           <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
         )}
+        <JoyrideGuide />
 
         <div className="mb-5 flex w-full justify-end">
-          <div className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
+          <div className="mr-2 flex items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
+            <button onClick={() => startTutorial()}>使用教學</button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="yellow"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+              />
+            </svg>
+          </div>
+          <div className="joyride-totalproperty flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
             <button onClick={calculateProperty}>統計最新資產</button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -98,27 +130,32 @@ export default function HistoryRecord() {
             </svg>
           </div>
         </div>
-        <div className="flex h-full flex-col items-center justify-center gap-2 md:flex-row md:flex-nowrap">
-          <AccountDetails
-            title="儲蓄"
-            imageSrc={SavingPic}
-            accountType="儲蓄"
-            bgColor="bg-[#82A0BC]"
-          />
-          <AccountDetails
-            title="消費"
-            imageSrc={ConsumePic}
-            accountType="消費"
-            bgColor="bg-[#545E75]"
-            textColor="text-white"
-          />
-
-          <AccountDetails
-            title="投資"
-            imageSrc={InvestPic}
-            accountType="投資"
-            bgColor="bg-[#A7CCED]"
-          />
+        <div className="joyride-account flex h-full flex-col items-center justify-center gap-2 md:flex-row md:flex-nowrap">
+          <div className="joyride-saving-account w-full">
+            <AccountDetails
+              title="儲蓄"
+              imageSrc={SavingPic}
+              accountType="儲蓄"
+              bgColor="bg-[#82A0BC]"
+            />
+          </div>
+          <div className="joyride-expense-account w-full">
+            <AccountDetails
+              title="消費"
+              imageSrc={ConsumePic}
+              accountType="消費"
+              bgColor="bg-[#545E75]"
+              textColor="text-white"
+            />
+          </div>
+          <div className="joyride-investment-account w-full">
+            <AccountDetails
+              title="投資"
+              imageSrc={InvestPic}
+              accountType="投資"
+              bgColor="bg-[#A7CCED]"
+            />
+          </div>
         </div>
         <div className="mx-auto w-full">
           {historyData.length !== 0 ? (

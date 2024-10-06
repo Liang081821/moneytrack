@@ -179,13 +179,15 @@ export default function DailyAccounting({ setAccounting }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4 fade-in">
-      <div className="relative flex w-[30%] flex-col items-center justify-center gap-3 rounded-xl bg-white p-8">
+      <div className="joyride-accountingproject joyride-startaccounting relative flex w-[30%] flex-col items-center justify-center gap-3 rounded-xl bg-white p-8">
         {alertMessage && (
           <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
         )}
         <h2 className="text-xl font-semibold"> 記帳面板</h2>
         <div className="flex gap-2 self-end">
-          <AddNewClass />
+          <div className="joyride-class">
+            <AddNewClass />
+          </div>
           <button
             onClick={handleCloseAccounting}
             className="mr-2 rounded-xl bg-[#A7CCED] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"

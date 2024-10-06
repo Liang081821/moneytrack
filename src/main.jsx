@@ -9,63 +9,67 @@ import Project from "./pages/Project";
 import Login from "./pages/Login";
 import "./index.css";
 import { GlobalProvider } from "./context/GlobalContext";
+import { JoyrideProvider } from "./context/JoyrideContext";
+
 import PrivateRoute from "./pages/Login/PrivateRoute";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <GlobalProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <App />
-            </PrivateRoute>
-          }
-        >
+    <JoyrideProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
           <Route
-            path="/accounting"
+            path="/"
             element={
               <PrivateRoute>
-                <Accounting />
+                <App />
               </PrivateRoute>
             }
-          />
-          <Route
-            path="/analysis"
-            element={
-              <PrivateRoute>
-                <Analysis />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/property"
-            element={
-              <PrivateRoute>
-                <Property />
-              </PrivateRoute>
-            }
-          />
-          {/* <Route
+          >
+            <Route
+              path="/accounting"
+              element={
+                <PrivateRoute>
+                  <Accounting />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/analysis"
+              element={
+                <PrivateRoute>
+                  <Analysis />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/property"
+              element={
+                <PrivateRoute>
+                  <Property />
+                </PrivateRoute>
+              }
+            />
+            {/* <Route
             path="/personalinformation"
             element={<PersonalInformation />}
           /> */}
-          <Route
-            path="/project"
-            element={
-              <PrivateRoute>
-                <Project />
-              </PrivateRoute>
-            }
-          />
+            <Route
+              path="/project"
+              element={
+                <PrivateRoute>
+                  <Project />
+                </PrivateRoute>
+              }
+            />
 
-          <Route path="*" element={<Navigate to="/accounting" replace />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+            <Route path="*" element={<Navigate to="/accounting" replace />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </JoyrideProvider>
   </GlobalProvider>,
 );

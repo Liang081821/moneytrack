@@ -2,8 +2,10 @@ import MonthlyData from "../Analysis/MonthlyData";
 import BalanceSheet from "../Analysis/BalanceSheet";
 import Alert from "@/components/Alert";
 import Confirm from "@/components/Confirm";
+import AnalysisJoyride from "../../components/JoyRide/AnalysisJoyRide";
+import { useJoyride } from "../../context/JoyrideContext";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
@@ -11,6 +13,20 @@ import Step4 from "./Step4";
 import Step5 from "./Step5";
 
 export default function Report() {
+  const { setAnalysisRun } = useJoyride();
+
+  useEffect(() => {
+    const hasSeenAnalysisTutorial = localStorage.getItem(
+      "hasSeenAnalysisTutorial",
+    );
+    if (!hasSeenAnalysisTutorial) {
+      setAnalysisRun(true);
+      localStorage.setItem("hasSeenAnalysisTutorial", "true");
+    }
+  }, [setAnalysisRun]);
+  const startTutorial = () => {
+    setAnalysisRun(true);
+  };
   const [reportVisible, setReportVisible] = useState(false);
   const [step, setStep] = useState(1);
 
@@ -160,37 +176,61 @@ export default function Report() {
 
   return (
     <div className="flex w-[85%] flex-col items-center">
-      <div className="mb-5 flex cursor-pointer items-center justify-center gap-1 self-end rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
-        <button onClick={() => handleAddReport()}>我要進行分析</button>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          className="size-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"
-          />
-        </svg>
+      <AnalysisJoyride />
+      <div className="flex gap-2 self-end">
+        <div className="mb-5 flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
+          <button onClick={() => startTutorial()}>使用教學</button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="yellow"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+            />
+          </svg>
+        </div>
+        <div className="joyride-generatereport mb-5 flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
+          <button onClick={() => handleAddReport()}>我要進行分析</button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"
+            />
+          </svg>
+        </div>
       </div>
       <div className="mx-auto flex w-full flex-col justify-center gap-3 md:flex-row">
-        <MonthlyData
-          setmonthExpense={setmonthExpense}
-          setmonthIncome={setmonthIncome}
-          expenseTotals={expenseTotals}
-          setExpenseTotals={setExpenseTotals}
-          incomeTotals={incomeTotals}
-          setIncomeTotals={setIncomeTotals}
-          netWorth={netWorth}
-          setNetWorth={setNetWorth}
-          setExpenseRecords={setExpenseRecords}
-          expenseRecords={expenseRecords}
-        />
-        <BalanceSheet />
+        <div className="joyride-monthlydata min-h-[595px] w-full">
+          <MonthlyData
+            setmonthExpense={setmonthExpense}
+            setmonthIncome={setmonthIncome}
+            expenseTotals={expenseTotals}
+            setExpenseTotals={setExpenseTotals}
+            incomeTotals={incomeTotals}
+            setIncomeTotals={setIncomeTotals}
+            netWorth={netWorth}
+            setNetWorth={setNetWorth}
+            setExpenseRecords={setExpenseRecords}
+            expenseRecords={expenseRecords}
+          />
+        </div>
+        <div className="joyride-balancesheet min-h-[595px] w-full">
+          <BalanceSheet />
+        </div>
       </div>
       {/* 步驟導航 */}
       {reportVisible && (

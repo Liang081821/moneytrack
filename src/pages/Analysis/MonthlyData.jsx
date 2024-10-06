@@ -131,7 +131,7 @@ export default function MonthlyData({
     Object.keys(incomeTotals).length === 0
   ) {
     return (
-      <div className="flex w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="flex h-full w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

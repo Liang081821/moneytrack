@@ -12,6 +12,8 @@ import PropTypes from "prop-types";
 const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
+  const [accounting, setAccounting] = useState(false);
+
   const [property, setProperty] = useState([]);
   const [classData, setClassData] = useState([]);
   const [projectData, setProjectData] = useState([]);
@@ -117,6 +119,8 @@ export const GlobalProvider = ({ children }) => {
         setCurrencies,
         rates,
         setRates,
+        accounting,
+        setAccounting,
       }}
     >
       {children}

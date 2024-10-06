@@ -6,6 +6,8 @@ import { getFirestoreRefs } from "../../firebase/api";
 import { useGlobalContext } from "@/context/GlobalContext";
 import Alert from "@/components/Alert";
 import TransactionCard from "@/components/TransactionCard";
+import { useJoyride } from "../../context/JoyrideContext";
+import ProjectJoyride from "../../components/JoyRide/ProjectJoyRide";
 
 import {
   addDoc,
@@ -18,6 +20,19 @@ import {
 } from "firebase/firestore";
 
 export default function ProjectLayoutGrid() {
+  const { setProjectRun } = useJoyride();
+  useEffect(() => {
+    const hasSeenProjectTutorial = localStorage.getItem(
+      "hasSeenProjectTutorial",
+    );
+    if (!hasSeenProjectTutorial) {
+      setProjectRun(true);
+      localStorage.setItem("hasSeenProjectTutorial", "true");
+    }
+  }, [setProjectRun]);
+  const startTutorial = () => {
+    setProjectRun(true);
+  };
   const [projects, setProjects] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
@@ -203,25 +218,45 @@ export default function ProjectLayoutGrid() {
       {alertMessage && (
         <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
       )}
+      <ProjectJoyride />
       <div className="w-[85%] py-5">
         <div className="flex h-auto flex-col flex-wrap items-start justify-start gap-3">
           {/* 新增專案按鈕 */}
           <div className="flex gap-2 self-end">
-            <div
-              onClick={() => setShowOnlyEditing(true)}
-              className={`${showOnlyEditing ? "bg-[#607196] text-white" : "border-2 border-gray-500 bg-none"} mb-4 rounded-xl p-2`}
-            >
-              <button>進行中</button>
+            <div className="flex items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
+              <button onClick={() => startTutorial()}>使用教學</button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="yellow"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+                />
+              </svg>
             </div>
-            <button
-              onClick={() => setShowOnlyEditing(false)}
-              className={`${!showOnlyEditing ? "bg-[#607196] text-white" : "border-2 border-gray-500 bg-none"} mb-4 rounded-xl p-2`}
-            >
-              已結束
-            </button>
+            <div className="joyride-report flex gap-2">
+              <div
+                onClick={() => setShowOnlyEditing(true)}
+                className={`${showOnlyEditing ? "bg-[#607196] text-white" : "border-2 border-gray-500 bg-none"} rounded-xl p-2`}
+              >
+                <button>進行中</button>
+              </div>
+              <button
+                onClick={() => setShowOnlyEditing(false)}
+                className={`${!showOnlyEditing ? "bg-[#607196] text-white" : "border-2 border-gray-500 bg-none"} rounded-xl p-2`}
+              >
+                已結束
+              </button>
+            </div>
           </div>
-          <div className="flex w-full gap-3">
-            <div className="relative h-[200px] w-full md:h-[300px] md:w-[32%]">
+          <div className="joyride-project flex w-full gap-3">
+            <div className="joyride-addproject relative h-[200px] w-full md:h-[300px] md:w-[32%]">
               <div className="h-[200px] w-full rounded-xl border border-[#8b91a1] bg-[#8b91a1] p-4 opacity-20 md:h-[300px]"></div>
               <button
                 onClick={startEditing}

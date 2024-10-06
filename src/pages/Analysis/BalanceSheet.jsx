@@ -27,7 +27,7 @@ export default function BalanceSheet() {
     );
   }
   return (
-    <div className="flex h-auto w-full flex-col items-center rounded-xl border-2 border-gray-500 bg-white p-3">
+    <div className="flex h-full w-full flex-col items-center rounded-xl border-2 border-gray-500 bg-white p-3">
       <h2 className="mb-4 text-xl font-semibold">資產負債表</h2>
       <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
         {groupProperty.map((item) => (

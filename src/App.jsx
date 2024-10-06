@@ -2,24 +2,24 @@ import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import Nav from "./components/Nav";
 import DailyAccounting from "./pages/Accounting/DailyAccounting";
-import Edit from "../public/pencil-square.png";
-import { useState } from "react";
+import { useGlobalContext } from "./context/GlobalContext";
+
 function App() {
-  const [accounting, setAccounting] = useState(false);
+  const { accounting, setAccounting } = useGlobalContext();
   const startAccounting = () => {
     setAccounting(true);
   };
+
   return (
     <>
       <Header linkToBackstage={false} />
       <div className="mt-[80px] flex min-h-[100vh] items-stretch justify-start">
         <Nav className="h-auto" />
         <Outlet />
-        {/* <RightNav /> */}
       </div>
       <div
         onClick={() => startAccounting()}
-        className="group fixed bottom-16 right-4 flex h-16 w-16 cursor-pointer items-center justify-center rounded-[50%] border-2 border-gray-500 bg-white transition-all duration-100 hover:w-56 hover:rounded-full hover:opacity-100"
+        className="joyride-accounting group fixed bottom-16 right-4 flex h-16 w-16 cursor-pointer items-center justify-center rounded-[50%] border-2 border-gray-500 bg-white transition-all duration-100 hover:w-56 hover:rounded-full hover:opacity-100"
       >
         <div className="relative flex h-full w-full items-center justify-center">
           {/* SVG 圖標 */}
