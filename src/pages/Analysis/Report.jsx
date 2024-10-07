@@ -49,9 +49,6 @@ export default function Report() {
 
   //chatGpt
   const [preText, setPreText] = useState("");
-  const handleAddReport = () => {
-    setReportVisible(true);
-  };
 
   const [alertMessage, setAlertMessage] = useState(null);
   const [confirmData, setConfirmData] = useState({
@@ -59,7 +56,15 @@ export default function Report() {
     message: "",
     onConfirm: null,
   });
-
+  const handleAddReport = () => {
+    console.log("monthexpense:", monthexpense);
+    console.log("monthincome:", monthincome);
+    if (Number(monthexpense) === 0 && Number(monthincome) === 0) {
+      setAlertMessage("上月無數據可進行分析");
+    } else {
+      setReportVisible(true);
+    }
+  };
   const handleNextStep = () => {
     if (step === 2) {
       if (!selectedHouseCategory || !selectedInsureCategory) {
@@ -177,6 +182,9 @@ export default function Report() {
 
   return (
     <div className="flex w-[85%] flex-col items-center">
+      {alertMessage && (
+        <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+      )}
       <AnalysisJoyride />
       <div className="mb-3 flex w-full items-center justify-end gap-2 rounded-lg bg-[#fcfcfc] p-4 shadow-lg">
         <Button
