@@ -228,8 +228,8 @@ export default function Report() {
           </svg>
         </Button>
       </div>
-      <div className="mx-auto flex w-full flex-col justify-center gap-3 md:flex-row">
-        <div className="joyride-monthlydata min-h-[595px] w-full">
+      <div className="mx-auto flex h-auto w-full flex-col justify-center gap-3 md:flex-row">
+        <div className="joyride-monthlydata w-full">
           <MonthlyData
             setmonthExpense={setmonthExpense}
             setmonthIncome={setmonthIncome}
@@ -243,8 +243,8 @@ export default function Report() {
             expenseRecords={expenseRecords}
           />
         </div>
-        <div className="joyride-balancesheet min-h-[595px] w-full">
-          <BalanceSheet />
+        <div className="joyride-balancesheet w-full">
+          <BalanceSheet totalProperty={totalProperty} />
         </div>
       </div>
       {/* 步驟導航 */}
