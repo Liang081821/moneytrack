@@ -9,6 +9,7 @@ import ConsumePic from "../../../public/consume.png";
 import SavingPic from "../../../public/saving.png";
 import JoyrideGuide from "../../components/JoyRide/index";
 import { useJoyride } from "../../context/JoyrideContext";
+import Button from "@/components/Button";
 
 import AccountDetails from "@/components/AccountDetails";
 
@@ -101,7 +102,10 @@ export default function HistoryRecord() {
         <JoyrideGuide />
 
         <div className="mb-5 flex w-full justify-end">
-          <div className="mr-2 flex items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
+          <Button
+            className="mr-2 flex items-center justify-center gap-1 md:gap-2"
+            variant="grey"
+          >
             <button onClick={() => startTutorial()}>使用教學</button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -117,9 +121,12 @@ export default function HistoryRecord() {
                 d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
               />
             </svg>
-          </div>
-          <div className="joyride-totalproperty flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
-            <button onClick={calculateProperty}>統計最新資產</button>
+          </Button>
+          <Button
+            variant="retain"
+            className="joyride-totalproperty flex items-center justify-center gap-1 md:gap-2"
+          >
+            <p onClick={calculateProperty}>統計最新資產</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -134,7 +141,7 @@ export default function HistoryRecord() {
                 d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
               />
             </svg>
-          </div>
+          </Button>
         </div>
         <div className="joyride-account flex h-full flex-col items-center justify-center gap-2 md:flex-row md:flex-nowrap">
           <div className="joyride-saving-account w-full">
@@ -165,7 +172,7 @@ export default function HistoryRecord() {
         </div>
         <div className="mx-auto w-full">
           {historyData.length !== 0 ? (
-            <div className="mb-9 mt-5 flex w-full flex-col items-center justify-center rounded-xl border-2 border-gray-500 bg-white p-2">
+            <div className="mb-9 mt-5 flex w-full flex-col items-center justify-center rounded-lg border-2 border-gray-500 bg-white p-2">
               <div className="text-xl font-semibold">資產紀錄</div>
               {historyData
                 .slice()
@@ -173,14 +180,14 @@ export default function HistoryRecord() {
                 .map((item) => (
                   <div
                     key={item.id}
-                    className="m-1 flex min-h-[100px] w-full flex-col items-center gap-3 rounded-xl p-2 md:flex-row"
+                    className="m-1 flex min-h-[100px] w-full flex-col items-center gap-3 rounded-lg p-2 md:flex-row"
                   >
-                    <div className="w-[110px] rounded-xl p-2 text-center">
+                    <div className="w-[110px] rounded-lg p-2 text-center">
                       {item.time.toDate().toLocaleDateString()}
                     </div>
                     <div className="flex w-full">
                       <div
-                        className="t flex h-8 w-14 items-center justify-center rounded-xl bg-[#82A0BC] font-semibold"
+                        className="t flex h-8 w-14 items-center justify-center rounded-lg bg-[#82A0BC] font-semibold"
                         style={{
                           width: `${getPercentage(item.saving, item.totalAssetsAbsoluteValue)}%`,
                         }}
@@ -193,7 +200,7 @@ export default function HistoryRecord() {
                           : ""}
                       </div>
                       <div
-                        className="flex h-8 w-full items-center justify-center rounded-xl bg-[#545E75] font-semibold text-white"
+                        className="flex h-8 w-full items-center justify-center rounded-lg bg-[#545E75] font-semibold text-white"
                         style={{
                           width: `${getPercentage(item.expense, item.totalAssetsAbsoluteValue)}%`,
                         }}
@@ -206,7 +213,7 @@ export default function HistoryRecord() {
                           : ""}
                       </div>
                       <div
-                        className="flex h-8 w-14 items-center justify-center rounded-xl bg-[#A7CCED] font-semibold"
+                        className="flex h-8 w-14 items-center justify-center rounded-lg bg-[#A7CCED] font-semibold"
                         style={{
                           width: `${getPercentage(item.investment, item.totalAssetsAbsoluteValue)}%`,
                         }}
@@ -220,7 +227,7 @@ export default function HistoryRecord() {
                       </div>
                     </div>
                     <div className="flex w-full flex-col items-center justify-center gap-2 md:flex-row">
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border-2 border-[#82A0BC] p-3">
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#82A0BC] p-3">
                         <div className="text-lg font-semibold">儲蓄</div>
                         <div>
                           NT$
@@ -230,7 +237,7 @@ export default function HistoryRecord() {
                           })}
                         </div>
                       </div>
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border-2 border-[#545E75] p-3">
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#545E75] p-3">
                         <div className="text-lg font-semibold">消費</div>
                         <div>
                           NT$
@@ -240,7 +247,7 @@ export default function HistoryRecord() {
                           })}
                         </div>
                       </div>
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl border-2 border-[#A7CCED] p-3">
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#A7CCED] p-3">
                         <div className="text-lg font-semibold">投資</div>
                         <div>
                           NT$
@@ -250,7 +257,7 @@ export default function HistoryRecord() {
                           })}
                         </div>
                       </div>
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-xl bg-[#BABFD1] p-3">
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg bg-[#BABFD1] p-3">
                         <div className="text-lg font-semibold">總資產</div>
                         <div>
                           NT$
@@ -261,12 +268,13 @@ export default function HistoryRecord() {
                         </div>
                       </div>
 
-                      <button
+                      <Button
                         onClick={() => deleteRecord(item.id)}
-                        className="flex h-[60px] flex-col items-center justify-center text-nowrap rounded-xl border bg-[#89023E] p-2 text-white transition duration-200 hover:bg-[#CC7178]"
+                        variant="delete"
+                        className="flex-col items-center justify-center text-nowrap"
                       >
                         刪除
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 ))}

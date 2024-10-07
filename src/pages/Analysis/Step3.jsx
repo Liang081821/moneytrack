@@ -26,7 +26,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
             {Object.entries(expenseTotals).map(([recordClass, totalAmount]) => (
               <div
                 key={recordClass}
-                className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#545E75] p-4 text-gray-200"
+                className="m-1 flex flex-col items-center justify-center rounded-lg border bg-[#545E75] p-4 text-gray-200"
               >
                 <div className="text-sm">{recordClass}</div>
                 <div className="text-lg">
@@ -43,7 +43,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
             {Object.entries(incomeTotals).map(([recordClass, totalAmount]) => (
               <div
                 key={recordClass}
-                className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#82A0BC] p-4"
+                className="m-1 flex flex-col items-center justify-center rounded-lg border bg-[#82A0BC] p-4"
               >
                 <div className="text-sm">{recordClass}</div>
                 <div className="text-lg">
@@ -57,7 +57,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
               </div>
             ))}
 
-            <div className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#BABFD1] p-4">
+            <div className="m-1 flex flex-col items-center justify-center rounded-lg border bg-[#BABFD1] p-4">
               <div className="h-6 text-sm">投資&儲蓄</div>
               <div className="text-lg">
                 NT$
@@ -78,7 +78,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
             {groupProperty.map((item) => (
               <div
                 key={item.account}
-                className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#A7CCED] p-4"
+                className="m-1 flex flex-col items-center justify-center rounded-lg border bg-[#A7CCED] p-4"
               >
                 <div className="text-sm">{item.account}</div>
                 <div className="text-lg">
@@ -94,7 +94,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
             {groupPropertyLiability.map((item) => (
               <div
                 key={item.account}
-                className="m-1 flex flex-col items-center justify-center rounded-xl border bg-[#545E75] p-4 text-gray-200"
+                className="m-1 flex flex-col items-center justify-center rounded-lg border bg-[#545E75] p-4 text-gray-200"
               >
                 <div className="text-sm">{item.account}</div>
                 <div className="text-lg">

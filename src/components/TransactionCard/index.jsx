@@ -9,7 +9,7 @@ export default function TransactionCard({
   return (
     <div
       key={item.id}
-      className={`rounded-xl border p-3 transition-all duration-200 ${
+      className={`rounded-lg border p-3 transition-all duration-200 ${
         item.record_type === "支出"
           ? "bg-[#5e687f] text-white"
           : item.record_type === "轉帳"

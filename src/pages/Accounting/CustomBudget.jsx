@@ -25,7 +25,7 @@ export default function CustomBudget() {
       className={`fixed right-0 top-40 p-2 transition-all ${
         isOpen
           ? "z-50 h-[650px] w-[450px] rounded-lg bg-[#BABFD1] opacity-90"
-          : "w-25 overflow-hidden rounded-xl bg-[#BABFD1] text-white"
+          : "w-25 overflow-hidden rounded-lg bg-[#BABFD1] text-white"
       }`}
     >
       <button

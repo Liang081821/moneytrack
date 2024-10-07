@@ -70,7 +70,7 @@ function App() {
       {/* 離線提示區塊，帶有滑入/滑出的動畫 */}
       {isOffline && (
         <div
-          className={`absolute bottom-10 left-10 z-50 flex w-[200px] flex-col items-start rounded-xl bg-white px-10 py-10 shadow-md transition-transform duration-500 md:w-[600px] ${
+          className={`absolute bottom-10 left-10 z-50 flex w-[200px] flex-col items-start rounded-lg bg-white px-10 py-10 shadow-md transition-transform duration-500 md:w-[600px] ${
             isVisible ? "translate-x-0" : "-translate-x-full"
           }`}
         >

@@ -1,5 +1,6 @@
 import { useGlobalContext } from "@/context/GlobalContext";
 import { useState } from "react";
+import Button from "@/components/Button";
 
 export default function HistoryReport() {
   const { reportData } = useGlobalContext();
@@ -43,7 +44,7 @@ export default function HistoryReport() {
 
   return (
     <div className="mx-auto mt-3 w-full">
-      <div className="mx-auto mb-4 w-full rounded-xl border-2 border-gray-500 bg-white p-6 shadow-md">
+      <div className="mx-auto mb-4 w-full rounded-lg border-2 border-gray-500 bg-white p-6 shadow-md">
         <h3 className="mb-6 text-center text-xl font-semibold">
           {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}
           月 報告
@@ -143,25 +144,27 @@ export default function HistoryReport() {
 
       {/* 翻頁按鈕區域 */}
       <div className="mt-4 flex items-center justify-between">
-        <button
+        <Button
           onClick={handlePrev}
           disabled={currentIndex === 0}
-          className="rounded-xl bg-blue-500 px-2 py-2 text-sm text-white disabled:bg-gray-300 md:px-4 md:text-base"
+          variant="grey"
+          className="disabled:bg-gray-300 disabled:text-white"
         >
           上一頁
-        </button>
+        </Button>
 
         <span className="text-sm md:text-base">
           第{currentIndex + 1}頁 / 共{reportData.length}頁
         </span>
 
-        <button
+        <Button
           onClick={handleNext}
           disabled={currentIndex === reportData.length - 1}
-          className="rounded-xl bg-blue-500 px-2 py-2 text-sm text-white disabled:bg-gray-300 md:px-4 md:text-base"
+          variant="retain"
+          className="disabled:bg-gray-300"
         >
           下一頁
-        </button>
+        </Button>
       </div>
     </div>
   );

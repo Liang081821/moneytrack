@@ -171,7 +171,7 @@ export default function BarChart({
   };
 
   return (
-    <div className="flex flex-1 items-center justify-center rounded-xl bg-white p-4 shadow-lg">
+    <div className="flex flex-1 items-center justify-center rounded-lg bg-white p-4 shadow-lg">
       <div className="w-full overflow-x-auto">
         <div className="h-[400px] min-w-[800px]">
           <Line

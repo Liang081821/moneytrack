@@ -27,13 +27,13 @@ export default function BalanceSheet() {
     );
   }
   return (
-    <div className="flex h-full w-full flex-col items-center rounded-xl border-2 border-gray-500 bg-white p-3">
+    <div className="flex h-full w-full flex-col items-center rounded-lg border-2 border-gray-500 bg-white p-3">
       <h2 className="mb-4 text-xl font-semibold">資產負債表</h2>
       <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
         {groupProperty.map((item) => (
           <div
             key={item.account}
-            className="m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#A7CCED] p-2 xs:h-28 xs:w-28 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
+            className="m-1 flex h-20 w-20 flex-col items-center justify-center rounded-lg border bg-[#A7CCED] p-2 xs:h-28 xs:w-28 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
           >
             <div className="text-xs sm:text-sm lg:text-xl">{item.account}</div>
             <div className="text-xs sm:text-sm lg:text-xl">
@@ -52,7 +52,7 @@ export default function BalanceSheet() {
         {groupPropertyLiability.map((item) => (
           <div
             key={item.account}
-            className="m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#545E75] p-2 xs:h-28 xs:w-28 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
+            className="m-1 flex h-20 w-20 flex-col items-center justify-center rounded-lg border bg-[#545E75] p-2 xs:h-28 xs:w-28 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
           >
             <div className="text-xs text-gray-200 sm:text-sm lg:text-xl">
               {item.account}

@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import AddNewClass from "./AddNewClass";
 import Alert from "@/components/Alert";
 import PropTypes from "prop-types";
+import Button from "@/components/Button";
 
 export default function DailyAccounting({ setAccounting }) {
   const { property, classData, projectData } = useGlobalContext();
@@ -179,7 +180,7 @@ export default function DailyAccounting({ setAccounting }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4 fade-in">
-      <div className="joyride-accountingproject joyride-startaccounting relative flex w-[30%] flex-col items-center justify-center gap-3 rounded-xl bg-white p-8">
+      <div className="joyride-accountingproject joyride-startaccounting relative flex w-[30%] flex-col items-center justify-center gap-3 rounded-lg bg-white p-8">
         {alertMessage && (
           <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
         )}
@@ -188,18 +189,15 @@ export default function DailyAccounting({ setAccounting }) {
           <div className="joyride-class">
             <AddNewClass />
           </div>
-          <button
-            onClick={handleCloseAccounting}
-            className="mr-2 rounded-xl bg-[#A7CCED] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
-          >
+          <Button onClick={handleCloseAccounting} className="mr-2">
             取消
-          </button>
+          </Button>
         </div>
         <div className="flex w-full items-center gap-3">
           <div className="text-nowrap text-sm font-semibold md:text-base">
             日期
           </div>
-          <div className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center focus:outline-none focus:ring-2 focus:ring-blue-500 md:h-[44px]">
+          <div className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center focus:outline-none focus:ring-2 focus:ring-blue-500 md:h-[44px]">
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}
@@ -222,7 +220,7 @@ export default function DailyAccounting({ setAccounting }) {
               帳戶
             </div>
             <select
-              className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
+              className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
               {...register("account", {
                 required: "請選擇帳戶",
               })}
@@ -241,7 +239,7 @@ export default function DailyAccounting({ setAccounting }) {
               類型
             </div>
             <select
-              className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
+              className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
               {...register("type", {
                 required: "請選擇類型",
               })}
@@ -258,7 +256,7 @@ export default function DailyAccounting({ setAccounting }) {
                 轉入
               </div>
               <select
-                className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
+                className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
                 {...register("targetaccount", {
                   required: watchType === "轉帳" ? "請選擇目標轉入帳戶" : false,
                 })}
@@ -278,7 +276,7 @@ export default function DailyAccounting({ setAccounting }) {
                 分類
               </div>
               <select
-                className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
+                className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
                 {...register("class", {
                   required: watchType !== "轉帳" ? "請選擇目標轉入帳戶" : false,
                 })}
@@ -301,7 +299,7 @@ export default function DailyAccounting({ setAccounting }) {
                 </div>
 
                 <select
-                  className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
+                  className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
                   {...register("project")}
                 >
                   <option value="">請選擇</option>
@@ -352,7 +350,7 @@ export default function DailyAccounting({ setAccounting }) {
               金額
             </div>
             <input
-              className="flex h-[30px] w-full items-center justify-center rounded-xl border border-black text-center md:h-[44px]"
+              className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
               type="number"
               placeholder={errors.amount ? errors.amount.message : "金額不為 0"}
               {...register("amount", {
@@ -371,12 +369,9 @@ export default function DailyAccounting({ setAccounting }) {
           )}
 
           <div className="flex w-full gap-2">
-            <button
-              type="submit"
-              className="flex-1 rounded-xl bg-[#82A0BC] p-1 text-sm md:p-2 md:text-base"
-            >
+            <Button type="submit" className="flex-1" variant="add">
               {watchType === "轉帳" ? "我要轉帳" : "我要記一筆"}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

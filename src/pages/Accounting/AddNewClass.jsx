@@ -5,6 +5,7 @@ import { getFirestoreRefs } from "../../firebase/api";
 import { useForm } from "react-hook-form";
 import Alert from "@/components/Alert";
 import Confirm from "@/components/Confirm";
+import Button from "@/components/Button";
 
 export default function AddNewClass() {
   const [newclassEditing, setNewClassEditing] = useState(false);
@@ -83,8 +84,8 @@ export default function AddNewClass() {
 
   return (
     <div
-      className={`self-end rounded-xl bg-[#BABFD1] p-1 text-center transition-all md:p-2 ${
-        newclassEditing ? "" : "overflow-hidden text-sm md:text-base"
+      className={`self-end rounded-lg bg-[#A7CCED] px-4 py-2 text-center font-semibold transition-all ${
+        newclassEditing ? "" : "overflow-hidden text-white"
       }`}
     >
       {alertMessage && (
@@ -104,12 +105,12 @@ export default function AddNewClass() {
 
       {newclassEditing && (
         <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
+          <div className="relative flex min-h-[20vh] w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
             {!newclass && (
-              <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-col items-center gap-8">
                 <div className="flex w-full justify-evenly">
                   <div
-                    className={`grow cursor-pointer rounded-xl p-1 text-center transition-all duration-300 ease-in-out ${
+                    className={`grow cursor-pointer rounded-lg p-1 text-center transition-all duration-300 ease-in-out ${
                       selectedCategory === "收入"
                         ? "bg-[#82A0BC] text-white"
                         : "bg-gray-100 opacity-70"
@@ -119,7 +120,7 @@ export default function AddNewClass() {
                     收入
                   </div>
                   <div
-                    className={`grow cursor-pointer rounded-xl p-1 text-center transition-all duration-300 ease-in-out ${
+                    className={`grow cursor-pointer rounded-lg p-1 text-center transition-all duration-300 ease-in-out ${
                       selectedCategory === "支出"
                         ? "bg-[#82A0BC] text-white"
                         : "bg-gray-100 opacity-70"
@@ -131,12 +132,12 @@ export default function AddNewClass() {
                 </div>
 
                 {/* 顯示分類 */}
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 self-start">
                   {Array.isArray(categoriesToDisplay) &&
                     categoriesToDisplay.map((item, index) => (
                       <div
                         key={index}
-                        className="flex items-center justify-center rounded-xl border border-gray-300 p-2"
+                        className="flex items-center justify-start rounded-lg border border-gray-300 p-2"
                       >
                         <p>{item}</p>
                         {/* 刪除按鈕 */}
@@ -163,19 +164,17 @@ export default function AddNewClass() {
                         </svg>
                       </div>
                     ))}
-                  <div
-                    className="flex cursor-pointer items-center justify-center rounded-xl border border-gray-300 p-2 hover:bg-gray-100"
-                    onClick={handleAddNewClass}
-                  >
+                  <Button variant="add" onClick={handleAddNewClass}>
                     新增
-                  </div>
+                  </Button>
                 </div>
-                <button
+                <Button
                   onClick={completeEdit}
-                  className="mt-10 rounded-xl bg-[#82A0BC] p-2 text-white"
+                  className="absolute bottom-8 mt-10"
+                  variant="retain"
                 >
                   編輯完成
-                </button>
+                </Button>
               </div>
             )}
           </div>
@@ -186,14 +185,14 @@ export default function AddNewClass() {
                   onSubmit={handleSubmit(onSubmit)}
                   className="flex items-center justify-between"
                 >
-                  <div className="ml-2 text-nowrap rounded-xl bg-[#82A0BC] p-2 text-white">
+                  <div className="ml-2 text-nowrap rounded-lg bg-[#82A0BC] px-4 py-2 text-white">
                     {selectedCategory}
                   </div>
                   <input
                     placeholder={
                       errors.class ? errors.class.message : "分類名稱"
                     }
-                    className={`rounded-xl border border-gray-300 px-4 py-2 ${
+                    className={`rounded-lg border border-gray-300 px-4 py-2 ${
                       errors.class ? "border-red-500" : ""
                     }`}
                     {...register("class", {
@@ -201,18 +200,12 @@ export default function AddNewClass() {
                     })}
                   />
                   <div>
-                    <button
-                      type="submit"
-                      className="ml-2 rounded-xl bg-[#607196] p-2 text-white"
-                    >
+                    <Button type="submit" className="ml-2" variant="add">
                       新增
-                    </button>
-                    <button
-                      onClick={closeAddNewClass}
-                      className="ml-2 rounded-xl bg-[#A7CCED] p-2 text-[#607196]"
-                    >
-                      返回
-                    </button>
+                    </Button>
+                    <Button onClick={closeAddNewClass} className="ml-2">
+                      取消
+                    </Button>
                   </div>
                 </form>
               </div>

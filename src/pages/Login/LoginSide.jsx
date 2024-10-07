@@ -279,7 +279,7 @@ export default function LoginSide() {
         <section className="h-auto bg-[#fafafa] pt-[10vh] lg:pt-0">
           <div className="flex h-full flex-col items-center gap-7">
             <h1 className="text-4xl font-semibold lg:text-6xl">更多特色</h1>
-            <div className="flex h-[50%] flex-col items-center gap-3 rounded-xl lg:flex-row">
+            <div className="flex h-[50%] flex-col items-center gap-3 rounded-lg lg:flex-row">
               {[
                 {
                   title: "自定義佈局",
@@ -395,10 +395,10 @@ export default function LoginSide() {
         <section className="h-auto bg-[#fafafa] py-[10vh]">
           <div className="flex h-full flex-col items-center gap-5">
             <h1 className="text-4xl font-semibold lg:text-6xl">好評推薦</h1>
-            <h2 className="ml-[5vh] self-start rounded-xl bg-[#bbe0e1] p-2 font-semibold text-white sm:ml-[10vh] lg:ml-[20vh]">
+            <h2 className="ml-[5vh] self-start rounded-lg bg-[#bbe0e1] p-2 font-semibold text-white sm:ml-[10vh] lg:ml-[20vh]">
               MoneyTrack 用戶這麽說
             </h2>
-            <h2 className="mb-2 ml-[5vh] self-start rounded-xl px-2 font-semibold sm:ml-[10vh] lg:ml-[20vh] lg:text-xl">
+            <h2 className="mb-2 ml-[5vh] self-start rounded-lg px-2 font-semibold sm:ml-[10vh] lg:ml-[20vh] lg:text-xl">
               使用者真實評價
             </h2>
             <Carousel className="max-w-7xl lg:w-[80vw]">

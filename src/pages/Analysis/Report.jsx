@@ -4,6 +4,7 @@ import Alert from "@/components/Alert";
 import Confirm from "@/components/Confirm";
 import AnalysisJoyride from "../../components/JoyRide/AnalysisJoyRide";
 import { useJoyride } from "../../context/JoyrideContext";
+import Button from "@/components/Button";
 
 import { useState, useEffect } from "react";
 import Step1 from "./Step1";
@@ -178,8 +179,11 @@ export default function Report() {
     <div className="flex w-[85%] flex-col items-center">
       <AnalysisJoyride />
       <div className="flex gap-2 self-end">
-        <div className="mb-5 flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
-          <button onClick={() => startTutorial()}>使用教學</button>
+        <Button
+          className="mb-5 flex cursor-pointer items-center justify-center gap-1 md:gap-2"
+          variant="grey"
+        >
+          <p onClick={() => startTutorial()}>使用教學</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="yellow"
@@ -194,9 +198,12 @@ export default function Report() {
               d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
             />
           </svg>
-        </div>
-        <div className="joyride-generatereport mb-5 flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
-          <button onClick={() => handleAddReport()}>我要進行分析</button>
+        </Button>
+        <Button
+          className="joyride-generatereport mb-5 flex cursor-pointer items-center justify-center gap-1 md:gap-2"
+          variant="retain"
+        >
+          <p onClick={() => handleAddReport()}>我要進行分析</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -211,7 +218,7 @@ export default function Report() {
               d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"
             />
           </svg>
-        </div>
+        </Button>
       </div>
       <div className="mx-auto flex w-full flex-col justify-center gap-3 md:flex-row">
         <div className="joyride-monthlydata min-h-[595px] w-full">
@@ -256,12 +263,7 @@ export default function Report() {
                     }
                   />
                 )}
-                <button
-                  onClick={handleCloseReport}
-                  className="rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"
-                >
-                  關閉
-                </button>
+                <Button onClick={handleCloseReport}>取消</Button>
               </div>
 
               {/* 步驟指示器 */}
@@ -269,10 +271,10 @@ export default function Report() {
                 {Array.from({ length: 5 }, (_, index) => (
                   <div
                     key={index}
-                    className={`mx-1 h-2 flex-1 rounded-full ${
+                    className={`mx-1 h-3 flex-1 rounded-lg ${
                       index + 1 <= step
-                        ? "border-2 border-gray-500 bg-gray-500"
-                        : "border border-gray-500"
+                        ? "border-2 border-[#aaaaaa] bg-[#aaaaaa]"
+                        : "border border-[#aaaaaa]"
                     }`}
                   ></div>
                 ))}
@@ -280,34 +282,31 @@ export default function Report() {
             </div>
 
             {/* 步驟內容 */}
-            <div className="h-[540px] rounded-xl border-2 border-gray-500">
+            <div className="h-[540px] rounded-lg border-2 border-gray-500">
               {renderStepContent()}
             </div>
 
             {/* 步驟導航按鈕 */}
             <div className="mt-6 flex justify-between">
-              <button
+              <Button
                 onClick={handlePreviousStep}
-                className="rounded-xl bg-gray-200 p-2"
+                variant="prevstep"
                 disabled={step === 1 || step === 4 || step === 5}
               >
                 上一步
-              </button>
+              </Button>
               {step === 5 ? (
-                <button
-                  onClick={handleComplete}
-                  className="rounded-xl bg-[#607196] p-2 text-white"
-                >
+                <Button onClick={handleComplete} variant="retain">
                   結束健檢分析
-                </button>
+                </Button>
               ) : (
-                <button
+                <Button
                   onClick={handleNextStep}
-                  className="rounded-xl bg-[#607196] p-2 text-white"
+                  variant="retain"
                   disabled={step === 5}
                 >
                   下一步
-                </button>
+                </Button>
               )}
             </div>
           </div>

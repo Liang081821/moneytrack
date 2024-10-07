@@ -1,0 +1,39 @@
+// components/UI/Button.jsx
+import PropTypes from "prop-types";
+
+const Button = ({
+  children,
+  onClick,
+  variant = "default",
+  className = "",
+  ...props
+}) => {
+  const baseStyle =
+    "rounded-lg px-4 py-2  font-semibold transition duration-200";
+
+  const variantStyles = {
+    delete: "bg-[#89023E] hover:bg-[#CC7178] text-white",
+    add: "bg-[#A7CCED] text-white",
+    retain: "bg-[#607196] text-white",
+    grey: "bg-[#aaaaaa] text-white",
+    prevstep: "bg-gray-300",
+    dontdelete: "bg-[#9DBEBB] text-white",
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      className={`${baseStyle} ${variantStyles[variant]} ${className}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+Button.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+  variant: PropTypes.oneOf(["default", "delete", "secondary"]),
+  className: PropTypes.string,
+};
+export default Button;

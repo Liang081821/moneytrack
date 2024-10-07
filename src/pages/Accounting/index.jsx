@@ -11,6 +11,7 @@ import BarChart from "./BarChart";
 import { useJoyride } from "../../context/JoyrideContext";
 import DataJoyride from "../../components/JoyRide/DataJoyRide";
 import { useEffect } from "react";
+import Button from "@/components/Button";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Accounting() {
@@ -99,8 +100,9 @@ export default function Accounting() {
 
         <div className="joyride-changemonth mb-5 flex items-center justify-between px-3">
           <div className="flex w-[228px]">
-            <div
-              className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
+            <Button
+              variant="retain"
+              className="flex items-center justify-center gap-1 md:gap-2"
               onClick={() => handleMonthChange("prev")}
             >
               <svg
@@ -117,25 +119,29 @@ export default function Accounting() {
                   d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"
                 />
               </svg>
-              <button>上個月</button>
-            </div>
+              <p>上個月</p>
+            </Button>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex h-full w-full items-center justify-center rounded-xl border-2 border-gray-500 p-1 md:p-2">
-              <div className="flex h-full items-center text-base font-bold">
+            <div className="flex h-full w-full items-center justify-center rounded-lg p-1 md:p-2">
+              <div className="flex h-full items-center text-xl font-semibold">
                 {`${selectedMonth.getFullYear()}年 ${selectedMonth.getMonth() + 1}月`}
               </div>
             </div>
-            <div
-              className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
+            <Button
+              variant="retain"
+              className="flex items-center justify-center gap-1 md:gap-2"
               onClick={() => handleMonthChange("")}
             >
-              <button className="text-nowrap">回本月</button>
-            </div>
+              <p className="text-nowrap">回本月</p>
+            </Button>
           </div>
           <div className="flex gap-2">
-            <div className="mr-2 flex items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base">
-              <button onClick={() => startTutorial()}>使用教學</button>
+            <Button
+              className="mr-2 flex items-center justify-center gap-1 md:gap-2"
+              variant="grey"
+            >
+              <p onClick={() => startTutorial()}>使用教學</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="yellow"
@@ -150,12 +156,13 @@ export default function Accounting() {
                   d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
                 />
               </svg>
-            </div>
-            <div
-              className="flex cursor-pointer items-center justify-center gap-1 rounded-xl border-2 border-gray-500 p-1 text-sm font-semibold md:gap-2 md:p-2 md:text-base"
+            </Button>
+            <Button
+              variant="retain"
+              className="flex items-center justify-center gap-1 md:gap-2"
               onClick={() => handleMonthChange("next")}
             >
-              <button>下個月</button>
+              <p>下個月</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -170,7 +177,7 @@ export default function Accounting() {
                   d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5"
                 />
               </svg>
-            </div>
+            </Button>
           </div>
         </div>
       </div>
@@ -188,7 +195,7 @@ export default function Accounting() {
         >
           <div
             key="a"
-            className="joyride-datachange flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+            className="joyride-datachange flex flex-col rounded-lg border-2 border-gray-500 bg-white"
           >
             <div className="joyride-drag drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月支出變化表
@@ -200,7 +207,7 @@ export default function Accounting() {
           </div>
           {/* <div
             key="b"
-            className="flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+            className="flex flex-col rounded-lg border-2 border-gray-500 bg-white"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               每日紀錄
@@ -209,7 +216,7 @@ export default function Accounting() {
           </div> */}
           <div
             key="c"
-            className="joyride-transaction flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+            className="joyride-transaction flex flex-col rounded-lg border-2 border-gray-500 bg-white"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               交易紀錄
@@ -221,7 +228,7 @@ export default function Accounting() {
           </div>
           <div
             key="d"
-            className="joyride-expense flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+            className="joyride-expense flex flex-col rounded-lg border-2 border-gray-500 bg-white"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月支出分佈
@@ -233,7 +240,7 @@ export default function Accounting() {
           </div>
           <div
             key="e"
-            className="joyride-income flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+            className="joyride-income flex flex-col rounded-lg border-2 border-gray-500 bg-white"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月收入分佈
@@ -245,7 +252,7 @@ export default function Accounting() {
           </div>
           <div
             key="f"
-            className="joyride-balance flex flex-col rounded-xl border-2 border-gray-500 bg-white"
+            className="joyride-balance flex flex-col rounded-lg border-2 border-gray-500 bg-white"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月盈餘
@@ -257,7 +264,7 @@ export default function Accounting() {
           </div>
           {/* <div
             key="g"
-            className="flex flex-col rounded-xl border-2 border-gray-500"
+            className="flex flex-col rounded-lg border-2 border-gray-500"
           >
             <div className="drag-handle rounded-lg p-4 text-xl font-semibold">
               g (拖動我)

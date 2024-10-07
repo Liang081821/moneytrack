@@ -189,7 +189,7 @@ export default function ExpensePieChart({
   };
 
   return (
-    <div className="flex flex-1 items-center justify-center rounded-xl bg-white p-4 shadow-lg">
+    <div className="flex flex-1 items-center justify-center rounded-lg bg-white p-4 shadow-lg">
       <div className="flex w-[300px] justify-center lg:w-[400px]">
         <Pie data={data} options={options} />
       </div>

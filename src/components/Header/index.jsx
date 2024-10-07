@@ -109,14 +109,14 @@ export default function Header({ linkToBackstage = true }) {
             {linkToBackstage && (
               <button
                 onClick={goToBackstage}
-                className="rounded-xl border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] xs:text-sm sm:text-base"
+                className="rounded-lg border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] xs:text-sm sm:text-base"
               >
                 進入後台
               </button>
             )}
             <button
               onClick={handleLogout}
-              className="rounded-xl border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] xs:text-sm sm:text-base"
+              className="rounded-lg border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] xs:text-sm sm:text-base"
             >
               登出
             </button>
@@ -138,7 +138,7 @@ export default function Header({ linkToBackstage = true }) {
             <div className="flex items-center gap-3">
               <button
                 onClick={handleGoogleLogin}
-                className="rounded-xl border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] xs:text-sm sm:text-base"
+                className="rounded-lg border border-white p-2 text-xs text-white hover:bg-white hover:text-[#222E50] xs:text-sm sm:text-base"
               >
                 註冊/登入
               </button>

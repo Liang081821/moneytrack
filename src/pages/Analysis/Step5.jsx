@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import Button from "@/components/Button";
 
 export default function Step5({ preText, setPreText }) {
   const [messages, setMessages] = useState([]);
@@ -102,7 +103,7 @@ export default function Step5({ preText, setPreText }) {
 
   return (
     <div className="h-full w-full p-1 fade-in">
-      <div className="relative flex h-full flex-col rounded-xl bg-slate-300 p-4">
+      <div className="relative flex h-full flex-col rounded-lg bg-slate-300 p-4">
         {loading && (
           <div className="flex h-full w-full flex-col items-center justify-center">
             <h2 className="pb-2 text-2xl font-bold">理財貓</h2>
@@ -116,8 +117,10 @@ export default function Step5({ preText, setPreText }) {
               className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[70%] rounded-xl p-3 text-white ${
-                  msg.role === "user" ? "bg-[#222E50]" : "bg-blue-500"
+                className={`max-w-[70%] rounded-lg p-3 text-white ${
+                  msg.role === "user"
+                    ? "bg-[#222E50]"
+                    : "bg-[#82A0BC] text-black"
                 }`}
               >
                 <strong>{msg.role === "user" ? "" : "理財貓  : "}</strong>{" "}
@@ -129,17 +132,14 @@ export default function Step5({ preText, setPreText }) {
         <div className="mt-16">
           <div className="absolute bottom-3 mt-5 flex w-full justify-center gap-2">
             <input
-              className="h-12 w-[700px] rounded-xl border border-black pl-2"
+              className="h-12 w-[700px] rounded-lg border border-black pl-2"
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSend(userInput)}
             />
-            <button
-              onClick={() => handleSend(userInput)}
-              className="rounded-xl bg-[#607196] p-2 text-white"
-            >
+            <Button onClick={() => handleSend(userInput)} variant="retain">
               傳送
-            </button>
+            </Button>
           </div>
         </div>
       </div>

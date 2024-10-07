@@ -52,7 +52,9 @@ export default function Step2({
           <button
             onClick={() => handleHouseCategoryClick("無")}
             className={`rounded-md border p-2 ${
-              selectedHouseCategory === "無" ? "bg-[#A7CCED]" : "bg-gray-200"
+              selectedHouseCategory === "無"
+                ? "bg-[#545E75] text-gray-200"
+                : "bg-gray-200"
             }`}
           >
             無
@@ -81,7 +83,9 @@ export default function Step2({
           <button
             onClick={() => handleInsureCategoryClick("無")}
             className={`rounded-md border p-2 ${
-              selectedInsureCategory === "無" ? "bg-[#A7CCED]" : "bg-gray-200"
+              selectedInsureCategory === "無"
+                ? "bg-[#545E75] text-gray-200"
+                : "bg-gray-200"
             }`}
           >
             無

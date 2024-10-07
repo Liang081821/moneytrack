@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useGlobalContext } from "@/context/GlobalContext";
 import Alert from "@/components/Alert";
 import PropTypes from "prop-types";
+import Button from "../../components/Button/index";
 
 export default function AddNewFunction({ account_type, bgColor }) {
   const [addProperty, setAddProperty] = useState(false);
@@ -53,15 +54,16 @@ export default function AddNewFunction({ account_type, bgColor }) {
       {alertMessage && (
         <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
       )}
-      <div
-        className={`absolute right-0 rounded-xl ${bgColor} p-1 text-sm text-white transition-all md:p-2 md:text-base`}
+      <Button
+        variant={`${bgColor}`}
+        className={`absolute right-0 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-all md:text-base`}
       >
-        <button
+        <p
           onClick={handleAddProperty}
-          className="] flex items-center justify-center rounded-2xl"
+          className="flex items-center justify-center rounded-2xl"
         >
           新增{account_type}帳戶
-        </button>
+        </p>
         <div
           className={`z-50 ${addProperty ? "text-black" : "overflow-hidden"}`}
         >
@@ -69,16 +71,16 @@ export default function AddNewFunction({ account_type, bgColor }) {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
                 <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8 opacity-100">
-                  <button
-                    className="absolute right-3 top-3 mr-2 rounded-xl bg-[#A7CCED] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
+                  <Button
+                    className="absolute right-3 top-3 mr-2"
                     onClick={handleCloseButton}
                   >
                     取消
-                  </button>
+                  </Button>
                   <div className="flex items-center gap-3">
-                    <div>帳戶名稱</div>
+                    <div className="font-semibold">帳戶名稱</div>
                     <input
-                      className="rounded-xl border border-gray-300 px-4 py-2"
+                      className="rounded-lg border border-gray-300 px-4 py-2"
                       type="text"
                       placeholder="帳戶名稱"
                       {...register("account", { required: "請輸入帳戶名稱" })}
@@ -87,74 +89,11 @@ export default function AddNewFunction({ account_type, bgColor }) {
                       <p className="text-red-500">{errors.account.message}</p>
                     )}
                   </div>
-                  {/* <div className="flex items-center gap-3">
-                  <div>帳戶類型</div>
-                  <div className="flex space-x-4">
-                    <label
-                      className={`flex cursor-pointer items-center justify-center rounded-xl border px-4 py-2 ${
-                        watch("account_type") === "儲蓄"
-                          ? "bg-[#82A0BC] text-white"
-                          : "border-gray-300 bg-white text-gray-700"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        value="儲蓄"
-                        {...register("account_type", {
-                          required: "請選擇帳戶類型",
-                        })}
-                        className="hidden"
-                      />
-                      儲蓄
-                    </label>
-
-                    <label
-                      className={`flex cursor-pointer items-center justify-center rounded-xl border px-4 py-2 ${
-                        watch("account_type") === "消費"
-                          ? "bg-[#82A0BC] text-white"
-                          : "border-gray-300 bg-white text-gray-700"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        value="消費"
-                        {...register("account_type", {
-                          required: "請選擇帳戶類型",
-                        })}
-                        className="hidden"
-                      />
-                      消費
-                    </label>
-
-                    <label
-                      className={`flex cursor-pointer items-center justify-center rounded-xl border px-4 py-2 ${
-                        watch("account_type") === "投資"
-                          ? "bg-[#82A0BC] text-white"
-                          : "border-gray-300 bg-white text-gray-700"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        value="投資"
-                        {...register("account_type", {
-                          required: "請選擇帳戶類型",
-                        })}
-                        className="hidden"
-                      />
-                      投資
-                    </label>
-                  </div>
-                  {errors.account_type && (
-                    <p className="text-red-500">
-                      {errors.account_type.message}
-                    </p>
-                  )}
-                </div> */}
 
                   <div className="flex items-center gap-3">
-                    <div>初始金額</div>
+                    <div className="font-semibold">初始金額</div>
                     <input
-                      className="rounded-xl border border-gray-300 px-4 py-2"
+                      className="rounded-lg border border-gray-300 px-4 py-2"
                       type="text"
                       placeholder="初始金額"
                       {...register("balance", {
@@ -166,21 +105,19 @@ export default function AddNewFunction({ account_type, bgColor }) {
                       <p className="text-red-500">{errors.balance.message}</p>
                     )}
                   </div>
-                  <button
-                    type="submit"
-                    className="rounded-xl bg-[#82A0BC] p-2 text-white"
-                  >
+                  <Button type="submit" variant="add">
                     新增
-                  </button>
+                  </Button>
                 </div>
               </div>
             </form>
           )}
         </div>
-      </div>
+      </Button>
     </>
   );
 }
 AddNewFunction.propTypes = {
   account_type: PropTypes.string.isRequired,
+  bgColor: PropTypes.string.isRequired,
 };

@@ -151,13 +151,13 @@ export default function MonthlyData({
     );
   }
   return (
-    <div className="flex w-full flex-col items-center rounded-xl border-2 border-gray-500 bg-white p-3 sm:min-h-[595px]">
+    <div className="flex w-full flex-col items-center rounded-lg border-2 border-gray-500 bg-white p-3 sm:min-h-[595px]">
       <h2 className="mb-4 text-xl font-semibold">上月數據</h2>
       <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
         {Object.entries(expenseTotals).map(([recordClass, totalAmount]) => (
           <div
             key={recordClass}
-            className="m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#545E75] p-2 xs:h-28 xs:w-28 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
+            className="m-1 flex h-20 w-20 flex-col items-center justify-center rounded-lg border bg-[#545E75] p-2 xs:h-28 xs:w-28 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
           >
             <div className="text-sm text-gray-200 sm:text-sm lg:text-xl">
               {recordClass}
@@ -178,7 +178,7 @@ export default function MonthlyData({
         {Object.entries(incomeTotals).map(([recordClass, totalAmount]) => (
           <div
             key={recordClass}
-            className="m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#82A0BC] p-2 xs:h-28 xs:w-28 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
+            className="m-1 flex h-20 w-20 flex-col items-center justify-center rounded-lg border bg-[#82A0BC] p-2 xs:h-28 xs:w-28 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48"
           >
             <div className="text-xs sm:text-sm lg:text-xl">{recordClass}</div>
             <div className="text-xs sm:text-sm lg:text-xl">
@@ -194,7 +194,7 @@ export default function MonthlyData({
           </div>
         ))}
 
-        <div className="m-1 flex h-20 w-20 flex-col items-center justify-center rounded-xl border bg-[#BABFD1] p-2 xs:h-28 xs:w-28 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48">
+        <div className="m-1 flex h-20 w-20 flex-col items-center justify-center rounded-lg border bg-[#BABFD1] p-2 xs:h-28 xs:w-28 sm:p-4 lg:h-32 lg:w-32 xl:h-48 xl:w-48">
           <div className="text-xs sm:text-sm lg:text-xl">投資&儲蓄</div>
           <div className="text-xs sm:text-sm lg:text-xl">
             NT$

@@ -6,6 +6,7 @@ import Alert from "@/components/Alert";
 import TransactionCard from "@/components/TransactionCard";
 import PropTypes from "prop-types";
 import AddNewFunction from "../../pages/Property/addNewAccount";
+import Button from "../../components/Button/index";
 
 export default function AccountDetails({
   title,
@@ -91,7 +92,7 @@ export default function AccountDetails({
             d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
           />
         </svg>
-        <div className="relative h-11 w-28 opacity-100">
+        <div className="relative h-11 w-36 opacity-100">
           <AddNewFunction account_type={accountType} bgColor="" />
         </div>
       </div>
@@ -99,22 +100,22 @@ export default function AccountDetails({
   }
 
   return (
-    <div className="flex h-auto w-full flex-col items-center overflow-y-scroll rounded-2xl border-2 border-gray-500 bg-white p-3 shadow-md md:h-[595px]">
+    <div className="flex h-auto w-full flex-col items-center rounded-2xl border-2 border-gray-500 bg-white p-3 shadow-md md:h-[595px]">
       <div className="relative mb-4 flex w-full items-center justify-center gap-3">
         <img src={imageSrc} alt="" className="h-8 w-8" />
         <div className="text-xl font-semibold">{title}</div>
-        <AddNewFunction account_type={accountType} bgColor="bg-[#BABFD1]" />
+        <AddNewFunction account_type={accountType} bgColor="add" />
       </div>
 
       {/* 動態渲染篩選後的帳戶 */}
       {filteredAccounts.map((account) => (
         <div
           key={account.id}
-          className={`m-2 flex h-[88px] w-full items-center justify-between rounded-xl p-3 ${bgColor}`}
+          className={`m-2 flex h-[88px] w-full items-center justify-between rounded-lg p-3 ${bgColor}`}
         >
           <div className={`${textColor}`}>
             <div className="text-xl font-semibold">{account.account}</div>
-            <div className="h-1 w-6 rounded-xl bg-[#031926]"></div>
+            <div className="h-1 w-6 rounded-lg bg-[#031926]"></div>
             <div className="text-xl">
               NT$
               {account.balance.toLocaleString(undefined, {
@@ -155,18 +156,14 @@ export default function AccountDetails({
                 {selectedAccount.account} 歷史紀錄
               </h2>
               <div>
-                <button
+                <Button
                   onClick={() => setShowDeleteConfirm(true)}
-                  className="mr-2 rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"
+                  variant="delete"
+                  className="mr-2"
                 >
                   刪除帳戶
-                </button>
-                <button
-                  onClick={handleCloseDetail}
-                  className="mr-2 rounded-xl bg-[#A7CCED] px-4 py-2 text-gray-800 transition duration-200 hover:bg-[#E8E9ED]"
-                >
-                  取消
-                </button>
+                </Button>
+                <Button onClick={handleCloseDetail}>取消</Button>
               </div>
             </div>
             {/* 渲染帳戶的所有紀錄 */}
@@ -187,30 +184,25 @@ export default function AccountDetails({
           <div className="w-full max-w-md rounded-lg bg-white p-4">
             <h2 className="mb-4 text-xl font-bold">確定要刪除帳戶嗎？</h2>
             <div className="flex justify-around">
-              <button
-                className="rounded-xl bg-[#9DBEBB] px-4 py-2 text-white"
+              <Button
+                variant="dontdelete"
                 onClick={() => {
                   handleDeleteAccount("保留帳單");
                   setShowDeleteConfirm(false);
                 }}
               >
-                保留所有帳單{" "}
-              </button>{" "}
-              <button
-                className="rounded-xl bg-[#89023E] px-4 py-2 text-white transition duration-200 hover:bg-[#CC7178]"
+                保留所有帳單
+              </Button>
+              <Button
+                variant="delete"
                 onClick={() => {
                   handleDeleteAccount("刪除帳單");
                   setShowDeleteConfirm(false);
                 }}
               >
                 刪除所有帳單
-              </button>
-              <button
-                className="rounded-xl bg-[#A7CCED] px-4 py-2 hover:bg-[#E8E9ED]"
-                onClick={() => setShowDeleteConfirm(false)}
-              >
-                取消
-              </button>
+              </Button>
+              <Button onClick={() => setShowDeleteConfirm(false)}>取消</Button>
             </div>
           </div>
         </div>
