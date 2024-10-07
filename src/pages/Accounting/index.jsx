@@ -25,41 +25,30 @@ export default function Accounting() {
   }, [setDataRun]);
   const defaultLayouts = {
     lg: [
-      { i: "a", x: 0, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
-      // { i: "b", x: 4, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
+      // { i: "a", x: 0, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
+      { i: "b", x: 0, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "c", x: 8, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "d", x: 0, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "e", x: 4, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "f", x: 8, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
-      // {
-      //   i: "g",
-      //   x: 0,
-      //   y: 0,
-      //   w: 8,
-      //   h: 50,
-      //   minH: 50,
-      //   minW: 8,
-      //   isDraggable: false,
-      //   isResizable: false,
-      // },
     ],
     md: [
-      { i: "a", x: 0, y: 0, w: 5, h: 60, minH: 60, minW: 4 },
-      // { i: "b", x: 5, y: 0, w: 5, h: 60, minH: 60, minW: 4 },
+      // { i: "a", x: 0, y: 0, w: 5, h: 60, minH: 60, minW: 4 },
+      { i: "b", x: 0, y: 1, w: 5, h: 60, minH: 60, minW: 4 },
       { i: "c", x: 0, y: 1, w: 5, h: 60, minH: 60, minW: 4 },
       { i: "d", x: 0, y: 2, w: 5, h: 50, minH: 50, minW: 4 },
       { i: "e", x: 5, y: 2, w: 5, h: 50, minH: 50, minW: 4 },
       { i: "f", x: 0, y: 3, w: 5, h: 50, minH: 50, minW: 4 },
-      { i: "g", x: 5, y: 3, w: 5, h: 50, minH: 50, minW: 8 },
+      // { i: "g", x: 5, y: 3, w: 5, h: 50, minH: 50, minW: 8 },
     ],
     sm: [
-      { i: "a", x: 0, y: 0, w: 6, h: 50, minH: 50, minW: 6 },
-      // { i: "b", x: 0, y: 1, w: 6, h: 50, minH: 50, minW: 6 },
+      // { i: "a", x: 0, y: 0, w: 6, h: 50, minH: 50, minW: 6 },
+      { i: "b", x: 0, y: 1, w: 6, h: 50, minH: 50, minW: 6 },
       { i: "c", x: 0, y: 2, w: 6, h: 80, minH: 80, minW: 6 },
       { i: "d", x: 0, y: 4, w: 6, h: 40, minH: 40, minW: 6 },
       { i: "e", x: 0, y: 5, w: 6, h: 40, minH: 40, minW: 6 },
       { i: "f", x: 0, y: 6, w: 6, h: 40, minH: 40, minW: 6 },
-      { i: "g", x: 0, y: 7, w: 6, h: 20, minH: 20, minW: 6 },
+      // { i: "g", x: 0, y: 7, w: 6, h: 20, minH: 20, minW: 6 },
     ],
   };
 
@@ -204,7 +193,7 @@ export default function Accounting() {
           }
         >
           <div
-            key="a"
+            key="b"
             className="joyride-datachange flex flex-col rounded-lg bg-[#fcfcfc] shadow-lg"
           >
             <div className="joyride-drag drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">

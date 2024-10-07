@@ -46,8 +46,8 @@ export default function HistoryReport() {
     <div className="mx-auto mt-3 w-full">
       <div className="mx-auto mb-4 w-full rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
         <h3 className="mb-6 text-center text-xl font-semibold">
-          {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}
-          月 報告
+          {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}{" "}
+          月報告
         </h3>
 
         {/* 卡片風格報表 */}

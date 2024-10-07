@@ -14,13 +14,23 @@ function App() {
     setAccounting(true);
   };
   useEffect(() => {
+    const savedOfflineStatus = localStorage.getItem("isOffline");
+    if (savedOfflineStatus) {
+      setIsOffline(savedOfflineStatus === "true");
+      setIsVisible(savedOfflineStatus === "true");
+    }
+
     const handleOnline = () => {
       setIsVisible(false);
-      setTimeout(() => setIsOffline(false), 500);
+      setTimeout(() => {
+        setIsOffline(false);
+        localStorage.setItem("isOffline", "false");
+      }, 500);
     };
 
     const handleOffline = () => {
       setIsOffline(true);
+      localStorage.setItem("isOffline", "true");
       setTimeout(() => setIsVisible(true), 10);
     };
 
@@ -71,7 +81,7 @@ function App() {
       {isOffline && (
         <div
           className={`absolute bottom-10 left-10 z-50 flex w-[200px] flex-col items-start rounded-lg bg-white px-10 py-10 shadow-md transition-transform duration-500 md:w-[600px] ${
-            isVisible ? "translate-x-0" : "-translate-x-full"
+            isVisible ? "translate-x-0" : "-translate-x-[120%]"
           }`}
         >
           <div className="flex items-center gap-2">

@@ -36,11 +36,11 @@ export default function BalanceSheet() {
   }
   return (
     <div className="flex max-h-[100vh] w-full flex-col items-center overflow-scroll rounded-lg">
-      <h2 className="mb-2 w-full rounded-lg bg-[#fcfcfc] p-4 text-center text-xl font-semibold shadow-lg">
+      <h2 className="sticky top-0 mb-2 w-full rounded-lg bg-[#fcfcfc] p-4 text-center text-xl font-semibold shadow-lg">
         資產負債表
       </h2>
       <div className="flex w-full flex-col gap-2">
-        <div className="flex flex-col items-center gap-2 rounded-lg bg-[#fcfcfc] px-7 py-4 shadow-lg">
+        <div className="flex flex-col items-center gap-2 rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
           <p className="text-sm font-semibold sm:text-base lg:text-lg">資產</p>
           {groupProperty.map((item) => (
             <div
@@ -82,7 +82,7 @@ export default function BalanceSheet() {
             </div>
           ))}
         </div>
-        <div className="flex flex-col items-center gap-2 rounded-lg bg-[#fcfcfc] px-7 py-4 shadow-lg">
+        <div className="flex flex-col items-center gap-2 rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
           <p className="text-sm font-semibold sm:text-base lg:text-lg">負債</p>
           {groupPropertyLiability.map((item) => (
             <div
@@ -125,7 +125,7 @@ export default function BalanceSheet() {
             </div>
           ))}
         </div>
-        <div className="flex flex-col items-center gap-2 rounded-lg bg-[#fcfcfc] px-7 py-4 shadow-lg">
+        <div className="flex flex-col items-center gap-2 rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
           <p className="text-sm font-semibold sm:text-base lg:text-lg">
             淨資產
           </p>

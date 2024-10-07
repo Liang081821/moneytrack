@@ -318,31 +318,33 @@ export default function DailyAccounting({ setAccounting }) {
               幣別
             </div>
             <div className="grid w-full grid-cols-6 gap-1 md:h-[44px]">
-              {currencies.map(([code]) => (
-                <label
-                  key={code}
-                  className={`flex cursor-pointer items-center justify-center rounded-lg border p-1 ${
-                    selectedCurrency === code
-                      ? "bg-[#545E75] text-white"
-                      : "bg-gray-100"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="currency"
-                    value={code}
-                    checked={selectedCurrency === code}
-                    // onChange={() => {
-                    //   setSelectedCurrency(code);
-                    // }}
-                    className="hidden"
-                    {...register("currency", { required: "請選擇幣別" })}
-                  />
-                  <div className="text-center">
-                    <p className="text-sm font-semibold">{code}</p>
-                  </div>
-                </label>
-              ))}
+              {(currencies.length === 0 ? [["TWD"]] : currencies).map(
+                ([code]) => (
+                  <label
+                    key={code}
+                    className={`flex cursor-pointer items-center justify-center rounded-lg border p-1 ${
+                      selectedCurrency === code
+                        ? "bg-[#545E75] text-white"
+                        : "bg-gray-100"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="currency"
+                      value={code}
+                      checked={selectedCurrency === code}
+                      // onChange={() => {
+                      //   setSelectedCurrency(code);
+                      // }}
+                      className="hidden"
+                      {...register("currency", { required: "請選擇幣別" })}
+                    />
+                    <div className="text-center">
+                      <p className="text-sm font-semibold">{code}</p>
+                    </div>
+                  </label>
+                ),
+              )}
             </div>
           </div>
           <div className="flex w-full items-center gap-3">

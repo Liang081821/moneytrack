@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Chart from "../../../public/chart.gif";
 import Analysis from "../../../public/analysis.gif";
 import Project from "../../../public/project.gif";
+import handleGoogleLogin from "./loginFunction";
 
 import {
   Carousel,
@@ -227,6 +228,12 @@ export default function LoginSide() {
             <h1 className="mt-2 text-white xl:text-xl">
               最多元的資產管理平台，最方便的記帳工具， 最完整的智慧分析。
             </h1>
+            <button
+              className="rounded-lg bg-[#fcfcfc] px-2 py-4 font-semibold text-[#446f5c]"
+              onClick={handleGoogleLogin}
+            >
+              立刻免費註冊
+            </button>
           </div>
         </div>
       </div>
