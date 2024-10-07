@@ -178,9 +178,9 @@ export default function Report() {
   return (
     <div className="flex w-[85%] flex-col items-center">
       <AnalysisJoyride />
-      <div className="flex gap-2 self-end">
+      <div className="mb-3 flex w-full items-center justify-end gap-2 rounded-lg bg-[#fcfcfc] p-4 shadow-lg">
         <Button
-          className="mb-5 flex cursor-pointer items-center justify-center gap-1 md:gap-2"
+          className="flex cursor-pointer items-center justify-center gap-1 md:gap-2"
           variant="grey"
         >
           <p onClick={() => startTutorial()}>使用教學</p>
@@ -200,7 +200,7 @@ export default function Report() {
           </svg>
         </Button>
         <Button
-          className="joyride-generatereport mb-5 flex cursor-pointer items-center justify-center gap-1 md:gap-2"
+          className="joyride-generatereport flex cursor-pointer items-center justify-center gap-1 md:gap-2"
           variant="retain"
         >
           <p onClick={() => handleAddReport()}>我要進行分析</p>

@@ -31,7 +31,17 @@ export default function Accounting() {
       { i: "d", x: 0, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "e", x: 4, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "f", x: 8, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
-      { i: "g", x: 0, y: 2, w: 8, h: 50, minH: 50, minW: 8 },
+      // {
+      //   i: "g",
+      //   x: 0,
+      //   y: 0,
+      //   w: 8,
+      //   h: 50,
+      //   minH: 50,
+      //   minW: 8,
+      //   isDraggable: false,
+      //   isResizable: false,
+      // },
     ],
     md: [
       { i: "a", x: 0, y: 0, w: 5, h: 60, minH: 60, minW: 4 },
@@ -95,10 +105,9 @@ export default function Accounting() {
   };
   return (
     <div className="flex w-full flex-col items-center justify-center bg-gradient-to-r from-[#e3e3e3] via-[#efefef] to-[#e3e3e3] pb-[10vh] fade-in">
-      <div className="mt-5 w-[85%]">
-        <DataJoyride />
-
-        <div className="joyride-changemonth mb-5 flex items-center justify-between px-3">
+      <DataJoyride />
+      <div className="mt-5 w-[85%] px-3">
+        <div className="joyride-changemonth flex items-center justify-between rounded-lg bg-[#fcfcfc] p-4 shadow-lg">
           <div className="flex w-[228px]">
             <Button
               variant="retain"
@@ -188,6 +197,7 @@ export default function Accounting() {
           breakpoints={{ lg: 1200, md: 996, sm: 768 }}
           cols={{ lg: 12, md: 10, sm: 6 }}
           rowHeight={1}
+          // margin={[10, 10]}
           draggableHandle=".drag-handle"
           onLayoutChange={(currentLayout, allLayouts) =>
             handleLayoutChange(currentLayout, allLayouts)
@@ -195,7 +205,7 @@ export default function Accounting() {
         >
           <div
             key="a"
-            className="joyride-datachange flex flex-col rounded-lg border-2 border-gray-500 bg-white"
+            className="joyride-datachange flex flex-col rounded-lg bg-[#fcfcfc] shadow-lg"
           >
             <div className="joyride-drag drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月支出變化表
@@ -205,18 +215,10 @@ export default function Accounting() {
               lastDayOfSelectedMonth={lastDayOfSelectedMonth}
             />
           </div>
-          {/* <div
-            key="b"
-            className="flex flex-col rounded-lg border-2 border-gray-500 bg-white"
-          >
-            <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
-              每日紀錄
-            </div>
-            <DailyAccounting />
-          </div> */}
+
           <div
             key="c"
-            className="joyride-transaction flex flex-col rounded-lg border-2 border-gray-500 bg-white"
+            className="joyride-transaction flex flex-col rounded-lg bg-[#fcfcfc] shadow-lg"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               交易紀錄
@@ -228,7 +230,7 @@ export default function Accounting() {
           </div>
           <div
             key="d"
-            className="joyride-expense flex flex-col rounded-lg border-2 border-gray-500 bg-white"
+            className="joyride-expense flex flex-col rounded-lg bg-[#fcfcfc] shadow-lg"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月支出分佈
@@ -240,7 +242,7 @@ export default function Accounting() {
           </div>
           <div
             key="e"
-            className="joyride-income flex flex-col rounded-lg border-2 border-gray-500 bg-white"
+            className="joyride-income flex flex-col rounded-lg bg-[#fcfcfc] shadow-lg"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月收入分佈
@@ -252,7 +254,7 @@ export default function Accounting() {
           </div>
           <div
             key="f"
-            className="joyride-balance flex flex-col rounded-lg border-2 border-gray-500 bg-white"
+            className="joyride-balance flex flex-col rounded-lg bg-[#fcfcfc] shadow-lg"
           >
             <div className="drag-handle cursor-move rounded-lg p-4 text-center text-xl font-semibold">
               本月盈餘
@@ -262,14 +264,6 @@ export default function Accounting() {
               lastDayOfSelectedMonth={lastDayOfSelectedMonth}
             />
           </div>
-          {/* <div
-            key="g"
-            className="flex flex-col rounded-lg border-2 border-gray-500"
-          >
-            <div className="drag-handle rounded-lg p-4 text-xl font-semibold">
-              g (拖動我)
-            </div>
-          </div> */}
         </ResponsiveGridLayout>
       </div>
     </div>

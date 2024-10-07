@@ -45,7 +45,7 @@ export default function Nav() {
             </div>
           </>
         ) : (
-          <div className="sticky top-[84px] flex flex-col gap-6">
+          <div className="sticky top-[84px] flex flex-col gap-6 fade-in">
             <button className="h-10 rounded-lg p-2" onClick={handleClickMenu}>
               <svg
                 width="24"

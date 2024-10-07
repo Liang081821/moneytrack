@@ -54,10 +54,7 @@ export default function AddNewFunction({ account_type, bgColor }) {
       {alertMessage && (
         <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
       )}
-      <Button
-        variant={`${bgColor}`}
-        className={`absolute right-0 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-all md:text-base`}
-      >
+      <Button variant={`${bgColor}`} className={`absolute right-0`}>
         <p
           onClick={handleAddProperty}
           className="flex items-center justify-center rounded-2xl"

@@ -44,7 +44,7 @@ export default function HistoryReport() {
 
   return (
     <div className="mx-auto mt-3 w-full">
-      <div className="mx-auto mb-4 w-full rounded-lg border-2 border-gray-500 bg-white p-6 shadow-md">
+      <div className="mx-auto mb-4 w-full rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
         <h3 className="mb-6 text-center text-xl font-semibold">
           {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}
           月 報告

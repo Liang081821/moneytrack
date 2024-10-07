@@ -169,7 +169,7 @@ export default function Step4({
   };
 
   return (
-    <div className="flex h-full flex-col items-center justify-center pt-10 fade-in">
+    <div className="flex h-full flex-col items-center justify-center py-5 fade-in">
       <h2 className="pb-2 text-2xl font-bold">報表</h2>
       {alertMessage && (
         <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
@@ -250,7 +250,7 @@ export default function Step4({
                           ? "支出超支"
                           : savingRate > 0
                             ? `${savingRate}%`
-                            : ""}
+                            : "無儲蓄"}
                   </td>
                   <td
                     className={`border border-gray-300 px-4 py-2 ${savingRate > 30 ? "text-green-500" : "text-red-600"}`}

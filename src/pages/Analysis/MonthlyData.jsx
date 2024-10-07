@@ -151,7 +151,7 @@ export default function MonthlyData({
     );
   }
   return (
-    <div className="flex w-full flex-col items-center rounded-lg border-2 border-gray-500 bg-white p-3 sm:min-h-[595px]">
+    <div className="flex w-full flex-col items-center overflow-scroll rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg sm:min-h-[595px]">
       <h2 className="mb-4 text-xl font-semibold">上月數據</h2>
       <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
         {Object.entries(expenseTotals).map(([recordClass, totalAmount]) => (

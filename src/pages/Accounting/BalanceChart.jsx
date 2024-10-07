@@ -150,7 +150,7 @@ export default function BalanceDoughnutChart({
   };
 
   return (
-    <div className="flex flex-1 items-center justify-center rounded-lg bg-white p-4 shadow-lg">
+    <div className="flex flex-1 items-center justify-center rounded-lg p-4">
       <div className="relative flex w-[300px] items-center justify-center lg:w-[400px]">
         <Doughnut data={data} options={options} />
         {/* 在中間顯示盈餘 */}

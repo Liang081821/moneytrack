@@ -221,9 +221,9 @@ export default function ProjectLayoutGrid() {
       )}
       <ProjectJoyride />
       <div className="w-[85%] py-5">
-        <div className="flex h-auto flex-col flex-wrap items-start justify-start gap-3">
+        <div className="flex h-auto flex-col flex-wrap items-start justify-start gap-4">
           {/* 新增專案按鈕 */}
-          <div className="flex gap-2 self-end">
+          <div className="flex w-full justify-end gap-2 self-end rounded-lg bg-[#fcfcfc] p-4 shadow-lg">
             <Button
               className="flex items-center justify-center gap-1 md:gap-2"
               variant="grey"
@@ -259,14 +259,27 @@ export default function ProjectLayoutGrid() {
               </button>
             </div>
           </div>
-          <div className="joyride-project flex w-full gap-3">
+          <div className="joyride-project flex w-full gap-4">
             <div className="joyride-addproject relative h-[200px] w-full md:h-[300px] md:w-[32%]">
               <div className="h-[200px] w-full rounded-lg border border-[#8b91a1] bg-[#8b91a1] p-4 opacity-20 md:h-[300px]"></div>
               <button
                 onClick={startEditing}
-                className="absolute left-1/2 top-1/2 flex h-[70px] w-[70px] -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-gray-400 pb-4 text-5xl font-semibold opacity-100 md:h-[100px] md:w-[100px] md:text-7xl"
+                className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center text-5xl font-semibold opacity-100 md:h-[100px] md:w-[100px] md:text-7xl"
               >
-                +
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1"
+                  stroke="currentColor"
+                  className="size-20"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
               </button>
             </div>
 
@@ -319,7 +332,7 @@ export default function ProjectLayoutGrid() {
 
       {/* 編輯模式的彈出窗 */}
       {isEditing && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 fade-in">
           <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
             <Button onClick={closeEditing} className="self-end">
               取消
@@ -375,7 +388,7 @@ export default function ProjectLayoutGrid() {
 
       {/* 顯示專案詳情的彈出窗 */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 fade-in">
           <div className="relative flex w-[2000px] max-w-lg flex-col gap-3 rounded-lg bg-white p-6">
             <Button onClick={closeProjectDetails} className="self-end">
               取消
@@ -422,7 +435,7 @@ export default function ProjectLayoutGrid() {
       )}
       {/* 刪除確認彈窗 */}
       {showDeleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4 fade-in">
           <div className="w-full max-w-md rounded-lg bg-white p-4">
             <h2 className="mb-4 text-xl font-bold">確認刪除所有的資料將移除</h2>
             <div className="flex justify-around">

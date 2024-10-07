@@ -545,7 +545,7 @@ export default function DailyRecord({
     );
   }
   return (
-    <div className="flex flex-1 flex-col overflow-scroll rounded-lg bg-white p-4 shadow-lg">
+    <div className="flex flex-1 flex-col overflow-scroll rounded-lg p-4">
       {alertMessage && (
         <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
       )}
@@ -585,7 +585,7 @@ export default function DailyRecord({
         ))}
 
         {editing && (
-          <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-800 bg-opacity-75">
+          <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-800 bg-opacity-75 fade-in">
             <div className="w-[90%] max-w-lg rounded-lg bg-white p-4 shadow-lg">
               <div className="mb-3 flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-gray-800">

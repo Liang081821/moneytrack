@@ -101,7 +101,7 @@ export default function HistoryRecord() {
         )}
         <JoyrideGuide />
 
-        <div className="mb-5 flex w-full justify-end">
+        <div className="mb-3 flex w-full justify-end rounded-lg bg-[#fcfcfc] p-4 shadow-lg">
           <Button
             className="mr-2 flex items-center justify-center gap-1 md:gap-2"
             variant="grey"
@@ -143,7 +143,7 @@ export default function HistoryRecord() {
             </svg>
           </Button>
         </div>
-        <div className="joyride-account flex h-full flex-col items-center justify-center gap-2 md:flex-row md:flex-nowrap">
+        <div className="joyride-account flex h-full flex-col items-center justify-center gap-3 md:flex-row md:flex-nowrap">
           <div className="joyride-saving-account w-full">
             <AccountDetails
               title="儲蓄"
@@ -172,7 +172,7 @@ export default function HistoryRecord() {
         </div>
         <div className="mx-auto w-full">
           {historyData.length !== 0 ? (
-            <div className="mb-9 mt-5 flex w-full flex-col items-center justify-center rounded-lg border-2 border-gray-500 bg-white p-2">
+            <div className="mb-9 mt-3 flex w-full flex-col items-center justify-center rounded-lg bg-[#fcfcfc] p-2 shadow-lg">
               <div className="text-xl font-semibold">資產紀錄</div>
               {historyData
                 .slice()
@@ -280,7 +280,7 @@ export default function HistoryRecord() {
                 ))}
             </div>
           ) : (
-            <div className="mb-4 mt-4 flex h-[100px] w-full items-center justify-center rounded-lg border bg-slate-500 text-white opacity-40">
+            <div className="mb-4 mt-3 flex h-[100px] w-full items-center justify-center rounded-lg border bg-slate-500 text-white opacity-40">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -295,7 +295,7 @@ export default function HistoryRecord() {
                   d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
                 />
               </svg>
-              <p>統計資產，即可查看分析圖表</p>
+              <p className="ml-4 font-semibold">統計資產，即可查看分析圖表</p>
             </div>
           )}
         </div>
