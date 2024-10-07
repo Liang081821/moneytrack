@@ -83,6 +83,30 @@ export default function ExpensePieChart({
     );
   }
 
+  const getContrastColor = (hexColor) => {
+    // 去掉 # 號
+    hexColor = hexColor.replace("#", "");
+
+    // 將 3 位數的顏色代碼擴展為 6 位數
+    if (hexColor.length === 3) {
+      hexColor = hexColor
+        .split("")
+        .map((hex) => hex + hex)
+        .join("");
+    }
+
+    // 將 RGB 值提取出來
+    const r = parseInt(hexColor.substring(0, 2), 16);
+    const g = parseInt(hexColor.substring(2, 4), 16);
+    const b = parseInt(hexColor.substring(4, 6), 16);
+
+    // 計算亮度值
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+    // 根據亮度選擇黑色或白色
+    return brightness > 128 ? "black" : "white";
+  };
+
   const data = {
     labels: expenseRecord.map((record) => record.label),
     datasets: [
@@ -103,7 +127,6 @@ export default function ExpensePieChart({
   const options = {
     maintainAspectRatio: true,
     responsive: true,
-
     devicePixelRatio: window.devicePixelRatio,
     plugins: {
       tooltip: {
@@ -121,10 +144,10 @@ export default function ExpensePieChart({
         },
         backgroundColor: "rgba(0, 0, 0, 0.7)",
         titleFont: {
-          size: 16,
+          size: 18,
         },
         bodyFont: {
-          size: 14,
+          size: 16,
         },
         titleColor: "#fff",
         bodyColor: "#fff",
@@ -132,7 +155,11 @@ export default function ExpensePieChart({
       datalabels: {
         anchor: "center",
         align: "center",
-        color: "black",
+        color: (context) => {
+          const backgroundColor =
+            context.dataset.backgroundColor[context.dataIndex];
+          return getContrastColor(backgroundColor);
+        },
         font: {
           size: 18,
           weight: "bold",

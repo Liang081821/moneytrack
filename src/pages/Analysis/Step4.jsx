@@ -242,7 +242,15 @@ export default function Step4({
                 <tr>
                   <td className="border border-gray-300 px-4 py-2">儲蓄率</td>
                   <td className="border border-gray-300 px-4 py-2">
-                    {savingRate}%
+                    {isNaN(savingRate)
+                      ? ""
+                      : savingRate > 30
+                        ? `${savingRate}%`
+                        : savingRate < 0
+                          ? "支出超支"
+                          : savingRate > 0
+                            ? `${savingRate}%`
+                            : ""}
                   </td>
                   <td
                     className={`border border-gray-300 px-4 py-2 ${savingRate > 30 ? "text-green-500" : "text-red-600"}`}
@@ -256,7 +264,7 @@ export default function Step4({
                       房貸/房租率
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
-                      {houseingRate}%
+                      {isNaN(houseingRate) ? "無數據" : `${houseingRate}%`}
                     </td>
                     <td
                       className={`border border-gray-300 px-4 py-2 ${houseingRate < 30 ? "text-green-500" : "text-red-600"}`}
@@ -275,7 +283,7 @@ export default function Step4({
                       保險比例
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
-                      {insureRate}%
+                      {isNaN(insureRate) ? "無數據" : `${insureRate}%`}
                     </td>
                     <td
                       className={`border border-gray-300 px-4 py-2 ${insureRate < 10 ? "text-green-500" : "text-red-600"}`}
@@ -300,7 +308,13 @@ export default function Step4({
                   >
                     {emergyAccounts > monthexpense * 6
                       ? "達標，手上儲蓄超過這金額"
-                      : `太低了，手上目前儲蓄有 NT$ ${emergyAccounts}`}
+                      : `太低了，手上目前儲蓄有 NT$ ${emergyAccounts.toLocaleString(
+                          undefined,
+                          {
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 2,
+                          },
+                        )}`}
                   </td>
                 </tr>
                 <tr>

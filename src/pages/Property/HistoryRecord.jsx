@@ -53,6 +53,11 @@ export default function HistoryRecord() {
       0,
     );
 
+    const totalAssetsAbsoluteValue = Object.values(newTotals).reduce(
+      (accumulator, currentValue) => accumulator + Math.abs(currentValue),
+      0,
+    );
+
     try {
       setAlertMessage("添加成功");
       const docRef = await addDoc(historyCollectionRef, {
@@ -60,6 +65,7 @@ export default function HistoryRecord() {
         expense: newTotals.expense,
         investment: newTotals.investment,
         totalAssets: totalAssets,
+        totalAssetsAbsoluteValue: totalAssetsAbsoluteValue,
         time: new Date(),
       });
 
@@ -176,36 +182,41 @@ export default function HistoryRecord() {
                       <div
                         className="t flex h-8 w-14 items-center justify-center rounded-xl bg-[#82A0BC] font-semibold"
                         style={{
-                          width: `${getPercentage(item.saving, item.totalAssets)}%`,
+                          width: `${getPercentage(item.saving, item.totalAssetsAbsoluteValue)}%`,
                         }}
                       >
-                        {getPercentage(item.saving, item.totalAssets).toFixed(
-                          1,
-                        )}
-                        %
+                        {getPercentage(
+                          item.saving,
+                          item.totalAssetsAbsoluteValue,
+                        ) >= 5
+                          ? `${getPercentage(item.saving, item.totalAssetsAbsoluteValue).toFixed(1)}%`
+                          : ""}
                       </div>
                       <div
                         className="flex h-8 w-full items-center justify-center rounded-xl bg-[#545E75] font-semibold text-white"
                         style={{
-                          width: `${getPercentage(item.expense, item.totalAssets)}%`,
+                          width: `${getPercentage(item.expense, item.totalAssetsAbsoluteValue)}%`,
                         }}
                       >
-                        {getPercentage(item.expense, item.totalAssets).toFixed(
-                          1,
-                        )}
-                        %
+                        {getPercentage(
+                          item.expense,
+                          item.totalAssetsAbsoluteValue,
+                        ) >= 5
+                          ? `${getPercentage(item.expense, item.totalAssetsAbsoluteValue).toFixed(1)}%`
+                          : ""}
                       </div>
                       <div
                         className="flex h-8 w-14 items-center justify-center rounded-xl bg-[#A7CCED] font-semibold"
                         style={{
-                          width: `${getPercentage(item.investment, item.totalAssets)}%`,
+                          width: `${getPercentage(item.investment, item.totalAssetsAbsoluteValue)}%`,
                         }}
                       >
                         {getPercentage(
                           item.investment,
-                          item.totalAssets,
-                        ).toFixed(1)}
-                        %
+                          item.totalAssetsAbsoluteValue,
+                        ) >= 5
+                          ? `${getPercentage(item.investment, item.totalAssetsAbsoluteValue).toFixed(1)}%`
+                          : ""}
                       </div>
                     </div>
                     <div className="flex w-full flex-col items-center justify-center gap-2 md:flex-row">

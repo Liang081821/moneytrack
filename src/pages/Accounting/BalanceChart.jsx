@@ -109,12 +109,23 @@ export default function BalanceDoughnutChart({
               0,
             );
             const percentage = ((tooltipItem.raw / total) * 100).toFixed(1);
-            return `${tooltipItem.label}: ${percentage}%`;
+            const value = tooltipItem.raw;
+
+            return `${tooltipItem.label}: $${value.toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2,
+            })} (${percentage}%)`;
           },
         },
         backgroundColor: "rgba(0, 0, 0, 0.7)",
         titleColor: "#fff",
         bodyColor: "#fff",
+        titleFont: {
+          size: 18,
+        },
+        bodyFont: {
+          size: 16,
+        },
       },
       legend: {
         display: false,
@@ -128,11 +139,11 @@ export default function BalanceDoughnutChart({
           weight: "bold",
         },
         formatter: (value, context) => {
+          if (value === 0) {
+            return "";
+          }
           const label = context.chart.data.labels[context.dataIndex];
-          return `${label}: $${value.toLocaleString(undefined, {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 2,
-          })}`;
+          return `${label}`;
         },
       },
     },

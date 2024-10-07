@@ -29,6 +29,7 @@ export default function LoginSide() {
   const windowHeight = window.innerHeight;
   console.log(window.innerHeight);
   console.log(window.scrollY);
+  const [fadeIn, setFadeIn] = useState(true); // 控制淡入淡出效果
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,8 +42,16 @@ export default function LoginSide() {
 
         const newPage = Math.floor(adjustedScrollY / windowHeight);
 
-        if (newPage !== currentPage && newPage >= 0 && newPage < 3) {
-          setCurrentPage(newPage);
+        if (
+          newPage !== currentPage &&
+          newPage >= 0 &&
+          newPage < content.length
+        ) {
+          setFadeIn(false);
+          setTimeout(() => {
+            setCurrentPage(newPage);
+            setFadeIn(true);
+          }, 300);
         }
       }
     };
@@ -228,7 +237,11 @@ export default function LoginSide() {
             ref={horizonRef}
             className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden bg-[#fafafa] pt-[20vh] lg:pt-0"
           >
-            <div className="mb-44 flex h-screen w-screen flex-col items-center justify-center gap-20 lg:mb-0 lg:flex-row lg:pr-28 xl:gap-28">
+            <div
+              className={`mb-44 flex h-screen w-screen flex-col items-center justify-center gap-20 transition-opacity duration-500 ${
+                fadeIn ? "opacity-100" : "opacity-0"
+              } lg:mb-0 lg:flex-row lg:pr-28 xl:gap-28`}
+            >
               <img
                 src={content[currentPage].img}
                 alt=""

@@ -64,12 +64,20 @@ export default function HistoryReport() {
 
           <div className="rounded-lg bg-[#BABFD1] p-4 shadow-sm">
             <h4 className="text-lg font-semibold">房租率</h4>
-            <p className="text-xl">{currentReport.houseingRate || "無數據"}%</p>
+            <p className="text-xl">
+              {isNaN(currentReport.houseingRate)
+                ? "無數據"
+                : `${currentReport.houseingRate}%`}
+            </p>
           </div>
 
           <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
             <h4 className="text-lg font-semibold">保險率</h4>
-            <p className="text-xl">{currentReport.insureRate || "無數據"}%</p>
+            <p className="text-xl">
+              {isNaN(currentReport.insureRate)
+                ? "無數據"
+                : `${currentReport.insureRate}%`}
+            </p>
           </div>
 
           <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
@@ -107,7 +115,17 @@ export default function HistoryReport() {
 
           <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
             <h4 className="text-lg font-semibold">儲蓄率</h4>
-            <p className="text-xl">{currentReport.savingRate || "無數據"}%</p>
+            <p className="text-xl">
+              {isNaN(currentReport.savingRate)
+                ? "無數據"
+                : currentReport.savingRate > 30
+                  ? `${currentReport.savingRate}%`
+                  : currentReport.savingRate < 0
+                    ? "支出超支"
+                    : currentReport.savingRate > 0
+                      ? `${currentReport.savingRate}%`
+                      : ""}
+            </p>
           </div>
 
           <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
