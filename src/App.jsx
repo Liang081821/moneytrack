@@ -3,12 +3,35 @@ import Header from "./components/Header";
 import Nav from "./components/Nav";
 import DailyAccounting from "./pages/Accounting/DailyAccounting";
 import { useGlobalContext } from "./context/GlobalContext";
+import { useState, useEffect } from "react";
 
 function App() {
   const { accounting, setAccounting } = useGlobalContext();
+  const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  const [isVisible, setIsVisible] = useState(false);
+
   const startAccounting = () => {
     setAccounting(true);
   };
+  useEffect(() => {
+    const handleOnline = () => {
+      setIsVisible(false);
+      setTimeout(() => setIsOffline(false), 500);
+    };
+
+    const handleOffline = () => {
+      setIsOffline(true);
+      setTimeout(() => setIsVisible(true), 10);
+    };
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
 
   return (
     <>
@@ -44,7 +67,34 @@ function App() {
           </span>
         </div>
       </div>
+      {/* 離線提示區塊，帶有滑入/滑出的動畫 */}
+      {isOffline && (
+        <div
+          className={`absolute bottom-10 left-10 z-50 flex w-[200px] flex-col items-start rounded-xl bg-white px-10 py-10 shadow-md transition-transform duration-500 md:w-[600px] ${
+            isVisible ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="red"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="mb-1 size-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
+              />
+            </svg>
 
+            <p className="mb-2 text-xl font-semibold">您處於離線狀態。</p>
+          </div>
+          <p className="text-xl">您可以繼續使用記帳功能。</p>
+        </div>
+      )}
       {accounting && <DailyAccounting setAccounting={setAccounting} />}
     </>
   );

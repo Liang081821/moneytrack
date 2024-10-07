@@ -146,7 +146,7 @@ export default function HistoryReport() {
         <button
           onClick={handlePrev}
           disabled={currentIndex === 0}
-          className="rounded bg-blue-500 px-2 py-2 text-sm text-white disabled:bg-gray-300 md:px-4 md:text-base"
+          className="rounded-xl bg-blue-500 px-2 py-2 text-sm text-white disabled:bg-gray-300 md:px-4 md:text-base"
         >
           上一頁
         </button>
@@ -158,7 +158,7 @@ export default function HistoryReport() {
         <button
           onClick={handleNext}
           disabled={currentIndex === reportData.length - 1}
-          className="rounded bg-blue-500 px-2 py-2 text-sm text-white disabled:bg-gray-300 md:px-4 md:text-base"
+          className="rounded-xl bg-blue-500 px-2 py-2 text-sm text-white disabled:bg-gray-300 md:px-4 md:text-base"
         >
           下一頁
         </button>

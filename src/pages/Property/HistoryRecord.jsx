@@ -188,7 +188,7 @@ export default function HistoryRecord() {
                         {getPercentage(
                           item.saving,
                           item.totalAssetsAbsoluteValue,
-                        ) >= 5
+                        ) >= 4
                           ? `${getPercentage(item.saving, item.totalAssetsAbsoluteValue).toFixed(1)}%`
                           : ""}
                       </div>
@@ -201,7 +201,7 @@ export default function HistoryRecord() {
                         {getPercentage(
                           item.expense,
                           item.totalAssetsAbsoluteValue,
-                        ) >= 5
+                        ) >= 4
                           ? `${getPercentage(item.expense, item.totalAssetsAbsoluteValue).toFixed(1)}%`
                           : ""}
                       </div>
@@ -214,7 +214,7 @@ export default function HistoryRecord() {
                         {getPercentage(
                           item.investment,
                           item.totalAssetsAbsoluteValue,
-                        ) >= 5
+                        ) >= 4
                           ? `${getPercentage(item.investment, item.totalAssetsAbsoluteValue).toFixed(1)}%`
                           : ""}
                       </div>

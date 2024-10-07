@@ -324,7 +324,10 @@ export default function ProjectLayoutGrid() {
               取消
             </button>
 
-            <form onSubmit={handleSubmit(addNewBox)} className="flex flex-col">
+            <form
+              onSubmit={handleSubmit(addNewBox)}
+              className="flex flex-col gap-2"
+            >
               <div className="flex items-center gap-3">
                 <div className="font-semibold">專案名稱</div>
                 <input
