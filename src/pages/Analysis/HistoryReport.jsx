@@ -1,6 +1,25 @@
 import { useGlobalContext } from "@/context/GlobalContext";
 import { useState } from "react";
 import Button from "@/components/Button";
+import { Doughnut, Bar } from "react-chartjs-2";
+import {
+  Chart,
+  ArcElement,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+
+Chart.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+);
 
 export default function HistoryReport() {
   const { reportData } = useGlobalContext();
@@ -42,81 +61,208 @@ export default function HistoryReport() {
 
   const currentReport = reportData[currentIndex] || {};
 
+  const renderDoughnutChart = (label, value) => {
+    const data = {
+      labels: [label, ""],
+      datasets: [
+        {
+          data: [value, 100 - value],
+          backgroundColor: ["#9DBEBB", "#d6d6d6"],
+          hoverBackgroundColor: ["#9DBEBB", "#eeeeee"],
+          borderWidth: 1,
+        },
+      ],
+    };
+
+    const options = {
+      cutout: "60%",
+      responsive: true,
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (tooltipItem) {
+              return `${tooltipItem.label}: ${tooltipItem.raw}%`;
+            },
+          },
+        },
+        legend: {
+          display: false,
+        },
+        datalabels: {
+          display: (context) => context.dataIndex === 0,
+          color: "#333",
+          font: {
+            weight: "bold",
+            size: 16,
+          },
+          formatter: (value) => `${value}`,
+        },
+      },
+    };
+
+    return <Doughnut data={data} options={options} />;
+  };
+  const stackedBarData = {
+    labels: ["財務狀況"],
+    datasets: [
+      {
+        label: "每月收入",
+        data: [currentReport.monthincome || 0],
+        backgroundColor: "#9DBEBB",
+      },
+      {
+        label: "每月支出",
+        data: [currentReport.monthexpense || 0],
+        backgroundColor: "#E8E9ED",
+      },
+      {
+        label: "淨收入",
+        data: [currentReport.net || 0],
+        backgroundColor: "#BABFD1",
+      },
+    ],
+  };
+
+  const stackedBarOptions = {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        stacked: true,
+        ticks: {
+          font: {
+            size: 16,
+          },
+        },
+      },
+      x: {
+        stacked: true,
+        ticks: {
+          font: {
+            size: 16,
+          },
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+      },
+      datalabels: {
+        color: "#333",
+        font: {
+          weight: "bold",
+          size: 18,
+        },
+        formatter: (value) => `NT$${value}`,
+      },
+    },
+  };
+  const emergencyFund = currentReport.emergynumberrecommend || 0;
+  const totalProperty = currentReport.totalProperty || 0;
+
+  const data = {
+    labels: ["建議緊急備用金", "總資產"],
+    datasets: [
+      {
+        label: "NT$",
+        data: [emergencyFund, totalProperty],
+        backgroundColor: ["#BABFD1", "#E8E9ED"],
+        borderColor: ["#A0A6B0", "#D1D3D6"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    layout: {
+      padding: {
+        right: 120, // 增加右邊距
+      },
+    },
+    indexAxis: "y",
+    scales: {
+      x: {
+        beginAtZero: true,
+        ticks: {
+          font: {
+            size: 16,
+          },
+        },
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          font: {
+            size: 16,
+          },
+        },
+      },
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      datalabels: {
+        color: "#333",
+        font: {
+          weight: "bold",
+          size: 16,
+        },
+        anchor: "end",
+        align: "right",
+        clip: false,
+        offset: 10,
+        formatter: (value) => `NT$${value}`,
+      },
+    },
+  };
   return (
-    <div className="mx-auto mt-3 w-full">
-      <div className="mx-auto mb-4 w-full rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
-        <h3 className="mb-6 text-center text-xl font-semibold">
+    <div className="w-full">
+      <div className="mx-auto mb-4 flex w-full flex-col gap-3">
+        <h3 className="rounded-lg bg-[#fcfcfc] p-7 text-center text-xl font-semibold shadow-lg">
           {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}{" "}
           月報告
         </h3>
 
-        {/* 卡片風格報表 */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-lg bg-[#BABFD1] p-4 shadow-sm">
-            <h4 className="text-lg font-semibold">建議緊急備用金</h4>
-            <p className="text-xl">
-              NT$
-              {currentReport.emergynumberrecommend.toLocaleString(undefined, {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2,
-              }) || "無數據"}
-            </p>
-          </div>
-
-          <div className="rounded-lg bg-[#BABFD1] p-4 shadow-sm">
-            <h4 className="text-lg font-semibold">房租率</h4>
-            <p className="text-xl">
+        <div className="flex w-full gap-3 rounded-lg bg-[#fcfcfc] p-7 shadow-lg">
+          {/* 房租率圖表 */}
+          <div className="w-full">
+            <h4 className="mb-3 text-lg font-semibold">房租率</h4>
+            <p className="text-3xl font-semibold text-[#9DBEBB]">
               {isNaN(currentReport.houseingRate)
                 ? "無數據"
                 : `${currentReport.houseingRate}%`}
             </p>
+            <div className="mx-auto h-56 w-56">
+              {renderDoughnutChart(
+                "房租率",
+                isNaN(currentReport.houseingRate)
+                  ? 0
+                  : currentReport.houseingRate,
+              )}
+            </div>
           </div>
-
-          <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
-            <h4 className="text-lg font-semibold">保險率</h4>
-            <p className="text-xl">
+          <div className="w-full">
+            <h4 className="mb-3 text-lg font-semibold">保險率</h4>
+            <p className="text-3xl font-semibold text-[#9DBEBB]">
               {isNaN(currentReport.insureRate)
                 ? "無數據"
                 : `${currentReport.insureRate}%`}
             </p>
+            <div className="mx-auto h-56 w-56">
+              {renderDoughnutChart(
+                "房租率",
+                isNaN(currentReport.insureRate) ? 0 : currentReport.insureRate,
+              )}
+            </div>
           </div>
 
-          <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
-            <h4 className="text-lg font-semibold">每月支出</h4>
-            <p className="text-xl">
-              NT$
-              {currentReport.monthexpense.toLocaleString(undefined, {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2,
-              }) || "無數據"}
-            </p>
-          </div>
-
-          <div className="rounded-lg bg-[#BABFD1] p-4 shadow-sm">
-            <h4 className="text-lg font-semibold">每月收入</h4>
-            <p className="text-xl">
-              NT$
-              {currentReport.monthincome.toLocaleString(undefined, {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2,
-              }) || "無數據"}
-            </p>
-          </div>
-
-          <div className="rounded-lg bg-[#BABFD1] p-4 shadow-sm">
-            <h4 className="text-lg font-semibold">淨收入</h4>
-            <p className="text-xl">
-              NT$
-              {currentReport.net.toLocaleString(undefined, {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2,
-              }) || "N/A"}
-            </p>
-          </div>
-
-          <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
-            <h4 className="text-lg font-semibold">儲蓄率</h4>
-            <p className="text-xl">
+          {/* 儲蓄率圖表 */}
+          <div className="w-full">
+            <h4 className="mb-3 text-lg font-semibold">儲蓄率</h4>
+            <p className="text-3xl font-semibold text-[#9DBEBB]">
               {isNaN(currentReport.savingRate)
                 ? "無數據"
                 : currentReport.savingRate > 30
@@ -127,17 +273,34 @@ export default function HistoryReport() {
                       ? `${currentReport.savingRate}%`
                       : ""}
             </p>
+            <div className="mx-auto h-56 w-56">
+              {renderDoughnutChart(
+                "儲蓄率",
+                isNaN(currentReport.savingRate)
+                  ? 0
+                  : currentReport.savingRate > 30
+                    ? currentReport.savingRate
+                    : currentReport.savingRate < 0
+                      ? 0
+                      : currentReport.savingRate,
+              )}
+            </div>
+          </div>
+        </div>
+        {/* 堆疊條形圖 */}
+        <div className="flex w-full gap-3">
+          <div className="flex w-full flex-col rounded-lg bg-[#fcfcfc] p-7 shadow-lg">
+            <h4 className="mb-14 text-lg font-semibold">收支概況</h4>
+            <div className="flex justify-center lg:h-auto">
+              <Bar data={stackedBarData} options={stackedBarOptions} />
+            </div>
           </div>
 
-          <div className="rounded-lg bg-[#E8E9ED] p-4 shadow-sm">
-            <h4 className="text-lg font-semibold">總資產</h4>
-            <p className="text-xl">
-              NT$
-              {currentReport.totalProperty.toLocaleString(undefined, {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2,
-              }) || "無數據"}
-            </p>
+          <div className="flex w-full flex-col rounded-lg bg-[#fcfcfc] p-7 shadow-lg">
+            <h4 className="mb-14 text-lg font-semibold">財務數據</h4>
+            <div className="flex justify-center lg:h-auto">
+              <Bar data={data} options={options} />
+            </div>
           </div>
         </div>
       </div>

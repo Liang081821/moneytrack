@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { Chart, registerables } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import { color } from "framer-motion";
 
 Chart.register(...registerables, ChartDataLabels);
 
@@ -113,11 +114,11 @@ export default function IncomePieChart({
       {
         data: incomeRecord.map((record) => record.value),
         backgroundColor: [
-          "#82A0BC",
-          "#304D6D",
+          "#9dbebb",
+          "#e8e9ed",
+          "#babfd1",
+          "#d6d6d6",
           "#A7CCED",
-          "#545E75",
-          "#63ADF2",
         ],
         borderWidth: 0,
       },
@@ -125,6 +126,12 @@ export default function IncomePieChart({
   };
 
   const options = {
+    layout: {
+      padding: {
+        right: 75,
+        left: 75,
+      },
+    },
     maintainAspectRatio: true,
     responsive: true,
     devicePixelRatio: window.devicePixelRatio,
@@ -153,17 +160,15 @@ export default function IncomePieChart({
         bodyColor: "#fff",
       },
       datalabels: {
-        anchor: "center",
-        align: "center",
-        color: (context) => {
-          const backgroundColor =
-            context.dataset.backgroundColor[context.dataIndex];
-          return getContrastColor(backgroundColor);
-        },
+        anchor: "end",
+        align: "end",
+
         font: {
-          size: 18,
+          color: "#333",
+          size: 16,
           weight: "bold",
         },
+        offset: 10,
         formatter: (value, context) => {
           const total = context.chart.data.datasets[0].data.reduce(
             (a, b) => a + b,
@@ -173,7 +178,7 @@ export default function IncomePieChart({
 
           return percentage < 5
             ? ""
-            : `${context.chart.data.labels[context.dataIndex]}: $${value.toLocaleString(
+            : `${context.chart.data.labels[context.dataIndex]}\n$${value.toLocaleString(
                 undefined,
                 {
                   minimumFractionDigits: 0,

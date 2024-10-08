@@ -13,11 +13,12 @@ const Button = ({
 
   const variantStyles = {
     delete: "bg-[#89023E] hover:bg-[#CC7178] text-white",
-    add: "bg-[#A7CCED] text-white",
+    add: "bg-[#babfd1] text-gray-800",
     retain: "bg-[#607196] text-white",
     grey: "bg-[#aaaaaa] text-white",
     prevstep: "bg-gray-300",
     dontdelete: "bg-[#9DBEBB] text-white",
+    default: "",
   };
 
   return (

@@ -89,17 +89,24 @@ export default function BalanceDoughnutChart({
     datasets: [
       {
         data: balanceData.map((record) => record.value),
-        backgroundColor: ["#545E75", "#82A0BC"],
+        backgroundColor: ["#9DBEBB", "#d6d6d6"],
+        hoverBackgroundColor: ["#9DBEBB", "#eeeeee"],
         borderWidth: 0,
       },
     ],
   };
 
   const options = {
+    layout: {
+      padding: {
+        right: 75,
+        left: 75,
+      },
+    },
     maintainAspectRatio: true,
     responsive: true,
     devicePixelRatio: window.devicePixelRatio,
-
+    cutout: "60%",
     plugins: {
       tooltip: {
         callbacks: {
@@ -131,11 +138,13 @@ export default function BalanceDoughnutChart({
         display: false,
       },
       datalabels: {
-        anchor: "center",
-        align: "center",
-        color: "black",
+        anchor: "end",
+        align: "end",
+        offset: 10,
+
         font: {
-          size: 18,
+          color: "#333",
+          size: 16,
           weight: "bold",
         },
         formatter: (value, context) => {
@@ -143,7 +152,7 @@ export default function BalanceDoughnutChart({
             return "";
           }
           const label = context.chart.data.labels[context.dataIndex];
-          return `${label}`;
+          return `${label}\n$${value}`;
         },
       },
     },

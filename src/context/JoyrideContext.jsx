@@ -99,7 +99,7 @@ export const JoyrideProvider = ({ children }) => {
     },
     {
       target: ".joyride-report",
-      content: "4、分析後的健檢報告將出現在下方供您回顧。",
+      content: "4、分析後的健檢報告將出現在歷史報告供您回顧。",
       disableBeacon: true,
     },
   ];

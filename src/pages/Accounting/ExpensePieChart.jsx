@@ -113,11 +113,11 @@ export default function ExpensePieChart({
       {
         data: expenseRecord.map((record) => record.value),
         backgroundColor: [
-          "#304D6D",
+          "#d6d6d6",
+          "#9dbebb",
+          "#e8e9ed",
+          "#babfd1",
           "#A7CCED",
-          "#63ADF2",
-          "#82A0BC",
-          "#545E75",
         ],
         borderWidth: 0,
       },
@@ -125,6 +125,12 @@ export default function ExpensePieChart({
   };
 
   const options = {
+    layout: {
+      padding: {
+        right: 75,
+        left: 75,
+      },
+    },
     maintainAspectRatio: true,
     responsive: true,
     devicePixelRatio: window.devicePixelRatio,
@@ -153,17 +159,16 @@ export default function ExpensePieChart({
         bodyColor: "#fff",
       },
       datalabels: {
-        anchor: "center",
-        align: "center",
-        color: (context) => {
-          const backgroundColor =
-            context.dataset.backgroundColor[context.dataIndex];
-          return getContrastColor(backgroundColor);
-        },
+        anchor: "end",
+        align: "end",
+
         font: {
-          size: 18,
+          color: "#333",
+          size: 16,
           weight: "bold",
         },
+        offset: 10,
+
         formatter: (value, context) => {
           const total = context.chart.data.datasets[0].data.reduce(
             (a, b) => a + b,
@@ -173,7 +178,7 @@ export default function ExpensePieChart({
 
           return percentage < 5
             ? ""
-            : `${context.chart.data.labels[context.dataIndex]}: $${value.toLocaleString(
+            : `${context.chart.data.labels[context.dataIndex]}\n$${value.toLocaleString(
                 undefined,
                 {
                   minimumFractionDigits: 0,

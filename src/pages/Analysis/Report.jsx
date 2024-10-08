@@ -5,6 +5,7 @@ import Confirm from "@/components/Confirm";
 import AnalysisJoyride from "../../components/JoyRide/AnalysisJoyRide";
 import { useJoyride } from "../../context/JoyrideContext";
 import Button from "@/components/Button";
+import HistoryReport from "./HistoryReport";
 
 import { useState, useEffect } from "react";
 import Step1 from "./Step1";
@@ -179,6 +180,7 @@ export default function Report() {
         return null;
     }
   };
+  const [livestatic, setLiveStatic] = useState(true);
 
   return (
     <div className="flex w-[85%] flex-col items-center">
@@ -186,67 +188,91 @@ export default function Report() {
         <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
       )}
       <AnalysisJoyride />
-      <div className="mb-3 flex w-full items-center justify-end gap-2 rounded-lg bg-[#fcfcfc] p-4 shadow-lg">
-        <Button
-          className="flex cursor-pointer items-center justify-center gap-1 md:gap-2"
-          variant="grey"
-        >
-          <p onClick={() => startTutorial()}>使用教學</p>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="yellow"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="size-6"
+
+      <div className="mb-3 flex w-full items-center justify-between gap-2 rounded-lg bg-[#fcfcfc] p-4 shadow-lg">
+        <div className="flex gap-2">
+          <button
+            onClick={() => setLiveStatic(true)}
+            className={`font-semibold ${livestatic ? "bg-[#607196] text-white" : "bg-gray-300 text-white"} rounded-lg px-4 py-2 transition duration-200`}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
-            />
-          </svg>
-        </Button>
-        <Button
-          className="joyride-generatereport flex cursor-pointer items-center justify-center gap-1 md:gap-2"
-          variant="retain"
-        >
-          <p onClick={() => handleAddReport()}>我要進行分析</p>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="size-6"
+            即時數據
+          </button>
+          <button
+            onClick={() => setLiveStatic(false)}
+            className={`joyride-report font-semibold ${!livestatic ? "bg-[#607196] text-white" : "bg-gray-300 text-white"} rounded-lg px-4 py-2 transition duration-200`}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"
-            />
-          </svg>
-        </Button>
-      </div>
-      <div className="mx-auto flex h-auto w-full flex-col justify-center gap-3 md:flex-row">
-        <div className="joyride-monthlydata w-full">
-          <MonthlyData
-            setmonthExpense={setmonthExpense}
-            setmonthIncome={setmonthIncome}
-            expenseTotals={expenseTotals}
-            setExpenseTotals={setExpenseTotals}
-            incomeTotals={incomeTotals}
-            setIncomeTotals={setIncomeTotals}
-            netWorth={netWorth}
-            setNetWorth={setNetWorth}
-            setExpenseRecords={setExpenseRecords}
-            expenseRecords={expenseRecords}
-          />
+            歷史報告
+          </button>
         </div>
-        <div className="joyride-balancesheet w-full">
-          <BalanceSheet totalProperty={totalProperty} />
+        <div className="flex gap-2">
+          <Button
+            className="flex cursor-pointer items-center justify-center gap-1 md:gap-2"
+            variant="grey"
+          >
+            <p onClick={() => startTutorial()}>使用教學</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="yellow"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+              />
+            </svg>
+          </Button>
+          <Button
+            className="joyride-generatereport flex cursor-pointer items-center justify-center gap-1 md:gap-2"
+            variant="retain"
+          >
+            <p onClick={() => handleAddReport()}>我要進行分析</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"
+              />
+            </svg>
+          </Button>
         </div>
       </div>
+      {livestatic ? (
+        <div className="mx-auto flex h-auto w-full flex-col justify-center gap-3 md:flex-row">
+          <div className="joyride-monthlydata w-full">
+            <MonthlyData
+              setmonthExpense={setmonthExpense}
+              setmonthIncome={setmonthIncome}
+              expenseTotals={expenseTotals}
+              setExpenseTotals={setExpenseTotals}
+              incomeTotals={incomeTotals}
+              setIncomeTotals={setIncomeTotals}
+              netWorth={netWorth}
+              setNetWorth={setNetWorth}
+              setExpenseRecords={setExpenseRecords}
+              expenseRecords={expenseRecords}
+            />
+          </div>
+          <div className="joyride-balancesheet w-full">
+            <BalanceSheet totalProperty={totalProperty} />
+          </div>
+        </div>
+      ) : (
+        <>
+          <HistoryReport></HistoryReport>
+        </>
+      )}
+
       {/* 步驟導航 */}
       {reportVisible && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">

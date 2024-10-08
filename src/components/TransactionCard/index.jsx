@@ -11,10 +11,10 @@ export default function TransactionCard({
       key={item.id}
       className={`rounded-lg border p-3 transition-all duration-200 ${
         item.record_type === "支出"
-          ? "bg-[#5e687f] text-white"
+          ? "bg-[#9dbebb] text-gray-800"
           : item.record_type === "轉帳"
-            ? "bg-[#A7CCED] text-gray-800"
-            : "bg-[#82A0BC] text-gray-800"
+            ? "bg-[#BABFD1] text-gray-800"
+            : "bg-[#e8e9ed] text-gray-800"
       }`}
       onClick={() => onEditClick(item)}
     >
@@ -33,7 +33,7 @@ export default function TransactionCard({
       </div>
       <div
         className={`flex justify-between ${
-          item.record_type === "支出" ? "text-gray-300" : "text-gray-800"
+          item.record_type === "支出" ? "text-gray-800" : "text-gray-800"
         }`}
       >
         <div className="text-sm">
@@ -44,7 +44,7 @@ export default function TransactionCard({
       {showProject && item.project && (
         <div
           className={`${
-            item.record_type === "支出" ? "text-white" : "text-gray-800"
+            item.record_type === "支出" ? "text-gray-800" : "text-gray-800"
           }`}
         >
           <p>{item.project}</p>

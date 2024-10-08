@@ -147,32 +147,77 @@ export default function HistoryRecord() {
           <div className="joyride-saving-account w-full">
             <AccountDetails
               title="儲蓄"
-              imageSrc={SavingPic}
+              imageSrc={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="#e8e9ed"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z"
+                  />
+                </svg>
+              }
               accountType="儲蓄"
-              bgColor="bg-[#82A0BC]"
+              bgColor="bg-[#e8e9ed]"
             />
           </div>
           <div className="joyride-expense-account w-full">
             <AccountDetails
               title="消費"
-              imageSrc={ConsumePic}
+              imageSrc={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="#9dbebb"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                  />
+                </svg>
+              }
               accountType="消費"
-              bgColor="bg-[#545E75]"
-              textColor="text-white"
+              bgColor="bg-[#9dbebb]"
+              textColor="text-gray-800"
             />
           </div>
           <div className="joyride-investment-account w-full">
             <AccountDetails
               title="投資"
-              imageSrc={InvestPic}
+              imageSrc={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="#babfd1"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"
+                  />
+                </svg>
+              }
               accountType="投資"
-              bgColor="bg-[#A7CCED]"
+              bgColor="bg-[#babfd1]"
             />
           </div>
         </div>
         <div className="mx-auto w-full">
           {historyData.length !== 0 ? (
-            <div className="mb-9 mt-3 flex w-full flex-col items-center justify-center rounded-lg bg-[#fcfcfc] p-2 shadow-lg">
+            <div className="mb-9 mt-3 flex w-full flex-col items-center justify-center rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
               <div className="text-xl font-semibold">資產紀錄</div>
               {historyData
                 .slice()
@@ -187,7 +232,7 @@ export default function HistoryRecord() {
                     </div>
                     <div className="flex w-full">
                       <div
-                        className="t flex h-8 w-14 items-center justify-center rounded-lg bg-[#82A0BC] font-semibold"
+                        className="t flex h-8 w-14 items-center justify-center rounded-lg bg-[#e8e9ed] font-semibold"
                         style={{
                           width: `${getPercentage(item.saving, item.totalAssetsAbsoluteValue)}%`,
                         }}
@@ -200,7 +245,7 @@ export default function HistoryRecord() {
                           : ""}
                       </div>
                       <div
-                        className="flex h-8 w-full items-center justify-center rounded-lg bg-[#545E75] font-semibold text-white"
+                        className="flex h-8 w-full items-center justify-center rounded-lg bg-[#9dbebb] font-semibold text-white"
                         style={{
                           width: `${getPercentage(item.expense, item.totalAssetsAbsoluteValue)}%`,
                         }}
@@ -213,7 +258,7 @@ export default function HistoryRecord() {
                           : ""}
                       </div>
                       <div
-                        className="flex h-8 w-14 items-center justify-center rounded-lg bg-[#A7CCED] font-semibold"
+                        className="flex h-8 w-14 items-center justify-center rounded-lg bg-[#babfd1] font-semibold"
                         style={{
                           width: `${getPercentage(item.investment, item.totalAssetsAbsoluteValue)}%`,
                         }}
@@ -237,7 +282,7 @@ export default function HistoryRecord() {
                           })}
                         </div>
                       </div>
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#545E75] p-3">
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#9dbebb] p-3">
                         <div className="text-lg font-semibold">消費</div>
                         <div>
                           NT$
@@ -247,7 +292,7 @@ export default function HistoryRecord() {
                           })}
                         </div>
                       </div>
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#A7CCED] p-3">
+                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#babfd1] p-3">
                         <div className="text-lg font-semibold">投資</div>
                         <div>
                           NT$

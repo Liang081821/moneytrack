@@ -37,6 +37,7 @@ export default function AccountDetails({
     setSelectedAccount(null);
     setAccountRecord([]);
   };
+  const [isAddNewOpen, setIsAddNewOpen] = useState(false); //這裡z-index
 
   const handleDeleteAccount = async (deleteOption) => {
     try {
@@ -44,11 +45,14 @@ export default function AccountDetails({
         setAlertMessage("帳戶已刪除");
         setSelectedAccount(null);
         setAccountRecord([]);
+        setIsAddNewOpen(false);
         await deleteDoc(doc(propertyCollectionRef, selectedAccount.id));
       } else if (deleteOption === "刪除帳單") {
         setAlertMessage("帳戶及其所有帳單已刪除");
         setSelectedAccount(null);
         setAccountRecord([]);
+        setIsAddNewOpen(false);
+        console.log("已刪除");
         const q = query(
           accountingCollectionRef,
           where("account", "==", selectedAccount.account),
@@ -92,8 +96,14 @@ export default function AccountDetails({
             d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
           />
         </svg>
-        <div className="relative h-11 w-32 text-nowrap opacity-100">
-          <AddNewFunction account_type={accountType} bgColor="" />
+        <div
+          className={`relative h-11 w-32 text-nowrap opacity-100 ${isAddNewOpen ? "z-10" : ""}`}
+        >
+          <AddNewFunction
+            account_type={accountType}
+            bgColor="default"
+            setIsAddNewOpen={setIsAddNewOpen}
+          />
         </div>
       </div>
     );
@@ -102,51 +112,57 @@ export default function AccountDetails({
   return (
     <div className="flex h-auto w-full flex-col items-center rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg md:h-[595px]">
       <div className="relative mb-4 flex w-full items-center justify-center gap-3">
-        <img src={imageSrc} alt="" className="h-8 w-8" />
+        <div className="">{imageSrc}</div>
         <div className="text-xl font-semibold">{title}</div>
-        <AddNewFunction account_type={accountType} bgColor="add" />
       </div>
-
-      {/* 動態渲染篩選後的帳戶 */}
-      {filteredAccounts.map((account) => (
-        <div
-          key={account.id}
-          className={`m-2 flex h-[88px] w-full items-center justify-between rounded-lg p-3 ${bgColor}`}
-        >
-          <div className={`${textColor}`}>
-            <div className="text-xl font-semibold">{account.account}</div>
-            <div className="h-1 w-6 rounded-lg bg-[#031926]"></div>
-            <div className="text-xl">
-              NT$
-              {account.balance.toLocaleString(undefined, {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2,
-              })}
-            </div>
-          </div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="size-5 cursor-pointer"
-            onClick={() => handleAccountClick(account)}
+      <div className="relative flex h-full w-full flex-col gap-2 overflow-scroll">
+        {/* 動態渲染篩選後的帳戶 */}
+        {filteredAccounts.map((account) => (
+          <div
+            key={account.id}
+            className={`flex h-[88px] w-full items-center justify-between rounded-lg p-3 ${bgColor}`}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-            />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-            />
-          </svg>
-        </div>
-      ))}
-
+            <div className={`${textColor}`}>
+              <div className="text-xl font-semibold">{account.account}</div>
+              <div className="h-1 w-6 rounded-lg bg-[#031926]"></div>
+              <div className="text-xl">
+                NT$
+                {account.balance.toLocaleString(undefined, {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 2,
+                })}
+              </div>
+            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-5 cursor-pointer"
+              onClick={() => handleAccountClick(account)}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+            </svg>
+          </div>
+        ))}
+      </div>
+      <div className={`w-full pt-5 ${isAddNewOpen ? "z-10" : ""}`}>
+        <AddNewFunction
+          account_type={accountType}
+          bgColor="add"
+          setIsAddNewOpen={setIsAddNewOpen}
+        />
+      </div>
       {/* 帳戶詳細紀錄顯示 */}
       {selectedAccount && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4">

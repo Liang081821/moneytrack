@@ -93,7 +93,7 @@ export default function BarChart({
         label: "每日支出 (NT$)",
         data: dailyExpenses.map((entry) => entry.y),
         fill: false,
-        borderColor: "#63ADF2",
+        borderColor: "#babfd1",
         borderWidth: 3,
         backgroundColor: "#304D6D",
         pointRadius: 5,
@@ -112,21 +112,30 @@ export default function BarChart({
             return `NT$ ${context.parsed.y}`;
           },
         },
+        titleFont: {
+          size: 18,
+        },
+        bodyFont: {
+          size: 16,
+        },
       },
       legend: {
         display: false,
       },
       datalabels: {
         display: true,
-        color: "white",
-        backgroundColor: "#304D6D",
+        color: "black",
+        backgroundColor: "#e8e9ed",
         borderRadius: 4,
         padding: 6,
         font: {
-          size: 12,
+          size: 16,
           weight: "bold",
         },
-        formatter: (value) => `NT$ ${value}`,
+        anchor: "end", // 將標籤錨點設置在數據點的上方或下方
+        align: "top", // 將標籤對齊到數據點的上方
+        offset: 10,
+        formatter: (value) => ` NT$ ${value}`,
       },
       zoom: {
         pan: {
@@ -135,7 +144,7 @@ export default function BarChart({
         },
         zoom: {
           enabled: true,
-          mode: "x", // 允許水平縮放
+          mode: "x",
           speed: 0.1,
         },
       },
@@ -149,6 +158,9 @@ export default function BarChart({
         ticks: {
           autoSkip: true,
           maxTicksLimit: 10,
+          font: {
+            size: 16,
+          },
         },
         grid: {
           drawBorder: false,
@@ -161,11 +173,16 @@ export default function BarChart({
           text: "支出 (NT$)",
         },
         beginAtZero: true,
+        ticks: {
+          font: {
+            size: 16,
+          },
+        },
       },
     },
     layout: {
       padding: {
-        right: 40,
+        right: 60,
       },
     },
   };
