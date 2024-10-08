@@ -311,18 +311,18 @@ export default function MonthlyData({
   }
   return (
     <div className="flex max-h-[100vh] w-full flex-col items-center overflow-scroll rounded-lg">
-      <h2 className="sticky top-0 mb-2 w-full rounded-lg bg-[#fcfcfc] p-4 text-center text-xl font-semibold shadow-lg">
-        {`${now.getFullYear()} 年 ${now.getMonth()} 月收支數據`}
-      </h2>
-      <div className="flex w-full flex-col gap-2">
-        <div className="flex flex-col items-center gap-2 rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
-          <p className="text-sm font-semibold sm:text-base lg:text-lg">支出</p>
+      <div className="flex w-full flex-col gap-2 bg-[#fcfcfc] px-4 py-7 shadow-lg">
+        <h2 className="sticky top-0 w-full rounded-lg text-center text-xl font-semibold">
+          {`${now.getFullYear()} 年 ${now.getMonth()} 月收支數據`}
+        </h2>
+        <div className="flex flex-col items-center gap-2 rounded-lg px-4">
+          {/* <p className="text-sm font-semibold sm:text-base lg:text-lg">支出</p> */}
 
           {expenseWithChanges.map(
             ({ recordClass, totalAmount, changeAmount, changePercentage }) => (
               <div
                 key={recordClass}
-                className="flex h-20 w-full items-center justify-between rounded-lg bg-[#5e687f] p-4 text-white"
+                className="flex h-20 w-full items-center justify-between rounded-lg bg-[#9dbebb] px-4"
               >
                 <div>
                   {changeAmount >= 0 ? (
@@ -358,7 +358,7 @@ export default function MonthlyData({
                   )}
 
                   {/* 類別名稱 */}
-                  <div className="text-sm font-semibold sm:text-sm lg:text-lg">
+                  <div className="text-sm font-semibold text-gray-800 sm:text-sm lg:text-lg">
                     {recordClass}
                   </div>
                 </div>
@@ -376,7 +376,7 @@ export default function MonthlyData({
                   {/* 變化量和百分比 */}
                   <div
                     className={`text-sm font-semibold ${
-                      changeAmount >= 0 ? "text-[#9DBEBB]" : "text-[#CC7178]"
+                      changeAmount >= 0 ? "text-gray-600" : "text-gray-600"
                     }`}
                   >
                     {changeAmount >= 0 ? "+" : ""}
@@ -385,7 +385,7 @@ export default function MonthlyData({
                       maximumFractionDigits: 2,
                     })}
                   </div>
-                  <div className="text-sm text-gray-200">
+                  <div className="text-sm text-gray-600">
                     {changePercentage !== "N/A"
                       ? ` ${changePercentage}%`
                       : "0%"}
@@ -395,14 +395,14 @@ export default function MonthlyData({
             ),
           )}
         </div>
-        <div className="flex flex-col items-center gap-2 rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
-          <p className="text-sm font-semibold sm:text-base lg:text-lg">收入</p>
+        <div className="flex flex-col items-center gap-2 rounded-lg px-4">
+          {/* <p className="text-sm font-semibold sm:text-base lg:text-lg">收入</p> */}
 
           {incomeWithChanges.map(
             ({ recordClass, totalAmount, changeAmount, changePercentage }) => (
               <div
                 key={recordClass}
-                className="flex h-20 w-full items-center justify-between rounded-lg bg-[#82A0BC] p-4 text-white"
+                className="flex h-20 w-full items-center justify-between rounded-lg bg-[#e8e9ed] p-4"
               >
                 <div>
                   {changeAmount >= 0 ? (
@@ -438,14 +438,14 @@ export default function MonthlyData({
                   )}
 
                   {/* 類別名稱 */}
-                  <div className="text-sm font-semibold sm:text-sm lg:text-lg">
+                  <div className="text-sm font-semibold text-gray-800 sm:text-sm lg:text-lg">
                     {recordClass}
                   </div>
                 </div>
 
                 {/* 當月總額 */}
                 <div className="flex flex-col items-end">
-                  <p className="flex text-sm font-semibold sm:text-lg lg:text-xl">
+                  <p className="flex text-sm font-semibold text-gray-800 sm:text-lg lg:text-xl">
                     NT$
                     {totalAmount.toLocaleString(undefined, {
                       minimumFractionDigits: 0,
@@ -456,7 +456,7 @@ export default function MonthlyData({
                   {/* 變化量和百分比 */}
                   <div
                     className={`text-sm font-semibold ${
-                      changeAmount >= 0 ? "text-[#9DBEBB]" : "text-[#CC7178]"
+                      changeAmount >= 0 ? "text-gray-600" : "text-gray-600"
                     }`}
                   >
                     {changeAmount >= 0 ? "+" : ""}
@@ -465,7 +465,7 @@ export default function MonthlyData({
                       maximumFractionDigits: 2,
                     })}
                   </div>
-                  <div className="text-sm text-gray-200">
+                  <div className="text-sm text-gray-600">
                     {changePercentage !== "N/A"
                       ? ` ${changePercentage}%`
                       : "0%"}
@@ -475,11 +475,11 @@ export default function MonthlyData({
             ),
           )}
         </div>
-        <div className="flex flex-col items-center gap-2 rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
-          <p className="text-sm font-semibold sm:text-base lg:text-lg">
+        <div className="flex flex-col items-center gap-2 px-4">
+          {/* <p className="text-sm font-semibold sm:text-base lg:text-lg">
             淨現金流
-          </p>
-          <div className="flex h-20 w-full items-center justify-between rounded-lg bg-[#A7CCED] p-4 text-white">
+          </p> */}
+          <div className="flex h-20 w-full items-center justify-between rounded-lg bg-[#babfd1] px-4 text-gray-800">
             <div className="flex flex-col">
               {/* 根據變化量顯示上升或下降圖標 */}
               {changeAmount >= 0 ? (
@@ -515,7 +515,7 @@ export default function MonthlyData({
               )}
 
               {/* 類別名稱 */}
-              <div className="text-sm font-semibold sm:text-sm lg:text-lg">
+              <div className="text-sm font-semibold text-gray-800 sm:text-sm lg:text-lg">
                 淨現金流
               </div>
             </div>
@@ -534,7 +534,7 @@ export default function MonthlyData({
               {/* 變化量 */}
               <div
                 className={`text-sm font-semibold ${
-                  changeAmount >= 0 ? "text-[#9DBEBB]" : "text-[#CC7178]"
+                  changeAmount >= 0 ? "text-gray-600" : "text-gray-600"
                 }`}
               >
                 {changeAmount >= 0 ? "+" : ""}
@@ -545,7 +545,7 @@ export default function MonthlyData({
               </div>
 
               {/* 變化百分比 */}
-              <div className="text-sm text-gray-200">
+              <div className="text-sm text-gray-600">
                 {changePercentage !== "N/A" ? ` ${changePercentage}%` : "0%"}
               </div>
             </div>

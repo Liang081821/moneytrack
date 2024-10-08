@@ -89,7 +89,7 @@ export default function HistoryReport() {
           display: false,
         },
         datalabels: {
-          display: (context) => context.dataIndex === 0,
+          display: false,
           color: "#333",
           font: {
             weight: "bold",
@@ -219,85 +219,100 @@ export default function HistoryReport() {
     },
   };
   return (
-    <div className="w-full">
+    <div className="mb-[5vh] w-full">
       <div className="mx-auto mb-4 flex w-full flex-col gap-3">
-        <h3 className="rounded-lg bg-[#fcfcfc] p-7 text-center text-xl font-semibold shadow-lg">
-          {currentReport.reportMonth.year} 年 {currentReport.reportMonth.month}{" "}
-          月報告
-        </h3>
+        <div className="rounded-lg bg-[#fcfcfc] shadow-lg">
+          <h3 className="p-7 text-center text-xl font-semibold">
+            {currentReport.reportMonth.year} 年{" "}
+            {currentReport.reportMonth.month} 月分析結果
+          </h3>
 
-        <div className="flex w-full gap-3 rounded-lg bg-[#fcfcfc] p-7 shadow-lg">
-          {/* 房租率圖表 */}
-          <div className="w-full">
-            <h4 className="mb-3 text-lg font-semibold">房租率</h4>
-            <p className="text-3xl font-semibold text-[#9DBEBB]">
-              {isNaN(currentReport.houseingRate)
-                ? "無數據"
-                : `${currentReport.houseingRate}%`}
-            </p>
-            <div className="mx-auto h-56 w-56">
-              {renderDoughnutChart(
-                "房租率",
-                isNaN(currentReport.houseingRate)
-                  ? 0
-                  : currentReport.houseingRate,
-              )}
+          <div className="flex w-full gap-3 p-7">
+            {/* 房租率圖表 */}
+            <div className="relative flex w-full items-center justify-center">
+              <div className="absolute">
+                <h4 className="text-center text-lg font-semibold">房租率</h4>
+                <p className="text-3xl font-semibold text-[#9DBEBB]">
+                  {isNaN(currentReport.houseingRate)
+                    ? "無數據"
+                    : `${currentReport.houseingRate}%`}
+                </p>
+              </div>
+              <div className="mx-auto h-56 w-56">
+                {renderDoughnutChart(
+                  "房租率",
+                  isNaN(currentReport.houseingRate)
+                    ? 0
+                    : currentReport.houseingRate,
+                )}
+              </div>
             </div>
-          </div>
-          <div className="w-full">
-            <h4 className="mb-3 text-lg font-semibold">保險率</h4>
-            <p className="text-3xl font-semibold text-[#9DBEBB]">
-              {isNaN(currentReport.insureRate)
-                ? "無數據"
-                : `${currentReport.insureRate}%`}
-            </p>
-            <div className="mx-auto h-56 w-56">
-              {renderDoughnutChart(
-                "房租率",
-                isNaN(currentReport.insureRate) ? 0 : currentReport.insureRate,
-              )}
+            <div className="relative flex w-full items-center justify-center">
+              <div className="absolute">
+                <h4 className="text-center text-lg font-semibold">保險率</h4>
+                <p className="text-3xl font-semibold text-[#9DBEBB]">
+                  {isNaN(currentReport.insureRate)
+                    ? "無數據"
+                    : `${currentReport.insureRate}%`}
+                </p>
+              </div>
+              <div className="mx-auto h-56 w-56">
+                {renderDoughnutChart(
+                  "房租率",
+                  isNaN(currentReport.insureRate)
+                    ? 0
+                    : currentReport.insureRate,
+                )}
+              </div>
             </div>
-          </div>
 
-          {/* 儲蓄率圖表 */}
-          <div className="w-full">
-            <h4 className="mb-3 text-lg font-semibold">儲蓄率</h4>
-            <p className="text-3xl font-semibold text-[#9DBEBB]">
-              {isNaN(currentReport.savingRate)
-                ? "無數據"
-                : currentReport.savingRate > 30
-                  ? `${currentReport.savingRate}%`
-                  : currentReport.savingRate < 0
-                    ? "支出超支"
-                    : currentReport.savingRate > 0
+            {/* 儲蓄率圖表 */}
+            <div className="relative flex w-full items-center justify-center">
+              <div className="absolute">
+                {" "}
+                <h4 className="text-center text-lg font-semibold">儲蓄率</h4>
+                <p className="text-3xl font-semibold text-[#9DBEBB]">
+                  {isNaN(currentReport.savingRate)
+                    ? "無數據"
+                    : currentReport.savingRate > 30
                       ? `${currentReport.savingRate}%`
-                      : ""}
-            </p>
-            <div className="mx-auto h-56 w-56">
-              {renderDoughnutChart(
-                "儲蓄率",
-                isNaN(currentReport.savingRate)
-                  ? 0
-                  : currentReport.savingRate > 30
-                    ? currentReport.savingRate
-                    : currentReport.savingRate < 0
-                      ? 0
-                      : currentReport.savingRate,
-              )}
+                      : currentReport.savingRate < 0
+                        ? "支出超支"
+                        : currentReport.savingRate > 0
+                          ? `${currentReport.savingRate}%`
+                          : ""}
+                </p>
+              </div>
+              <div className="mx-auto h-56 w-56">
+                {renderDoughnutChart(
+                  "儲蓄率",
+                  isNaN(currentReport.savingRate)
+                    ? 0
+                    : currentReport.savingRate > 30
+                      ? currentReport.savingRate
+                      : currentReport.savingRate < 0
+                        ? 0
+                        : currentReport.savingRate,
+                )}
+              </div>
             </div>
           </div>
         </div>
         {/* 堆疊條形圖 */}
         <div className="flex w-full gap-3">
           <div className="flex w-full flex-col rounded-lg bg-[#fcfcfc] p-7 shadow-lg">
-            <h4 className="mb-14 text-lg font-semibold">收支概況</h4>
+            <h4 className="mb-14 text-center text-xl font-semibold">
+              收支概況
+            </h4>
             <div className="flex justify-center lg:h-auto">
               <Bar data={stackedBarData} options={stackedBarOptions} />
             </div>
           </div>
 
           <div className="flex w-full flex-col rounded-lg bg-[#fcfcfc] p-7 shadow-lg">
-            <h4 className="mb-14 text-lg font-semibold">財務數據</h4>
+            <h4 className="mb-14 text-center text-xl font-semibold">
+              財務數據
+            </h4>
             <div className="flex justify-center lg:h-auto">
               <Bar data={data} options={options} />
             </div>

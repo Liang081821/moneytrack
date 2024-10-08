@@ -332,13 +332,13 @@ export default function Step4({
           <div className="flex justify-center">
             <button
               onClick={handleSaveReport}
-              className="mt-1 rounded-md bg-[#9DBEBB] p-2 text-white"
+              className="mt-1 rounded-lg bg-[#9DBEBB] p-2 text-white"
             >
               下載 CSV
             </button>
             <button
               onClick={handleSaveToFirebase}
-              className="ml-4 mt-1 rounded-md bg-[#607196] p-2 text-white"
+              className="ml-4 mt-1 rounded-lg bg-[#607196] p-2 text-white"
             >
               儲存報表
             </button>

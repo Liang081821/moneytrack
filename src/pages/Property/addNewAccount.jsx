@@ -11,11 +11,11 @@ export default function AddNewFunction({
   account_type,
   bgColor,
   setIsAddNewOpen,
+  setAlertMessage,
 }) {
   const [addProperty, setAddProperty] = useState(false);
   const { loginEmail } = useGlobalContext();
   const { propertyCollectionRef } = getFirestoreRefs(loginEmail);
-  const [alertMessage, setAlertMessage] = useState(null);
 
   const {
     register,
@@ -59,9 +59,6 @@ export default function AddNewFunction({
 
   return (
     <>
-      {alertMessage && (
-        <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
-      )}
       <Button
         variant={`${bgColor}`}
         className={`sticky bottom-0 right-0 w-full`}
@@ -107,6 +104,7 @@ export default function AddNewFunction({
                     {...register("balance", {
                       required: "請輸入初始金額",
                       valueAsNumber: true,
+                      validate: (value) => !isNaN(value) || "請輸入有效的數字",
                     })}
                   />
                   {errors.balance && (

@@ -48,9 +48,10 @@ export default function AccountDetails({
         setIsAddNewOpen(false);
         await deleteDoc(doc(propertyCollectionRef, selectedAccount.id));
       } else if (deleteOption === "刪除帳單") {
-        setAlertMessage("帳戶及其所有帳單已刪除");
         setSelectedAccount(null);
         setAccountRecord([]);
+        setAlertMessage("帳戶及其所有帳單已刪除");
+
         setIsAddNewOpen(false);
         console.log("已刪除");
         const q = query(
@@ -81,36 +82,47 @@ export default function AccountDetails({
 
   if (!filteredAccounts || filteredAccounts.length === 0) {
     return (
-      <div className="flex h-[300px] w-full items-center justify-center rounded-lg border bg-slate-500 bg-opacity-40 p-6 text-white md:h-[595px]">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          className="mb-2 h-12 w-12"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
-          />
-        </svg>
-        <div
-          className={`relative h-11 w-32 text-nowrap opacity-100 ${isAddNewOpen ? "z-10" : ""}`}
-        >
-          <AddNewFunction
-            account_type={accountType}
-            bgColor="default"
-            setIsAddNewOpen={setIsAddNewOpen}
-          />
+      <>
+        {alertMessage && (
+          <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+        )}
+
+        <div className="flex h-[300px] w-full items-center justify-center rounded-lg border bg-slate-500 bg-opacity-40 p-6 text-white md:h-[595px]">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="mb-2 h-12 w-12"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
+            />
+          </svg>
+          <div
+            className={`relative h-11 w-32 text-nowrap opacity-100 ${isAddNewOpen ? "z-10" : ""}`}
+          >
+            <AddNewFunction
+              account_type={accountType}
+              bgColor="default"
+              setIsAddNewOpen={setIsAddNewOpen}
+              alertMessage={alertMessage}
+              setAlertMessage={setAlertMessage}
+            />
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
     <div className="flex h-auto w-full flex-col items-center rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg md:h-[595px]">
+      {alertMessage && (
+        <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+      )}
       <div className="relative mb-4 flex w-full items-center justify-center gap-3">
         <div className="">{imageSrc}</div>
         <div className="text-xl font-semibold">{title}</div>
@@ -161,6 +173,8 @@ export default function AccountDetails({
           account_type={accountType}
           bgColor="add"
           setIsAddNewOpen={setIsAddNewOpen}
+          alertMessage={alertMessage}
+          setAlertMessage={setAlertMessage}
         />
       </div>
       {/* 帳戶詳細紀錄顯示 */}
@@ -191,9 +205,7 @@ export default function AccountDetails({
           </div>
         </div>
       )}
-      {alertMessage && (
-        <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
-      )}
+
       {/* 刪除確認彈窗 */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4">

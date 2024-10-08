@@ -36,16 +36,16 @@ export default function BalanceSheet() {
   }
   return (
     <div className="flex max-h-[100vh] w-full flex-col items-center overflow-scroll rounded-lg">
-      <h2 className="sticky top-0 mb-2 w-full rounded-lg bg-[#fcfcfc] p-4 text-center text-xl font-semibold shadow-lg">
-        資產負債表
-      </h2>
-      <div className="flex w-full flex-col gap-2">
-        <div className="flex flex-col items-center gap-2 rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
-          <p className="text-sm font-semibold sm:text-base lg:text-lg">資產</p>
+      <div className="flex w-full flex-col gap-2 bg-[#fcfcfc] px-4 py-7 shadow-lg">
+        <h2 className="sticky top-0 mb-2 w-full rounded-lg text-center text-xl font-semibold">
+          資產負債表
+        </h2>
+        <div className="flex flex-col items-center gap-2 rounded-lg px-4">
+          {/* <p className="text-sm font-semibold sm:text-base lg:text-lg">資產</p> */}
           {groupProperty.map((item) => (
             <div
               key={item.account}
-              className="flex h-20 w-full items-center justify-between rounded-lg border bg-[#9DBEBB] p-4 text-white"
+              className="flex h-20 w-full items-center justify-between rounded-lg border bg-[#e8e9ed] p-4 text-gray-800"
             >
               <div className="flex flex-col gap-2">
                 <svg
@@ -82,12 +82,12 @@ export default function BalanceSheet() {
             </div>
           ))}
         </div>
-        <div className="flex flex-col items-center gap-2 rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
-          <p className="text-sm font-semibold sm:text-base lg:text-lg">負債</p>
+        <div className="flex flex-col items-center gap-2 rounded-lg px-4">
+          {/* <p className="text-sm font-semibold sm:text-base lg:text-lg">負債</p> */}
           {groupPropertyLiability.map((item) => (
             <div
               key={item.account}
-              className="flex h-20 w-full items-center justify-between rounded-lg border bg-[#CC7178] p-4 text-white"
+              className="flex h-20 w-full items-center justify-between rounded-lg border bg-[#aaaaaa] p-4 text-white"
             >
               <div className="flex flex-col gap-2">
                 <svg
@@ -125,11 +125,11 @@ export default function BalanceSheet() {
             </div>
           ))}
         </div>
-        <div className="flex flex-col items-center gap-2 rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
-          <p className="text-sm font-semibold sm:text-base lg:text-lg">
+        <div className="flex flex-col items-center gap-2 rounded-lg px-4">
+          {/* <p className="text-sm font-semibold sm:text-base lg:text-lg">
             淨資產
-          </p>
-          <div className="flex h-20 w-full items-center justify-between rounded-lg border bg-[#aaaaaa] p-4 text-white">
+          </p> */}
+          <div className="flex h-20 w-full items-center justify-between rounded-lg border bg-[#babfd1] p-4 text-gray-800">
             <div className="flex flex-col gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

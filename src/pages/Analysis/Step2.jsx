@@ -31,7 +31,7 @@ export default function Step2({
       <h2 className="text-2xl font-semibold">設定統計數據</h2>
       <div>
         <h2 className="mt-7 text-xl font-semibold">
-          1. 選擇您房貸/房租使用的支出分類
+          1. 選擇您記帳使用的「房貸/房租」分類
         </h2>
 
         {/* 渲染按鈕組合 */}
@@ -40,7 +40,7 @@ export default function Step2({
             <button
               key={index}
               onClick={() => handleHouseCategoryClick(category)}
-              className={`rounded-md border p-2 ${
+              className={`rounded-lg border px-4 py-2 ${
                 selectedHouseCategory === category
                   ? "bg-[#545E75] text-gray-200"
                   : "bg-gray-200"
@@ -51,7 +51,7 @@ export default function Step2({
           ))}
           <button
             onClick={() => handleHouseCategoryClick("無")}
-            className={`rounded-md border p-2 ${
+            className={`rounded-lg border px-4 py-2 ${
               selectedHouseCategory === "無"
                 ? "bg-[#545E75] text-gray-200"
                 : "bg-gray-200"
@@ -62,7 +62,7 @@ export default function Step2({
         </div>
 
         <h2 className="mt-7 text-xl font-semibold">
-          2. 選擇您保險使用的支出分類
+          2. 選擇您紀錄「保險」支出的分類
         </h2>
 
         {/* 渲染按鈕組合 */}
@@ -71,7 +71,7 @@ export default function Step2({
             <button
               key={index}
               onClick={() => handleInsureCategoryClick(category)}
-              className={`rounded-md border p-2 ${
+              className={`rounded-lg border px-4 py-2 ${
                 selectedInsureCategory === category
                   ? "bg-[#545E75] text-gray-200"
                   : "bg-gray-200"
@@ -82,7 +82,7 @@ export default function Step2({
           ))}
           <button
             onClick={() => handleInsureCategoryClick("無")}
-            className={`rounded-md border p-2 ${
+            className={`rounded-lg border px-4 py-2 ${
               selectedInsureCategory === "無"
                 ? "bg-[#545E75] text-gray-200"
                 : "bg-gray-200"
