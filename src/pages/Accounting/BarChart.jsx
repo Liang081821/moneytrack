@@ -135,7 +135,11 @@ export default function BarChart({
         anchor: "end", // 將標籤錨點設置在數據點的上方或下方
         align: "top", // 將標籤對齊到數據點的上方
         offset: 10,
-        formatter: (value) => ` NT$ ${value}`,
+        formatter: (value) =>
+          ` NT$ ${value.toLocaleString(undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2,
+          })}`,
       },
       zoom: {
         pan: {

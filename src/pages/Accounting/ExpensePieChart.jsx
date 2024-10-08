@@ -145,7 +145,10 @@ export default function ExpensePieChart({
               0,
             );
             const percentage = ((value / total) * 100).toFixed(1);
-            return `金額: $${value} (${percentage}%)`;
+            return `金額: $${value.toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2,
+            })} (${percentage}%)`;
           },
         },
         backgroundColor: "rgba(0, 0, 0, 0.7)",

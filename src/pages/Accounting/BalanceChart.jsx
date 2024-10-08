@@ -152,7 +152,10 @@ export default function BalanceDoughnutChart({
             return "";
           }
           const label = context.chart.data.labels[context.dataIndex];
-          return `${label}\n$${value}`;
+          return `${label}\n$${value.toLocaleString(undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2,
+          })}`;
         },
       },
     },
