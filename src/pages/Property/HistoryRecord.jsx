@@ -4,12 +4,10 @@ import { addDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
 import Alert from "@/components/Alert";
 import { useState, useEffect } from "react";
-import InvestPic from "../../../public/invest.png";
-import ConsumePic from "../../../public/consume.png";
-import SavingPic from "../../../public/saving.png";
 import JoyrideGuide from "../../components/JoyRide/index";
 import { useJoyride } from "../../context/JoyrideContext";
 import Button from "@/components/Button";
+import PropertyTrendChart from "./PropertyTrendChart";
 
 import AccountDetails from "@/components/AccountDetails";
 
@@ -93,9 +91,11 @@ export default function HistoryRecord() {
   const startTutorial = () => {
     setRun(true);
   };
+
+  const [view, SetView] = useState(true);
   return (
     <div className="w-full bg-gradient-to-r from-[#e3e3e3] via-[#efefef] to-[#e3e3e3] pl-11 pt-5 fade-in md:pl-0">
-      <div className="mx-auto flex w-[85%] flex-col">
+      <div className="mx-auto mb-[10vh] flex w-[85%] flex-col">
         {alertMessage && (
           <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
         )}
@@ -218,111 +218,138 @@ export default function HistoryRecord() {
         <div className="mx-auto w-full">
           {historyData.length !== 0 ? (
             <div className="mb-9 mt-3 flex w-full flex-col items-center justify-center rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
-              <div className="text-xl font-semibold">資產紀錄</div>
-              {historyData
-                .slice()
-                .sort((a, b) => b.time.toDate() - a.time.toDate())
-                .map((item) => (
-                  <div
-                    key={item.id}
-                    className="m-1 flex min-h-[100px] w-full flex-col items-center gap-3 rounded-lg p-2 md:flex-row"
+              <div className="relative flex w-full items-center justify-center">
+                <div className="text-xl font-semibold">資產紀錄</div>
+                <div className="absolute right-0 flex gap-2">
+                  <button
+                    onClick={() => SetView(true)}
+                    className={`font-semibold ${view ? "bg-[#607196] text-white" : "bg-gray-300 text-white"} rounded-lg px-4 py-2 transition duration-200`}
                   >
-                    <div className="w-[110px] rounded-lg p-2 text-center">
-                      {item.time.toDate().toLocaleDateString()}
-                    </div>
-                    <div className="flex w-full">
-                      <div
-                        className="t flex h-8 w-14 items-center justify-center rounded-lg bg-[#e8e9ed] font-semibold"
-                        style={{
-                          width: `${getPercentage(item.saving, item.totalAssetsAbsoluteValue)}%`,
-                        }}
-                      >
-                        {getPercentage(
-                          item.saving,
-                          item.totalAssetsAbsoluteValue,
-                        ) >= 4
-                          ? `${getPercentage(item.saving, item.totalAssetsAbsoluteValue).toFixed(1)}%`
-                          : ""}
+                    列表檢視
+                  </button>
+
+                  <button
+                    onClick={() => SetView(false)}
+                    className={`font-semibold ${!view ? "bg-[#607196] text-white" : "bg-gray-300 text-white"} rounded-lg px-4 py-2 transition duration-200`}
+                  >
+                    圖表檢視
+                  </button>
+                </div>
+              </div>
+              {view ? (
+                historyData
+                  .slice()
+                  .sort((a, b) => b.time.toDate() - a.time.toDate())
+                  .map((item) => (
+                    <div
+                      key={item.id}
+                      className="m-1 flex min-h-[100px] w-full flex-col items-center gap-3 rounded-lg p-2 md:flex-row"
+                    >
+                      {/* 日期 */}
+                      <div className="w-[110px] rounded-lg p-2 text-center">
+                        {item.time.toDate().toLocaleDateString()}
                       </div>
-                      <div
-                        className="flex h-8 w-full items-center justify-center rounded-lg bg-[#9dbebb] font-semibold text-white"
-                        style={{
-                          width: `${getPercentage(item.expense, item.totalAssetsAbsoluteValue)}%`,
-                        }}
-                      >
-                        {getPercentage(
-                          item.expense,
-                          item.totalAssetsAbsoluteValue,
-                        ) >= 4
-                          ? `${getPercentage(item.expense, item.totalAssetsAbsoluteValue).toFixed(1)}%`
-                          : ""}
-                      </div>
-                      <div
-                        className="flex h-8 w-14 items-center justify-center rounded-lg bg-[#babfd1] font-semibold"
-                        style={{
-                          width: `${getPercentage(item.investment, item.totalAssetsAbsoluteValue)}%`,
-                        }}
-                      >
-                        {getPercentage(
-                          item.investment,
-                          item.totalAssetsAbsoluteValue,
-                        ) >= 4
-                          ? `${getPercentage(item.investment, item.totalAssetsAbsoluteValue).toFixed(1)}%`
-                          : ""}
-                      </div>
-                    </div>
-                    <div className="flex w-full flex-col items-center justify-center gap-2 md:flex-row">
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#82A0BC] p-3">
-                        <div className="text-lg font-semibold">儲蓄</div>
-                        <div>
-                          NT$
-                          {item.saving.toLocaleString(undefined, {
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 2,
-                          })}
+
+                      {/* 百分比條 */}
+                      <div className="flex w-full">
+                        <div
+                          className="flex h-8 items-center justify-center rounded-lg bg-[#e8e9ed] font-semibold"
+                          style={{
+                            width: `${getPercentage(item.saving, item.totalAssetsAbsoluteValue)}%`,
+                          }}
+                        >
+                          {getPercentage(
+                            item.saving,
+                            item.totalAssetsAbsoluteValue,
+                          ) >= 4
+                            ? `${getPercentage(item.saving, item.totalAssetsAbsoluteValue).toFixed(1)}%`
+                            : ""}
                         </div>
-                      </div>
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#9dbebb] p-3">
-                        <div className="text-lg font-semibold">消費</div>
-                        <div>
-                          NT$
-                          {item.expense.toLocaleString(undefined, {
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 2,
-                          })}
+                        <div
+                          className="flex h-8 w-full items-center justify-center rounded-lg bg-[#9dbebb] font-semibold text-white"
+                          style={{
+                            width: `${getPercentage(item.expense, item.totalAssetsAbsoluteValue)}%`,
+                          }}
+                        >
+                          {getPercentage(
+                            item.expense,
+                            item.totalAssetsAbsoluteValue,
+                          ) >= 4
+                            ? `${getPercentage(item.expense, item.totalAssetsAbsoluteValue).toFixed(1)}%`
+                            : ""}
                         </div>
-                      </div>
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#babfd1] p-3">
-                        <div className="text-lg font-semibold">投資</div>
-                        <div>
-                          NT$
-                          {item.investment.toLocaleString(undefined, {
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 2,
-                          })}
-                        </div>
-                      </div>
-                      <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg bg-[#BABFD1] p-3">
-                        <div className="text-lg font-semibold">總資產</div>
-                        <div>
-                          NT$
-                          {item.totalAssets.toLocaleString(undefined, {
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 2,
-                          })}
+                        <div
+                          className="flex h-8 items-center justify-center rounded-lg bg-[#babfd1] font-semibold"
+                          style={{
+                            width: `${getPercentage(item.investment, item.totalAssetsAbsoluteValue)}%`,
+                          }}
+                        >
+                          {getPercentage(
+                            item.investment,
+                            item.totalAssetsAbsoluteValue,
+                          ) >= 4
+                            ? `${getPercentage(item.investment, item.totalAssetsAbsoluteValue).toFixed(1)}%`
+                            : ""}
                         </div>
                       </div>
 
-                      <Button
-                        onClick={() => deleteRecord(item.id)}
-                        variant="delete"
-                        className="flex-col items-center justify-center text-nowrap"
-                      >
-                        刪除
-                      </Button>
+                      {/* 資產詳細資料 */}
+                      <div className="flex w-full flex-col items-center justify-center gap-2 md:flex-row">
+                        <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#82A0BC] p-3">
+                          <div className="text-lg font-semibold">儲蓄</div>
+                          <div>
+                            NT$
+                            {item.saving.toLocaleString(undefined, {
+                              minimumFractionDigits: 0,
+                              maximumFractionDigits: 2,
+                            })}
+                          </div>
+                        </div>
+                        <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#9dbebb] p-3">
+                          <div className="text-lg font-semibold">消費</div>
+                          <div>
+                            NT$
+                            {item.expense.toLocaleString(undefined, {
+                              minimumFractionDigits: 0,
+                              maximumFractionDigits: 2,
+                            })}
+                          </div>
+                        </div>
+                        <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg border-2 border-[#babfd1] p-3">
+                          <div className="text-lg font-semibold">投資</div>
+                          <div>
+                            NT$
+                            {item.investment.toLocaleString(undefined, {
+                              minimumFractionDigits: 0,
+                              maximumFractionDigits: 2,
+                            })}
+                          </div>
+                        </div>
+                        <div className="flex h-[60px] w-full flex-col items-center justify-center rounded-lg bg-[#BABFD1] p-3">
+                          <div className="text-lg font-semibold">總資產</div>
+                          <div>
+                            NT$
+                            {item.totalAssets.toLocaleString(undefined, {
+                              minimumFractionDigits: 0,
+                              maximumFractionDigits: 2,
+                            })}
+                          </div>
+                        </div>
+
+                        {/* 刪除按鈕 */}
+                        <Button
+                          onClick={() => deleteRecord(item.id)}
+                          variant="delete"
+                          className="flex-col items-center justify-center text-nowrap"
+                        >
+                          刪除
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+              ) : (
+                <PropertyTrendChart />
+              )}
             </div>
           ) : (
             <div className="mb-4 mt-3 flex h-[100px] w-full items-center justify-center rounded-lg border bg-slate-500 text-white opacity-40">

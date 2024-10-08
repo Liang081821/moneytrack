@@ -183,6 +183,7 @@ export default function BarChart({
     layout: {
       padding: {
         right: 60,
+        top: 40,
       },
     },
   };
@@ -190,7 +191,10 @@ export default function BarChart({
   return (
     <div className="flex flex-1 items-center justify-center rounded-lg p-4">
       <div className="w-full overflow-x-auto">
-        <div className="h-[400px] min-w-[800px]">
+        <div
+          className="h-[400px]"
+          style={{ width: `${dailyExpenses.length * 100}px` }}
+        >
           <Line
             data={data}
             options={options}
