@@ -559,15 +559,20 @@ export default function DailyRecord({
               <div className="mx-auto w-full border-[0.5px] border-gray-400"></div>
               <div className="text-lg font-bold text-gray-800">
                 NT$
-                {items.reduce((total, item) => {
-                  if (item.record_type === "轉帳") return total;
+                {items
+                  .reduce((total, item) => {
+                    if (item.record_type === "轉帳") return total;
 
-                  const amount =
-                    item.record_type === "支出"
-                      ? -Number(item.convertedAmountTWD)
-                      : Number(item.convertedAmountTWD);
-                  return total + amount;
-                }, 0)}
+                    const amount =
+                      item.record_type === "支出"
+                        ? -Number(item.convertedAmountTWD)
+                        : Number(item.convertedAmountTWD);
+                    return total + amount;
+                  }, 0)
+                  .toLocaleString(undefined, {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2,
+                  })}
               </div>
             </div>
 
