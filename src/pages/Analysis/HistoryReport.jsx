@@ -39,7 +39,7 @@ export default function HistoryReport() {
 
   if (!reportData || reportData.length === 0) {
     return (
-      <div className="mb-4 mt-4 flex w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="mb-4 mt-4 flex h-[70vh] w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

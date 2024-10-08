@@ -311,8 +311,8 @@ export default function MonthlyData({
   }
   return (
     <div className="flex max-h-[100vh] w-full flex-col items-center overflow-scroll rounded-lg">
-      <div className="flex w-full flex-col gap-2 bg-[#fcfcfc] px-4 py-7 shadow-lg">
-        <h2 className="sticky top-0 w-full rounded-lg text-center text-xl font-semibold">
+      <div className="flex h-[700px] w-full flex-col gap-2 overflow-scroll bg-[#fcfcfc] px-4 pb-7 shadow-lg">
+        <h2 className="sticky top-0 w-full rounded-lg bg-[#fcfcfc] pb-2 pt-7 text-center text-xl font-semibold">
           {`${now.getFullYear()} 年 ${now.getMonth()} 月收支數據`}
         </h2>
         <div className="flex flex-col items-center gap-2 rounded-lg px-4">

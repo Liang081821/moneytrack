@@ -105,7 +105,7 @@ export default function AddNewClass() {
 
       {newclassEditing && (
         <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="relative flex min-h-[60vh] w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
+          <div className="relative flex h-[30vh] w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
             {!newclass && (
               <div className="flex flex-col items-center gap-8">
                 <div className="flex w-full justify-evenly">
@@ -132,7 +132,7 @@ export default function AddNewClass() {
                 </div>
 
                 {/* 顯示分類 */}
-                <div className="flex flex-wrap gap-3 self-start">
+                <div className="flex flex-wrap gap-3 self-start overflow-scroll">
                   {Array.isArray(categoriesToDisplay) &&
                     categoriesToDisplay.map((item, index) => (
                       <div
