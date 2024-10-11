@@ -474,13 +474,13 @@ export default function DailyRecord({
 
       const qOriginal = query(
         propertyCollectionRef,
-        where("account", "==", currentTransaction.account),
+        where("id", "==", currentTransaction.accountid),
       );
 
       if (currentTransaction.targetaccount) {
         const qTargetAccount = query(
           propertyCollectionRef,
-          where("account", "==", currentTransaction.targetaccount),
+          where("id", "==", currentTransaction.targetaccountid),
         );
 
         const querySnapshotTarget = await getDocs(qTargetAccount);

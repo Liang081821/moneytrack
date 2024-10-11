@@ -61,7 +61,8 @@ export default function DailyAccounting({ setAccounting }) {
           : "transfer"
     ];
   const accountsToRender = property.filter((item) => {
-    return item.account !== watchAccount;
+    const parsedAccount = watchAccount ? JSON.parse(watchAccount) : null;
+    return parsedAccount ? item.id !== parsedAccount.id : true;
   });
   const { currencies, rates } = useGlobalContext();
   const [convertedAmountDisplay, setConvertedAmountDisplay] = useState(0);
@@ -96,15 +97,18 @@ export default function DailyAccounting({ setAccounting }) {
           return;
         }
       }
+      const selectedAccount = JSON.parse(data.account);
+      const selectedTargetAccount = JSON.parse(data.targetaccount);
+
       const q = query(
         propertyCollectionRef,
-        where("account", "==", data.account),
+        where("id", "==", selectedAccount.id),
       );
 
       if (data.targetaccount) {
         const qTarget = query(
           propertyCollectionRef,
-          where("account", "==", data.targetaccount),
+          where("id", "==", selectedTargetAccount.id),
         );
         const qTargetSnapshot = await getDocs(qTarget);
 
@@ -142,7 +146,6 @@ export default function DailyAccounting({ setAccounting }) {
       const accountType = !querySnapshot.empty
         ? querySnapshot.docs[0].data().account_type
         : "";
-
       try {
         setConfirmData({
           isOpen: true,
@@ -155,11 +158,13 @@ export default function DailyAccounting({ setAccounting }) {
         reset();
         if (watchType === "轉帳") {
           docRef = await addDoc(accountingCollectionRef, {
-            account: data.account,
+            account: selectedAccount.account,
+            accountid: selectedAccount.id,
             account_type: accountType,
+            targetaccountid: selectedTargetAccount.id,
             amount: Number(data.amount),
             time: startDate,
-            targetaccount: data.targetaccount,
+            targetaccount: selectedTargetAccount.account,
             record_type: data.type,
             project: data.project || null,
             currency: data.currency,
@@ -167,7 +172,9 @@ export default function DailyAccounting({ setAccounting }) {
           });
         } else {
           docRef = await addDoc(accountingCollectionRef, {
-            account: data.account,
+            account: selectedAccount.account,
+            accountid: selectedAccount.id,
+
             account_type: accountType,
             amount: Number(data.amount),
             time: startDate,
@@ -258,7 +265,13 @@ export default function DailyAccounting({ setAccounting }) {
                 <option value="">請選擇</option>
                 {Array.isArray(property) &&
                   property.map((item) => (
-                    <option key={item.id} value={item.account}>
+                    <option
+                      key={item.id}
+                      value={JSON.stringify({
+                        id: item.id,
+                        account: item.account,
+                      })}
+                    >
                       {item.account}
                     </option>
                   ))}
@@ -305,7 +318,13 @@ export default function DailyAccounting({ setAccounting }) {
                   <option value="">請選擇</option>
                   {Array.isArray(accountsToRender) &&
                     accountsToRender.map((item) => (
-                      <option key={item.id} value={item.account}>
+                      <option
+                        key={item.id}
+                        value={JSON.stringify({
+                          id: item.id,
+                          account: item.account,
+                        })}
+                      >
                         {item.account}
                       </option>
                     ))}

@@ -56,7 +56,7 @@ export default function AccountDetails({
         console.log("已刪除");
         const q = query(
           accountingCollectionRef,
-          where("account", "==", selectedAccount.account),
+          where("accountid", "==", selectedAccount.id),
         );
         const qSnapShot = await getDocs(q);
         qSnapShot.forEach(async (docSnap) => {
@@ -73,7 +73,7 @@ export default function AccountDetails({
   useEffect(() => {
     if (selectedAccount) {
       const records = transactionData.filter(
-        (account) => account.account === selectedAccount.account,
+        (account) => account.accountid === selectedAccount.id,
       );
       records.sort((a, b) => b.time.toDate() - a.time.toDate());
       setAccountRecord(records);

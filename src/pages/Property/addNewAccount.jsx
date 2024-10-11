@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getFirestoreRefs } from "../../firebase/api";
-import { addDoc } from "firebase/firestore";
+import { addDoc, updateDoc } from "firebase/firestore";
 import { useForm } from "react-hook-form";
 import { useGlobalContext } from "@/context/GlobalContext";
 import PropTypes from "prop-types";
@@ -47,6 +47,9 @@ export default function AddNewFunction({
         account: data.account,
         account_type: account_type,
         balance: Number(data.balance),
+      });
+      await updateDoc(docRef, {
+        id: docRef.id,
       });
 
       console.log("Document written with ID: ", docRef.id);
