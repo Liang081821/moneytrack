@@ -17,6 +17,8 @@ export default function AddNewClass() {
     isOpen: false,
     message: "",
     onConfirm: null,
+    cancelMessage: "取消",
+    confirmMessage: "確認",
   });
   const [selectedCategory, setSelectedCategory] = useState("收入");
   const { classData } = useGlobalContext();
@@ -99,6 +101,8 @@ export default function AddNewClass() {
             setConfirmData({ ...confirmData, isOpen: false });
           }}
           onCancel={() => setConfirmData({ ...confirmData, isOpen: false })}
+          cancelMessage={confirmData.cancelMessage}
+          confirmMessage={confirmData.confirmMessage}
         />
       )}
       <button onClick={handleEditing}>管理分類</button>
@@ -153,6 +157,8 @@ export default function AddNewClass() {
                               isOpen: true,
                               message: `確定要刪除「${item}」嗎？ 刪除後該紀錄仍會保留`,
                               onConfirm: () => handleDeleteClass(item),
+                              cancelMessage: "取消",
+                              confirmMessage: "確認",
                             });
                           }}
                         >

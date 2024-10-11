@@ -30,25 +30,29 @@ export default function Step2({
     <div className="flex h-full flex-col items-center justify-center pt-10 fade-in">
       <h2 className="text-2xl font-semibold">設定統計數據</h2>
       <div>
-        <h2 className="mt-7 text-xl font-semibold">
+        <h2 className="mb-1 mt-7 text-xl font-semibold">
           1. 選擇您記帳使用的「房貸/房租」分類
         </h2>
+        <p className="text-lg text-gray-500">
+          後續步驟會為您計算房貸/租相關比率，因此您需要選擇記帳時自定義的分類！
+        </p>
 
         {/* 渲染按鈕組合 */}
         <div className="mt-4 flex space-x-2">
-          {classData.expense.map((category, index) => (
-            <button
-              key={index}
-              onClick={() => handleHouseCategoryClick(category)}
-              className={`rounded-lg border px-4 py-2 ${
-                selectedHouseCategory === category
-                  ? "bg-[#545E75] text-gray-200"
-                  : "bg-gray-200"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
+          {classData.expense &&
+            classData.expense.map((category, index) => (
+              <button
+                key={index}
+                onClick={() => handleHouseCategoryClick(category)}
+                className={`rounded-lg border px-4 py-2 ${
+                  selectedHouseCategory === category
+                    ? "bg-[#545E75] text-gray-200"
+                    : "bg-gray-200"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
           <button
             onClick={() => handleHouseCategoryClick("無")}
             className={`rounded-lg border px-4 py-2 ${
@@ -61,25 +65,29 @@ export default function Step2({
           </button>
         </div>
 
-        <h2 className="mt-7 text-xl font-semibold">
+        <h2 className="mb-1 mt-7 text-xl font-semibold">
           2. 選擇您紀錄「保險」支出的分類
         </h2>
+        <p className="text-lg text-gray-500">
+          後續步驟會為您計算保險相關比率，因此您需要選擇記帳時自定義的分類！
+        </p>
 
         {/* 渲染按鈕組合 */}
         <div className="mt-4 flex space-x-2">
-          {classData.expense.map((category, index) => (
-            <button
-              key={index}
-              onClick={() => handleInsureCategoryClick(category)}
-              className={`rounded-lg border px-4 py-2 ${
-                selectedInsureCategory === category
-                  ? "bg-[#545E75] text-gray-200"
-                  : "bg-gray-200"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
+          {classData.expense &&
+            classData.expense.map((category, index) => (
+              <button
+                key={index}
+                onClick={() => handleInsureCategoryClick(category)}
+                className={`rounded-lg border px-4 py-2 ${
+                  selectedInsureCategory === category
+                    ? "bg-[#545E75] text-gray-200"
+                    : "bg-gray-200"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
           <button
             onClick={() => handleInsureCategoryClick("無")}
             className={`rounded-lg border px-4 py-2 ${

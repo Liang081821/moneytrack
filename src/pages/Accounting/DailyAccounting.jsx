@@ -6,15 +6,26 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AddNewClass from "./AddNewClass";
-import Alert from "@/components/Alert";
+// import Alert from "@/components/Alert";
+import Confirm from "@/components/Confirm";
+import { useNavigate } from "react-router-dom";
+
 import PropTypes from "prop-types";
 import Button from "@/components/Button";
 
 export default function DailyAccounting({ setAccounting }) {
   const { property, classData, projectData } = useGlobalContext();
   const { loginEmail } = useGlobalContext();
-  const [alertMessage, setAlertMessage] = useState(null);
+  const navigate = useNavigate();
 
+  // const [alertMessage, setAlertMessage] = useState(null);
+  const [confirmData, setConfirmData] = useState({
+    isOpen: false,
+    message: "",
+    onConfirm: null,
+    cancelMessage: "取消",
+    confirmMessage: "確認",
+  });
   const { accountingCollectionRef, propertyCollectionRef } =
     getFirestoreRefs(loginEmail);
 
@@ -133,7 +144,14 @@ export default function DailyAccounting({ setAccounting }) {
         : "";
 
       try {
-        setAlertMessage("新增成功");
+        setConfirmData({
+          isOpen: true,
+          message: `新增成功`,
+          onConfirm: () => navigate("/accounting"),
+          onCancel: () => setAccounting(false),
+          cancelMessage: "再記一筆",
+          confirmMessage: "確認",
+        });
         reset();
         if (watchType === "轉帳") {
           docRef = await addDoc(accountingCollectionRef, {
@@ -162,7 +180,7 @@ export default function DailyAccounting({ setAccounting }) {
         }
       } catch (error) {
         console.error("寫入資料時出錯：", error);
-        setAlertMessage("新增失敗，請稍後再試");
+        // setAlertMessage("新增失敗，請稍後再試");
       }
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -180,8 +198,20 @@ export default function DailyAccounting({ setAccounting }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4 fade-in">
       <div className="joyride-accountingproject joyride-startaccounting relative flex w-[30%] flex-col items-center justify-center gap-3 rounded-lg bg-white p-8">
-        {alertMessage && (
+        {/* {alertMessage && (
           <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
+        )} */}
+        {confirmData.isOpen && (
+          <Confirm
+            message={confirmData.message}
+            onConfirm={() => {
+              navigate("/accounting"); // 導航到 /accounting
+              setAccounting(false); // 執行 setAccounting(false)
+            }}
+            onCancel={() => setConfirmData({ ...confirmData, isOpen: false })}
+            cancelMessage={confirmData.cancelMessage}
+            confirmMessage={confirmData.confirmMessage}
+          />
         )}
         <h2 className="text-xl font-semibold"> 記帳面板</h2>
         <div className="flex gap-2 self-end">

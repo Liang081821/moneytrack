@@ -56,6 +56,8 @@ export default function Report() {
     isOpen: false,
     message: "",
     onConfirm: null,
+    cancelMessage: "取消",
+    confirmMessage: "確認",
   });
   const handleAddReport = () => {
     console.log("monthexpense:", monthexpense);
@@ -82,6 +84,8 @@ export default function Report() {
           setConfirmData({ ...confirmData, isOpen: false });
           setStep((prevStep) => prevStep + 1);
         },
+        cancelMessage: "取消",
+        confirmMessage: "確認",
       });
       return;
     }
@@ -96,6 +100,8 @@ export default function Report() {
           setConfirmData({ ...confirmData, isOpen: false });
           setStep((prevStep) => prevStep + 1);
         },
+        cancelMessage: "取消",
+        confirmMessage: "確認",
       });
       return;
     }
@@ -111,6 +117,8 @@ export default function Report() {
     setConfirmData({
       isOpen: true,
       message: "離開後需重新進入，確定離開嗎",
+      cancelMessage: "取消",
+      confirmMessage: "確認",
       onConfirm: () => {
         setConfirmData({ ...confirmData, isOpen: false });
         setReportVisible(false);
@@ -134,6 +142,8 @@ export default function Report() {
         setSelectedHouseCategory("");
         setSelectedInsureCategory("");
       },
+      cancelMessage: "取消",
+      confirmMessage: "確認",
     });
 
     return;
@@ -303,6 +313,8 @@ export default function Report() {
                     onCancel={() =>
                       setConfirmData({ ...confirmData, isOpen: false })
                     }
+                    cancelMessage={confirmData.cancelMessage}
+                    confirmMessage={confirmData.confirmMessage}
                   />
                 )}
                 <Button onClick={handleCloseReport}>取消</Button>
