@@ -220,17 +220,17 @@ export default function HistoryRecord() {
             <div className="mb-9 mt-3 flex w-full flex-col items-center justify-center rounded-lg bg-[#fcfcfc] px-4 py-7 shadow-lg">
               <div className="relative flex w-full items-center justify-center">
                 <div className="text-xl font-semibold">資產紀錄</div>
-                <div className="absolute right-0 flex gap-2">
+                <div className="absolute right-3 flex gap-2 border-b border-gray-300">
                   <button
                     onClick={() => SetView(true)}
-                    className={`font-semibold ${view ? "bg-[#607196] text-white" : "bg-gray-300 text-white"} rounded-lg px-4 py-2 transition duration-200`}
+                    className={`font-semibold ${view ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-4 py-2 transition duration-300 ease-in-out`}
                   >
                     列表檢視
                   </button>
 
                   <button
                     onClick={() => SetView(false)}
-                    className={`font-semibold ${!view ? "bg-[#607196] text-white" : "bg-gray-300 text-white"} rounded-lg px-4 py-2 transition duration-200`}
+                    className={`font-semibold ${!view ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-4 py-2 transition duration-300 ease-in-out`}
                   >
                     圖表檢視
                   </button>

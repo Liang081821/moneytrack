@@ -52,7 +52,7 @@ function App() {
       </div>
       <div
         onClick={() => startAccounting()}
-        className="joyride-accounting group fixed bottom-16 right-4 flex h-16 w-16 cursor-pointer items-center justify-center rounded-[50%] bg-white shadow-lg transition-all duration-100 hover:w-56 hover:rounded-full hover:opacity-100"
+        className="joyride-accounting group fixed bottom-16 right-4 flex h-16 w-16 cursor-pointer items-center justify-center rounded-[50%] bg-white shadow-lg transition-all duration-300 hover:w-56 hover:rounded-full hover:opacity-100"
       >
         <div className="relative flex h-full w-full items-center justify-center">
           {/* SVG 圖標 */}
@@ -62,7 +62,7 @@ function App() {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="h-8 w-8 transition-opacity duration-100 group-hover:opacity-0"
+            className="h-8 w-8 transition-opacity duration-200 group-hover:opacity-0"
           >
             <path
               strokeLinecap="round"
@@ -72,11 +72,12 @@ function App() {
           </svg>
 
           {/* 顯示文字 */}
-          <span className="absolute left-20 text-lg font-semibold opacity-0 transition-opacity duration-100 group-hover:opacity-100">
+          <span className="absolute left-20 w-0 overflow-hidden text-lg font-semibold opacity-0 transition-all duration-200 group-hover:w-auto group-hover:whitespace-nowrap group-hover:opacity-100 group-hover:delay-200">
             我要記帳
           </span>
         </div>
       </div>
+
       {/* 離線提示區塊，帶有滑入/滑出的動畫 */}
       {isOffline && (
         <div

@@ -223,86 +223,109 @@ export default function ProjectLayoutGrid() {
       <div className="w-[85%] py-5">
         <div className="flex h-auto flex-col flex-wrap items-start justify-start gap-4">
           {/* 新增專案按鈕 */}
-          <div className="flex w-full justify-end gap-2 self-end rounded-lg bg-[#fcfcfc] p-4 shadow-lg">
-            <Button
-              className="flex items-center justify-center gap-1 md:gap-2"
-              variant="grey"
-            >
-              <p onClick={() => startTutorial()}>使用教學</p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="yellow"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="size-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
-                />
-              </svg>
-            </Button>
-            <div className="joyride-report flex gap-2">
+          <div className="flex w-full justify-between gap-2 self-end rounded-lg bg-[#fcfcfc] p-4 shadow-lg">
+            <div className="joyride-report flex gap-2 border-b border-gray-300">
               <div
                 onClick={() => setShowOnlyEditing(true)}
-                className={`font-semibold ${showOnlyEditing ? "bg-[#607196] text-white" : "bg-gray-300 text-white"} rounded-lg px-4 py-2 transition duration-200`}
+                className={`transform cursor-pointer text-center font-semibold transition-all duration-300 ${
+                  showOnlyEditing
+                    ? "scale-105 border-b-2 border-[#607196] text-[#607196]"
+                    : "text-gray-400"
+                } px-4 py-2`}
               >
-                <button>進行中</button>
+                進行中
               </div>
-              <button
+
+              <div
                 onClick={() => setShowOnlyEditing(false)}
-                className={`font-semibold ${!showOnlyEditing ? "bg-[#607196] text-white" : "bg-gray-300 text-white"} rounded-lg px-4 py-2 transition duration-200`}
+                className={`transform cursor-pointer text-center font-semibold transition-all duration-300 ${
+                  !showOnlyEditing
+                    ? "scale-105 border-b-2 border-[#607196] text-[#607196]"
+                    : "text-gray-400"
+                } px-4 py-2`}
               >
                 已結束
-              </button>
+              </div>
             </div>
+            {showOnlyEditing ? (
+              <>
+                <Button
+                  className="flex items-center justify-center gap-1 md:gap-2"
+                  variant="grey"
+                >
+                  <p onClick={() => startTutorial()}>使用教學</p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="yellow"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="size-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+                    />
+                  </svg>
+                </Button>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="joyride-project flex w-full gap-4">
-            <div className="joyride-addproject relative h-[200px] w-full md:h-[300px] md:w-[32%]">
-              <div className="h-[200px] w-full rounded-lg border border-[#8b91a1] bg-[#8b91a1] p-4 opacity-20 md:h-[300px]"></div>
-              <button
-                onClick={startEditing}
-                className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center text-5xl font-semibold opacity-100 md:h-[100px] md:w-[100px] md:text-7xl"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1"
-                  stroke="currentColor"
-                  className="size-20"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
-              </button>
-            </div>
+            {showOnlyEditing ? (
+              <>
+                {" "}
+                <div className="joyride-addproject relative h-[200px] w-full md:h-[300px] md:w-[32%]">
+                  <div className="h-[200px] w-full rounded-lg border border-[#8b91a1] bg-[#8b91a1] p-4 opacity-20 md:h-[300px]"></div>
+                  <button
+                    onClick={startEditing}
+                    className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center text-5xl font-semibold opacity-100 md:h-[100px] md:w-[100px] md:text-7xl"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1"
+                      stroke="currentColor"
+                      className="size-20"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
 
             {/* 動態生成的專案 */}
             {projects.length === 0 ? (
-              <div className="flex h-[200px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[300px]">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="mb-2 h-12 w-12"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
-                  />
-                </svg>
-                <p>新增第一個專案</p>
-              </div>
+              <></>
             ) : (
+              // <div className="flex h-[200px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[300px]">
+              //   <svg
+              //     xmlns="http://www.w3.org/2000/svg"
+              //     fill="none"
+              //     viewBox="0 0 24 24"
+              //     strokeWidth="1.5"
+              //     stroke="currentColor"
+              //     className="mb-2 h-12 w-12"
+              //   >
+              //     <path
+              //       strokeLinecap="round"
+              //       strokeLinejoin="round"
+              //       d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
+              //     />
+              //   </svg>
+              //   <p>新增第一個專案</p>
+              // </div>
               <>
                 {projects
                   .filter((project) =>
@@ -342,14 +365,22 @@ export default function ProjectLayoutGrid() {
               onSubmit={handleSubmit(addNewBox)}
               className="flex flex-col gap-2"
             >
-              <div className="flex items-center gap-3">
-                <div className="font-semibold">專案名稱</div>
-                <input
-                  className="rounded-lg border border-gray-300 px-4 py-2"
-                  type="text"
-                  placeholder="專案名稱"
-                  {...register("projectname", { required: "請輸入專案名稱" })}
-                />
+              <div className="flex flex-col items-center gap-3">
+                <div className="flex w-full items-center gap-3">
+                  <div className="text-nowrap font-semibold">專案名稱</div>
+                  <input
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2"
+                    type="text"
+                    placeholder="專案名稱"
+                    {...register("projectname", {
+                      required: "請輸入專案名稱",
+                      maxLength: {
+                        value: 10,
+                        message: "專案名稱不能超過 10 個字",
+                      },
+                    })}
+                  />
+                </div>
                 {errors.projectname && (
                   <p className="text-red-500">{errors.projectname.message}</p>
                 )}

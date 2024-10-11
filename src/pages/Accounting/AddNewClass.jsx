@@ -108,23 +108,23 @@ export default function AddNewClass() {
           <div className="relative flex h-[30vh] w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
             {!newclass && (
               <div className="flex flex-col items-center gap-8">
-                <div className="flex w-full justify-evenly">
+                <div className="flex w-full justify-evenly border-b border-gray-300">
                   <div
-                    className={`grow cursor-pointer rounded-lg p-1 text-center transition-all duration-300 ease-in-out ${
+                    className={`grow transform cursor-pointer text-center transition-all duration-300 ease-in-out ${
                       selectedCategory === "收入"
-                        ? "bg-[#82A0BC] text-white"
-                        : "bg-gray-100 opacity-70"
-                    }`}
+                        ? "scale-105 border-b-2 border-[#82A0BC] text-[#82A0BC]"
+                        : "text-gray-400"
+                    } p-1`}
                     onClick={() => setSelectedCategory("收入")}
                   >
                     收入
                   </div>
                   <div
-                    className={`grow cursor-pointer rounded-lg p-1 text-center transition-all duration-300 ease-in-out ${
+                    className={`grow transform cursor-pointer text-center transition-all duration-300 ease-in-out ${
                       selectedCategory === "支出"
-                        ? "bg-[#82A0BC] text-white"
-                        : "bg-gray-100 opacity-70"
-                    }`}
+                        ? "scale-105 border-b-2 border-[#82A0BC] text-[#82A0BC]"
+                        : "text-gray-400"
+                    } p-1`}
                     onClick={() => setSelectedCategory("支出")}
                   >
                     支出

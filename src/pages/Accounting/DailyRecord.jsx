@@ -70,7 +70,14 @@ export default function DailyRecord({
   const [editing, setEditing] = useState(false);
   const [currentTransaction, setCurrentTransaction] = useState(null);
 
-  const { register, handleSubmit, reset, setValue, watch } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       record_type: "",
       class: "",
@@ -717,17 +724,26 @@ export default function DailyRecord({
                     {currentTransaction.currency}
                   </div>
                 </div>
-                <div className="mb-3 flex items-center gap-2">
-                  <label className="text-nowrap text-gray-700">金額</label>
-                  <input
-                    className="w-full rounded-lg border p-2"
-                    type="number"
-                    {...register("amount", {
-                      required: "請輸入金額",
-                      valueAsNumber: true,
-                      validate: (value) => value > 0 || "金額必須大於 0",
-                    })}
-                  />
+                <div className="mb-3 flex flex-col items-center gap-2">
+                  <div className="flex w-full gap-2">
+                    <label className="text-nowrap text-gray-700">金額</label>
+                    <input
+                      className="w-full rounded-lg border p-2"
+                      type="number"
+                      {...register("amount", {
+                        required: "請輸入金額",
+                        valueAsNumber: true,
+                        max: {
+                          value: 100000000000,
+                          message: "須小於一千億",
+                        },
+                        validate: (value) => value > 0 || "金額必須大於 0",
+                      })}
+                    />
+                  </div>
+                  {errors.amount && (
+                    <p className="text-red-500">{errors.amount.message}</p>
+                  )}
                 </div>
 
                 <div className="flex justify-end">

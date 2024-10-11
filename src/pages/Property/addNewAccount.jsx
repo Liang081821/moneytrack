@@ -3,7 +3,6 @@ import { getFirestoreRefs } from "../../firebase/api";
 import { addDoc } from "firebase/firestore";
 import { useForm } from "react-hook-form";
 import { useGlobalContext } from "@/context/GlobalContext";
-import Alert from "@/components/Alert";
 import PropTypes from "prop-types";
 import Button from "../../components/Button/index";
 
@@ -88,7 +87,14 @@ export default function AddNewFunction({
                     className="rounded-lg border border-gray-300 px-4 py-2"
                     type="text"
                     placeholder="帳戶名稱"
-                    {...register("account", { required: "請輸入帳戶名稱" })}
+                    // maxLength={10}
+                    {...register("account", {
+                      required: "請輸入帳戶名稱",
+                      maxLength: {
+                        value: 10,
+                        message: "名稱須小於 10 個字",
+                      },
+                    })}
                   />
                   {errors.account && (
                     <p className="text-red-500">{errors.account.message}</p>
@@ -99,11 +105,15 @@ export default function AddNewFunction({
                   <div className="font-semibold">初始金額</div>
                   <input
                     className="rounded-lg border border-gray-300 px-4 py-2"
-                    type="text"
+                    type="number"
                     placeholder="初始金額"
                     {...register("balance", {
                       required: "請輸入初始金額",
                       valueAsNumber: true,
+                      max: {
+                        value: 100000000000,
+                        message: "須小於一千億",
+                      },
                       validate: (value) => !isNaN(value) || "請輸入有效的數字",
                     })}
                   />
@@ -125,4 +135,6 @@ export default function AddNewFunction({
 AddNewFunction.propTypes = {
   account_type: PropTypes.string.isRequired,
   bgColor: PropTypes.string.isRequired,
+  setIsAddNewOpen: PropTypes.func.isRequired,
+  setAlertMessage: PropTypes.func.isRequired,
 };

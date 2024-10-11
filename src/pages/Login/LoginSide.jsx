@@ -446,7 +446,7 @@ export default function LoginSide() {
           </div>
         </section>
         <section className="flex h-auto flex-col items-center justify-center gap-10 bg-[#222E50] p-7 text-sm text-white lg:text-lg">
-          <div className="it flex justify-center gap-10">
+          {/* <div className="it flex justify-center gap-10">
             <div className="flex flex-col gap-2">
               <p className="font-semibold text-[#bbe0e1]">麻布追蹤</p>
               <p>關於我們</p>
@@ -460,7 +460,7 @@ export default function LoginSide() {
               <p>資訊安全政策</p>
               <p>聯絡我們</p>
             </div>
-          </div>
+          </div> */}
           <p className="">
             © 2024 MoneyTrack Corp., Ltd. All rights reserved.
           </p>

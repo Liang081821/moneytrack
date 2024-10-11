@@ -74,7 +74,6 @@ export default function DailyAccounting({ setAccounting }) {
     try {
       const { amount, currency } = data;
 
-      // 將金額轉換為 TWD
       let convertedAmountTWD = amount;
       if (currency !== "TWD") {
         if (rates[currency] && rates["TWD"]) {
@@ -215,80 +214,101 @@ export default function DailyAccounting({ setAccounting }) {
           onSubmit={handleSubmit(onSubmit)}
           className="flex w-full flex-col items-center gap-3"
         >
-          <div className="flex w-full items-center gap-3">
-            <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
-              帳戶
-            </div>
-            <select
-              className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
-              {...register("account", {
-                required: "請選擇帳戶",
-              })}
-            >
-              <option value="">請選擇</option>
-              {Array.isArray(property) &&
-                property.map((item) => (
-                  <option key={item.id} value={item.account}>
-                    {item.account}
-                  </option>
-                ))}
-            </select>
-          </div>
-          <div className="flex w-full items-center gap-3">
-            <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
-              類型
-            </div>
-            <select
-              className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
-              {...register("type", {
-                required: "請選擇類型",
-              })}
-            >
-              <option value="">請選擇</option>
-              <option>收入</option>
-              <option>支出</option>
-              <option>轉帳</option>
-            </select>
-          </div>
-          {watchType === "轉帳" ? (
-            <div className="flex w-full items-center gap-3">
+          <div className="flex w-full flex-col items-center gap-3">
+            <div className="flex w-full gap-3">
               <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
-                轉入
+                帳戶
               </div>
               <select
                 className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
-                {...register("targetaccount", {
-                  required: watchType === "轉帳" ? "請選擇目標轉入帳戶" : false,
+                {...register("account", {
+                  required: "請選擇帳戶",
                 })}
               >
                 <option value="">請選擇</option>
-                {Array.isArray(accountsToRender) &&
-                  accountsToRender.map((item) => (
+                {Array.isArray(property) &&
+                  property.map((item) => (
                     <option key={item.id} value={item.account}>
                       {item.account}
                     </option>
                   ))}
               </select>
             </div>
-          ) : (
-            <div className="flex w-full items-center gap-3">
+            {errors.account && (
+              <p className="text-red-500">{errors.account.message}</p>
+            )}
+          </div>
+          <div className="flex w-full flex-col items-center gap-3">
+            <div className="flex w-full gap-3">
               <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
-                分類
+                類型
               </div>
               <select
                 className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
-                {...register("class", {
-                  required: watchType !== "轉帳" ? "請選擇目標轉入帳戶" : false,
+                {...register("type", {
+                  required: "請選擇類型",
                 })}
               >
                 <option value="">請選擇</option>
-                {Array.isArray(optionsToRender) &&
-                  optionsToRender.map((item) => (
-                    <option key={item.id} value={item.value}>
-                      {item}
-                    </option>
-                  ))}
+                <option>收入</option>
+                <option>支出</option>
+                <option>轉帳</option>
               </select>
+            </div>
+            {errors.type && (
+              <p className="text-red-500">{errors.type.message}</p>
+            )}
+          </div>
+          {watchType === "轉帳" ? (
+            <div className="flex w-full flex-col items-center gap-3">
+              <div className="flex w-full gap-3">
+                <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
+                  轉入
+                </div>
+                <select
+                  className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
+                  {...register("targetaccount", {
+                    required:
+                      watchType === "轉帳" ? "請選擇目標轉入帳戶" : false,
+                  })}
+                >
+                  <option value="">請選擇</option>
+                  {Array.isArray(accountsToRender) &&
+                    accountsToRender.map((item) => (
+                      <option key={item.id} value={item.account}>
+                        {item.account}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              {errors.targetaccount && (
+                <p className="text-red-500">{errors.targetaccount.message}</p>
+              )}
+            </div>
+          ) : (
+            <div className="flex w-full flex-col items-center gap-3">
+              <div className="flex w-full gap-3">
+                <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
+                  分類
+                </div>
+                <select
+                  className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
+                  {...register("class", {
+                    required: watchType !== "轉帳" ? "請選擇分類" : false,
+                  })}
+                >
+                  <option value="">請選擇</option>
+                  {Array.isArray(optionsToRender) &&
+                    optionsToRender.map((item) => (
+                      <option key={item.id} value={item.value}>
+                        {item}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              {errors.class && (
+                <p className="text-red-500">{errors.class.message}</p>
+              )}
             </div>
           )}
           {Array.isArray(projectData) &&
@@ -347,20 +367,31 @@ export default function DailyAccounting({ setAccounting }) {
               )}
             </div>
           </div>
-          <div className="flex w-full items-center gap-3">
-            <div className="text-nowrap text-sm font-semibold md:text-base">
-              金額
+          <div className="flex w-full flex-col items-center gap-3">
+            <div className="flex w-full gap-3">
+              <div className="text-nowrap text-sm font-semibold md:text-base">
+                金額
+              </div>
+              <input
+                className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
+                type="number"
+                placeholder={
+                  errors.amount ? errors.amount.message : "金額不為 0"
+                }
+                {...register("amount", {
+                  required: "請輸入金額",
+                  valueAsNumber: true,
+                  max: {
+                    value: 100000000000,
+                    message: "須小於一千億",
+                  },
+                  validate: (value) => value > 0 || "金額必須大於 0",
+                })}
+              />
             </div>
-            <input
-              className="flex h-[30px] w-full items-center justify-center rounded-lg border border-black text-center md:h-[44px]"
-              type="number"
-              placeholder={errors.amount ? errors.amount.message : "金額不為 0"}
-              {...register("amount", {
-                required: "請輸入金額",
-                valueAsNumber: true,
-                validate: (value) => value > 0 || "金額必須大於 0",
-              })}
-            />
+            {errors.amount && (
+              <p className="text-red-500">{errors.amount.message}</p>
+            )}
           </div>
           {selectedCurrency !== "TWD" && amount ? (
             <div className="font-semibold text-red-400 fade-in">

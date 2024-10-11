@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Button from "@/components/Button";
 
@@ -26,7 +26,8 @@ export default function Step5({ preText, setPreText }) {
           messages: [
             {
               role: "system",
-              content: "你是一個使用繁體中文回應的理財規劃師。",
+              content:
+                "你是一個使用繁體中文回應的理財規劃師。如果有其他跟理財不相關的話題，請一律表示無法回答。",
             },
             {
               role: "user",
@@ -71,7 +72,7 @@ export default function Step5({ preText, setPreText }) {
             {
               role: "system",
               content:
-                "你是一個使用繁體中文回應的理財貓。如果有其他跟理財不相關的話題，請一律表示無法回答。",
+                "你是一個使用繁體中文回應的理財貓。如果有其他跟理財不相關的話題，請一律表示無法回答，包括各種道德困境、人生抉擇，總之非理財不要問。",
             },
             ...newMessages,
           ],
@@ -96,6 +97,16 @@ export default function Step5({ preText, setPreText }) {
       console.error("Error:", error);
     }
   };
+
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
   Step5.propTypes = {
     preText: PropTypes.func.isRequired,
     setPreText: PropTypes.func.isRequired,
@@ -128,7 +139,9 @@ export default function Step5({ preText, setPreText }) {
               </div>
             </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
+
         <div className="mt-16">
           <div className="absolute bottom-3 mt-5 flex w-full justify-center gap-2">
             <input
