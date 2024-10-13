@@ -105,6 +105,9 @@ export default function ProjectLayoutGrid() {
       setAlertMessage("新增成功");
       setImagePreview(null);
       const docRef = await addDoc(projectCollectionRef, newProject);
+      await updateDoc(docRef, {
+        id: docRef.id,
+      });
       setProjects([...projects, { id: docRef.id, ...newProject }]);
     } catch (error) {
       console.error("Error adding project: ", error);

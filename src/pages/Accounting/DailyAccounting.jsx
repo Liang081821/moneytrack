@@ -97,8 +97,10 @@ export default function DailyAccounting({ setAccounting }) {
           return;
         }
       }
-      const selectedAccount = JSON.parse(data.account);
-      const selectedTargetAccount = JSON.parse(data.targetaccount);
+      const selectedAccount = data.account ? JSON.parse(data.account) : null;
+      const selectedTargetAccount = data.targetaccount
+        ? JSON.parse(data.targetaccount)
+        : null;
 
       const q = query(
         propertyCollectionRef,

@@ -92,10 +92,26 @@ export default function DailyRecord({
     setEditing(true);
     setValue("record_type", item.record_type);
     setValue("class", item.class);
-    setValue("account", item.account);
+    setValue(
+      "account",
+      JSON.stringify({
+        id: item.accountid || "",
+        account: item.account,
+      }),
+    );
     setValue("amount", item.amount);
     setValue("project", item.project || "");
-    setValue("targetaccount", item.targetaccount);
+    setValue(
+      "targetaccount",
+      JSON.stringify({
+        id: item.targetaccountid || "",
+        account: item.targetaccount || "",
+      }),
+    );
+    console.log("Setting targetaccount with:", {
+      id: item.targetaccountid || "",
+      account: item.targetaccount || "",
+    });
     const transactionDate = item.time.toDate();
     setStartDate(transactionDate);
   };
@@ -108,8 +124,11 @@ export default function DailyRecord({
 
   const recordType = watch("record_type");
   const watchAccount = watch("account");
+  const parsedAccount = watchAccount ? JSON.parse(watchAccount) : null;
   const watchTargetAccount = watch("targetaccount");
-
+  useEffect(() => {
+    console.log("Current targetaccount value in form:", watchTargetAccount);
+  }, [watchTargetAccount]);
   const optionsToRender =
     recordType === "收入"
       ? classData.income
@@ -117,9 +136,14 @@ export default function DailyRecord({
         ? classData.expense
         : [];
 
+  // const accountsToRender = property.filter((item) => {
+  //   return item.account !== watchAccount;
+  // });
   const accountsToRender = property.filter((item) => {
-    return item.account !== watchAccount;
+    const parsedAccount = watchAccount ? JSON.parse(watchAccount) : null;
+    return parsedAccount ? item.id !== parsedAccount.id : true;
   });
+
   useEffect(() => {
     if (editing && recordType !== currentTransaction?.record_type) {
       setValue("class", "");
@@ -127,8 +151,9 @@ export default function DailyRecord({
   }, [recordType, setValue, editing, currentTransaction?.record_type]);
 
   useEffect(() => {
-    if (editing && watchAccount !== currentTransaction?.account) {
+    if (editing && parsedAccount.id !== currentTransaction?.accountid) {
       setValue("targetaccount", "");
+      console.log("here");
     }
   }, [watchAccount, setValue, editing, currentTransaction?.account]);
   const { rates } = useGlobalContext();
@@ -142,14 +167,20 @@ export default function DailyRecord({
         "accounting",
         currentTransaction.id,
       );
+      const selectedNewAccount = data.account ? JSON.parse(data.account) : null;
+      const selectedTargetNewAccount = watchTargetAccount
+        ? JSON.parse(watchTargetAccount)
+        : null;
 
-      const originalAccount = currentTransaction.account;
-      const newAccount = data.account;
+      const originalAccount = currentTransaction.accountid;
+      const newAccount = selectedNewAccount.id;
+      console.log(newAccount);
       const originalAmount = Number(currentTransaction.amount);
       const newAmount = Number(data.amount);
-      const originalTargetAccount = currentTransaction.targetaccount;
-      const newTargetAccount = data.targetaccount;
-
+      const originalTargetAccount = currentTransaction.targetaccountid;
+      const newTargetAccount = selectedTargetNewAccount
+        ? selectedTargetNewAccount.id
+        : null;
       const isOriginalIncome = currentTransaction.record_type === "收入";
       const isOriginalExpense = currentTransaction.record_type === "支出";
       const isOriginalTransfer = currentTransaction.record_type === "轉帳";
@@ -177,21 +208,15 @@ export default function DailyRecord({
       // 查詢帳戶
       const qOriginal = query(
         propertyCollectionRef,
-        where("account", "==", originalAccount),
+        where("id", "==", originalAccount),
       );
-      const qNew = query(
-        propertyCollectionRef,
-        where("account", "==", newAccount),
-      );
+      const qNew = query(propertyCollectionRef, where("id", "==", newAccount));
       const qOriginalTarget = originalTargetAccount
-        ? query(
-            propertyCollectionRef,
-            where("account", "==", originalTargetAccount),
-          )
+        ? query(propertyCollectionRef, where("id", "==", originalTargetAccount))
         : null;
 
       const qNewTarget = newTargetAccount
-        ? query(propertyCollectionRef, where("account", "==", newTargetAccount))
+        ? query(propertyCollectionRef, where("id", "==", newTargetAccount))
         : null;
 
       const querySnapshotOriginal = await getDocs(qOriginal);
@@ -447,10 +472,20 @@ export default function DailyRecord({
           }
         });
       }
+      const targetAccount = selectedTargetNewAccount
+        ? selectedTargetNewAccount.account
+        : null;
+      const targetAccountId = selectedTargetNewAccount
+        ? selectedTargetNewAccount.id
+        : null;
+
       const cleanData = {
         ...data,
         class: data.class || null,
-        targetaccount: data.targetaccount || null,
+        account: selectedNewAccount.account,
+        accountid: newAccount,
+        targetaccount: targetAccount,
+        targetaccountid: targetAccountId,
         time: startDate || currentTransaction.time,
         convertedAmountTWD: convertedAmountTWD,
       };
@@ -642,7 +677,13 @@ export default function DailyRecord({
                   >
                     {Array.isArray(property) &&
                       property.map((item) => (
-                        <option key={item.id} value={item.account}>
+                        <option
+                          key={item.id}
+                          value={JSON.stringify({
+                            id: item.id,
+                            account: item.account,
+                          })}
+                        >
                           {item.account}
                         </option>
                       ))}
@@ -673,7 +714,13 @@ export default function DailyRecord({
                     >
                       {Array.isArray(accountsToRender) &&
                         accountsToRender.map((item, index) => (
-                          <option key={index} value={item.account}>
+                          <option
+                            key={index}
+                            value={JSON.stringify({
+                              id: item.id,
+                              account: item.account,
+                            })}
+                          >
                             {item.account}
                           </option>
                         ))}
@@ -691,9 +738,7 @@ export default function DailyRecord({
                     >
                       {Array.isArray(optionsToRender) &&
                         optionsToRender.map((item, index) => (
-                          <option key={index} value={item}>
-                            {item}
-                          </option>
+                          <option key={index}>{item}</option>
                         ))}
                     </select>
                   </div>
