@@ -181,6 +181,7 @@ export default function DailyRecord({
 
       const originalAccount = currentTransaction.accountid;
       const newAccount = selectedNewAccount.id;
+      const newProject = selectedProject.id || null;
       console.log(newAccount);
       const originalAmount = Number(currentTransaction.amount);
       const newAmount = Number(data.amount);
@@ -199,6 +200,8 @@ export default function DailyRecord({
       const areDatesEqual =
         startDate.getTime() === currentTransaction.time.toDate().getTime();
 
+      console.log(currentTransaction.projectid);
+      console.log(newProject);
       if (
         originalAccount === newAccount &&
         originalAmount === newAmount &&
@@ -206,7 +209,7 @@ export default function DailyRecord({
         currentTransaction.record_type === data.record_type &&
         currentTransaction.class === data.class &&
         areDatesEqual &&
-        currentTransaction.projectid === data.projectid
+        currentTransaction.projectid === newProject
       ) {
         setAlertMessage("沒有變更，不需儲存");
         return;
