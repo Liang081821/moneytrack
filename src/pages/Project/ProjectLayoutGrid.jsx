@@ -130,10 +130,10 @@ export default function ProjectLayoutGrid() {
   };
 
   // 顯示專案詳情
-  const showProjectDetails = (project, name) => {
+  const showProjectDetails = (project, id) => {
     setSelectedProject(project);
     const filteredTransactions = transactionData.filter(
-      (item) => item.project === name,
+      (item) => item.projectid === id,
     );
     const sortfilteredTransactions = filteredTransactions.sort(
       (a, b) => b.time.toDate() - a.time.toDate(),
@@ -178,7 +178,7 @@ export default function ProjectLayoutGrid() {
         await deleteDoc(doc(projectCollectionRef, id));
         const q = query(
           accountingCollectionRef,
-          where("project", "==", selectedProject.name),
+          where("projectid", "==", selectedProject.id),
         );
         const qSnapShot = await getDocs(q);
         qSnapShot.forEach(async (docSnap) => {
@@ -338,7 +338,7 @@ export default function ProjectLayoutGrid() {
                     <div
                       key={project.id}
                       className={`border-1 relative flex h-[200px] w-full flex-col items-center justify-center gap-4 rounded-lg md:h-[300px] md:w-[32%] ${project.isediting ? "bg-[#82A0BC]" : "bg-[#A7CCED]"} p-3 shadow-md`}
-                      onClick={() => showProjectDetails(project, project.name)}
+                      onClick={() => showProjectDetails(project, project.id)}
                     >
                       {project.imageUrl && (
                         <img

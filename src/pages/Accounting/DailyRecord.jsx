@@ -100,7 +100,13 @@ export default function DailyRecord({
       }),
     );
     setValue("amount", item.amount);
-    setValue("project", item.project || "");
+    setValue(
+      "project",
+      JSON.stringify({
+        id: item.projectid || "",
+        name: item.projectname || "",
+      }),
+    );
     setValue(
       "targetaccount",
       JSON.stringify({
@@ -171,6 +177,7 @@ export default function DailyRecord({
       const selectedTargetNewAccount = watchTargetAccount
         ? JSON.parse(watchTargetAccount)
         : null;
+      const selectedProject = data.project ? JSON.parse(data.project) : null;
 
       const originalAccount = currentTransaction.accountid;
       const newAccount = selectedNewAccount.id;
@@ -199,7 +206,7 @@ export default function DailyRecord({
         currentTransaction.record_type === data.record_type &&
         currentTransaction.class === data.class &&
         areDatesEqual &&
-        currentTransaction.project === data.project
+        currentTransaction.projectid === data.projectid
       ) {
         setAlertMessage("沒有變更，不需儲存");
         return;
@@ -479,13 +486,17 @@ export default function DailyRecord({
         ? selectedTargetNewAccount.id
         : null;
 
+      const { project, ...filteredData } = data;
+
       const cleanData = {
-        ...data,
+        ...filteredData,
         class: data.class || null,
         account: selectedNewAccount.account,
         accountid: newAccount,
         targetaccount: targetAccount,
         targetaccountid: targetAccountId,
+        projectid: selectedProject.id || null,
+        projectname: selectedProject.name || null,
         time: startDate || currentTransaction.time,
         convertedAmountTWD: convertedAmountTWD,
       };
@@ -755,7 +766,13 @@ export default function DailyRecord({
                         {projectData
                           .filter((item) => item.isediting === true)
                           .map((item) => (
-                            <option key={item.id} value={item.name}>
+                            <option
+                              key={item.id}
+                              value={JSON.stringify({
+                                id: item.id,
+                                name: item.name,
+                              })}
+                            >
                               {item.name}
                             </option>
                           ))}

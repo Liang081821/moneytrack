@@ -98,6 +98,8 @@ export default function DailyAccounting({ setAccounting }) {
         }
       }
       const selectedAccount = data.account ? JSON.parse(data.account) : null;
+      const selectedProject = data.project ? JSON.parse(data.project) : null;
+
       const selectedTargetAccount = data.targetaccount
         ? JSON.parse(data.targetaccount)
         : null;
@@ -168,7 +170,8 @@ export default function DailyAccounting({ setAccounting }) {
             time: startDate,
             targetaccount: selectedTargetAccount.account,
             record_type: data.type,
-            project: data.project || null,
+            projectname: selectedProject ? selectedProject.name : null,
+            projectid: selectedProject ? selectedProject.id : null,
             currency: data.currency,
             convertedAmountTWD: Number(convertedAmountTWD),
           });
@@ -182,7 +185,9 @@ export default function DailyAccounting({ setAccounting }) {
             time: startDate,
             class: data.class,
             record_type: data.type,
-            project: data.project || null,
+            projectname: selectedProject ? selectedProject.name : null,
+            projectid: selectedProject ? selectedProject.id : null,
+
             currency: data.currency,
             convertedAmountTWD: Number(convertedAmountTWD),
           });
@@ -377,7 +382,13 @@ export default function DailyAccounting({ setAccounting }) {
                   {projectData
                     .filter((item) => item.isediting)
                     .map((item) => (
-                      <option key={item.id} value={item.name}>
+                      <option
+                        key={item.id}
+                        value={JSON.stringify({
+                          id: item.id,
+                          name: item.name,
+                        })}
+                      >
                         {item.name}
                       </option>
                     ))}

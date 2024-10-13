@@ -41,13 +41,13 @@ export default function TransactionCard({
         </div>
         <div className="text-sm">{item.account}</div>
       </div>
-      {showProject && item.project && (
+      {showProject && item.projectname && (
         <div
           className={`${
             item.record_type === "支出" ? "text-gray-800" : "text-gray-800"
           }`}
         >
-          <p>{item.project}</p>
+          <p>{item.projectname}</p>
         </div>
       )}
     </div>
