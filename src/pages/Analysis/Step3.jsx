@@ -18,9 +18,9 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
       <h2 className="mb-10 text-2xl font-semibold">記帳數據</h2>
 
       {/* Flex 容器，將左右兩邊分開 */}
-      <div className="flex w-full justify-center space-x-3">
+      <div className="flex h-72 w-full flex-col justify-center space-x-3 overflow-scroll pt-[450px] md:h-auto md:flex-row md:pt-0">
         {/* 左邊：支出與收入 */}
-        <div className="flex flex-1 flex-col items-center px-7">
+        <div className="flex flex-1 flex-col items-center">
           <h2 className="mb-5 text-xl font-semibold">支出和收入</h2>
           <div className="h-[360px] w-full overflow-scroll">
             {Object.entries(expenseTotals).map(([recordClass, totalAmount]) => (

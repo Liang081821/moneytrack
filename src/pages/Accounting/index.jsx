@@ -93,11 +93,11 @@ export default function Accounting() {
     setDataRun(true);
   };
   return (
-    <div className="flex w-full flex-col items-center justify-center bg-gradient-to-r from-[#e3e3e3] via-[#efefef] to-[#e3e3e3] pb-[10vh] fade-in">
+    <div className="flex w-full flex-col items-center justify-center bg-gradient-to-r from-[#e3e3e3] via-[#efefef] to-[#e3e3e3] pb-[10vh] pl-11 fade-in md:pl-0">
       <DataJoyride />
       <div className="mt-5 w-[85%] px-3">
-        <div className="joyride-changemonth flex items-center justify-between rounded-lg bg-[#fcfcfc] p-4 shadow-lg">
-          <div className="flex w-[228px]">
+        <div className="joyride-changemonth flex items-center justify-between rounded-lg bg-[#fcfcfc] p-1 shadow-lg md:p-4">
+          <div className="flex md:w-[228px]">
             <Button
               variant="retain"
               className="flex items-center justify-center gap-1 md:gap-2"
@@ -109,7 +109,7 @@ export default function Accounting() {
                 viewBox="0 0 24 24"
                 strokeWidth="2"
                 stroke="currentColor"
-                className="size-5"
+                className="hidden size-6 md:block"
               >
                 <path
                   strokeLinecap="round"
@@ -117,12 +117,12 @@ export default function Accounting() {
                   d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"
                 />
               </svg>
-              <p>上個月</p>
+              <p className="text-sm md:text-base">上個月</p>
             </Button>
           </div>
           <div className="flex items-center gap-2">
             <div className="flex h-full w-full items-center justify-center rounded-lg p-1 md:p-2">
-              <div className="flex h-full items-center text-xl font-semibold">
+              <div className="flex h-full items-center text-sm font-semibold md:text-xl">
                 {`${selectedMonth.getFullYear()}年 ${selectedMonth.getMonth() + 1}月`}
               </div>
             </div>
@@ -131,22 +131,27 @@ export default function Accounting() {
               className="flex items-center justify-center gap-1 md:gap-2"
               onClick={() => handleMonthChange("")}
             >
-              <p className="text-nowrap">回本月</p>
+              <p className="text-sm md:text-nowrap md:text-base">回本月</p>
             </Button>
           </div>
-          <div className="flex gap-2">
+          <div className="flex md:gap-2">
             <Button
-              className="mr-2 flex items-center justify-center gap-1 md:gap-2"
+              className="flex items-center justify-center gap-1 md:gap-2"
               variant="grey"
             >
-              <p onClick={() => startTutorial()}>使用教學</p>
+              <p
+                onClick={() => startTutorial()}
+                className="text-sm md:text-base"
+              >
+                使用教學
+              </p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="yellow"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="size-6"
+                className="hidden size-6 md:block"
               >
                 <path
                   strokeLinecap="round"
@@ -160,14 +165,14 @@ export default function Accounting() {
               className="flex items-center justify-center gap-1 md:gap-2"
               onClick={() => handleMonthChange("next")}
             >
-              <p>下個月</p>
+              <p className="text-sm md:text-base">下個月</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="2"
                 stroke="currentColor"
-                className="size-5"
+                className="hidden size-6 md:block"
               >
                 <path
                   strokeLinecap="round"

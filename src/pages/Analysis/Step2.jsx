@@ -27,7 +27,7 @@ export default function Step2({
   };
 
   return (
-    <div className="flex h-full flex-col items-center justify-center pt-10 fade-in">
+    <div className="flex h-full flex-col items-center justify-center px-2 fade-in md:px-0 md:pt-10">
       <h2 className="text-2xl font-semibold">設定統計數據</h2>
       <div>
         <h2 className="mb-1 mt-7 text-xl font-semibold">

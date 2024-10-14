@@ -221,7 +221,7 @@ export default function DailyAccounting({ setAccounting }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4 fade-in">
-      <div className="joyride-accountingproject joyride-startaccounting relative flex w-[30%] flex-col items-center justify-center gap-3 rounded-lg bg-white p-8">
+      <div className="joyride-accountingproject joyride-startaccounting relative flex w-full flex-col items-center justify-center gap-3 rounded-lg bg-white p-8 md:w-[35%]">
         {/* {alertMessage && (
           <Alert message={alertMessage} onClose={() => setAlertMessage(null)} />
         )} */}

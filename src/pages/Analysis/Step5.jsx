@@ -101,11 +101,15 @@ export default function Step5({ preText, setPreText }) {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
     scrollToBottom();
+    console.log("hey");
+    console.log(messagesEndRef.current);
   }, [messages]);
   Step5.propTypes = {
     preText: PropTypes.func.isRequired,
@@ -145,7 +149,7 @@ export default function Step5({ preText, setPreText }) {
         <div className="mt-16">
           <div className="absolute bottom-3 mt-5 flex w-full justify-center gap-2">
             <input
-              className="h-12 w-[700px] rounded-lg border border-black pl-2"
+              className="h-12 w-[200px] rounded-lg border border-black pl-2 md:w-[700px]"
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSend(userInput)}

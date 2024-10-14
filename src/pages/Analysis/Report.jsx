@@ -203,14 +203,14 @@ export default function Report() {
         <div className="relative flex gap-2 border-b border-gray-300">
           <button
             onClick={() => setLiveStatic(true)}
-            className={`font-semibold ${livestatic ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-4 py-2 transition duration-300 ease-in-out`}
+            className={`text-sm font-semibold md:text-base ${livestatic ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-4 py-2 transition duration-300 ease-in-out`}
           >
             即時數據
           </button>
 
           <button
             onClick={() => setLiveStatic(false)}
-            className={`joyride-report font-semibold ${!livestatic ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-4 py-2 transition duration-300 ease-in-out`}
+            className={`joyride-report text-sm font-semibold md:text-base ${!livestatic ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-4 py-2 transition duration-300 ease-in-out`}
           >
             歷史報告
           </button>
@@ -222,14 +222,19 @@ export default function Report() {
                 className="flex cursor-pointer items-center justify-center gap-1 md:gap-2"
                 variant="grey"
               >
-                <p onClick={() => startTutorial()}>使用教學</p>
+                <p
+                  onClick={() => startTutorial()}
+                  className="text-sm md:text-base"
+                >
+                  使用教學
+                </p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="yellow"
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-6"
+                  className="hidden size-6 md:block"
                 >
                   <path
                     strokeLinecap="round"
@@ -247,14 +252,19 @@ export default function Report() {
             className="joyride-generatereport flex cursor-pointer items-center justify-center gap-1 md:gap-2"
             variant="retain"
           >
-            <p onClick={() => handleAddReport()}>我要進行分析</p>
+            <p
+              onClick={() => handleAddReport()}
+              className="text-sm md:text-base"
+            >
+              我要進行分析
+            </p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="size-6"
+              className="hidden size-6 md:block"
             >
               <path
                 strokeLinecap="round"
@@ -293,8 +303,8 @@ export default function Report() {
 
       {/* 步驟導航 */}
       {reportVisible && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="h-[720px] w-full max-w-6xl rounded-lg bg-white p-6 shadow-lg">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 px-2">
+          <div className="h-auto w-full max-w-6xl rounded-lg bg-white p-6 shadow-lg md:h-[720px]">
             <div className="mb-4">
               <div className="mb-2 flex justify-between">
                 <h2 className="text-2xl font-bold">生成報表 - 步驟 {step}/5</h2>
@@ -336,7 +346,7 @@ export default function Report() {
             </div>
 
             {/* 步驟內容 */}
-            <div className="h-[540px] rounded-lg border-2 border-gray-500">
+            <div className="h-[540px] overflow-hidden rounded-lg border-2 border-gray-500">
               {renderStepContent()}
             </div>
 

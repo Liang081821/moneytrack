@@ -230,7 +230,7 @@ export default function ProjectLayoutGrid() {
             <div className="joyride-report flex gap-2 border-b border-gray-300">
               <div
                 onClick={() => setShowOnlyEditing(true)}
-                className={`transform cursor-pointer text-center font-semibold transition-all duration-300 ${
+                className={`transform cursor-pointer text-center text-sm font-semibold transition-all duration-300 md:text-base ${
                   showOnlyEditing
                     ? "scale-105 border-b-2 border-[#607196] text-[#607196]"
                     : "text-gray-400"
@@ -241,7 +241,7 @@ export default function ProjectLayoutGrid() {
 
               <div
                 onClick={() => setShowOnlyEditing(false)}
-                className={`transform cursor-pointer text-center font-semibold transition-all duration-300 ${
+                className={`transform cursor-pointer text-center text-sm font-semibold transition-all duration-300 md:text-base ${
                   !showOnlyEditing
                     ? "scale-105 border-b-2 border-[#607196] text-[#607196]"
                     : "text-gray-400"
@@ -256,14 +256,19 @@ export default function ProjectLayoutGrid() {
                   className="flex items-center justify-center gap-1 md:gap-2"
                   variant="grey"
                 >
-                  <p onClick={() => startTutorial()}>使用教學</p>
+                  <p
+                    onClick={() => startTutorial()}
+                    className="text-sm md:text-base"
+                  >
+                    使用教學
+                  </p>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="yellow"
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="size-6"
+                    className="hidden size-6 md:block"
                   >
                     <path
                       strokeLinecap="round"

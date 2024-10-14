@@ -181,7 +181,7 @@ export default function Step4({
       {!loading && (
         <div className="w-full fade-in">
           {/* 報表內容 */}
-          <div className="mb-1">
+          <div className="mb-1 h-80 overflow-scroll">
             <table className="min-w-full border-collapse border border-gray-200">
               <thead>
                 <tr>

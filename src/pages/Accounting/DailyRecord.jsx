@@ -624,7 +624,7 @@ export default function DailyRecord({
       <div>
         {Object.entries(groupedTransactions).map(([date, items]) => (
           <div key={date} className="mb-6">
-            <div className="mb-2 flex items-center gap-3">
+            <div className="mb-2 flex flex-col gap-3 md:flex-row md:items-center">
               <div className="text-nowrap text-lg font-semibold text-gray-800">
                 {date}
               </div>

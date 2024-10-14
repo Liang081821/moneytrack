@@ -9,7 +9,7 @@ const Button = ({
   ...props
 }) => {
   const baseStyle =
-    "rounded-lg px-4 py-2  font-semibold transition duration-200";
+    "rounded-lg px-2 py-1  md:px-4 md:py-2  font-semibold transition duration-200";
 
   const variantStyles = {
     delete: "bg-[#89023E] hover:bg-[#CC7178] text-white",

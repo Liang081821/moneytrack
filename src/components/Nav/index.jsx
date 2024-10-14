@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 export default function Nav() {
@@ -14,10 +14,30 @@ export default function Nav() {
       setHidden(true);
     }
   };
+  useEffect(() => {
+    // 偵測目前螢幕的寬度
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setHidden(false);
+      } else {
+        setHidden(true);
+      }
+    };
+
+    handleResize();
+
+    // 監聽螢幕大小變化
+    window.addEventListener("resize", handleResize);
+
+    // 清除事件監聽器
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <>
       <div
-        className={`fixed rounded-r-xl p-1 py-3 transition-all duration-300 ease-in md:relative md:h-auto md:rounded-r-none md:bg-[#bfbfbf] md:px-3 ${hidden ? "" : "z-10 flex min-w-48 flex-col gap-8 bg-white px-3"} `}
+        className={`fixed h-[100vh] rounded-r-xl p-1 py-3 transition-all duration-300 ease-in md:relative md:h-auto md:rounded-r-none md:bg-[#bfbfbf] md:px-3 ${hidden ? "" : "z-10 flex min-w-48 flex-col gap-8 bg-white px-3"} `}
       >
         {hidden ? (
           <>
