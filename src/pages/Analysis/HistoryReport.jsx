@@ -39,7 +39,7 @@ export default function HistoryReport() {
 
   if (!reportData || reportData.length === 0) {
     return (
-      <div className="mb-4 mt-4 flex h-[70vh] w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
+      <div className="flex w-full items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[595px]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -54,7 +54,7 @@ export default function HistoryReport() {
             d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
           />
         </svg>
-        <p>無歷史報告數據</p>
+        <p className="ml-2">無歷史報告數據</p>
       </div>
     );
   }

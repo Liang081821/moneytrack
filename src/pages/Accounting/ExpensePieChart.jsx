@@ -11,7 +11,7 @@ export default function ExpensePieChart({
   firstDayOfSelectedMonth,
   lastDayOfSelectedMonth,
 }) {
-  const { transactionData } = useGlobalContext();
+  const { transactionData, setAccounting } = useGlobalContext();
   const [expenseRecord, setExpenseRecord] = useState([]);
 
   useEffect(() => {
@@ -70,42 +70,44 @@ export default function ExpensePieChart({
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="mb-2 h-12 w-12"
+          className="mb-2 mr-2 size-10"
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
+            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
           />
         </svg>
-        <p>計入本月支出，即可觀看分析圖表</p>
+        <p onClick={() => setAccounting(true)} className="cursor-pointer">
+          開始記帳，即可觀看支出圖表
+        </p>
       </div>
     );
   }
 
-  const getContrastColor = (hexColor) => {
-    // 去掉 # 號
-    hexColor = hexColor.replace("#", "");
+  // const getContrastColor = (hexColor) => {
+  //   // 去掉 # 號
+  //   hexColor = hexColor.replace("#", "");
 
-    // 將 3 位數的顏色代碼擴展為 6 位數
-    if (hexColor.length === 3) {
-      hexColor = hexColor
-        .split("")
-        .map((hex) => hex + hex)
-        .join("");
-    }
+  //   // 將 3 位數的顏色代碼擴展為 6 位數
+  //   if (hexColor.length === 3) {
+  //     hexColor = hexColor
+  //       .split("")
+  //       .map((hex) => hex + hex)
+  //       .join("");
+  //   }
 
-    // 將 RGB 值提取出來
-    const r = parseInt(hexColor.substring(0, 2), 16);
-    const g = parseInt(hexColor.substring(2, 4), 16);
-    const b = parseInt(hexColor.substring(4, 6), 16);
+  //   // 將 RGB 值提取出來
+  //   const r = parseInt(hexColor.substring(0, 2), 16);
+  //   const g = parseInt(hexColor.substring(2, 4), 16);
+  //   const b = parseInt(hexColor.substring(4, 6), 16);
 
-    // 計算亮度值
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+  //   // 計算亮度值
+  //   const brightness = (r * 299 + g * 587 + b * 114) / 1000;
 
-    // 根據亮度選擇黑色或白色
-    return brightness > 128 ? "black" : "white";
-  };
+  //   // 根據亮度選擇黑色或白色
+  //   return brightness > 128 ? "black" : "white";
+  // };
 
   const data = {
     labels: expenseRecord.map((record) => record.label),

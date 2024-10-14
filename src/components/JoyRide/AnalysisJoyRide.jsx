@@ -95,6 +95,7 @@ const AnalysisJoyride = () => {
         },
         tooltip: {
           fontSize: "18px",
+
           fontWeight: "bold",
           backgroundColor: "#f2f2f2", // 引導框背景顏色
           borderRadius: "8px", // 引導框圓角

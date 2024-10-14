@@ -28,6 +28,10 @@ export default function HistoryRecord() {
   const { loginEmail } = useGlobalContext();
   const { historyCollectionRef } = getFirestoreRefs(loginEmail);
   const calculateProperty = async () => {
+    if (property.length === 0) {
+      setAlertMessage("尚未有資產，無法統計");
+      return;
+    }
     const types = {
       saving: "儲蓄",
       expense: "消費",
@@ -367,7 +371,12 @@ export default function HistoryRecord() {
                   d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
                 />
               </svg>
-              <p className="ml-4 font-semibold">統計資產，即可查看分析圖表</p>
+              <p
+                className="ml-4 cursor-pointer font-semibold"
+                onClick={calculateProperty}
+              >
+                統計資產，即可查看分析圖表
+              </p>
             </div>
           )}
         </div>

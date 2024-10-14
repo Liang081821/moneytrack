@@ -63,7 +63,7 @@ TransactionCard.propTypes = {
     class: PropTypes.string,
     targetaccount: PropTypes.string,
     account: PropTypes.string.isRequired,
-    project: PropTypes.string,
+    projectname: PropTypes.string,
   }).isRequired,
   onEditClick: PropTypes.func.isRequired,
   showTime: PropTypes.bool,

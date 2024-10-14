@@ -86,7 +86,7 @@ export default function AddNewClass() {
 
   return (
     <div
-      className={`self-end rounded-lg bg-[#A7CCED] px-4 py-2 text-center font-semibold transition-all ${
+      className={`self-end rounded-lg bg-[#607196] px-4 py-2 text-center font-semibold transition-all ${
         newclassEditing ? "" : "overflow-hidden text-white"
       }`}
     >

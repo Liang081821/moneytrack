@@ -312,23 +312,6 @@ export default function ProjectLayoutGrid() {
             {projects.length === 0 ? (
               <></>
             ) : (
-              // <div className="flex h-[200px] w-[420px] items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40 md:h-[300px]">
-              //   <svg
-              //     xmlns="http://www.w3.org/2000/svg"
-              //     fill="none"
-              //     viewBox="0 0 24 24"
-              //     strokeWidth="1.5"
-              //     stroke="currentColor"
-              //     className="mb-2 h-12 w-12"
-              //   >
-              //     <path
-              //       strokeLinecap="round"
-              //       strokeLinejoin="round"
-              //       d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
-              //     />
-              //   </svg>
-              //   <p>新增第一個專案</p>
-              // </div>
               <>
                 {projects
                   .filter((project) =>
@@ -372,7 +355,7 @@ export default function ProjectLayoutGrid() {
                 <div className="flex w-full items-center gap-3">
                   <div className="text-nowrap font-semibold">專案名稱</div>
                   <input
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2"
+                    className="h-[48px] w-full rounded-lg border border-gray-300 px-4 py-2"
                     type="text"
                     placeholder="專案名稱"
                     {...register("projectname", {
@@ -390,9 +373,9 @@ export default function ProjectLayoutGrid() {
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="font-semibold">專案圖片</div>
+                <div className="text-nowrap font-semibold">專案圖片</div>
                 <input
-                  className="rounded-lg border border-gray-300 px-4 py-2"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2"
                   type="file"
                   accept="image/*"
                   {...register("projectimage", { required: "上傳圖片" })}
