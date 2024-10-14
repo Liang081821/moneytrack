@@ -7,8 +7,7 @@ import Alert from "@/components/Alert";
 import Confirm from "@/components/Confirm";
 import Button from "@/components/Button";
 
-export default function AddNewClass() {
-  const [newclassEditing, setNewClassEditing] = useState(false);
+export default function AddNewClass({ newclassEditing, setNewClassEditing }) {
   const [newclass, setNewclass] = useState(false);
   const { loginEmail } = useGlobalContext();
   const { docRef } = getFirestoreRefs(loginEmail);

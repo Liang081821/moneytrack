@@ -186,7 +186,7 @@ export default function DailyRecord({
       console.log(newAccount);
       const originalAmount = Number(currentTransaction.amount);
       const newAmount = Number(data.amount);
-      const originalTargetAccount = currentTransaction.targetaccountid;
+      const originalTargetAccount = currentTransaction.targetaccountid || "";
       const newTargetAccount = selectedTargetNewAccount
         ? selectedTargetNewAccount.id
         : null;
@@ -203,6 +203,19 @@ export default function DailyRecord({
 
       console.log(currentTransaction.projectid);
       console.log(newProject);
+
+      console.log(originalAccount);
+      console.log(newAccount);
+      console.log(originalTargetAccount);
+      console.log(newTargetAccount);
+      console.log(originalAmount);
+      console.log(newAmount);
+      console.log(currentTransaction.record_type);
+      console.log(data.record_type);
+      console.log(currentTransaction.class);
+      console.log(data.class);
+      console.log(areDatesEqual);
+
       if (
         originalAccount === newAccount &&
         originalAmount === newAmount &&

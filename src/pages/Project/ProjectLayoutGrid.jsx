@@ -282,7 +282,7 @@ export default function ProjectLayoutGrid() {
               <>
                 {" "}
                 <div className="joyride-addproject relative h-[200px] w-full md:h-[300px] md:w-[32%]">
-                  <div className="h-[200px] w-full rounded-lg border border-[#8b91a1] bg-[#8b91a1] p-4 opacity-20 md:h-[300px]"></div>
+                  <div className="h-[200px] w-full rounded-lg bg-slate-500 p-4 opacity-20 md:h-[300px]"></div>
                   <button
                     onClick={startEditing}
                     className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center text-5xl font-semibold opacity-100 md:h-[100px] md:w-[100px] md:text-7xl"

@@ -208,6 +208,16 @@ export default function DailyAccounting({ setAccounting }) {
   DailyAccounting.propTypes = {
     setAccounting: PropTypes.func.isRequired,
   };
+  const navigateToAddAccountPage = () => {
+    navigate("/property");
+    setAccounting(false);
+  };
+  const navigateToAddClass = () => {
+    // setAccounting(false);
+
+    setNewClassEditing(true);
+  };
+  const [newclassEditing, setNewClassEditing] = useState(false);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4 fade-in">
@@ -230,7 +240,10 @@ export default function DailyAccounting({ setAccounting }) {
         <h2 className="text-xl font-semibold"> 記帳面板</h2>
         <div className="flex gap-2 self-end">
           <div className="joyride-class">
-            <AddNewClass />
+            <AddNewClass
+              newclassEditing={newclassEditing}
+              setNewClassEditing={setNewClassEditing}
+            />
           </div>
           <Button onClick={handleCloseAccounting} className="mr-2">
             取消
@@ -260,7 +273,7 @@ export default function DailyAccounting({ setAccounting }) {
         >
           <div className="flex w-full flex-col items-center gap-3">
             <div className="flex w-full gap-3">
-              <div className="text-nowrap text-sm font-semibold text-[##BABFD1] md:text-base">
+              <div className="text-nowrap text-sm font-semibold md:text-base">
                 帳戶
               </div>
               <select
@@ -268,9 +281,15 @@ export default function DailyAccounting({ setAccounting }) {
                 {...register("account", {
                   required: "請選擇帳戶",
                 })}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value === "addAccount") {
+                    navigateToAddAccountPage();
+                  }
+                }}
               >
                 <option value="">請選擇</option>
-                {Array.isArray(property) &&
+                {Array.isArray(property) && property.length > 0 ? (
                   property.map((item) => (
                     <option
                       key={item.id}
@@ -281,9 +300,17 @@ export default function DailyAccounting({ setAccounting }) {
                     >
                       {item.account}
                     </option>
-                  ))}
+                  ))
+                ) : (
+                  <>
+                    <option value="addAccount" disabled>
+                      您需要先新增帳戶
+                    </option>
+                  </>
+                )}
               </select>
             </div>
+
             {errors.account && (
               <p className="text-red-500">{errors.account.message}</p>
             )}
@@ -352,14 +379,26 @@ export default function DailyAccounting({ setAccounting }) {
                   {...register("class", {
                     required: watchType !== "轉帳" ? "請選擇分類" : false,
                   })}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === "addClass") {
+                      navigateToAddClass();
+                    }
+                  }}
                 >
                   <option value="">請選擇</option>
                   {Array.isArray(optionsToRender) &&
+                  optionsToRender.length > 0 ? (
                     optionsToRender.map((item) => (
-                      <option key={item.id} value={item.value}>
+                      <option key={item.id} value={item.name}>
                         {item}
                       </option>
-                    ))}
+                    ))
+                  ) : (
+                    <option value="addClass" disabled>
+                      您需要先新增分類
+                    </option>
+                  )}
                 </select>
               </div>
               {errors.class && (
