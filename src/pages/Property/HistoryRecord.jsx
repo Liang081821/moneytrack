@@ -10,6 +10,8 @@ import Button from "@/components/Button";
 import PropertyTrendChart from "./PropertyTrendChart";
 import { Tooltip } from "react-tooltip";
 import AccountDetails from "@/components/AccountDetails";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function HistoryRecord() {
   const { setRun } = useJoyride();
@@ -27,6 +29,18 @@ export default function HistoryRecord() {
 
   const { loginEmail } = useGlobalContext();
   const { historyCollectionRef } = getFirestoreRefs(loginEmail);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // 模擬 2 秒延遲，然後取消 loading 狀態
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+
+    // 清理計時器
+    return () => clearTimeout(timer);
+  }, []);
+
   const calculateProperty = async () => {
     if (property.length === 0) {
       setAlertMessage("尚未有資產，無法統計");
@@ -97,6 +111,34 @@ export default function HistoryRecord() {
   };
 
   const [view, SetView] = useState(true);
+  if (loading) {
+    // 顯示骨架屏
+    return (
+      <div className="w-full pt-5">
+        <div className="mx-auto mb-[10vh] flex w-[85%] flex-col pl-11 md:pl-0">
+          {/* 頁面標題的骨架 */}
+          <Skeleton height={72} width="100%" />
+
+          {/* 帳戶細節區塊的骨架 */}
+          <div className="mt-2 flex w-full flex-col gap-2 md:flex-row">
+            <div className="h-[300px] w-full md:h-[595px]">
+              <Skeleton height="100%" width="100%" />
+            </div>
+            <div className="h-[300px] w-full md:h-[595px]">
+              <Skeleton height="100%" width="100%" />
+            </div>
+            <div className="h-[300px] w-full md:h-[595px]">
+              <Skeleton height="100%" width="100%" />
+            </div>
+          </div>
+
+          {/* 底部的骨架 */}
+          <Skeleton height={200} width="100%" className="mt-3" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full bg-gradient-to-r from-[#e3e3e3] via-[#efefef] to-[#e3e3e3] pl-11 pt-5 fade-in md:pl-0">
       <div className="mx-auto mb-[10vh] flex w-[85%] flex-col">
