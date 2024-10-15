@@ -261,7 +261,7 @@ export default function HistoryRecord() {
                         {item.time.toDate().toLocaleDateString()}
                       </div>
                       {/* 百分比條 */}
-                      <div className="flex w-[50vw] items-center">
+                      <div className="flex w-[40vw] items-center">
                         <div
                           className="flex h-6 items-center justify-center rounded-lg bg-[#e8e9ed] font-semibold"
                           style={{
