@@ -275,55 +275,58 @@ export default function HistoryRecord() {
         </div>
         <div className="mx-auto w-full">
           {historyData.length !== 0 ? (
-            <div className="mb-9 mt-3 flex max-h-[750px] w-full flex-col items-center overflow-y-scroll rounded-lg bg-[#fcfcfc] px-4 pb-7 shadow-lg">
+            <div className="mb-9 mt-3 flex h-auto w-full flex-col items-center overflow-y-scroll rounded-lg bg-[#fcfcfc] px-4 pb-7 shadow-lg lg:max-h-[750px]">
               <div className="sticky top-0 flex w-full items-center justify-center bg-[#fcfcfc] pb-2 pt-7">
-                <div className="text-xl font-semibold">資產紀錄</div>
+                <div className="mr-2 text-lg font-semibold md:mr-0 md:text-xl">
+                  資產紀錄
+                </div>
                 <div className="right-3 flex gap-2 border-b border-gray-300 md:absolute">
                   <button
                     onClick={() => SetView(true)}
-                    className={`text-sm font-semibold md:text-base ${view ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-4 py-2 transition duration-300 ease-in-out`}
+                    className={`text-sm font-semibold md:text-base ${view ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-2 py-1 transition duration-300 ease-in-out md:px-4 md:py-2`}
                   >
                     列表檢視
                   </button>
 
                   <button
                     onClick={() => SetView(false)}
-                    className={`text-sm font-semibold md:text-base ${!view ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-4 py-2 transition duration-300 ease-in-out`}
+                    className={`text-sm font-semibold md:text-base ${!view ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-2 py-1 transition duration-300 ease-in-out md:px-4 md:py-2`}
                   >
                     圖表檢視
                   </button>
                 </div>
               </div>
-              {view ? (
-                historyData
-                  .slice()
-                  .sort((a, b) => b.time.toDate() - a.time.toDate())
-                  .map((item) => (
-                    <div
-                      key={item.id}
-                      className="m-1 flex min-h-[100px] w-full flex-col items-center gap-3 rounded-lg p-2 md:flex-row"
-                    >
-                      {/* 日期 */}
-                      <div className="w-[110px] rounded-lg p-2 text-center">
-                        {item.time.toDate().toLocaleDateString()}
-                      </div>
-                      {/* 百分比條 */}
-                      <div className="flex w-full items-center">
-                        <div
-                          className="flex h-6 items-center justify-center rounded-lg bg-[#e8e9ed] font-semibold"
-                          style={{
-                            width: `${getPercentage(item.saving, item.totalAssetsAbsoluteValue)}%`,
-                          }}
-                          data-tooltip-id="tooltip"
-                          data-tooltip-content={`儲蓄帳戶 NT$${item.saving.toLocaleString(
-                            undefined,
-                            {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 2,
-                            },
-                          )} (${getPercentage(item.saving, item.totalAssetsAbsoluteValue).toFixed(1)}%)`}
-                        >
-                          {/* <div className="flex flex-col text-center">
+              <div className="flex h-[500px] w-full flex-col overflow-y-scroll">
+                {view ? (
+                  historyData
+                    .slice()
+                    .sort((a, b) => b.time.toDate() - a.time.toDate())
+                    .map((item) => (
+                      <div
+                        key={item.id}
+                        className="m-1 flex h-fit w-full flex-col items-center gap-3 rounded-lg p-2 md:flex-row lg:min-h-[100px]"
+                      >
+                        {/* 日期 */}
+                        <div className="w-[110px] rounded-lg p-2 text-center">
+                          {item.time.toDate().toLocaleDateString()}
+                        </div>
+                        {/* 百分比條 */}
+                        <div className="flex w-full items-center">
+                          <div
+                            className="flex h-6 items-center justify-center rounded-lg bg-[#e8e9ed] font-semibold"
+                            style={{
+                              width: `${getPercentage(item.saving, item.totalAssetsAbsoluteValue)}%`,
+                            }}
+                            data-tooltip-id="tooltip"
+                            data-tooltip-content={`儲蓄帳戶 NT$${item.saving.toLocaleString(
+                              undefined,
+                              {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 2,
+                              },
+                            )} (${getPercentage(item.saving, item.totalAssetsAbsoluteValue).toFixed(1)}%)`}
+                          >
+                            {/* <div className="flex flex-col text-center">
                             NT$
                             {item.saving.toLocaleString(undefined, {
                               minimumFractionDigits: 0,
@@ -338,23 +341,23 @@ export default function HistoryRecord() {
                               : ""}
                             )
                           </div> */}
-                        </div>
+                          </div>
 
-                        <div
-                          className="flex h-6 w-full items-center justify-center rounded-lg bg-[#9dbebb] font-semibold text-white"
-                          style={{
-                            width: `${getPercentage(item.expense, item.totalAssetsAbsoluteValue)}%`,
-                          }}
-                          data-tooltip-id="tooltip"
-                          data-tooltip-content={`消費帳戶 NT$${item.expense.toLocaleString(
-                            undefined,
-                            {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 2,
-                            },
-                          )} (${getPercentage(item.expense, item.totalAssetsAbsoluteValue).toFixed(1)}%)`}
-                        >
-                          {/* <div className="flex flex-col text-center">
+                          <div
+                            className="flex h-6 w-full items-center justify-center rounded-lg bg-[#9dbebb] font-semibold text-white"
+                            style={{
+                              width: `${getPercentage(item.expense, item.totalAssetsAbsoluteValue)}%`,
+                            }}
+                            data-tooltip-id="tooltip"
+                            data-tooltip-content={`消費帳戶 NT$${item.expense.toLocaleString(
+                              undefined,
+                              {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 2,
+                              },
+                            )} (${getPercentage(item.expense, item.totalAssetsAbsoluteValue).toFixed(1)}%)`}
+                          >
+                            {/* <div className="flex flex-col text-center">
                             NT$
                             {item.expense.toLocaleString(undefined, {
                               minimumFractionDigits: 0,
@@ -368,23 +371,23 @@ export default function HistoryRecord() {
                               ? `${getPercentage(item.expense, item.totalAssetsAbsoluteValue).toFixed(1)}%`
                               : ""}
                           </div> */}
-                        </div>
+                          </div>
 
-                        <div
-                          className="flex h-6 items-center justify-center rounded-lg bg-[#babfd1] font-semibold"
-                          style={{
-                            width: `${getPercentage(item.investment, item.totalAssetsAbsoluteValue)}%`,
-                          }}
-                          data-tooltip-id="tooltip"
-                          data-tooltip-content={`投資帳戶 NT$${item.investment.toLocaleString(
-                            undefined,
-                            {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 2,
-                            },
-                          )} (${getPercentage(item.investment, item.totalAssetsAbsoluteValue).toFixed(1)}%)`}
-                        >
-                          {/* <div className="flex flex-col text-center">
+                          <div
+                            className="flex h-6 items-center justify-center rounded-lg bg-[#babfd1] font-semibold"
+                            style={{
+                              width: `${getPercentage(item.investment, item.totalAssetsAbsoluteValue)}%`,
+                            }}
+                            data-tooltip-id="tooltip"
+                            data-tooltip-content={`投資帳戶 NT$${item.investment.toLocaleString(
+                              undefined,
+                              {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 2,
+                              },
+                            )} (${getPercentage(item.investment, item.totalAssetsAbsoluteValue).toFixed(1)}%)`}
+                          >
+                            {/* <div className="flex flex-col text-center">
                             NT$
                             {item.investment.toLocaleString(undefined, {
                               minimumFractionDigits: 0,
@@ -399,67 +402,68 @@ export default function HistoryRecord() {
                               : ""}
                             )
                           </div> */}
-                        </div>
+                          </div>
 
-                        {/* Tooltips */}
-                        <Tooltip id="tooltip" />
+                          {/* Tooltips */}
+                          <Tooltip id="tooltip" />
+                        </div>
+                        {/* 資產詳細資料 */}
+                        <div className="flex flex-col items-center justify-end gap-2 lg:flex-row">
+                          <div className="ml-2 flex h-[60px] min-w-[150px] flex-col items-center justify-center rounded-lg border-2 border-[#e8e9ed] p-3">
+                            <div className="text-lg font-semibold">儲蓄</div>
+                            <div>
+                              NT$
+                              {item.saving.toLocaleString(undefined, {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0,
+                              })}
+                            </div>
+                          </div>
+                          <div className="ml-2 flex h-[60px] min-w-[150px] flex-col items-center justify-center rounded-lg border-2 border-[#9dbebb] p-3">
+                            <div className="text-lg font-semibold">消費</div>
+                            <div>
+                              NT$
+                              {item.expense.toLocaleString(undefined, {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0,
+                              })}
+                            </div>
+                          </div>
+                          <div className="ml-2 flex h-[60px] min-w-[150px] flex-col items-center justify-center rounded-lg border-2 border-[#babfd1] p-3">
+                            <div className="text-lg font-semibold">投資</div>
+                            <div>
+                              NT$
+                              {item.investment.toLocaleString(undefined, {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0,
+                              })}
+                            </div>
+                          </div>
+                          <div className="ml-2 flex h-[60px] min-w-[150px] flex-col items-center justify-center rounded-lg p-3">
+                            <div className="text-lg font-semibold">總資產</div>
+                            <div>
+                              NT$
+                              {item.totalAssets.toLocaleString(undefined, {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0,
+                              })}
+                            </div>
+                          </div>
+                          {/* 刪除按鈕 */}
+                          <Button
+                            onClick={() => deleteRecord(item.id)}
+                            variant="delete"
+                            className="flex-col items-center justify-center text-nowrap"
+                          >
+                            刪除
+                          </Button>
+                        </div>
                       </div>
-                      {/* 資產詳細資料 */}
-                      <div className="flex flex-col items-center justify-end gap-2 lg:flex-row">
-                        <div className="ml-2 flex h-[60px] min-w-[150px] flex-col items-center justify-center rounded-lg border-2 border-[#e8e9ed] p-3">
-                          <div className="text-lg font-semibold">儲蓄</div>
-                          <div>
-                            NT$
-                            {item.saving.toLocaleString(undefined, {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 0,
-                            })}
-                          </div>
-                        </div>
-                        <div className="ml-2 flex h-[60px] min-w-[150px] flex-col items-center justify-center rounded-lg border-2 border-[#9dbebb] p-3">
-                          <div className="text-lg font-semibold">消費</div>
-                          <div>
-                            NT$
-                            {item.expense.toLocaleString(undefined, {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 0,
-                            })}
-                          </div>
-                        </div>
-                        <div className="ml-2 flex h-[60px] min-w-[150px] flex-col items-center justify-center rounded-lg border-2 border-[#babfd1] p-3">
-                          <div className="text-lg font-semibold">投資</div>
-                          <div>
-                            NT$
-                            {item.investment.toLocaleString(undefined, {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 0,
-                            })}
-                          </div>
-                        </div>
-                        <div className="ml-2 flex h-[60px] min-w-[150px] flex-col items-center justify-center rounded-lg p-3">
-                          <div className="text-lg font-semibold">總資產</div>
-                          <div>
-                            NT$
-                            {item.totalAssets.toLocaleString(undefined, {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 0,
-                            })}
-                          </div>
-                        </div>
-                        {/* 刪除按鈕 */}
-                        <Button
-                          onClick={() => deleteRecord(item.id)}
-                          variant="delete"
-                          className="flex-col items-center justify-center text-nowrap"
-                        >
-                          刪除
-                        </Button>
-                      </div>
-                    </div>
-                  ))
-              ) : (
-                <PropertyTrendChart />
-              )}
+                    ))
+                ) : (
+                  <PropertyTrendChart />
+                )}
+              </div>
             </div>
           ) : (
             <div className="mb-4 mt-3 flex h-[200px] w-full items-center justify-center rounded-lg border bg-slate-500 text-white opacity-40">

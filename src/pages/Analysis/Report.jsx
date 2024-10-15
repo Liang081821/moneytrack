@@ -203,14 +203,14 @@ export default function Report() {
         <div className="relative flex gap-2 border-b border-gray-300">
           <button
             onClick={() => setLiveStatic(true)}
-            className={`text-sm font-semibold md:text-base ${livestatic ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-4 py-2 transition duration-300 ease-in-out`}
+            className={`text-sm font-semibold md:text-base ${livestatic ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-2 py-1 transition duration-300 ease-in-out md:px-4 md:py-2`}
           >
             即時數據
           </button>
 
           <button
             onClick={() => setLiveStatic(false)}
-            className={`joyride-report text-sm font-semibold md:text-base ${!livestatic ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-4 py-2 transition duration-300 ease-in-out`}
+            className={`joyride-report text-sm font-semibold md:text-base ${!livestatic ? "scale-105 border-b-2 border-[#607196] text-[#607196]" : "text-gray-400"} transform px-2 py-1 transition duration-300 ease-in-out md:px-4 md:py-2`}
           >
             歷史報告
           </button>
@@ -291,7 +291,7 @@ export default function Report() {
               expenseRecords={expenseRecords}
             />
           </div>
-          <div className="joyride-balancesheet w-full">
+          <div className="joyride-balancesheet mb-[10vh] w-full md:mb-0">
             <BalanceSheet totalProperty={totalProperty} />
           </div>
         </div>

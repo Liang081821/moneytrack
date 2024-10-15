@@ -282,7 +282,7 @@ export default function ProjectLayoutGrid() {
               <></>
             )}
           </div>
-          <div className="joyride-project flex w-full gap-4">
+          <div className="joyride-project flex w-full flex-wrap gap-4">
             {showOnlyEditing ? (
               <>
                 {" "}
@@ -410,7 +410,7 @@ export default function ProjectLayoutGrid() {
 
       {/* 顯示專案詳情的彈出窗 */}
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 p-2 fade-in md:p-0">
           <div className="relative flex w-[2000px] max-w-lg flex-col gap-3 rounded-lg bg-white p-6">
             <Button onClick={closeProjectDetails} className="self-end">
               取消
