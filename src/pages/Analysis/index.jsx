@@ -2,21 +2,32 @@ import Report from "./Report";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useState, useEffect } from "react";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 export default function Analysis() {
   const [loading, setLoading] = useState(true);
+  const { transactionData } = useGlobalContext();
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
-    // 模擬 2 秒延遲，然後取消 loading 狀態
-    const timer = setTimeout(() => {
+    if (
+      Array.isArray(transactionData) &&
+      transactionData.length === 0 &&
+      isFirstLoad
+    ) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+        setIsFirstLoad(false);
+      }, 2500);
+
+      return () => clearTimeout(timer);
+    } else if (Array.isArray(transactionData) && transactionData.length > 0) {
       setLoading(false);
-    }, 1500);
+      setIsFirstLoad(false);
+    }
+  }, [transactionData]);
 
-    // 清理計時器
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) {
+  if (loading && isFirstLoad) {
     // 顯示骨架屏
     return (
       <div className="w-full pt-5">

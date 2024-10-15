@@ -15,19 +15,29 @@ import Button from "@/components/Button";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import { useGlobalContext } from "@/context/GlobalContext";
 export default function Accounting() {
   const [loading, setLoading] = useState(true);
+  const { transactionData } = useGlobalContext();
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
-    // 模擬 2 秒延遲，然後取消 loading 狀態
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1500);
+    if (
+      Array.isArray(transactionData) &&
+      transactionData.length === 0 &&
+      isFirstLoad
+    ) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+        setIsFirstLoad(false);
+      }, 2500);
 
-    // 清理計時器
-    return () => clearTimeout(timer);
-  }, []);
+      return () => clearTimeout(timer);
+    } else if (Array.isArray(transactionData) && transactionData.length > 0) {
+      setLoading(false);
+      setIsFirstLoad(false);
+    }
+  }, [transactionData]);
 
   const { setDataRun } = useJoyride();
   useEffect(() => {
@@ -106,7 +116,7 @@ export default function Accounting() {
   const startTutorial = () => {
     setDataRun(true);
   };
-  if (loading) {
+  if (loading && isFirstLoad) {
     // 顯示骨架屏
     return (
       <div className="w-full pt-5">

@@ -30,16 +30,21 @@ export default function HistoryRecord() {
   const { loginEmail } = useGlobalContext();
   const { historyCollectionRef } = getFirestoreRefs(loginEmail);
   const [loading, setLoading] = useState(true);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
-    // 模擬 2 秒延遲，然後取消 loading 狀態
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1500);
+    if (Array.isArray(property) && property.length === 0 && isFirstLoad) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+        setIsFirstLoad(false);
+      }, 2500);
 
-    // 清理計時器
-    return () => clearTimeout(timer);
-  }, []);
+      return () => clearTimeout(timer);
+    } else if (Array.isArray(property) && property.length > 0) {
+      setLoading(false);
+      setIsFirstLoad(false);
+    }
+  }, [property]);
 
   const calculateProperty = async () => {
     if (property.length === 0) {
@@ -111,7 +116,7 @@ export default function HistoryRecord() {
   };
 
   const [view, SetView] = useState(true);
-  if (loading) {
+  if (loading && isFirstLoad) {
     // 顯示骨架屏
     return (
       <div className="w-full pt-5">
@@ -303,7 +308,7 @@ export default function HistoryRecord() {
                         {item.time.toDate().toLocaleDateString()}
                       </div>
                       {/* 百分比條 */}
-                      <div className="flex w-[40vw] items-center">
+                      <div className="flex w-full items-center">
                         <div
                           className="flex h-6 items-center justify-center rounded-lg bg-[#e8e9ed] font-semibold"
                           style={{
