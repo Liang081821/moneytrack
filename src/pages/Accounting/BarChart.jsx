@@ -64,7 +64,7 @@ export default function BarChart({
     lastDayOfSelectedMonth: PropTypes.instanceOf(Date).isRequired,
   };
 
-  if (dailyExpenses.length === 0) {
+  if (dailyExpenses.length <= 1) {
     return (
       <div className="flex w-full flex-1 items-center justify-center rounded-lg border bg-slate-500 p-6 text-white opacity-40">
         <svg
@@ -134,9 +134,11 @@ export default function BarChart({
           size: 16,
           weight: "bold",
         },
-        anchor: "end", // 將標籤錨點設置在數據點的上方或下方
-        align: "top", // 將標籤對齊到數據點的上方
+        anchor: "end", // 調整標籤的對齊方式
+        align: "left", // 將標籤對齊到數據點的上方
         offset: 10,
+        collisionDetection: "dataset", // 啟用碰撞檢測
+
         formatter: (value) =>
           ` NT$ ${value.toLocaleString(undefined, {
             minimumFractionDigits: 0,
@@ -177,9 +179,13 @@ export default function BarChart({
         title: {
           display: true,
           text: "支出 (NT$)",
+          padding: {
+            top: -20, // 調整標題與刻度之間的間距
+          },
         },
         beginAtZero: true,
         ticks: {
+          // margin: 100,
           font: {
             size: 16,
           },
@@ -188,7 +194,8 @@ export default function BarChart({
     },
     layout: {
       padding: {
-        right: 60,
+        right: 10,
+        left: 60,
         top: 40,
       },
     },

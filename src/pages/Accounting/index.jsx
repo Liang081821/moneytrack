@@ -167,7 +167,7 @@ export default function Accounting() {
                 viewBox="0 0 24 24"
                 strokeWidth="2"
                 stroke="currentColor"
-                className="hidden size-6 md:block"
+                className="size-4 md:size-6"
               >
                 <path
                   strokeLinecap="round"
@@ -175,7 +175,7 @@ export default function Accounting() {
                   d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"
                 />
               </svg>
-              <p className="text-sm md:text-base">上個月</p>
+              <p className="hidden text-sm md:block md:text-base">上個月</p>
             </Button>
           </div>
           <div className="flex items-center gap-2">
@@ -189,27 +189,39 @@ export default function Accounting() {
               className="flex items-center justify-center gap-1 md:gap-2"
               onClick={() => handleMonthChange("")}
             >
-              <p className="text-sm md:text-nowrap md:text-base">回本月</p>
+              <p className="hidden text-sm md:block md:text-nowrap md:text-base">
+                回本月
+              </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="block size-4 md:hidden"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                />
+              </svg>
             </Button>
           </div>
-          <div className="flex md:gap-2">
+          <div className="flex gap-1 md:gap-2">
             <Button
               className="flex items-center justify-center gap-1 md:gap-2"
+              onClick={() => startTutorial()}
               variant="grey"
             >
-              <p
-                onClick={() => startTutorial()}
-                className="text-sm md:text-base"
-              >
-                使用教學
-              </p>
+              <p className="hidden text-sm md:block md:text-base">使用教學</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="yellow"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="hidden size-6 md:block"
+                className="size-4 md:size-6"
               >
                 <path
                   strokeLinecap="round"
@@ -223,14 +235,14 @@ export default function Accounting() {
               className="flex items-center justify-center gap-1 md:gap-2"
               onClick={() => handleMonthChange("next")}
             >
-              <p className="text-sm md:text-base">下個月</p>
+              <p className="hidden text-sm md:block md:text-base">下個月</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="2"
                 stroke="currentColor"
-                className="hidden size-6 md:block"
+                className="size-4 md:size-6"
               >
                 <path
                   strokeLinecap="round"

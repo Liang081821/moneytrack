@@ -56,7 +56,8 @@ export const JoyrideProvider = ({ children }) => {
   const dataSteps = [
     {
       target: ".joyride-datachange",
-      content: "1、本區塊是支出變化表，讓您檢視當月每日的支出變化。",
+      content:
+        "1、本區塊是支出變化表，讓您檢視當月每日的支出變化。（兩日交易紀錄後出現）",
       disableBeacon: true,
       styles: {
         tooltipContent: {

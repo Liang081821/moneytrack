@@ -234,7 +234,7 @@ export default function ProjectLayoutGrid() {
                   showOnlyEditing
                     ? "scale-105 border-b-2 border-[#607196] text-[#607196]"
                     : "text-gray-400"
-                } px-4 py-2`}
+                } px-2 py-1 md:px-4 md:py-2`}
               >
                 進行中
               </div>
@@ -245,7 +245,7 @@ export default function ProjectLayoutGrid() {
                   !showOnlyEditing
                     ? "scale-105 border-b-2 border-[#607196] text-[#607196]"
                     : "text-gray-400"
-                } px-4 py-2`}
+                } px-2 py-1 md:px-4 md:py-2`}
               >
                 已結束
               </div>
@@ -255,11 +255,9 @@ export default function ProjectLayoutGrid() {
                 <Button
                   className="flex items-center justify-center gap-1 md:gap-2"
                   variant="grey"
+                  onClick={() => startTutorial()}
                 >
-                  <p
-                    onClick={() => startTutorial()}
-                    className="text-sm md:text-base"
-                  >
+                  <p className="hidden text-sm md:block md:text-base">
                     使用教學
                   </p>
                   <svg
@@ -268,7 +266,7 @@ export default function ProjectLayoutGrid() {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="hidden size-6 md:block"
+                    className="size-4 md:size-6"
                   >
                     <path
                       strokeLinecap="round"

@@ -227,7 +227,7 @@ export default function HistoryReport() {
             {currentReport.reportMonth.month} 月分析結果
           </h3>
 
-          <div className="flex w-full gap-3 p-7">
+          <div className="flex w-full flex-col gap-3 p-7 md:flex-row">
             {/* 房租率圖表 */}
             <div className="relative flex w-full items-center justify-center">
               <div className="absolute">
@@ -299,12 +299,12 @@ export default function HistoryReport() {
           </div>
         </div>
         {/* 堆疊條形圖 */}
-        <div className="flex w-full gap-3">
+        <div className="flex w-full flex-col gap-3 md:flex-row">
           <div className="flex w-full flex-col rounded-lg bg-[#fcfcfc] p-7 shadow-lg">
             <h4 className="mb-14 text-center text-xl font-semibold">
               收支概況
             </h4>
-            <div className="flex justify-center lg:h-auto">
+            <div className="flex h-auto justify-center lg:h-auto">
               <Bar data={stackedBarData} options={stackedBarOptions} />
             </div>
           </div>
@@ -313,7 +313,7 @@ export default function HistoryReport() {
             <h4 className="mb-14 text-center text-xl font-semibold">
               財務數據
             </h4>
-            <div className="flex justify-center lg:h-auto">
+            <div className="flex justify-center overflow-x-scroll lg:h-auto">
               <Bar data={data} options={options} />
             </div>
           </div>

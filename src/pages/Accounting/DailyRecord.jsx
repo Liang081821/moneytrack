@@ -685,7 +685,7 @@ export default function DailyRecord({
               <form onSubmit={handleSubmit(handleSaveEdit)}>
                 <div className="mb-3 flex w-full items-center gap-2">
                   <label className="text-nowrap text-gray-700">日期</label>
-                  <div className="w-full rounded-lg border p-2">
+                  <div className="w-full rounded-lg border p-1 text-xs md:p-2 md:text-base">
                     <DatePicker
                       selected={startDate}
                       onChange={(date) => setStartDate(date)}

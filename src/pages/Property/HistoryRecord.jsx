@@ -156,11 +156,9 @@ export default function HistoryRecord() {
           <Button
             className="mr-2 flex items-center justify-center gap-1 md:gap-2"
             variant="grey"
+            onClick={() => startTutorial()}
           >
-            <button
-              onClick={() => startTutorial()}
-              className="text-sm md:text-base"
-            >
+            <button className="hidden text-sm md:block md:text-base">
               使用教學
             </button>
             <svg
@@ -169,7 +167,7 @@ export default function HistoryRecord() {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="hidden size-6 md:block"
+              className="size-4 md:size-6"
             >
               <path
                 strokeLinecap="round"
@@ -180,18 +178,17 @@ export default function HistoryRecord() {
           </Button>
           <Button
             variant="retain"
+            onClick={calculateProperty}
             className="joyride-totalproperty flex items-center justify-center gap-1 md:gap-2"
           >
-            <p onClick={calculateProperty} className="text-sm md:text-base">
-              統計最新資產
-            </p>
+            <p className="hidden text-sm md:block md:text-base">統計最新資產</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="hidden size-6 md:block"
+              className="size-4 md:size-6"
             >
               <path
                 strokeLinecap="round"
@@ -296,7 +293,7 @@ export default function HistoryRecord() {
                   </button>
                 </div>
               </div>
-              <div className="flex h-[500px] w-full flex-col overflow-y-scroll">
+              <div className="flex h-[500px] w-full flex-col overflow-y-scroll lg:h-auto">
                 {view ? (
                   historyData
                     .slice()

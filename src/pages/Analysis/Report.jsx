@@ -199,7 +199,7 @@ export default function Report() {
       )}
       <AnalysisJoyride />
 
-      <div className="mb-3 flex w-full items-center justify-between gap-2 rounded-lg bg-[#fcfcfc] p-4 shadow-lg">
+      <div className="mb-3 flex w-full items-center justify-between gap-1 rounded-lg bg-[#fcfcfc] p-4 shadow-lg md:gap-2">
         <div className="relative flex gap-2 border-b border-gray-300">
           <button
             onClick={() => setLiveStatic(true)}
@@ -221,20 +221,16 @@ export default function Report() {
               <Button
                 className="flex cursor-pointer items-center justify-center gap-1 md:gap-2"
                 variant="grey"
+                onClick={() => startTutorial()}
               >
-                <p
-                  onClick={() => startTutorial()}
-                  className="text-sm md:text-base"
-                >
-                  使用教學
-                </p>
+                <p className="hidden text-sm md:block md:text-base">使用教學</p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="yellow"
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="hidden size-6 md:block"
+                  className="size-4 md:size-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -251,20 +247,16 @@ export default function Report() {
           <Button
             className="joyride-generatereport flex cursor-pointer items-center justify-center gap-1 md:gap-2"
             variant="retain"
+            onClick={() => handleAddReport()}
           >
-            <p
-              onClick={() => handleAddReport()}
-              className="text-sm md:text-base"
-            >
-              我要進行分析
-            </p>
+            <p className="hidden text-sm md:block md:text-base">我要進行分析</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="hidden size-6 md:block"
+              className="size-4 md:size-6"
             >
               <path
                 strokeLinecap="round"
