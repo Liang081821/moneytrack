@@ -142,7 +142,7 @@ export default function BarChart({
         formatter: (value) =>
           ` NT$ ${value.toLocaleString(undefined, {
             minimumFractionDigits: 0,
-            maximumFractionDigits: 2,
+            maximumFractionDigits: 0,
           })}`,
       },
       zoom: {

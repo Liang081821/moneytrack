@@ -27,7 +27,7 @@ export default function TransactionCard({
           {item.currency}$
           {item.amount.toLocaleString(undefined, {
             minimumFractionDigits: 0,
-            maximumFractionDigits: 2,
+            maximumFractionDigits: 0,
           })}
         </div>
       </div>

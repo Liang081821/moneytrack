@@ -174,7 +174,7 @@ export default function BalanceDoughnutChart({
             月結餘 <br />$
             {surplus.toLocaleString(undefined, {
               minimumFractionDigits: 0,
-              maximumFractionDigits: 2,
+              maximumFractionDigits: 0,
             })}
           </div>
         </div>

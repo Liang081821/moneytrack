@@ -615,7 +615,7 @@ export default function DailyRecord({
                   }, 0)
                   .toLocaleString(undefined, {
                     minimumFractionDigits: 0,
-                    maximumFractionDigits: 2,
+                    maximumFractionDigits: 0,
                   })}
               </div>
             </div>

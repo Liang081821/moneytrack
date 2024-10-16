@@ -32,7 +32,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
                     NT$
                     {totalAmount.toLocaleString(undefined, {
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 0,
                     })}
                   </div>
                   <div className="self-end text-base">支出</div>
@@ -51,7 +51,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
                     NT$
                     {totalAmount.toLocaleString(undefined, {
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 0,
                     })}
                   </div>
                   <div className="self-end text-base">收入</div>
@@ -66,7 +66,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
                   NT$
                   {netWorth.toLocaleString(undefined, {
                     minimumFractionDigits: 0,
-                    maximumFractionDigits: 2,
+                    maximumFractionDigits: 0,
                   })}
                 </div>
                 <div className="self-end text-base">淨現金流</div>
@@ -89,7 +89,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
                     NT$
                     {item.balance.toLocaleString(undefined, {
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 0,
                     })}
                   </div>
                   <div className="self-end text-base">
@@ -109,7 +109,7 @@ export default function Step3({ expenseTotals, incomeTotals, netWorth }) {
                     NT$
                     {item.balance.toLocaleString(undefined, {
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 0,
                     })}
                   </div>
                   <div className="self-end text-base">

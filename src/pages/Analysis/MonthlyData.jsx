@@ -335,7 +335,7 @@ export default function MonthlyData({
                     NT$
                     {totalAmount.toLocaleString(undefined, {
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 0,
                     })}
                   </p>
 
@@ -347,7 +347,7 @@ export default function MonthlyData({
                     {changeAmount >= 0 ? "+" : ""}
                     {changeAmount.toLocaleString(undefined, {
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 0,
                     })}
                   </div>
                   <div className="text-sm text-gray-600">
@@ -410,7 +410,7 @@ export default function MonthlyData({
                     NT$
                     {totalAmount.toLocaleString(undefined, {
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 0,
                     })}
                   </p>
 
@@ -422,7 +422,7 @@ export default function MonthlyData({
                     {changeAmount >= 0 ? "+" : ""}
                     {changeAmount.toLocaleString(undefined, {
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 0,
                     })}
                   </div>
                   <div className="text-sm text-gray-600">
@@ -480,7 +480,7 @@ export default function MonthlyData({
                 NT$
                 {netWorth.toLocaleString(undefined, {
                   minimumFractionDigits: 0,
-                  maximumFractionDigits: 2,
+                  maximumFractionDigits: 0,
                 })}
               </p>
 
@@ -492,7 +492,7 @@ export default function MonthlyData({
                 {changeAmount >= 0 ? "+" : ""}
                 {changeAmount.toLocaleString(undefined, {
                   minimumFractionDigits: 0,
-                  maximumFractionDigits: 2,
+                  maximumFractionDigits: 0,
                 })}
               </div>
 

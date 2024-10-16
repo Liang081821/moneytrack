@@ -40,12 +40,14 @@ export default function Accounting() {
 
   const { setDataRun } = useJoyride();
   useEffect(() => {
-    const hasSeenDataTutorial = localStorage.getItem("hasSeenDataTutorial");
-    if (!hasSeenDataTutorial) {
-      setDataRun(true);
-      localStorage.setItem("hasSeenDataTutorial", "true");
+    if (!loading) {
+      const hasSeenDataTutorial = localStorage.getItem("hasSeenDataTutorial");
+      if (!hasSeenDataTutorial) {
+        setDataRun(true);
+        localStorage.setItem("hasSeenDataTutorial", "true");
+      }
     }
-  }, [setDataRun]);
+  }, [setDataRun, loading]);
   const defaultLayouts = {
     lg: [
       { i: "b", x: 0, y: 0, w: 4, h: 50, minH: 50, minW: 4 },

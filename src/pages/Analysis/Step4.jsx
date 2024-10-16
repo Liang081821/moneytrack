@@ -201,7 +201,7 @@ export default function Step4({
                     NT$
                     {totalProperty.toLocaleString(undefined, {
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 0,
                     })}
                   </td>
                   <td className="border border-gray-300 px-4 py-2"></td>
@@ -212,7 +212,7 @@ export default function Step4({
                     -NT$
                     {monthexpense.toLocaleString(undefined, {
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 0,
                     })}
                   </td>
                   <td className="border border-gray-300 px-4 py-2"></td>
@@ -223,7 +223,7 @@ export default function Step4({
                     NT$
                     {monthincome.toLocaleString(undefined, {
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 0,
                     })}
                   </td>
                   <td className="border border-gray-300 px-4 py-2"></td>
@@ -236,7 +236,7 @@ export default function Step4({
                     NT$
                     {(monthincome - monthexpense).toLocaleString(undefined, {
                       minimumFractionDigits: 0,
-                      maximumFractionDigits: 2,
+                      maximumFractionDigits: 0,
                     })}
                   </td>
                   <td className="border border-gray-300 px-4 py-2">

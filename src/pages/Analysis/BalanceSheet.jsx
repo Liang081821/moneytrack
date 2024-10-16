@@ -72,7 +72,7 @@ export default function BalanceSheet() {
                   NT$
                   {item.balance.toLocaleString(undefined, {
                     minimumFractionDigits: 0,
-                    maximumFractionDigits: 2,
+                    maximumFractionDigits: 0,
                   })}
                 </div>
                 <div className="lg:text-md self-end text-sm sm:text-base">
@@ -114,7 +114,7 @@ export default function BalanceSheet() {
                   NT$
                   {item.balance.toLocaleString(undefined, {
                     minimumFractionDigits: 0,
-                    maximumFractionDigits: 2,
+                    maximumFractionDigits: 0,
                   })}
                 </div>
                 <div className="lg:text-md self-end text-sm sm:text-base">
@@ -152,7 +152,7 @@ export default function BalanceSheet() {
                 NT$
                 {totalProperty.toLocaleString(undefined, {
                   minimumFractionDigits: 0,
-                  maximumFractionDigits: 2,
+                  maximumFractionDigits: 0,
                 })}
               </div>
               <div className="lg:text-md self-end text-sm sm:text-base"></div>

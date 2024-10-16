@@ -16,14 +16,6 @@ import PropertyTrendChart from "./PropertyTrendChart";
 export default function HistoryRecord() {
   const { setRun } = useJoyride();
 
-  useEffect(() => {
-    const hasSeenTutorial = localStorage.getItem("hasSeenTutorial");
-    if (!hasSeenTutorial) {
-      setRun(true);
-      localStorage.setItem("hasSeenTutorial", "true");
-    }
-  }, [setRun]);
-
   const { property } = useGlobalContext();
   const { historyData } = useGlobalContext();
   const [alertMessage, setAlertMessage] = useState(null);
@@ -46,6 +38,15 @@ export default function HistoryRecord() {
       setIsFirstLoad(false);
     }
   }, [property]);
+  useEffect(() => {
+    if (!loading) {
+      const hasSeenTutorial = localStorage.getItem("hasSeenTutorial");
+      if (!hasSeenTutorial) {
+        setRun(true);
+        localStorage.setItem("hasSeenTutorial", "true");
+      }
+    }
+  }, [setRun, loading]);
 
   const calculateProperty = async () => {
     if (property.length === 0) {

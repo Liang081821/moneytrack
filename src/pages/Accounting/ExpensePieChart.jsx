@@ -163,7 +163,7 @@ export default function ExpensePieChart({
                 undefined,
                 {
                   minimumFractionDigits: 0,
-                  maximumFractionDigits: 2,
+                  maximumFractionDigits: 0,
                 },
               )}`;
         },
