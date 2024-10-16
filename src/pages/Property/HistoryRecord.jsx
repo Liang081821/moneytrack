@@ -1,17 +1,17 @@
+import AccountDetails from "@/components/AccountDetails";
+import Alert from "@/components/Alert";
+import Button from "@/components/Button";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { getFirestoreRefs } from "@/firebase/api";
-import { addDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/firebase/firebaseConfig";
-import Alert from "@/components/Alert";
-import { useState, useEffect } from "react";
-import JoyrideGuide from "../../components/JoyRide/index";
-import { useJoyride } from "../../context/JoyrideContext";
-import Button from "@/components/Button";
-import PropertyTrendChart from "./PropertyTrendChart";
-import { Tooltip } from "react-tooltip";
-import AccountDetails from "@/components/AccountDetails";
+import { addDoc, deleteDoc, doc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { Tooltip } from "react-tooltip";
+import JoyrideGuide from "../../components/JoyRide/index";
+import { useJoyride } from "../../context/JoyrideContext";
+import PropertyTrendChart from "./PropertyTrendChart";
 
 export default function HistoryRecord() {
   const { setRun } = useJoyride();
@@ -23,6 +23,7 @@ export default function HistoryRecord() {
       localStorage.setItem("hasSeenTutorial", "true");
     }
   }, [setRun]);
+
   const { property } = useGlobalContext();
   const { historyData } = useGlobalContext();
   const [alertMessage, setAlertMessage] = useState(null);
@@ -100,7 +101,6 @@ export default function HistoryRecord() {
   const deleteRecord = async (id) => {
     try {
       const docRef = doc(db, "record", loginEmail, "history", id);
-
       setAlertMessage("刪除成功");
       await deleteDoc(docRef);
     } catch (e) {
@@ -117,14 +117,11 @@ export default function HistoryRecord() {
 
   const [view, SetView] = useState(true);
   if (loading && isFirstLoad) {
-    // 顯示骨架屏
     return (
       <div className="w-full pt-5">
         <div className="mx-auto mb-[10vh] flex w-[85%] flex-col pl-11 md:pl-0">
-          {/* 頁面標題的骨架 */}
           <Skeleton height={72} width="100%" />
 
-          {/* 帳戶細節區塊的骨架 */}
           <div className="mt-2 flex w-full flex-col gap-2 md:flex-row">
             <div className="h-[300px] w-full md:h-[595px]">
               <Skeleton height="100%" width="100%" />
@@ -137,7 +134,6 @@ export default function HistoryRecord() {
             </div>
           </div>
 
-          {/* 底部的骨架 */}
           <Skeleton height={200} width="100%" className="mt-3" />
         </div>
       </div>
@@ -303,11 +299,9 @@ export default function HistoryRecord() {
                         key={item.id}
                         className="m-1 flex h-fit w-full flex-col items-center gap-3 rounded-lg p-2 md:flex-row lg:min-h-[100px]"
                       >
-                        {/* 日期 */}
                         <div className="w-[110px] rounded-lg p-2 text-center">
                           {item.time.toDate().toLocaleDateString()}
                         </div>
-                        {/* 百分比條 */}
                         <div className="flex w-full items-center">
                           <div
                             className="flex h-6 items-center justify-center rounded-lg bg-[#e8e9ed] font-semibold"
@@ -322,23 +316,7 @@ export default function HistoryRecord() {
                                 maximumFractionDigits: 2,
                               },
                             )} (${getPercentage(item.saving, item.totalAssetsAbsoluteValue).toFixed(1)}%)`}
-                          >
-                            {/* <div className="flex flex-col text-center">
-                            NT$
-                            {item.saving.toLocaleString(undefined, {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 2,
-                            })}
-                            <br></br>(
-                            {getPercentage(
-                              item.saving,
-                              item.totalAssetsAbsoluteValue,
-                            ) >= 4
-                              ? `${getPercentage(item.saving, item.totalAssetsAbsoluteValue).toFixed(1)}%`
-                              : ""}
-                            )
-                          </div> */}
-                          </div>
+                          ></div>
 
                           <div
                             className="flex h-6 w-full items-center justify-center rounded-lg bg-[#9dbebb] font-semibold text-white"
@@ -353,22 +331,7 @@ export default function HistoryRecord() {
                                 maximumFractionDigits: 2,
                               },
                             )} (${getPercentage(item.expense, item.totalAssetsAbsoluteValue).toFixed(1)}%)`}
-                          >
-                            {/* <div className="flex flex-col text-center">
-                            NT$
-                            {item.expense.toLocaleString(undefined, {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 2,
-                            })}
-                            <br></br>
-                            {getPercentage(
-                              item.expense,
-                              item.totalAssetsAbsoluteValue,
-                            ) >= 4
-                              ? `${getPercentage(item.expense, item.totalAssetsAbsoluteValue).toFixed(1)}%`
-                              : ""}
-                          </div> */}
-                          </div>
+                          ></div>
 
                           <div
                             className="flex h-6 items-center justify-center rounded-lg bg-[#babfd1] font-semibold"
@@ -383,28 +346,10 @@ export default function HistoryRecord() {
                                 maximumFractionDigits: 2,
                               },
                             )} (${getPercentage(item.investment, item.totalAssetsAbsoluteValue).toFixed(1)}%)`}
-                          >
-                            {/* <div className="flex flex-col text-center">
-                            NT$
-                            {item.investment.toLocaleString(undefined, {
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 2,
-                            })}
-                            <br></br>(
-                            {getPercentage(
-                              item.investment,
-                              item.totalAssetsAbsoluteValue,
-                            ) >= 4
-                              ? `${getPercentage(item.investment, item.totalAssetsAbsoluteValue).toFixed(1)}%`
-                              : ""}
-                            )
-                          </div> */}
-                          </div>
+                          ></div>
 
-                          {/* Tooltips */}
                           <Tooltip id="tooltip" />
                         </div>
-                        {/* 資產詳細資料 */}
                         <div className="flex flex-col items-center justify-end gap-2 lg:flex-row">
                           <div className="ml-2 flex h-[60px] min-w-[150px] flex-col items-center justify-center rounded-lg border-2 border-[#e8e9ed] p-3">
                             <div className="text-lg font-semibold">儲蓄</div>
@@ -446,7 +391,6 @@ export default function HistoryRecord() {
                               })}
                             </div>
                           </div>
-                          {/* 刪除按鈕 */}
                           <Button
                             onClick={() => deleteRecord(item.id)}
                             variant="delete"

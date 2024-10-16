@@ -1,8 +1,8 @@
-import { Doughnut } from "react-chartjs-2";
-import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { Chart, registerables } from "chart.js";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { Doughnut } from "react-chartjs-2";
 
 Chart.register(...registerables);
 

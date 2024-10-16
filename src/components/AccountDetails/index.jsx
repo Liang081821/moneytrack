@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import { useGlobalContext } from "../../context/GlobalContext";
-import { getFirestoreRefs } from "../../firebase/api";
-import { getDocs, query, where, deleteDoc, doc } from "firebase/firestore";
 import Alert from "@/components/Alert";
 import TransactionCard from "@/components/TransactionCard";
+import { deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import PropTypes from "prop-types";
-import AddNewFunction from "../../pages/Property/addNewAccount";
+import { useEffect, useState } from "react";
 import Button from "../../components/Button/index";
+import { useGlobalContext } from "../../context/GlobalContext";
+import { getFirestoreRefs } from "../../firebase/api";
+import AddNewFunction from "../../pages/Property/addNewAccount";
 
 export default function AccountDetails({
   title,
@@ -37,7 +37,7 @@ export default function AccountDetails({
     setSelectedAccount(null);
     setAccountRecord([]);
   };
-  const [isAddNewOpen, setIsAddNewOpen] = useState(false); //這裡z-index
+  const [isAddNewOpen, setIsAddNewOpen] = useState(false);
 
   const handleDeleteAccount = async (deleteOption) => {
     try {
@@ -128,7 +128,6 @@ export default function AccountDetails({
         <div className="text-xl font-semibold">{title}</div>
       </div>
       <div className="relative flex h-full w-full flex-col gap-2 overflow-scroll">
-        {/* 動態渲染篩選後的帳戶 */}
         {filteredAccounts.map((account) => (
           <div
             key={account.id}
@@ -178,7 +177,6 @@ export default function AccountDetails({
           setAlertMessage={setAlertMessage}
         />
       </div>
-      {/* 帳戶詳細紀錄顯示 */}
       {selectedAccount && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4">
           <div className="h-[80vh] w-full max-w-lg overflow-scroll rounded-lg bg-white p-4 shadow-lg">
@@ -197,7 +195,6 @@ export default function AccountDetails({
                 <Button onClick={handleCloseDetail}>取消</Button>
               </div>
             </div>
-            {/* 渲染帳戶的所有紀錄 */}
             <div className="flex flex-col gap-3">
               {accountRecord?.map((item) => (
                 <TransactionCard key={item.id} item={item} showTime={true} />
@@ -207,7 +204,6 @@ export default function AccountDetails({
         </div>
       )}
 
-      {/* 刪除確認彈窗 */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4">
           <div className="w-full max-w-md rounded-lg bg-white p-4">

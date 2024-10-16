@@ -1,27 +1,28 @@
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { storage } from "../../firebase/firebaseConfig";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getFirestoreRefs } from "../../firebase/api";
-import { useGlobalContext } from "@/context/GlobalContext";
 import Alert from "@/components/Alert";
-import TransactionCard from "@/components/TransactionCard";
-import { useJoyride } from "../../context/JoyrideContext";
-import ProjectJoyride from "../../components/JoyRide/ProjectJoyRide";
 import Button from "@/components/Button";
+import TransactionCard from "@/components/TransactionCard";
+import { useGlobalContext } from "@/context/GlobalContext";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import ProjectJoyride from "../../components/JoyRide/ProjectJoyRide";
+import { useJoyride } from "../../context/JoyrideContext";
+import { getFirestoreRefs } from "../../firebase/api";
+import { storage } from "../../firebase/firebaseConfig";
 
 import {
   addDoc,
-  getDocs,
-  doc,
   deleteDoc,
-  updateDoc,
+  doc,
+  getDocs,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
 export default function ProjectLayoutGrid() {
   const { setProjectRun } = useJoyride();
+
   useEffect(() => {
     const hasSeenProjectTutorial = localStorage.getItem(
       "hasSeenProjectTutorial",
@@ -31,6 +32,7 @@ export default function ProjectLayoutGrid() {
       localStorage.setItem("hasSeenProjectTutorial", "true");
     }
   }, [setProjectRun]);
+
   const startTutorial = () => {
     setProjectRun(true);
   };
@@ -82,7 +84,6 @@ export default function ProjectLayoutGrid() {
     setIsEditing(true);
   };
 
-  // 新增專案
   const addNewBox = async (data) => {
     if (isSubmitting) return;
     setIsSubmitting(true);
@@ -116,20 +117,17 @@ export default function ProjectLayoutGrid() {
     }
   };
 
-  // 處理圖片預覽
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImagePreview(URL.createObjectURL(file));
   };
 
-  // 關閉編輯模式
   const closeEditing = () => {
     setIsEditing(false);
     setImagePreview(null);
     reset();
   };
 
-  // 顯示專案詳情
   const showProjectDetails = (project, id) => {
     setSelectedProject(project);
     const filteredTransactions = transactionData.filter(
@@ -139,7 +137,6 @@ export default function ProjectLayoutGrid() {
       (a, b) => b.time.toDate() - a.time.toDate(),
     );
 
-    // 設定選中的專案
     setSelectedProject(project);
     setselectedProjectData(sortfilteredTransactions);
 
@@ -155,26 +152,14 @@ export default function ProjectLayoutGrid() {
 
     setTotalAmount(total);
 
-    // 返回過濾後的列表
     return filteredTransactions;
   };
 
-  // 刪除專案
   const deleteProject = async (deleteOption, id) => {
     try {
       if (deleteOption === "保留帳單") {
-        // setProjects(projects.filter((project) => project.id !== id));
-        // setSelectedProject(null);
-        // setselectedProjectData(null);
-        // alert("專案已刪除");
-        // showDeleteConfirm(false);
         await deleteDoc(doc(projectCollectionRef, id));
       } else if (deleteOption === "刪除帳單") {
-        // setProjects(projects.filter((project) => project.id !== id));
-        // setSelectedProject(null);
-        // setselectedProjectData(null);
-        // alert("專案已刪除");
-        // showDeleteConfirm(false);
         await deleteDoc(doc(projectCollectionRef, id));
         const q = query(
           accountingCollectionRef,
@@ -195,7 +180,6 @@ export default function ProjectLayoutGrid() {
     }
   };
 
-  // 關閉專案詳情
   const closeProjectDetails = () => {
     setSelectedProject(null);
     setselectedProjectData(null);
@@ -209,7 +193,6 @@ export default function ProjectLayoutGrid() {
       await updateDoc(projectDocRef, {
         isediting: false,
       });
-
       console.log("Project deleted successfully!");
     } catch (error) {
       console.error("Error deleting project: ", error);
@@ -311,7 +294,6 @@ export default function ProjectLayoutGrid() {
               <></>
             )}
 
-            {/* 動態生成的專案 */}
             {projects.length === 0 ? (
               <></>
             ) : (
@@ -342,7 +324,6 @@ export default function ProjectLayoutGrid() {
         </div>
       </div>
 
-      {/* 編輯模式的彈出窗 */}
       {isEditing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 fade-in">
           <div className="relative flex w-[90%] max-w-lg flex-col gap-3 rounded-lg bg-white p-8">
@@ -406,7 +387,6 @@ export default function ProjectLayoutGrid() {
         </div>
       )}
 
-      {/* 顯示專案詳情的彈出窗 */}
       {selectedProject && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 p-2 fade-in md:p-0">
           <div className="relative flex w-[2000px] max-w-lg flex-col gap-3 rounded-lg bg-white p-6">
@@ -453,7 +433,6 @@ export default function ProjectLayoutGrid() {
           </div>
         </div>
       )}
-      {/* 刪除確認彈窗 */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-70 p-4 fade-in">
           <div className="w-full max-w-md rounded-lg bg-white p-4">

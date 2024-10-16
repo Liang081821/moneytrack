@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import { useGlobalContext } from "@/context/GlobalContext";
-import { getFirestoreRefs } from "../../firebase/api";
-import { addDoc } from "firebase/firestore";
-import { useState, useEffect } from "react";
 import Alert from "@/components/Alert";
+import { useGlobalContext } from "@/context/GlobalContext";
+import { addDoc } from "firebase/firestore";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { getFirestoreRefs } from "../../firebase/api";
 
 export default function Step4({
   monthexpense,
@@ -114,7 +114,6 @@ export default function Step4({
       ["一年約能存", `NT$${(monthincome - monthexpense) * 12}`, ""],
     ];
 
-    // 生成 CSV 格式
     const csvContent =
       "data:text/csv;charset=utf-8," + rows.map((e) => e.join(",")).join("\n");
 
@@ -159,6 +158,7 @@ export default function Step4({
       setLoading(false);
     }
   };
+
   Step4.propTypes = {
     preText: PropTypes.func.isRequired,
     setPreText: PropTypes.func.isRequired,
@@ -166,6 +166,11 @@ export default function Step4({
     setTotalProperty: PropTypes.func.isRequired,
     setSavingRate: PropTypes.func.isRequired,
     savingRate: PropTypes.func.isRequired,
+    monthexpense: PropTypes.number.isRequired,
+    monthincome: PropTypes.number.isRequired,
+    expenseRecords: PropTypes.array.isRequired,
+    selectedHouseCategory: PropTypes.string.isRequired,
+    selectedInsureCategory: PropTypes.string.isRequired,
   };
 
   return (
@@ -180,7 +185,6 @@ export default function Step4({
 
       {!loading && (
         <div className="w-full fade-in">
-          {/* 報表內容 */}
           <div className="mb-1 h-80 overflow-scroll">
             <table className="min-w-full border-collapse border border-gray-200">
               <thead>
@@ -348,11 +352,3 @@ export default function Step4({
     </div>
   );
 }
-
-Step4.propTypes = {
-  monthexpense: PropTypes.number.isRequired,
-  monthincome: PropTypes.number.isRequired,
-  expenseRecords: PropTypes.array.isRequired,
-  selectedHouseCategory: PropTypes.string.isRequired,
-  selectedInsureCategory: PropTypes.string.isRequired,
-};

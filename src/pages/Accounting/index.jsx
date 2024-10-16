@@ -1,21 +1,20 @@
-import { useState } from "react";
+import Button from "@/components/Button";
+import { useGlobalContext } from "@/context/GlobalContext";
+import { useEffect, useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import "react-resizable/css/styles.css";
-// import DailyAccounting from "./DailyAccounting";
+import DataJoyride from "../../components/JoyRide/DataJoyRide";
+import { useJoyride } from "../../context/JoyrideContext";
+import BalanceChart from "./BalanceChart";
+import BarChart from "./BarChart";
 import DailyRecord from "./DailyRecord";
 import ExpensePieChart from "./ExpensePieChart";
 import IncomePieChart from "./IncomePieChart";
-import BalanceChart from "./BalanceChart";
-import BarChart from "./BarChart";
-import { useJoyride } from "../../context/JoyrideContext";
-import DataJoyride from "../../components/JoyRide/DataJoyRide";
-import { useEffect } from "react";
-import Button from "@/components/Button";
 const ResponsiveGridLayout = WidthProvider(Responsive);
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import { useGlobalContext } from "@/context/GlobalContext";
+
 export default function Accounting() {
   const [loading, setLoading] = useState(true);
   const { transactionData } = useGlobalContext();
@@ -49,7 +48,6 @@ export default function Accounting() {
   }, [setDataRun]);
   const defaultLayouts = {
     lg: [
-      // { i: "a", x: 0, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "b", x: 0, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "c", x: 8, y: 0, w: 4, h: 50, minH: 50, minW: 4 },
       { i: "d", x: 0, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
@@ -57,22 +55,18 @@ export default function Accounting() {
       { i: "f", x: 8, y: 1, w: 4, h: 50, minH: 50, minW: 4 },
     ],
     md: [
-      // { i: "a", x: 0, y: 0, w: 5, h: 60, minH: 60, minW: 4 },
       { i: "b", x: 0, y: 1, w: 5, h: 60, minH: 60, minW: 4 },
       { i: "c", x: 0, y: 1, w: 5, h: 60, minH: 60, minW: 4 },
       { i: "d", x: 0, y: 2, w: 5, h: 50, minH: 50, minW: 4 },
       { i: "e", x: 5, y: 2, w: 5, h: 50, minH: 50, minW: 4 },
       { i: "f", x: 0, y: 3, w: 5, h: 50, minH: 50, minW: 4 },
-      // { i: "g", x: 5, y: 3, w: 5, h: 50, minH: 50, minW: 8 },
     ],
     sm: [
-      // { i: "a", x: 0, y: 0, w: 6, h: 50, minH: 50, minW: 6 },
       { i: "b", x: 0, y: 1, w: 6, h: 50, minH: 50, minW: 6 },
       { i: "c", x: 0, y: 2, w: 6, h: 80, minH: 80, minW: 6 },
       { i: "d", x: 0, y: 4, w: 6, h: 40, minH: 40, minW: 6 },
       { i: "e", x: 0, y: 5, w: 6, h: 40, minH: 40, minW: 6 },
       { i: "f", x: 0, y: 6, w: 6, h: 40, minH: 40, minW: 6 },
-      // { i: "g", x: 0, y: 7, w: 6, h: 20, minH: 20, minW: 6 },
     ],
   };
 
@@ -117,14 +111,11 @@ export default function Accounting() {
     setDataRun(true);
   };
   if (loading && isFirstLoad) {
-    // 顯示骨架屏
     return (
       <div className="w-full pt-5">
         <div className="mx-auto mb-[10vh] flex w-[85%] flex-col pl-11 md:pl-0">
-          {/* 頁面標題的骨架 */}
           <Skeleton height={72} width="100%" />
 
-          {/* 帳戶細節區塊的骨架 */}
           <div className="mt-2 flex w-full flex-col gap-2 md:flex-row">
             <div className="h-[540px] flex-grow">
               <Skeleton height="100%" width="100%" />

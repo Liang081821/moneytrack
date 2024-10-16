@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { useGlobalContext } from "@/context/GlobalContext";
-import { updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
-import { getFirestoreRefs } from "../../firebase/api";
-import { useForm } from "react-hook-form";
 import Alert from "@/components/Alert";
-import Confirm from "@/components/Confirm";
 import Button from "@/components/Button";
+import Confirm from "@/components/Confirm";
+import { useGlobalContext } from "@/context/GlobalContext";
+import { arrayRemove, arrayUnion, updateDoc } from "firebase/firestore";
+import PropTypes from "prop-types";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+import { getFirestoreRefs } from "../../firebase/api";
 
 export default function AddNewClass({ newclassEditing, setNewClassEditing }) {
   const [newclass, setNewclass] = useState(false);
@@ -32,7 +34,6 @@ export default function AddNewClass({ newclassEditing, setNewClassEditing }) {
     },
   });
 
-  // 編輯模式切換
   const handleEditing = () => {
     setNewClassEditing(true);
   };
@@ -40,7 +41,6 @@ export default function AddNewClass({ newclassEditing, setNewClassEditing }) {
     setNewClassEditing(false);
   };
 
-  // 提交新增分類
   const onSubmit = async (data) => {
     try {
       const fieldToUpdate = selectedCategory === "收入" ? "income" : "expense";
@@ -56,18 +56,15 @@ export default function AddNewClass({ newclassEditing, setNewClassEditing }) {
     }
   };
 
-  // 點擊新增分類
   const handleAddNewClass = () => {
     setNewclass(true);
   };
 
-  // 關閉新增分類
   const closeAddNewClass = () => {
     setNewclass(false);
     reset();
   };
 
-  // 刪除分類
   const handleDeleteClass = async (item) => {
     try {
       const fieldToUpdate = selectedCategory === "收入" ? "income" : "expense";
@@ -83,6 +80,10 @@ export default function AddNewClass({ newclassEditing, setNewClassEditing }) {
   const categoriesToDisplay =
     selectedCategory === "收入" ? classData.income : classData.expense;
 
+  AddNewClass.propTypes = {
+    newclassEditing: PropTypes.bool.isRequired,
+    setNewClassEditing: PropTypes.func.isRequired,
+  };
   return (
     <div
       className={`self-end rounded-lg bg-[#607196] px-4 py-2 text-center font-semibold transition-all ${

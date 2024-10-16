@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { getFirestoreRefs } from "../../firebase/api";
-import { addDoc, updateDoc } from "firebase/firestore";
-import { useForm } from "react-hook-form";
 import { useGlobalContext } from "@/context/GlobalContext";
+import { addDoc, updateDoc } from "firebase/firestore";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import Button from "../../components/Button/index";
+import { getFirestoreRefs } from "../../firebase/api";
 
 export default function AddNewFunction({
   account_type,
@@ -59,6 +59,12 @@ export default function AddNewFunction({
     }
   };
 
+  AddNewFunction.propTypes = {
+    account_type: PropTypes.string.isRequired,
+    bgColor: PropTypes.string.isRequired,
+    setIsAddNewOpen: PropTypes.func.isRequired,
+    setAlertMessage: PropTypes.func.isRequired,
+  };
   return (
     <>
       <Button
@@ -135,9 +141,3 @@ export default function AddNewFunction({
     </>
   );
 }
-AddNewFunction.propTypes = {
-  account_type: PropTypes.string.isRequired,
-  bgColor: PropTypes.string.isRequired,
-  setIsAddNewOpen: PropTypes.func.isRequired,
-  setAlertMessage: PropTypes.func.isRequired,
-};

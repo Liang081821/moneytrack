@@ -1,9 +1,9 @@
-import { Pie } from "react-chartjs-2";
-import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { Chart, registerables } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { Pie } from "react-chartjs-2";
 // import { color } from "framer-motion";
 
 Chart.register(...registerables, ChartDataLabels);
@@ -85,30 +85,6 @@ export default function IncomePieChart({
       </div>
     );
   }
-
-  // const getContrastColor = (hexColor) => {
-  //   // 去掉 # 號
-  //   hexColor = hexColor.replace("#", "");
-
-  //   // 將 3 位數的顏色代碼擴展為 6 位數
-  //   if (hexColor.length === 3) {
-  //     hexColor = hexColor
-  //       .split("")
-  //       .map((hex) => hex + hex)
-  //       .join("");
-  //   }
-
-  //   // 將 RGB 值提取出來
-  //   const r = parseInt(hexColor.substring(0, 2), 16);
-  //   const g = parseInt(hexColor.substring(2, 4), 16);
-  //   const b = parseInt(hexColor.substring(4, 6), 16);
-
-  //   // 計算亮度值
-  //   const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-
-  //   // 根據亮度選擇黑色或白色
-  //   return brightness > 128 ? "black" : "white";
-  // };
 
   const data = {
     labels: incomeRecord.map((record) => record.label),

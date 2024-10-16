@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import { fetchAllTransactionData, getFirestoreRefs } from "../../firebase/api";
-import {
-  doc,
-  setDoc,
-  query,
-  getDocs,
-  where,
-  updateDoc,
-  deleteDoc,
-} from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";
-import { useForm } from "react-hook-form";
+import Alert from "@/components/Alert";
+import Button from "@/components/Button";
+import TransactionCard from "@/components/TransactionCard";
 import { useGlobalContext } from "@/context/GlobalContext";
+import {
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Alert from "@/components/Alert";
-import TransactionCard from "@/components/TransactionCard";
-import PropTypes from "prop-types";
-import Button from "@/components/Button";
+import { useForm } from "react-hook-form";
+import { fetchAllTransactionData, getFirestoreRefs } from "../../firebase/api";
+import { db } from "../../firebase/firebaseConfig";
 
 export default function DailyRecord({
   firstDayOfSelectedMonth,
@@ -143,9 +143,6 @@ export default function DailyRecord({
         ? classData.expense
         : [];
 
-  // const accountsToRender = property.filter((item) => {
-  //   return item.account !== watchAccount;
-  // });
   const accountsToRender = property.filter((item) => {
     const parsedAccount = watchAccount ? JSON.parse(watchAccount) : null;
     return parsedAccount ? item.id !== parsedAccount.id : true;
@@ -183,7 +180,6 @@ export default function DailyRecord({
       const originalAccount = currentTransaction.accountid;
       const newAccount = selectedNewAccount.id;
       const newProject = selectedProject.id || null;
-      console.log(newAccount);
       const originalAmount = Number(currentTransaction.amount);
       const newAmount = Number(data.amount);
       const originalTargetAccount = currentTransaction.targetaccountid || "";
@@ -201,21 +197,6 @@ export default function DailyRecord({
       const areDatesEqual =
         startDate.getTime() === currentTransaction.time.toDate().getTime();
 
-      console.log(currentTransaction.projectid);
-      console.log(newProject);
-
-      console.log(originalAccount);
-      console.log(newAccount);
-      console.log(originalTargetAccount);
-      console.log(newTargetAccount);
-      console.log(originalAmount);
-      console.log(newAmount);
-      console.log(currentTransaction.record_type);
-      console.log(data.record_type);
-      console.log(currentTransaction.class);
-      console.log(data.class);
-      console.log(areDatesEqual);
-
       if (
         originalAccount === newAccount &&
         originalAmount === newAmount &&
@@ -228,8 +209,6 @@ export default function DailyRecord({
         setAlertMessage("沒有變更，不需儲存");
         return;
       }
-
-      // 查詢帳戶
       const qOriginal = query(
         propertyCollectionRef,
         where("id", "==", originalAccount),
@@ -450,13 +429,6 @@ export default function DailyRecord({
           return;
         }
       }
-
-      console.log(amountChangeForOriginalAccount);
-      console.log(amountChangeForNewAccount);
-
-      console.log(amountChangeForOriginalTargetAccount);
-      console.log(amountChangeForNewTargetAccount);
-      console.log(watchTargetAccount);
 
       setAlertMessage("編輯成功");
       handleCloseEdit();

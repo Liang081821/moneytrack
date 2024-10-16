@@ -1,5 +1,6 @@
 import { useGlobalContext } from "@/context/GlobalContext";
 import { useEffect, useState } from "react";
+
 export default function BalanceSheet() {
   const { property } = useGlobalContext();
   const [totalProperty, setTotalProperty] = useState(0);
@@ -41,7 +42,6 @@ export default function BalanceSheet() {
           資產負債表
         </h2>
         <div className="flex flex-col items-center gap-2 rounded-lg px-4">
-          {/* <p className="text-sm font-semibold sm:text-base lg:text-lg">資產</p> */}
           {groupProperty.map((item) => (
             <div
               key={item.account}
@@ -83,7 +83,6 @@ export default function BalanceSheet() {
           ))}
         </div>
         <div className="flex flex-col items-center gap-2 rounded-lg px-4">
-          {/* <p className="text-sm font-semibold sm:text-base lg:text-lg">負債</p> */}
           {groupPropertyLiability.map((item) => (
             <div
               key={item.account}
@@ -126,9 +125,6 @@ export default function BalanceSheet() {
           ))}
         </div>
         <div className="flex flex-col items-center gap-2 rounded-lg px-4">
-          {/* <p className="text-sm font-semibold sm:text-base lg:text-lg">
-            淨資產
-          </p> */}
           <div className="flex h-20 w-full items-center justify-between rounded-lg border bg-[#babfd1] p-4 text-gray-800">
             <div className="flex flex-col gap-2">
               <svg
@@ -147,7 +143,7 @@ export default function BalanceSheet() {
               </svg>
 
               <div className="text-xs font-semibold sm:text-sm lg:text-lg">
-                淨資產{" "}
+                淨資產
               </div>
             </div>
 

@@ -1,4 +1,3 @@
-// components/UI/Button.jsx
 import PropTypes from "prop-types";
 
 const Button = ({

@@ -1,10 +1,10 @@
 import { useGlobalContext } from "@/context/GlobalContext";
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Line } from "react-chartjs-2";
 import "chart.js/auto";
-import zoomPlugin from "chartjs-plugin-zoom";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import zoomPlugin from "chartjs-plugin-zoom";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
 
 export default function BarChart({
   firstDayOfSelectedMonth,
@@ -134,10 +134,10 @@ export default function BarChart({
           size: 16,
           weight: "bold",
         },
-        anchor: "end", // 調整標籤的對齊方式
-        align: "left", // 將標籤對齊到數據點的上方
+        anchor: "end",
+        align: "left",
         offset: 10,
-        collisionDetection: "dataset", // 啟用碰撞檢測
+        collisionDetection: "dataset",
 
         formatter: (value) =>
           ` NT$ ${value.toLocaleString(undefined, {
@@ -180,7 +180,7 @@ export default function BarChart({
           display: true,
           text: "支出 (NT$)",
           padding: {
-            top: -20, // 調整標題與刻度之間的間距
+            top: -20,
           },
         },
         beginAtZero: true,

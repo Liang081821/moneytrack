@@ -1,9 +1,8 @@
+import { useGlobalContext } from "@/context/GlobalContext";
+import { getDocs, query, where } from "firebase/firestore";
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { getFirestoreRefs } from "../../firebase/api";
-import { getDocs, query, where } from "firebase/firestore";
-import { useGlobalContext } from "@/context/GlobalContext";
-
-import PropTypes from "prop-types";
 
 export default function MonthlyData({
   setmonthExpense,
@@ -36,17 +35,12 @@ export default function MonthlyData({
           59,
         );
 
-        console.log("查詢日期範圍：", firstDayOfLastMonth, lastDayOfLastMonth);
-
-        // 查詢支出
         const expenseQuery = query(
           accountingCollectionRef,
           where("record_type", "==", "支出"),
           where("time", ">=", firstDayOfLastMonth),
           where("time", "<=", lastDayOfLastMonth),
         );
-
-        // 查詢收入
         const incomeQuery = query(
           accountingCollectionRef,
           where("record_type", "==", "收入"),
@@ -54,7 +48,6 @@ export default function MonthlyData({
           where("time", "<=", lastDayOfLastMonth),
         );
 
-        // 獲取支出數據
         const expenseSnapShot = await getDocs(expenseQuery);
         const expenseRecords = expenseSnapShot.docs.map((doc) => ({
           id: doc.id,
@@ -62,14 +55,12 @@ export default function MonthlyData({
         }));
         setExpenseRecords(expenseRecords);
 
-        // 獲取收入數據
         const incomeSnapShot = await getDocs(incomeQuery);
         const incomeRecords = incomeSnapShot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
-        // 分組並計算支出總和
         const expenseGroupedTotals = expenseRecords.reduce((acc, record) => {
           const { class: recordClass, convertedAmountTWD } = record;
           if (!acc[recordClass]) {
@@ -79,7 +70,6 @@ export default function MonthlyData({
           return acc;
         }, {});
 
-        // 分組並計算收入總和
         const incomeGroupedTotals = incomeRecords.reduce((acc, record) => {
           const { class: recordClass, convertedAmountTWD } = record;
           if (!acc[recordClass]) {
@@ -88,9 +78,6 @@ export default function MonthlyData({
           acc[recordClass] += convertedAmountTWD;
           return acc;
         }, {});
-
-        console.log("支出分組總和：", expenseGroupedTotals);
-        console.log("收入分組總和：", incomeGroupedTotals);
 
         setExpenseTotals(expenseGroupedTotals);
         setIncomeTotals(incomeGroupedTotals);
@@ -115,10 +102,6 @@ export default function MonthlyData({
     fetchRecords();
   }, []);
 
-  // const [previousMonthExpense, setPreviousMonthExpense] = useState(0);
-  // const [previousMonthIncome, setPreviousMonthIncome] = useState(0);
-  // const [previousExpenseRecords, setPreviousExpenseRecords] = useState([]);
-  // const [previousIncomeRecords, setPreviousIncomeRecords] = useState([]);
   const [previousExpenseTotals, setPreviousExpenseTotals] = useState({});
   const [previousIncomeTotals, setPreviousIncomeTotals] = useState({});
   const [previousNetWorth, setPreviousNetWorth] = useState(0);
@@ -127,7 +110,6 @@ export default function MonthlyData({
     const fetchRecordsForPreviousMonth = async () => {
       try {
         const now = new Date();
-        // 取得上上個月的第一天和最後一天
         const firstDayOfPreviousMonth = new Date(
           now.getFullYear(),
           now.getMonth() - 2,
@@ -148,7 +130,6 @@ export default function MonthlyData({
           lastDayOfPreviousMonth,
         );
 
-        // 查詢支出
         const expenseQuery = query(
           accountingCollectionRef,
           where("record_type", "==", "支出"),
@@ -156,7 +137,6 @@ export default function MonthlyData({
           where("time", "<=", lastDayOfPreviousMonth),
         );
 
-        // 查詢收入
         const incomeQuery = query(
           accountingCollectionRef,
           where("record_type", "==", "收入"),
@@ -164,23 +144,18 @@ export default function MonthlyData({
           where("time", "<=", lastDayOfPreviousMonth),
         );
 
-        // 獲取支出數據
         const expenseSnapShot = await getDocs(expenseQuery);
         const expenseRecords = expenseSnapShot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        // setPreviousExpenseRecords(expenseRecords);
 
-        // 獲取收入數據
         const incomeSnapShot = await getDocs(incomeQuery);
         const incomeRecords = incomeSnapShot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        // setPreviousIncomeRecords(incomeRecords);
 
-        // 分組並計算支出總和
         const expenseGroupedTotals = expenseRecords.reduce((acc, record) => {
           const { class: recordClass, convertedAmountTWD } = record;
           if (!acc[recordClass]) {
@@ -191,7 +166,6 @@ export default function MonthlyData({
         }, {});
         setPreviousExpenseTotals(expenseGroupedTotals);
 
-        // 分組並計算收入總和
         const incomeGroupedTotals = incomeRecords.reduce((acc, record) => {
           const { class: recordClass, convertedAmountTWD } = record;
           if (!acc[recordClass]) {
@@ -202,23 +176,16 @@ export default function MonthlyData({
         }, {});
         setPreviousIncomeTotals(incomeGroupedTotals);
 
-        console.log("前一個月支出分組總和：", expenseGroupedTotals);
-        console.log("前一個月收入分組總和：", incomeGroupedTotals);
-
-        // 計算總支出和總收入
         const totalExpenses = Object.values(expenseGroupedTotals).reduce(
           (acc, amount) => acc + amount,
           0,
         );
-        // setPreviousMonthExpense(totalExpenses);
 
         const totalIncome = Object.values(incomeGroupedTotals).reduce(
           (acc, amount) => acc + amount,
           0,
         );
-        // setPreviousMonthIncome(totalIncome);
 
-        // 計算淨值
         const calculatedNetWorth = totalIncome - totalExpenses;
         setPreviousNetWorth(calculatedNetWorth);
       } catch (e) {
@@ -228,6 +195,7 @@ export default function MonthlyData({
 
     fetchRecordsForPreviousMonth();
   }, []);
+
   const calculateChange = (current, previous) => {
     const changeAmount = current - previous;
     const changePercentage =
@@ -235,6 +203,7 @@ export default function MonthlyData({
 
     return { changeAmount, changePercentage };
   };
+
   const expenseWithChanges = Object.entries(expenseTotals).map(
     ([recordClass, totalAmount]) => {
       const previousTotalAmount = previousExpenseTotals[recordClass] || 0;
@@ -274,6 +243,7 @@ export default function MonthlyData({
     previousNetWorth,
   );
   const now = new Date();
+
   MonthlyData.propTypes = {
     setmonthExpense: PropTypes.func.isRequired,
     setmonthIncome: PropTypes.func.isRequired,
@@ -316,8 +286,6 @@ export default function MonthlyData({
           {`${now.getFullYear()} 年 ${now.getMonth()} 月收支數據`}
         </h2>
         <div className="flex flex-col items-center gap-2 rounded-lg px-4">
-          {/* <p className="text-sm font-semibold sm:text-base lg:text-lg">支出</p> */}
-
           {expenseWithChanges.map(
             ({ recordClass, totalAmount, changeAmount, changePercentage }) => (
               <div
@@ -357,13 +325,11 @@ export default function MonthlyData({
                     </svg>
                   )}
 
-                  {/* 類別名稱 */}
                   <div className="text-sm font-semibold text-gray-800 sm:text-sm lg:text-lg">
                     {recordClass}
                   </div>
                 </div>
 
-                {/* 當月總額 */}
                 <div className="flex flex-col items-end">
                   <p className="flex text-sm font-semibold sm:text-lg lg:text-xl">
                     NT$
@@ -373,7 +339,6 @@ export default function MonthlyData({
                     })}
                   </p>
 
-                  {/* 變化量和百分比 */}
                   <div
                     className={`text-sm font-semibold ${
                       changeAmount >= 0 ? "text-gray-600" : "text-gray-600"
@@ -396,8 +361,6 @@ export default function MonthlyData({
           )}
         </div>
         <div className="flex flex-col items-center gap-2 rounded-lg px-4">
-          {/* <p className="text-sm font-semibold sm:text-base lg:text-lg">收入</p> */}
-
           {incomeWithChanges.map(
             ({ recordClass, totalAmount, changeAmount, changePercentage }) => (
               <div
@@ -437,13 +400,11 @@ export default function MonthlyData({
                     </svg>
                   )}
 
-                  {/* 類別名稱 */}
                   <div className="text-sm font-semibold text-gray-800 sm:text-sm lg:text-lg">
                     {recordClass}
                   </div>
                 </div>
 
-                {/* 當月總額 */}
                 <div className="flex flex-col items-end">
                   <p className="flex text-sm font-semibold text-gray-800 sm:text-lg lg:text-xl">
                     NT$
@@ -453,7 +414,6 @@ export default function MonthlyData({
                     })}
                   </p>
 
-                  {/* 變化量和百分比 */}
                   <div
                     className={`text-sm font-semibold ${
                       changeAmount >= 0 ? "text-gray-600" : "text-gray-600"
@@ -476,12 +436,8 @@ export default function MonthlyData({
           )}
         </div>
         <div className="flex flex-col items-center gap-2 px-4">
-          {/* <p className="text-sm font-semibold sm:text-base lg:text-lg">
-            淨現金流
-          </p> */}
           <div className="flex h-20 w-full items-center justify-between rounded-lg bg-[#babfd1] px-4 text-gray-800">
             <div className="flex flex-col">
-              {/* 根據變化量顯示上升或下降圖標 */}
               {changeAmount >= 0 ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -514,15 +470,12 @@ export default function MonthlyData({
                 </svg>
               )}
 
-              {/* 類別名稱 */}
               <div className="text-sm font-semibold text-gray-800 sm:text-sm lg:text-lg">
                 淨現金流
               </div>
             </div>
 
-            {/* 當月總額及變化量 */}
             <div className="flex flex-col items-end">
-              {/* 當月淨現金流總額 */}
               <p className="flex text-sm font-semibold sm:text-lg lg:text-xl">
                 NT$
                 {netWorth.toLocaleString(undefined, {
@@ -531,7 +484,6 @@ export default function MonthlyData({
                 })}
               </p>
 
-              {/* 變化量 */}
               <div
                 className={`text-sm font-semibold ${
                   changeAmount >= 0 ? "text-gray-600" : "text-gray-600"
@@ -544,7 +496,6 @@ export default function MonthlyData({
                 })}
               </div>
 
-              {/* 變化百分比 */}
               <div className="text-sm text-gray-600">
                 {changePercentage !== "N/A" ? ` ${changePercentage}%` : "0%"}
               </div>

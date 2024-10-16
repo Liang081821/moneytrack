@@ -1,8 +1,8 @@
-import ProjectLayoutGrid from "./ProjectLayoutGrid";
+import { useGlobalContext } from "@/context/GlobalContext";
+import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useState, useEffect } from "react";
-import { useGlobalContext } from "@/context/GlobalContext";
+import ProjectLayoutGrid from "./ProjectLayoutGrid";
 
 export default function Project() {
   const [loading, setLoading] = useState(true);
@@ -22,15 +22,13 @@ export default function Project() {
       setIsFirstLoad(false);
     }
   }, [projectData]);
+
   if (loading && isFirstLoad) {
-    // 顯示骨架屏
     return (
       <div className="w-full pt-5">
         <div className="mx-auto mb-[10vh] flex w-[85%] flex-col pl-11 md:pl-0">
-          {/* 頁面標題的骨架 */}
           <Skeleton height={72} width="100%" />
 
-          {/* 帳戶細節區塊的骨架 */}
           <div className="mt-2 flex w-full flex-col gap-2 md:flex-row">
             <div className="w-full md:w-[450px]">
               <Skeleton height={300} w="100%" />

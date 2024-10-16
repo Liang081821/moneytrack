@@ -1,13 +1,12 @@
-import MonthlyData from "../Analysis/MonthlyData";
-import BalanceSheet from "../Analysis/BalanceSheet";
 import Alert from "@/components/Alert";
+import Button from "@/components/Button";
 import Confirm from "@/components/Confirm";
+import { useEffect, useState } from "react";
 import AnalysisJoyride from "../../components/JoyRide/AnalysisJoyRide";
 import { useJoyride } from "../../context/JoyrideContext";
-import Button from "@/components/Button";
+import BalanceSheet from "../Analysis/BalanceSheet";
+import MonthlyData from "../Analysis/MonthlyData";
 import HistoryReport from "./HistoryReport";
-
-import { useState, useEffect } from "react";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
@@ -36,11 +35,9 @@ export default function Report() {
   const [monthincome, setmonthIncome] = useState(0);
   const [expenseRecords, setExpenseRecords] = useState({});
 
-  //step4 回傳
   const [totalProperty, setTotalProperty] = useState(0);
   const [savingRate, setSavingRate] = useState(0);
 
-  //MothlyData
   const [expenseTotals, setExpenseTotals] = useState({});
   const [incomeTotals, setIncomeTotals] = useState({});
   const [netWorth, setNetWorth] = useState(0);
@@ -48,7 +45,6 @@ export default function Report() {
   const [selectedHouseCategory, setSelectedHouseCategory] = useState("");
   const [selectedInsureCategory, setSelectedInsureCategory] = useState("");
 
-  //chatGpt
   const [preText, setPreText] = useState("");
 
   const [alertMessage, setAlertMessage] = useState(null);
@@ -59,6 +55,9 @@ export default function Report() {
     cancelMessage: "取消",
     confirmMessage: "確認",
   });
+
+  const [livestatic, setLiveStatic] = useState(true);
+
   const handleAddReport = () => {
     console.log("monthexpense:", monthexpense);
     console.log("monthincome:", monthincome);
@@ -105,7 +104,6 @@ export default function Report() {
       });
       return;
     }
-
     setStep((prevStep) => prevStep + 1);
   };
 
@@ -190,7 +188,6 @@ export default function Report() {
         return null;
     }
   };
-  const [livestatic, setLiveStatic] = useState(true);
 
   return (
     <div className="flex w-[85%] flex-col items-center">
@@ -293,7 +290,6 @@ export default function Report() {
         </>
       )}
 
-      {/* 步驟導航 */}
       {reportVisible && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 px-2">
           <div className="h-auto w-full max-w-6xl rounded-lg bg-white p-6 shadow-lg md:h-[720px]">
@@ -322,7 +318,6 @@ export default function Report() {
                 <Button onClick={handleCloseReport}>取消</Button>
               </div>
 
-              {/* 步驟指示器 */}
               <div className="mb-4 flex justify-between">
                 {Array.from({ length: 5 }, (_, index) => (
                   <div
@@ -337,12 +332,10 @@ export default function Report() {
               </div>
             </div>
 
-            {/* 步驟內容 */}
             <div className="h-[540px] overflow-hidden rounded-lg border-2 border-gray-500">
               {renderStepContent()}
             </div>
 
-            {/* 步驟導航按鈕 */}
             <div className="mt-6 flex justify-between">
               <Button
                 onClick={handlePreviousStep}

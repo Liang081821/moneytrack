@@ -1,11 +1,9 @@
-import { auth } from "../../firebase/firebaseConfig";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useGlobalContext } from "@/context/GlobalContext";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";
-import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-
+import { useEffect, useState } from "react";
+import { auth, db } from "../../firebase/firebaseConfig";
 import Logo from "./Logo.png";
 
 export default function Header({ linkToBackstage = true }) {
@@ -29,7 +27,6 @@ export default function Header({ linkToBackstage = true }) {
     };
   }, []);
 
-  // Google 登入處理程序
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {

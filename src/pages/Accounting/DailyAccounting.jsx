@@ -1,24 +1,23 @@
-import { getFirestoreRefs } from "../../firebase/api";
-import { useState, useEffect } from "react";
-import { addDoc, query, getDocs, updateDoc, where } from "firebase/firestore";
-import { useForm } from "react-hook-form";
+import Confirm from "@/components/Confirm";
 import { useGlobalContext } from "@/context/GlobalContext";
+import { addDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import AddNewClass from "./AddNewClass";
-// import Alert from "@/components/Alert";
-import Confirm from "@/components/Confirm";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { getFirestoreRefs } from "../../firebase/api";
+import AddNewClass from "./AddNewClass";
 
-import PropTypes from "prop-types";
 import Button from "@/components/Button";
+import PropTypes from "prop-types";
 
 export default function DailyAccounting({ setAccounting }) {
-  const { property, classData, projectData } = useGlobalContext();
+  const { property, classData, projectData, currencies, rates } =
+    useGlobalContext();
   const { loginEmail } = useGlobalContext();
   const navigate = useNavigate();
 
-  // const [alertMessage, setAlertMessage] = useState(null);
   const [confirmData, setConfirmData] = useState({
     isOpen: false,
     message: "",
@@ -50,8 +49,6 @@ export default function DailyAccounting({ setAccounting }) {
   const selectedCurrency = watch("currency", "TWD");
   const amount = watch("amount");
 
-  // const watchTargetAccount = watch("targetaccount");
-
   const optionsToRender =
     classData[
       watchType === "收入"
@@ -64,7 +61,6 @@ export default function DailyAccounting({ setAccounting }) {
     const parsedAccount = watchAccount ? JSON.parse(watchAccount) : null;
     return parsedAccount ? item.id !== parsedAccount.id : true;
   });
-  const { currencies, rates } = useGlobalContext();
   const [convertedAmountDisplay, setConvertedAmountDisplay] = useState(0);
 
   useEffect(() => {
@@ -194,7 +190,6 @@ export default function DailyAccounting({ setAccounting }) {
         }
       } catch (error) {
         console.error("寫入資料時出錯：", error);
-        // setAlertMessage("新增失敗，請稍後再試");
       }
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -213,8 +208,6 @@ export default function DailyAccounting({ setAccounting }) {
     setAccounting(false);
   };
   const navigateToAddClass = () => {
-    // setAccounting(false);
-
     setNewClassEditing(true);
   };
   const [newclassEditing, setNewClassEditing] = useState(false);
@@ -229,8 +222,8 @@ export default function DailyAccounting({ setAccounting }) {
           <Confirm
             message={confirmData.message}
             onConfirm={() => {
-              navigate("/accounting"); // 導航到 /accounting
-              setAccounting(false); // 執行 setAccounting(false)
+              navigate("/accounting");
+              setAccounting(false);
             }}
             onCancel={() => setConfirmData({ ...confirmData, isOpen: false })}
             cancelMessage={confirmData.cancelMessage}

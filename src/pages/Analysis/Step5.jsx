@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
 import Button from "@/components/Button";
+import PropTypes from "prop-types";
+import { useEffect, useRef, useState } from "react";
 
 export default function Step5({ preText, setPreText }) {
   const [messages, setMessages] = useState([]);
@@ -111,6 +111,7 @@ export default function Step5({ preText, setPreText }) {
     console.log("hey");
     console.log(messagesEndRef.current);
   }, [messages]);
+
   Step5.propTypes = {
     preText: PropTypes.func.isRequired,
     setPreText: PropTypes.func.isRequired,

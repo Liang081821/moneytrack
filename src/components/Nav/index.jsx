@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 export default function Nav() {
@@ -15,7 +15,6 @@ export default function Nav() {
     }
   };
   useEffect(() => {
-    // 偵測目前螢幕的寬度
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setHidden(false);
@@ -26,10 +25,8 @@ export default function Nav() {
 
     handleResize();
 
-    // 監聽螢幕大小變化
     window.addEventListener("resize", handleResize);
 
-    // 清除事件監聽器
     return () => {
       window.removeEventListener("resize", handleResize);
     };

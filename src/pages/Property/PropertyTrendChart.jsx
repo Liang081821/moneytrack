@@ -1,23 +1,20 @@
 import { useGlobalContext } from "@/context/GlobalContext";
-import { Line } from "react-chartjs-2";
 import "chart.js/auto";
-import zoomPlugin from "chartjs-plugin-zoom";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import zoomPlugin from "chartjs-plugin-zoom";
 import { useEffect, useState } from "react";
-import { Tooltip } from "chart.js/auto";
+import { Line } from "react-chartjs-2";
 
 export default function PropertyTrendChart() {
-  const { historyData } = useGlobalContext(); // 從全局上下文獲取歷史數據
+  const { historyData } = useGlobalContext();
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
     if (historyData && historyData.length > 0) {
-      // 按時間先後順序排序 historyData
       const sortedData = [...historyData].sort(
         (a, b) => a.time.toDate() - b.time.toDate(),
       );
 
-      // 構建圖表數據
       const labels = sortedData.map((data) =>
         data.time.toDate().toLocaleString("zh-TW", {
           year: "numeric",

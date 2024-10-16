@@ -1,16 +1,16 @@
-import { useGlobalContext } from "@/context/GlobalContext";
-import { useState } from "react";
 import Button from "@/components/Button";
-import { Doughnut, Bar } from "react-chartjs-2";
+import { useGlobalContext } from "@/context/GlobalContext";
 import {
-  Chart,
   ArcElement,
-  Tooltip,
-  Legend,
   BarElement,
   CategoryScale,
+  Chart,
+  Legend,
   LinearScale,
+  Tooltip,
 } from "chart.js";
+import { useState } from "react";
+import { Bar, Doughnut } from "react-chartjs-2";
 
 Chart.register(
   ArcElement,
@@ -177,7 +177,7 @@ export default function HistoryReport() {
   const options = {
     layout: {
       padding: {
-        right: 120, // 增加右邊距
+        right: 120,
       },
     },
     indexAxis: "y",
@@ -228,7 +228,6 @@ export default function HistoryReport() {
           </h3>
 
           <div className="flex w-full flex-col gap-3 p-7 md:flex-row">
-            {/* 房租率圖表 */}
             <div className="relative flex w-full items-center justify-center">
               <div className="absolute">
                 <h4 className="text-center text-lg font-semibold">房租率</h4>
@@ -266,10 +265,8 @@ export default function HistoryReport() {
               </div>
             </div>
 
-            {/* 儲蓄率圖表 */}
             <div className="relative flex w-full items-center justify-center">
               <div className="absolute">
-                {" "}
                 <h4 className="text-center text-lg font-semibold">儲蓄率</h4>
                 <p className="text-3xl font-semibold text-[#9DBEBB]">
                   {isNaN(currentReport.savingRate)
@@ -298,7 +295,6 @@ export default function HistoryReport() {
             </div>
           </div>
         </div>
-        {/* 堆疊條形圖 */}
         <div className="flex w-full flex-col gap-3 md:flex-row">
           <div className="flex w-full flex-col rounded-lg bg-[#fcfcfc] p-7 shadow-lg">
             <h4 className="mb-14 text-center text-xl font-semibold">
@@ -320,7 +316,6 @@ export default function HistoryReport() {
         </div>
       </div>
 
-      {/* 翻頁按鈕區域 */}
       <div className="mt-4 flex items-center justify-between">
         <Button
           onClick={handlePrev}

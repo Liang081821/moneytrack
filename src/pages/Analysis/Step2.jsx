@@ -9,7 +9,6 @@ export default function Step2({
 }) {
   const { classData } = useGlobalContext();
 
-  // 處理分類選擇
   const handleHouseCategoryClick = (category) => {
     setSelectedHouseCategory(category);
     console.log("計算出的房屋支出：", category);
@@ -37,7 +36,6 @@ export default function Step2({
           後續步驟會為您計算房貸/租相關比率，因此您需要選擇記帳時自定義的分類！
         </p>
 
-        {/* 渲染按鈕組合 */}
         <div className="mt-4 flex space-x-2">
           {classData.expense &&
             classData.expense.map((category, index) => (
@@ -72,7 +70,6 @@ export default function Step2({
           後續步驟會為您計算保險相關比率，因此您需要選擇記帳時自定義的分類！
         </p>
 
-        {/* 渲染按鈕組合 */}
         <div className="mt-4 flex space-x-2">
           {classData.expense &&
             classData.expense.map((category, index) => (

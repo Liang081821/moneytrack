@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Joyride from "react-joyride";
-import { useJoyride } from "../../context/JoyrideContext";
 import { useGlobalContext } from "../../context/GlobalContext";
+import { useJoyride } from "../../context/JoyrideContext";
 
 const JoyrideGuide = () => {
   const { run, steps, stepIndex, setStepIndex, setRun } = useJoyride();
@@ -36,13 +36,11 @@ const JoyrideGuide = () => {
       type === "step:after" &&
       (action === "next" || action === "prev")
     ) {
-      // 更新步驟索引
       const newIndex = index + (action === "next" ? 1 : -1);
       setStepIndex(newIndex);
 
       switch (newIndex) {
         case 1:
-          // 當回到步驟 1，確保停止計帳
           if (action === "prev") {
             setAccounting(false);
           }
@@ -64,7 +62,7 @@ const JoyrideGuide = () => {
           if (action === "next") {
             setAccounting(true);
             setTimeout(() => {
-              setRun(true); // 確保 Joyride 在 module 已完全渲染後重新啟動
+              setRun(true);
             }, 500);
           } else if (action === "prev") {
             setAccounting(true);
@@ -97,44 +95,31 @@ const JoyrideGuide = () => {
       callback={handleCallback}
       disableBeacon={true}
       disableScrolling={true}
-      spotlightClicks={false} // 禁用點擊高亮區域內的元素來跳過
+      spotlightClicks={false}
       disableOverlayClose={true}
       styles={{
         options: {
           zIndex: 10000,
           arrowColor: "#f2f2f2",
           backgroundColor: "#f2f2f2",
-          textColor: "#333", // 內容框文字顏色
+          textColor: "#333",
           overlayColor: "rgba(0, 0, 0, 0.5)",
           primaryColor: "#4a90e2",
           placement: "bottom",
         },
-        // beacon: {
-        //   inner: {
-        //     backgroundColor: "#FF6B6B",
-        //     height: 16,
-        //     width: 16,
-        //     borderRadius: "50%",
-        //   },
-        //   outer: {
-        //     backgroundColor: "rgba(255, 107, 107, 0.4)",
-        //     height: 40,
-        //     width: 40,
-        //     borderRadius: "50%",
-        //   },
-        // },
+
         spotlight: {
-          borderRadius: "8px", // 高亮邊框圓角
+          borderRadius: "8px",
         },
         tooltip: {
           fontSize: "18px",
 
           fontWeight: "bold",
-          backgroundColor: "#f2f2f2", // 引導框背景顏色
-          borderRadius: "8px", // 引導框圓角
-          color: "#333", // 文字顏色
-          padding: "20px", // 引導框內部間距
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // 引導框陰影
+          backgroundColor: "#f2f2f2",
+          borderRadius: "8px",
+          color: "#333",
+          padding: "20px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
         },
         buttonNext: {
           backgroundColor: "#607196",
