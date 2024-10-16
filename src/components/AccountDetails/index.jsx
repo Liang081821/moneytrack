@@ -26,7 +26,13 @@ export default function AccountDetails({
     getFirestoreRefs(loginEmail);
 
   const filteredAccounts = Array.isArray(property)
-    ? property.filter((item) => item.account_type === accountType)
+    ? property
+        .filter((item) => item.account_type === accountType)
+        .sort((a, b) => {
+          const aTime = a.created_at ? a.created_at.seconds : 0;
+          const bTime = b.created_at ? b.created_at.seconds : 0;
+          return bTime - aTime;
+        })
     : [];
 
   const handleAccountClick = (account) => {

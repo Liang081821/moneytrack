@@ -1,5 +1,5 @@
 import { useGlobalContext } from "@/context/GlobalContext";
-import { addDoc, updateDoc } from "firebase/firestore";
+import { addDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -47,6 +47,7 @@ export default function AddNewFunction({
         account: data.account,
         account_type: account_type,
         balance: Number(data.balance),
+        created_at: serverTimestamp(),
       });
       await updateDoc(docRef, {
         id: docRef.id,

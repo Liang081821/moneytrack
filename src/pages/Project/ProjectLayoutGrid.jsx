@@ -2,6 +2,7 @@ import Alert from "@/components/Alert";
 import Button from "@/components/Button";
 import TransactionCard from "@/components/TransactionCard";
 import { useGlobalContext } from "@/context/GlobalContext";
+import { addDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -11,12 +12,11 @@ import { getFirestoreRefs } from "../../firebase/api";
 import { storage } from "../../firebase/firebaseConfig";
 
 import {
-  addDoc,
   deleteDoc,
   doc,
   getDocs,
   query,
-  updateDoc,
+  serverTimestamp,
   where,
 } from "firebase/firestore";
 
@@ -100,6 +100,7 @@ export default function ProjectLayoutGrid() {
         name: data.projectname,
         imageUrl: imageUrl,
         isediting: true,
+        created_at: serverTimestamp(),
       };
       setIsEditing(false);
       reset();
@@ -302,6 +303,11 @@ export default function ProjectLayoutGrid() {
                   .filter((project) =>
                     showOnlyEditing ? project.isediting : !project.isediting,
                   )
+                  .sort((a, b) => {
+                    const aTime = a.created_at ? a.created_at.seconds : 0;
+                    const bTime = b.created_at ? b.created_at.seconds : 0;
+                    return bTime - aTime;
+                  })
                   .map((project) => (
                     <div
                       key={project.id}
