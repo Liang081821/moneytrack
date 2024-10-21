@@ -20,7 +20,6 @@ const JoyrideGuide = () => {
 
   const handleCallback = (data) => {
     const { action, index, status, type, lifecycle } = data;
-    console.log(data);
 
     if (
       status === "finished" ||

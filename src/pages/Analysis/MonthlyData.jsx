@@ -124,12 +124,6 @@ export default function MonthlyData({
           59,
         );
 
-        console.log(
-          "查詢前一個月的日期範圍：",
-          firstDayOfPreviousMonth,
-          lastDayOfPreviousMonth,
-        );
-
         const expenseQuery = query(
           accountingCollectionRef,
           where("record_type", "==", "支出"),

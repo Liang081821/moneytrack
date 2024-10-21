@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import Nav from "./components/Nav";
-import DailyAccounting from "./pages/Accounting/DailyAccounting";
 import { useGlobalContext } from "./context/GlobalContext";
-import { useState, useEffect } from "react";
+import DailyAccounting from "./pages/Accounting/DailyAccounting";
 
 function App() {
   const { accounting, setAccounting } = useGlobalContext();
@@ -55,7 +55,6 @@ function App() {
         className="joyride-accounting group fixed bottom-16 right-4 flex h-16 w-16 cursor-pointer items-center justify-center rounded-[50%] bg-white shadow-lg transition-all duration-300 hover:w-56 hover:rounded-full hover:opacity-100"
       >
         <div className="relative flex h-full w-full items-center justify-center">
-          {/* SVG 圖標 */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -71,14 +70,12 @@ function App() {
             />
           </svg>
 
-          {/* 顯示文字 */}
           <span className="absolute left-20 w-0 overflow-hidden text-lg font-semibold opacity-0 transition-all duration-200 group-hover:w-auto group-hover:whitespace-nowrap group-hover:opacity-100 group-hover:delay-200">
             我要記帳
           </span>
         </div>
       </div>
 
-      {/* 離線提示區塊，帶有滑入/滑出的動畫 */}
       {isOffline && (
         <div
           className={`absolute bottom-10 left-10 z-50 flex w-[200px] flex-col items-start rounded-lg bg-white px-10 py-10 shadow-md transition-transform duration-500 md:w-[600px] ${

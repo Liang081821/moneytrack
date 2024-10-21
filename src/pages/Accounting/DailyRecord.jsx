@@ -115,10 +115,7 @@ export default function DailyRecord({
         account: item.targetaccount || "",
       }),
     );
-    console.log("Setting targetaccount with:", {
-      id: item.targetaccountid || "",
-      account: item.targetaccount || "",
-    });
+
     const transactionDate = item.time.toDate();
     setStartDate(transactionDate);
   };
@@ -133,9 +130,7 @@ export default function DailyRecord({
   const watchAccount = watch("account");
   const parsedAccount = watchAccount ? JSON.parse(watchAccount) : null;
   const watchTargetAccount = watch("targetaccount");
-  useEffect(() => {
-    console.log("Current targetaccount value in form:", watchTargetAccount);
-  }, [watchTargetAccount]);
+
   const optionsToRender =
     recordType === "收入"
       ? classData.income
@@ -157,7 +152,6 @@ export default function DailyRecord({
   useEffect(() => {
     if (editing && parsedAccount.id !== currentTransaction?.accountid) {
       setValue("targetaccount", "");
-      console.log("here");
     }
   }, [watchAccount, setValue, editing, currentTransaction?.account]);
   const { rates } = useGlobalContext();
@@ -223,48 +217,16 @@ export default function DailyRecord({
         : null;
 
       const querySnapshotOriginal = await getDocs(qOriginal);
-      console.log(
-        "Original Account Query Result:",
-        querySnapshotOriginal.empty
-          ? "No documents found"
-          : querySnapshotOriginal.docs.map((doc) => doc.data()),
-      );
 
       const querySnapshotNew = await getDocs(qNew);
-      console.log(
-        "New Account Query Result:",
-        querySnapshotNew.empty
-          ? "No documents found"
-          : querySnapshotNew.docs.map((doc) => doc.data()),
-      );
 
       const querySnapshotOriginalTarget = qOriginalTarget
         ? await getDocs(qOriginalTarget)
         : null;
-      if (querySnapshotOriginalTarget) {
-        console.log(
-          "Original Target Account Query Result:",
-          querySnapshotOriginalTarget.empty
-            ? "No documents found"
-            : querySnapshotOriginalTarget.docs.map((doc) => doc.data()),
-        );
-      } else {
-        console.log("No Original Target Account Query");
-      }
 
       const querySnapshotNewTarget = qNewTarget
         ? await getDocs(qNewTarget)
         : null;
-      if (querySnapshotNewTarget) {
-        console.log(
-          "New Target Account Query Result:",
-          querySnapshotNewTarget.empty
-            ? "No documents found"
-            : querySnapshotNewTarget.docs.map((doc) => doc.data()),
-        );
-      } else {
-        console.log("No New Target Account Query");
-      }
 
       const updateAccountBalance = async (docSnap, amountChange) => {
         const currentBalance = docSnap.data().balance || 0;
@@ -282,40 +244,30 @@ export default function DailyRecord({
           originalAccount === newAccount &&
           originalTargetAccount === newTargetAccount
         ) {
-          // 1. 轉入和轉出帳戶都未更改
-          console.log("1");
           amountChangeForNewAccount = originalAmount - newAmount;
           amountChangeForNewTargetAccount = newAmount - originalAmount;
         } else if (
           originalAccount === newTargetAccount &&
           originalTargetAccount === newAccount
         ) {
-          // 2. 轉入和轉出帳戶互換
-          console.log("2");
           amountChangeForNewAccount = -(originalAmount + newAmount);
           amountChangeForNewTargetAccount = originalAmount + newAmount;
         } else if (
           originalAccount !== newAccount &&
           originalTargetAccount === newTargetAccount
         ) {
-          // 3. 只改變了轉出帳戶
-          console.log("3");
           amountChangeForOriginalAccount = originalAmount;
           amountChangeForNewAccount = -newAmount;
         } else if (
           originalTargetAccount !== newTargetAccount &&
           originalAccount === newAccount
         ) {
-          // 4. 只改變了轉入帳戶
-          console.log("4");
           amountChangeForOriginalTargetAccount = -originalAmount;
           amountChangeForNewTargetAccount = newAmount;
         } else if (
           originalAccount !== newTargetAccount &&
           originalTargetAccount !== newAccount
         ) {
-          // 5. 轉入和轉出帳戶都改變了
-          console.log("5");
           amountChangeForOriginalAccount = originalAmount;
           amountChangeForOriginalTargetAccount = -originalAmount;
           amountChangeForNewAccount = -newAmount;
@@ -324,30 +276,24 @@ export default function DailyRecord({
       } else if ((isOriginalIncome || isOriginalExpense) && isNewTransfer) {
         if (isOriginalIncome) {
           if (originalAccount === newAccount) {
-            console.log("6");
             amountChangeForOriginalAccount = -(originalAmount + newAmount);
             amountChangeForNewTargetAccount = newAmount;
           } else if (originalAccount === newTargetAccount) {
-            console.log("7");
             amountChangeForNewAccount = -newAmount;
             amountChangeForNewTargetAccount = newAmount - originalAmount;
           } else {
-            console.log("8");
             amountChangeForOriginalAccount = -originalAmount;
             amountChangeForNewAccount = -newAmount;
             amountChangeForNewTargetAccount = newAmount;
           }
         } else if (isOriginalExpense) {
           if (originalAccount === newAccount) {
-            console.log("9");
             amountChangeForOriginalAccount = originalAmount - newAmount;
             amountChangeForNewTargetAccount = newAmount;
           } else if (originalAccount === newTargetAccount) {
-            console.log("10");
             amountChangeForNewAccount = -newAmount;
             amountChangeForNewTargetAccount = originalAmount + newAmount;
           } else {
-            console.log("11");
             amountChangeForOriginalAccount = originalAmount;
             amountChangeForNewAccount = -newAmount;
             amountChangeForNewTargetAccount = newAmount;
@@ -356,46 +302,35 @@ export default function DailyRecord({
       } else if (isOriginalTransfer && (isNewIncome || isNewExpense)) {
         if (isNewIncome) {
           if (originalAccount === newAccount) {
-            console.log("12");
             amountChangeForOriginalTargetAccount = -originalAmount;
             amountChangeForNewAccount = newAmount + originalAmount;
           } else {
-            console.log("13");
             amountChangeForOriginalTargetAccount = -originalAmount;
             amountChangeForOriginalAccount = originalAmount;
             amountChangeForNewAccount = newAmount;
           }
         } else if (isNewExpense) {
           if (originalAccount === newAccount) {
-            console.log("14");
             amountChangeForOriginalTargetAccount = -originalAmount;
             amountChangeForNewAccount = originalAmount - newAmount;
           } else {
-            console.log("15");
             amountChangeForOriginalTargetAccount = -originalAmount;
             amountChangeForOriginalAccount = originalAmount;
             amountChangeForNewAccount = -newAmount;
           }
         }
       } else {
-        //收入支出編輯>帳戶沒有改變
         if (originalAccount === newAccount) {
           if (isOriginalIncome && isNewIncome) {
-            console.log("16");
             amountChangeForOriginalAccount = newAmount - originalAmount;
           } else if (isOriginalExpense && isNewExpense) {
-            console.log("17");
             amountChangeForOriginalAccount = originalAmount - newAmount;
           } else if (isOriginalIncome && isNewExpense) {
-            console.log("18");
             amountChangeForOriginalAccount = -originalAmount - newAmount;
           } else if (isOriginalExpense && isNewIncome) {
-            console.log("19");
             amountChangeForOriginalAccount = originalAmount + newAmount;
           }
-          //收入支出編輯>帳戶改變
         } else {
-          console.log("20");
           amountChangeForOriginalAccount = isOriginalIncome
             ? -originalAmount
             : isOriginalExpense
@@ -490,8 +425,6 @@ export default function DailyRecord({
         convertedAmountTWD: convertedAmountTWD,
       };
       await setDoc(docRef, cleanData, { merge: true });
-
-      console.log("Document successfully updated!");
     } catch (error) {
       console.error("Error updating document:", error);
     }

@@ -59,7 +59,6 @@ export default function AccountDetails({
         setAlertMessage("帳戶及其所有帳單已刪除");
 
         setIsAddNewOpen(false);
-        console.log("已刪除");
         const q = query(
           accountingCollectionRef,
           where("accountid", "==", selectedAccount.id),

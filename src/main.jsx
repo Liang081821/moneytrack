@@ -1,15 +1,14 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import App from "./App";
-import Accounting from "./pages/Accounting";
-import Analysis from "./pages/Analysis";
-import Property from "./pages/Property";
-// import PersonalInformation from "./pages/PersonalInformation";
-import Project from "./pages/Project";
-import Login from "./pages/Login";
-import "./index.css";
 import { GlobalProvider } from "./context/GlobalContext";
 import { JoyrideProvider } from "./context/JoyrideContext";
+import "./index.css";
+import Accounting from "./pages/Accounting";
+import Analysis from "./pages/Analysis";
+import Login from "./pages/Login";
+import Project from "./pages/Project";
+import Property from "./pages/Property";
 
 import PrivateRoute from "./pages/Login/PrivateRoute";
 

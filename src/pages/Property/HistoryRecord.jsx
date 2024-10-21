@@ -84,7 +84,7 @@ export default function HistoryRecord() {
 
     try {
       setAlertMessage("添加成功");
-      const docRef = await addDoc(historyCollectionRef, {
+      await addDoc(historyCollectionRef, {
         saving: newTotals.saving,
         expense: newTotals.expense,
         investment: newTotals.investment,
@@ -92,8 +92,6 @@ export default function HistoryRecord() {
         totalAssetsAbsoluteValue: totalAssetsAbsoluteValue,
         time: new Date(),
       });
-
-      console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }

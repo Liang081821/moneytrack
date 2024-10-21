@@ -21,7 +21,6 @@ const AnalysisJoyride = () => {
     }
   }, [setAnalysisRun, setStepAnalysisIndex]);
   const handleCallback = (data) => {
-    console.log(data);
     const { action, index, status, type, lifecycle } = data;
 
     if (

@@ -53,7 +53,6 @@ export default function AddNewFunction({
         id: docRef.id,
       });
 
-      console.log("Document written with ID: ", docRef.id);
       setAlertMessage("新增成功");
     } catch (e) {
       console.error("Error adding document: ", e);

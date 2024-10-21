@@ -11,7 +11,6 @@ export default function Step2({
 
   const handleHouseCategoryClick = (category) => {
     setSelectedHouseCategory(category);
-    console.log("計算出的房屋支出：", category);
   };
 
   const handleInsureCategoryClick = (category) => {

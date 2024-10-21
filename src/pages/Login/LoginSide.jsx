@@ -1,9 +1,9 @@
-import bannerImage from "../../../public/banner.jpg";
-import { useRef, useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
 import { Card, CardContent } from "@/components/ui/card";
-import Chart from "../../../public/chart.gif";
+import { useEffect, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import Analysis from "../../../public/analysis.gif";
+import bannerImage from "../../../public/banner.jpg";
+import Chart from "../../../public/chart.gif";
 import Project from "../../../public/project.gif";
 import handleGoogleLogin from "./loginFunction";
 
@@ -28,9 +28,8 @@ export default function LoginSide() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const windowHeight = window.innerHeight;
-  console.log(window.innerHeight);
-  console.log(window.scrollY);
-  const [fadeIn, setFadeIn] = useState(true); // 控制淡入淡出效果
+
+  const [fadeIn, setFadeIn] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -142,8 +141,6 @@ export default function LoginSide() {
 
   return (
     <div className="landing-page">
-      {/* 第一個區塊 */}
-
       <div className="flex h-full w-full items-center justify-center">
         <div
           className="h-[80vh] w-full overflow-hidden object-cover text-center"
@@ -279,10 +276,8 @@ export default function LoginSide() {
               </div>
             </div>
           </div>
-          {/* 點點導航 */}
         </section>
-        {/* 最后一部分 */}
-        {/* 第一部分 */}
+
         <section className="h-auto bg-[#fafafa] pt-[10vh] lg:pt-0">
           <div className="flex h-full flex-col items-center gap-7">
             <h1 className="text-4xl font-semibold lg:text-6xl">更多特色</h1>
@@ -446,21 +441,6 @@ export default function LoginSide() {
           </div>
         </section>
         <section className="flex h-auto flex-col items-center justify-center gap-10 bg-[#222E50] p-7 text-sm text-white lg:text-lg">
-          {/* <div className="it flex justify-center gap-10">
-            <div className="flex flex-col gap-2">
-              <p className="font-semibold text-[#bbe0e1]">麻布追蹤</p>
-              <p>關於我們</p>
-              <p>粉絲專頁</p>
-              <p>臉書社團</p>
-            </div>
-            <div className="flex flex-col gap-2">
-              <p className="font-semibold text-[#bbe0e1]">客戶服務</p>
-
-              <p>隱私權政策</p>
-              <p>資訊安全政策</p>
-              <p>聯絡我們</p>
-            </div>
-          </div> */}
           <p className="">
             © 2024 MoneyTrack Corp., Ltd. All rights reserved.
           </p>
@@ -468,139 +448,4 @@ export default function LoginSide() {
       </div>
     </div>
   );
-}
-{
-  /* 横向滚动的部分 */
-}
-{
-  /* <section className="h-[500vh]">
-          <div
-            ref={horizonRef}
-            className="sticky top-0 flex max-h-screen overflow-x-hidden whitespace-nowrap bg-slate-500"
-          >
-            <div className="flex h-screen w-screen flex-none items-center justify-center bg-slate-300">
-              <div className="flex h-full items-center justify-center">
-                <img src={chart} alt="" className="max-h-[100vh] w-auto" />
-                <div>
-                  <p className="mb-4 text-3xl font-semibold text-[#446f5d]">
-                    我的支出都花在哪？
-                  </p>
-                  <p className="text-6xl leading-snug">
-                    多圖表分析
-                    <br />
-                    支出收入比例一目瞭然
-                  </p>
-                  <p className="mt-4 text-2xl leading-snug text-gray-600">
-                    包括收入、支出分布圖表，讓您可以快速的掌握自己每月的消費習慣！
-                    <br />
-                    提供您自定義佈局儀表板，讓您從理財小白瞬間升級。
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex h-screen w-screen flex-none items-center justify-center bg-green-300">
-              <div className="flex h-full items-center justify-center">
-                <img src={chat} alt="" className="max-h-[100vh] w-auto" />
-                <div>
-                  <p className="mb-4 text-3xl font-semibold text-[#446f5d]">
-                    我想要客製化的理財方向
-                  </p>
-                  <p className="text-6xl leading-snug">
-                    專屬理財規劃師
-                    <br />
-                    提供最專業的諮詢
-                  </p>
-                  <p className="mt-4 text-2xl leading-snug text-gray-600">
-                    透過數據報表，分析您每月的支出收入比率、淨資產分佈
-                    <br />
-                    最客製化的分析建議，讓您不再對理財毫無頭緒。
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex h-screen w-screen flex-none items-center justify-center bg-blue-300">
-              <div className="flex h-full items-center justify-center">
-                <img src={project} alt="" className="max-h-[100vh] w-auto" />
-                <div>
-                  <p className="mb-4 text-3xl font-semibold text-[#446f5d]">
-                    我每次出去玩都不知道自己花了多少錢
-                  </p>
-                  <p className="text-6xl leading-snug">
-                    開啟記帳專案
-                    <br />
-                    掌握你的金錢的流向
-                  </p>
-                  <p className="mt-4 text-2xl leading-snug text-gray-600">
-                    擁有理財專案的功能，不管是出遊、結婚、個人儲蓄計畫
-                    <br />
-                    通通可以交給 MoneyTrack。
-                  </p>
-                </div>
-              </div>
-            </div> */
-}
-{
-  /* <div className="flex h-screen w-screen flex-none items-center justify-center">
-              <span className="text-4xl">HORIZONTAL 🎉</span>
-            </div>
-            <div className="flex h-screen w-screen flex-none items-center justify-center">
-              <div className="text-6xl">🏄 OH YA BABY 🏄</div>
-            </div> */
-}
-{
-  /* </div>
-        </section> */
-}
-
-{
-  /* 第三個區塊 - 產品展示 */
-}
-{
-  /* <motion.section
-        className="flex flex-col items-center justify-center bg-gray-100 py-20"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        <motion.h2 className="mb-8 text-4xl font-bold text-gray-800">
-          我們的產品
-        </motion.h2>
-        <div className="grid grid-cols-2 gap-8">
-          {[1, 2].map((i) => (
-            <motion.div
-              key={i}
-              className="h-[300px] w-[400px] rounded-lg bg-gray-300 shadow-md"
-              variants={imageVariants}
-            >
-              <span className="text-center text-xl">產品圖 {i}</span>
-            </motion.div>
-          ))}
-        </div>
-      </motion.section> */
-}
-
-{
-  /* 第四個區塊 - CTA 區塊 */
-}
-{
-  /* <motion.section
-        className="flex h-screen flex-col items-center justify-center bg-white py-20"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        <motion.h2 className="mb-8 text-4xl font-bold text-gray-800">
-          準備好開始了嗎？
-        </motion.h2>
-        <motion.p className="mb-4 text-xl text-gray-600">
-          與我們一起創造未來。
-        </motion.p>
-        <motion.button
-          className="rounded-lg bg-yellow-500 px-8 py-3 text-white shadow-lg transition-transform duration-300 hover:scale-105"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          立即開始
-        </motion.button>
-      </motion.section> */
 }

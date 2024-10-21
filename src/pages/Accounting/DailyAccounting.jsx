@@ -129,7 +129,6 @@ export default function DailyAccounting({ setAccounting }) {
       if (!querySnapshot.empty) {
         querySnapshot.forEach(async (docSnap) => {
           const currentBalance = docSnap.data().balance || 0;
-          console.log(currentBalance);
           const newBalance =
             data.type === "收入"
               ? currentBalance + Number(convertedAmountTWD)
@@ -137,8 +136,6 @@ export default function DailyAccounting({ setAccounting }) {
 
           await updateDoc(docSnap.ref, { balance: newBalance });
         });
-      } else {
-        console.log("No such document!");
       }
 
       let docRef;
@@ -191,7 +188,6 @@ export default function DailyAccounting({ setAccounting }) {
       } catch (error) {
         console.error("寫入資料時出錯：", error);
       }
-      console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }

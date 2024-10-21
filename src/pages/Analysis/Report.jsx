@@ -59,8 +59,6 @@ export default function Report() {
   const [livestatic, setLiveStatic] = useState(true);
 
   const handleAddReport = () => {
-    console.log("monthexpense:", monthexpense);
-    console.log("monthincome:", monthincome);
     if (Number(monthexpense) === 0 && Number(monthincome) === 0) {
       setAlertMessage("上月無數據可進行分析");
     } else {
@@ -79,7 +77,6 @@ export default function Report() {
         isOpen: true,
         message: "即將生成報表，確認後不可返回",
         onConfirm: () => {
-          console.log("報表生成中...");
           setConfirmData({ ...confirmData, isOpen: false });
           setStep((prevStep) => prevStep + 1);
         },

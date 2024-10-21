@@ -194,7 +194,6 @@ export default function ProjectLayoutGrid() {
       await updateDoc(projectDocRef, {
         isediting: false,
       });
-      console.log("Project deleted successfully!");
     } catch (error) {
       console.error("Error deleting project: ", error);
     }
@@ -209,7 +208,6 @@ export default function ProjectLayoutGrid() {
       <ProjectJoyride />
       <div className="w-[85%] py-5">
         <div className="flex h-auto flex-col flex-wrap items-start justify-start gap-4">
-          {/* 新增專案按鈕 */}
           <div className="flex w-full justify-between gap-2 self-end rounded-lg bg-[#fcfcfc] p-4 shadow-lg">
             <div className="joyride-report flex gap-2 border-b border-gray-300">
               <div

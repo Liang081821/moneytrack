@@ -84,7 +84,6 @@ export default function Step5({ preText, setPreText }) {
       }
 
       const data = await response.json();
-      console.log("Bot Message:", data.botMessage);
 
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -108,8 +107,6 @@ export default function Step5({ preText, setPreText }) {
 
   useEffect(() => {
     scrollToBottom();
-    console.log("hey");
-    console.log(messagesEndRef.current);
   }, [messages]);
 
   Step5.propTypes = {

@@ -16,7 +16,6 @@ const DataJoyride = () => {
     }
   }, [setDataRun, setStepDataIndex]);
   const handleCallback = (data) => {
-    console.log(data);
     const { action, index, status, type, lifecycle } = data;
 
     if (
@@ -32,7 +31,6 @@ const DataJoyride = () => {
       type === "step:after" &&
       (action === "next" || action === "prev")
     ) {
-      // 更新步驟索引
       const newIndex = index + (action === "next" ? 1 : -1);
       setStepDataIndex(newIndex);
 
@@ -59,7 +57,7 @@ const DataJoyride = () => {
       callback={handleCallback}
       disableBeacon={true}
       disableScrolling={true}
-      spotlightClicks={false} // 禁用點擊高亮區域內的元素來跳過
+      spotlightClicks={false}
       disableOverlayClose={true}
       styles={{
         options: {

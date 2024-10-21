@@ -4,12 +4,9 @@ import OpenAI from "openai";
 
 initializeApp();
 
-// 初始化 OpenAI API
 const openai = new OpenAI({});
 
-// 聊天接口
 export const chat = https.onRequest(async (req, res) => {
-  // 跨域设置
   res.set("Access-Control-Allow-Origin", "*");
   res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.set("Access-Control-Allow-Headers", "Content-Type");

@@ -1,13 +1,13 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import {
-  fetchAllPropertyData,
-  fetchClassData,
-  fetchAllHistoryRecord,
-  fetchAllTransactionData,
-  fetchProjectData,
-  fetchAllReportRecord,
-} from "../firebase/api";
 import PropTypes from "prop-types";
+import { createContext, useContext, useEffect, useState } from "react";
+import {
+  fetchAllHistoryRecord,
+  fetchAllPropertyData,
+  fetchAllReportRecord,
+  fetchAllTransactionData,
+  fetchClassData,
+  fetchProjectData,
+} from "../firebase/api";
 
 const GlobalContext = createContext();
 

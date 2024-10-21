@@ -28,7 +28,6 @@ const JoyrideGuide = () => {
 
   const handleCallback = (data) => {
     const { action, index, status, type, lifecycle } = data;
-    console.log(data);
 
     if (
       status === "finished" ||
@@ -59,11 +58,6 @@ const JoyrideGuide = () => {
             setTimeout(() => {
               setProjectRun(true);
             }, 500);
-          } else if (action === "prev") {
-            // setAccounting(true);
-            // setTimeout(() => {
-            //   setProjectRun(true);
-            // }, 500);
           }
           break;
         case 3:

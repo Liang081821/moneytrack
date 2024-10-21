@@ -135,7 +135,6 @@ export default function AddNewClass({ newclassEditing, setNewClassEditing }) {
                   </div>
                 </div>
 
-                {/* 顯示分類 */}
                 <div className="flex flex-wrap gap-3 self-start overflow-scroll">
                   {Array.isArray(categoriesToDisplay) &&
                     categoriesToDisplay.map((item, index) => (
@@ -144,7 +143,6 @@ export default function AddNewClass({ newclassEditing, setNewClassEditing }) {
                         className="flex items-center justify-start rounded-lg border border-gray-300 p-2"
                       >
                         <p>{item}</p>
-                        {/* 刪除按鈕 */}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"

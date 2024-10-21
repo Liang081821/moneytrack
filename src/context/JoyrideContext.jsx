@@ -3,7 +3,6 @@ import { createContext, useContext, useState } from "react";
 const JoyrideContext = createContext();
 
 export const JoyrideProvider = ({ children }) => {
-  //第一頁
   const [run, setRun] = useState(true);
   const [stepIndex, setStepIndex] = useState(0);
   const steps = [
@@ -14,7 +13,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -35,7 +34,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -45,12 +44,11 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
   ];
-  //第二頁
   const [dataRun, setDataRun] = useState(true);
   const [stepDataIndex, setStepDataIndex] = useState(0);
   const dataSteps = [
@@ -61,7 +59,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -72,7 +70,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -82,7 +80,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -92,7 +90,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -102,7 +100,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -112,7 +110,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -122,12 +120,11 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
   ];
-  //第三頁
   const [analysisRun, setAnalysisRun] = useState(true);
   const [stepAnalysisIndex, setStepAnalysisIndex] = useState(0);
   const analysisSteps = [
@@ -137,7 +134,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -149,7 +146,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -159,7 +156,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -169,12 +166,11 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
   ];
-  //第四頁
   const [projectRun, setProjectRun] = useState(true);
   const [stepProjectIndex, setStepProjectIndex] = useState(0);
   const projectSteps = [
@@ -185,7 +181,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -196,7 +192,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -206,7 +202,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
@@ -216,7 +212,7 @@ export const JoyrideProvider = ({ children }) => {
       disableBeacon: true,
       styles: {
         tooltipContent: {
-          textAlign: "left", // 文字置左
+          textAlign: "left",
         },
       },
     },
