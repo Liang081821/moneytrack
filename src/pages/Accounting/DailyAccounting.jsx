@@ -32,6 +32,7 @@ export default function DailyAccounting({ setAccounting }) {
     register,
     handleSubmit,
     watch,
+    setValue,
     reset,
     formState: { errors },
   } = useForm({
@@ -46,21 +47,51 @@ export default function DailyAccounting({ setAccounting }) {
 
   const watchType = watch("type");
   const watchAccount = watch("account");
+  const watchTargetAccount = watch("targetaccount");
+
   const selectedCurrency = watch("currency", "TWD");
   const amount = watch("amount");
 
-  const optionsToRender =
-    classData[
-      watchType === "收入"
-        ? "income"
-        : watchType === "支出"
-          ? "expense"
-          : "transfer"
-    ];
-  const accountsToRender = property.filter((item) => {
+  const optionsToRender = classData
+    ? classData[
+        watchType === "收入"
+          ? "income"
+          : watchType === "支出"
+            ? "expense"
+            : "transfer"
+      ]
+    : [];
+  const [accountsToRender, setAccountsToRender] = useState([]);
+
+  useEffect(() => {
+    const filteredAccounts = property
+      ? property.filter((item) => {
+          const parsedAccount = watchAccount ? JSON.parse(watchAccount) : null;
+          return parsedAccount ? item.id !== parsedAccount.id : true;
+        })
+      : [];
+
+    setAccountsToRender(filteredAccounts);
+  }, [property, watchAccount, setValue]);
+
+  useEffect(() => {
     const parsedAccount = watchAccount ? JSON.parse(watchAccount) : null;
-    return parsedAccount ? item.id !== parsedAccount.id : true;
-  });
+    const parsedTargetAccount = watchTargetAccount
+      ? JSON.parse(watchTargetAccount)
+      : null;
+    console.log(watchAccount);
+    console.log(watchTargetAccount);
+    console.log(parsedAccount);
+    console.log(parsedTargetAccount);
+    if (
+      parsedAccount &&
+      parsedTargetAccount &&
+      parsedAccount.id === parsedTargetAccount.id
+    ) {
+      setValue("targetaccount", "");
+    }
+  }, [watchAccount, setValue, watchTargetAccount]);
+
   const [convertedAmountDisplay, setConvertedAmountDisplay] = useState(0);
 
   useEffect(() => {
@@ -169,7 +200,7 @@ export default function DailyAccounting({ setAccounting }) {
             convertedAmountTWD: Number(convertedAmountTWD),
           });
         } else {
-          docRef = await addDoc(accountingCollectionRef, {
+          await addDoc(accountingCollectionRef, {
             account: selectedAccount.account,
             accountid: selectedAccount.id,
 
@@ -271,6 +302,8 @@ export default function DailyAccounting({ setAccounting }) {
                   required: "請選擇帳戶",
                 })}
                 onChange={(e) => {
+                  setValue("account", e.target.value);
+
                   const value = e.target.value;
                   if (value === "addAccount") {
                     navigateToAddAccountPage();
@@ -443,9 +476,6 @@ export default function DailyAccounting({ setAccounting }) {
                       name="currency"
                       value={code}
                       checked={selectedCurrency === code}
-                      // onChange={() => {
-                      //   setSelectedCurrency(code);
-                      // }}
                       className="hidden"
                       {...register("currency", { required: "請選擇幣別" })}
                     />

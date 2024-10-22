@@ -78,8 +78,9 @@ export default function AddNewClass({ newclassEditing, setNewClassEditing }) {
   };
 
   const categoriesToDisplay =
-    selectedCategory === "收入" ? classData.income : classData.expense;
-
+    selectedCategory === "收入"
+      ? classData?.income || []
+      : classData?.expense || [];
   AddNewClass.propTypes = {
     newclassEditing: PropTypes.bool.isRequired,
     setNewClassEditing: PropTypes.func.isRequired,
