@@ -166,8 +166,6 @@ export default function DailyAccounting({ setAccounting }) {
         });
       }
 
-      let docRef;
-
       const accountType = !querySnapshot.empty
         ? querySnapshot.docs[0].data().account_type
         : "";
@@ -182,7 +180,7 @@ export default function DailyAccounting({ setAccounting }) {
         });
         reset();
         if (watchType === "轉帳") {
-          docRef = await addDoc(accountingCollectionRef, {
+          await addDoc(accountingCollectionRef, {
             account: selectedAccount.account,
             accountid: selectedAccount.id,
             account_type: accountType,
