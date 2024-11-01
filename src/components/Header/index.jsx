@@ -13,8 +13,7 @@ import { auth, db } from "../../firebase/firebaseConfig";
 import Logo from "./Logo.png";
 
 export default function Header({ linkToBackstage = true }) {
-  const { loginState } = useGlobalContext();
-  const { loginEmail } = useGlobalContext();
+  const { loginState, loginEmail } = useGlobalContext();
 
   const [isSticky, setIsSticky] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
