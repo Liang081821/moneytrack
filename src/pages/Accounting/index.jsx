@@ -254,7 +254,6 @@ export default function Accounting() {
           breakpoints={{ lg: 1200, md: 996, sm: 768 }}
           cols={{ lg: 12, md: 10, sm: 6 }}
           rowHeight={1}
-          // margin={[10, 10]}
           draggableHandle=".drag-handle"
           onLayoutChange={(currentLayout, allLayouts) =>
             handleLayoutChange(currentLayout, allLayouts)

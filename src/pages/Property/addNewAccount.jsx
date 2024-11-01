@@ -96,7 +96,6 @@ export default function AddNewFunction({
                     className="rounded-lg border border-gray-300 px-4 py-2"
                     type="text"
                     placeholder="帳戶名稱"
-                    // maxLength={10}
                     {...register("account", {
                       required: "請輸入帳戶名稱",
                       maxLength: {

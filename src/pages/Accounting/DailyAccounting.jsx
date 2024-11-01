@@ -79,10 +79,7 @@ export default function DailyAccounting({ setAccounting }) {
     const parsedTargetAccount = watchTargetAccount
       ? JSON.parse(watchTargetAccount)
       : null;
-    console.log(watchAccount);
-    console.log(watchTargetAccount);
-    console.log(parsedAccount);
-    console.log(parsedTargetAccount);
+
     if (
       parsedAccount &&
       parsedTargetAccount &&

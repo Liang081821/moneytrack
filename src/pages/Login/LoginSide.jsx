@@ -406,10 +406,7 @@ export default function LoginSide() {
             <Carousel className="max-w-7xl lg:w-[80vw]">
               <CarouselContent className="mx-auto w-[60vw] sm:w-[80vw] lg:w-[50vw]">
                 {testimonials.map((testimonial, index) => (
-                  <CarouselItem
-                    key={index}
-                    // className="pl-1 md:basis-1/2 lg:basis-1/3"
-                  >
+                  <CarouselItem key={index}>
                     <Card
                       className={`m-2 h-96 w-48 rounded-3xl border bg-white shadow-md transition duration-700 sm:h-80 sm:w-72 lg:h-96 lg:w-72 ${
                         secondInView

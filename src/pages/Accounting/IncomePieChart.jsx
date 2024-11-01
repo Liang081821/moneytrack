@@ -4,7 +4,6 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
-// import { color } from "framer-motion";
 
 Chart.register(...registerables, ChartDataLabels);
 

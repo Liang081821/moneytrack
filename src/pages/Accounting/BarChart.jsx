@@ -185,7 +185,6 @@ export default function BarChart({
         },
         beginAtZero: true,
         ticks: {
-          // margin: 100,
           font: {
             size: 16,
           },

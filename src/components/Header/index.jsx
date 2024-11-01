@@ -78,7 +78,7 @@ export default function Header({ linkToBackstage = true }) {
       localStorage.removeItem("user");
       window.location.href = "/";
     } catch (error) {
-      console.log("登出失敗", error);
+      console.error("登出失敗", error);
     }
   };
 
