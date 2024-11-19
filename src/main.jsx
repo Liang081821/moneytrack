@@ -52,10 +52,6 @@ root.render(
                 </PrivateRoute>
               }
             />
-            {/* <Route
-            path="/personalinformation"
-            element={<PersonalInformation />}
-          /> */}
             <Route
               path="/project"
               element={
