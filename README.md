@@ -1,7 +1,7 @@
-# MonerTrack  
+# MoneyTrack  
 
 ## **Project Overview**  
-MonerTrack is a personal finance tracking platform developed with React, designed to help users manage their income and expenses efficiently. The system provides features like real-time financial visualization using **Chart.js**, offline support with **VitePWA**, user onboarding with **React Joyride**, and advanced financial insights using the **OpenAI API**. The platform leverages **Firebase Firestore** for secure and real-time database management and integrates **OpenExchangeRates API** for real-time currency exchange rates.  
+MoneyTrack is a personal finance tracking platform developed with React, designed to help users manage their income and expenses efficiently. The system provides features like real-time financial visualization using **Chart.js**, offline support with **VitePWA**, user onboarding with **React Joyride**, and advanced financial insights using the **OpenAI API**. The platform leverages **Firebase Firestore** for secure and real-time database management and integrates **OpenExchangeRates API** for real-time currency exchange rates.  
 
 ---
 
@@ -63,4 +63,4 @@ MonerTrack is a personal finance tracking platform developed with React, designe
 
 ---
 
-MonerTrack combines financial tracking, data visualization, and intelligent insights into a user-friendly personal finance dashboard. It leverages modern frontend technologies and APIs to give users insights into their spending patterns while ensuring seamless user experiences, even without constant internet connectivity.
+MoneyTrack combines financial tracking, data visualization, and intelligent insights into a user-friendly personal finance dashboard. It leverages modern frontend technologies and APIs to give users insights into their spending patterns while ensuring seamless user experiences, even without constant internet connectivity.
